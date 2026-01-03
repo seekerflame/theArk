@@ -11,14 +11,25 @@ class EnergyMonitor:
         self.start_time = time.time()
         self.baseline_power = 15.0 # Base Watts for a Mac Mini / PC Node
         self.peak_power = 120.0 # Peak Watts during AI thinking
+        self.overclock_power = 250.0 # Watts during Overclock Mode
         self.current_watts = self.baseline_power
         self.total_energy_kwh = 0.0
         self.last_update = time.time()
+        self.overclock_file = "overclock.flag"
+
+    def is_overclocked(self):
+        return os.path.exists(self.overclock_file)
+
+    def get_performance_factor(self):
+        return 5.0 if self.is_overclocked() else 1.0
 
     def get_current_power(self, is_thinking=False):
         # Simulate power fluctuation
         noise = math.sin(time.time() * 0.1) * 2.0
-        if is_thinking:
+
+        if self.is_overclocked():
+             self.current_watts = self.overclock_power + (noise * 5) # High instability
+        elif is_thinking:
             self.current_watts = self.peak_power + noise
         else:
             self.current_watts = self.baseline_power + noise
@@ -56,5 +67,6 @@ class EnergyMonitor:
             "energy_kwh": round(self.total_energy_kwh, 6),
             "kardashev_level": self.calculate_kardashev(),
             "aggregate_humanity_mw": 18000000.0,
-            "node_contribution_percent": (power / 1.8e13) * 100
+            "node_contribution_percent": (power / 1.8e13) * 100,
+            "overclock_active": self.is_overclocked()
         }

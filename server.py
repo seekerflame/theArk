@@ -21,6 +21,7 @@ from api.steward import register_steward_routes
 from api.economy import register_economy_routes
 from api.social import register_social_routes
 from api.hardware import register_hardware_routes
+from api.feedback import register_feedback_routes
 
 # Configuration
 PORT = 3000
@@ -51,6 +52,7 @@ register_steward_routes(router, ledger, energy, auth_decorator)
 register_economy_routes(router, ledger, sensors, auth_decorator)
 register_social_routes(router, ledger, auth_decorator)
 register_hardware_routes(router, ledger, sensors, auth_decorator)
+register_feedback_routes(router, ledger, auth_decorator)
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -127,7 +129,10 @@ def sensor_polling_loop():
     while True:
         try:
             sensors.poll()
-            time.sleep(10)
+            # Dynamic sleep based on system energy state (Overclock)
+            factor = energy.get_performance_factor()
+            interval = max(1.0, 10.0 / factor)
+            time.sleep(interval)
         except Exception as e:
             logger.error(f"Sensor polling error: {e}")
             time.sleep(10)
