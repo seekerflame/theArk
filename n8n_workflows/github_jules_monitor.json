@@ -1,0 +1,119 @@
+{
+    "name": "GitHub Jules Monitor",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "github",
+                "responseMode": "onReceived",
+                "responseData": "allEntries"
+            },
+            "name": "GitHub Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                240,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{$json[\"commits\"][0][\"message\"]}}",
+                            "operation": "contains",
+                            "value2": "[Jules]"
+                        }
+                    ]
+                }
+            },
+            "name": "Is Jules Commit?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                460,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "channel": "#ark-notifications",
+                "text": "🤖 **Jules Commit Detected**\n\nMessage: {{$json[\"commits\"][0][\"message\"]}}\nBranch: {{$json[\"ref\"]}}\nURL: {{$json[\"commits\"][0][\"url\"]}}"
+            },
+            "name": "Slack Notification",
+            "type": "n8n-nodes-base.slack",
+            "typeVersion": 1,
+            "position": [
+                680,
+                200
+            ],
+            "notes": "Replace with your Slack webhook or use Discord/Email"
+        },
+        {
+            "parameters": {
+                "url": "http://localhost:3000/api/mission/log",
+                "options": {},
+                "bodyParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "event",
+                            "value": "jules_commit"
+                        },
+                        {
+                            "name": "message",
+                            "value": "={{$json[\"commits\"][0][\"message\"]}}"
+                        },
+                        {
+                            "name": "timestamp",
+                            "value": "={{$now.toISO()}}"
+                        }
+                    ]
+                }
+            },
+            "name": "Log to Ark",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 3,
+            "position": [
+                680,
+                400
+            ]
+        }
+    ],
+    "connections": {
+        "GitHub Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Is Jules Commit?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Is Jules Commit?": {
+            "main": [
+                [
+                    {
+                        "node": "Slack Notification",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Log to Ark",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {},
+    "staticData": null,
+    "tags": [
+        "automation",
+        "github",
+        "jules"
+    ]
+}

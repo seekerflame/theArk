@@ -1,0 +1,154 @@
+{
+    "name": "Hardware Sensor Mint",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "minutes",
+                            "minutesInterval": 5
+                        }
+                    ]
+                }
+            },
+            "name": "Every 5 Minutes",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                240,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "http://localhost:3000/api/hardware/sensors",
+                "options": {}
+            },
+            "name": "Get Sensor Data",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 3,
+            "position": [
+                460,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "number": [
+                        {
+                            "value1": "={{$json[\"solar_kwh\"]}}",
+                            "operation": "larger",
+                            "value2": 0
+                        }
+                    ]
+                }
+            },
+            "name": "Has Production?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                680,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "http://localhost:3000/api/mint",
+                "method": "POST",
+                "bodyParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "type",
+                            "value": "HARDWARE_PROOF"
+                        },
+                        {
+                            "name": "wallet_id",
+                            "value": "infrastructure_reserve"
+                        },
+                        {
+                            "name": "amount",
+                            "value": "={{$json[\"solar_kwh\"] * 0.1}}"
+                        },
+                        {
+                            "name": "source",
+                            "value": "solar_panel_1"
+                        },
+                        {
+                            "name": "reading_kwh",
+                            "value": "={{$json[\"solar_kwh\"]}}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "name": "Mint AT",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 3,
+            "position": [
+                900,
+                200
+            ]
+        },
+        {
+            "parameters": {},
+            "name": "No Production - Skip",
+            "type": "n8n-nodes-base.noOp",
+            "typeVersion": 1,
+            "position": [
+                900,
+                400
+            ]
+        }
+    ],
+    "connections": {
+        "Every 5 Minutes": {
+            "main": [
+                [
+                    {
+                        "node": "Get Sensor Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Sensor Data": {
+            "main": [
+                [
+                    {
+                        "node": "Has Production?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Has Production?": {
+            "main": [
+                [
+                    {
+                        "node": "Mint AT",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "No Production - Skip",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {},
+    "staticData": null,
+    "tags": [
+        "automation",
+        "hardware",
+        "mint"
+    ]
+}

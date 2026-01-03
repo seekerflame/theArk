@@ -1,0 +1,150 @@
+{
+    "name": "Daily Chronicle Backup",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 3 * * *"
+                        }
+                    ]
+                }
+            },
+            "name": "Daily at 3am",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                240,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "http://localhost:3000/api/ledger",
+                "options": {}
+            },
+            "name": "Export Ledger",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 3,
+            "position": [
+                460,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "functionCode": "const ledger = items[0].json;\nconst date = new Date().toISOString().split('T')[0];\nconst filename = `LEDGER_BACKUP_${date}.json`;\nconst content = JSON.stringify(ledger, null, 2);\n\nreturn [{\n  json: {\n    filename: filename,\n    content: content,\n    block_count: ledger.length || 0\n  }\n}];"
+            },
+            "name": "Format Backup",
+            "type": "n8n-nodes-base.function",
+            "typeVersion": 1,
+            "position": [
+                680,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "fileName": "={{$json[\"filename\"]}}",
+                "fileContent": "={{$json[\"content\"]}}"
+            },
+            "name": "Write Backup File",
+            "type": "n8n-nodes-base.writeBinaryFile",
+            "typeVersion": 1,
+            "position": [
+                900,
+                300
+            ],
+            "notes": "Writes to n8n's local storage. Adjust path as needed."
+        },
+        {
+            "parameters": {
+                "url": "http://localhost:3000/api/mission/log",
+                "method": "POST",
+                "bodyParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "event",
+                            "value": "chronicle_backup"
+                        },
+                        {
+                            "name": "filename",
+                            "value": "={{$json[\"filename\"]}}"
+                        },
+                        {
+                            "name": "block_count",
+                            "value": "={{$json[\"block_count\"]}}"
+                        },
+                        {
+                            "name": "timestamp",
+                            "value": "={{$now.toISO()}}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "name": "Log Backup Event",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 3,
+            "position": [
+                1120,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Daily at 3am": {
+            "main": [
+                [
+                    {
+                        "node": "Export Ledger",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Export Ledger": {
+            "main": [
+                [
+                    {
+                        "node": "Format Backup",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Format Backup": {
+            "main": [
+                [
+                    {
+                        "node": "Write Backup File",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Write Backup File": {
+            "main": [
+                [
+                    {
+                        "node": "Log Backup Event",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {},
+    "staticData": null,
+    "tags": [
+        "automation",
+        "backup",
+        "chronicle"
+    ]
+}
