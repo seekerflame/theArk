@@ -1,5 +1,5 @@
 {
-    "name": "GitHub Jules Monitor",
+    "name": "GitHub Jules Monitor (FOSS)",
     "nodes": [
         {
             "parameters": {
@@ -38,46 +38,54 @@
         },
         {
             "parameters": {
-                "channel": "#ark-notifications",
-                "text": "🤖 **Jules Commit Detected**\n\nMessage: {{$json[\"commits\"][0][\"message\"]}}\nBranch: {{$json[\"ref\"]}}\nURL: {{$json[\"commits\"][0][\"url\"]}}"
+                "functionCode": "// Log Jules commit to console and prepare for Ark API\nconst commit = items[0].json.commits?.[0] || {};\nconst logEntry = {\n  event: 'jules_commit',\n  message: commit.message || 'Unknown commit',\n  branch: items[0].json.ref || 'unknown',\n  url: commit.url || '',\n  author: commit.author?.name || 'Jules',\n  timestamp: new Date().toISOString()\n};\nconsole.log('🤖 Jules Commit:', JSON.stringify(logEntry));\nreturn [{ json: logEntry }];"
             },
-            "name": "Slack Notification",
-            "type": "n8n-nodes-base.slack",
+            "name": "Log Jules Commit",
+            "type": "n8n-nodes-base.function",
             "typeVersion": 1,
             "position": [
                 680,
-                200
+                300
             ],
-            "notes": "Replace with your Slack webhook or use Discord/Email"
+            "notes": "Pure JS logging - no external dependencies"
         },
         {
             "parameters": {
-                "url": "http://localhost:3000/api/mission/log",
-                "options": {},
+                "url": "={{$env.ARK_API_URL || 'http://localhost:3000'}}/api/mission/log",
+                "method": "POST",
                 "bodyParametersUi": {
                     "parameter": [
                         {
                             "name": "event",
-                            "value": "jules_commit"
+                            "value": "={{$json.event}}"
                         },
                         {
                             "name": "message",
-                            "value": "={{$json[\"commits\"][0][\"message\"]}}"
+                            "value": "={{$json.message}}"
+                        },
+                        {
+                            "name": "author",
+                            "value": "={{$json.author}}"
                         },
                         {
                             "name": "timestamp",
-                            "value": "={{$now.toISO()}}"
+                            "value": "={{$json.timestamp}}"
                         }
                     ]
+                },
+                "options": {
+                    "timeout": 5000
                 }
             },
             "name": "Log to Ark",
             "type": "n8n-nodes-base.httpRequest",
             "typeVersion": 3,
             "position": [
-                680,
-                400
-            ]
+                900,
+                300
+            ],
+            "continueOnFail": true,
+            "notes": "Logs to The Ark API. Set ARK_API_URL env var if not localhost."
         }
     ],
     "connections": {
@@ -96,10 +104,16 @@
             "main": [
                 [
                     {
-                        "node": "Slack Notification",
+                        "node": "Log Jules Commit",
                         "type": "main",
                         "index": 0
-                    },
+                    }
+                ]
+            ]
+        },
+        "Log Jules Commit": {
+            "main": [
+                [
                     {
                         "node": "Log to Ark",
                         "type": "main",
@@ -114,6 +128,7 @@
     "tags": [
         "automation",
         "github",
-        "jules"
+        "jules",
+        "foss"
     ]
 }

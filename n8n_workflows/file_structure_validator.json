@@ -1,5 +1,5 @@
 {
-    "name": "File Structure Validator",
+    "name": "File Structure Validator (FOSS)",
     "nodes": [
         {
             "parameters": {
@@ -17,7 +17,7 @@
         },
         {
             "parameters": {
-                "functionCode": "// FILE TAXONOMY VALIDATOR\n// Enforces the skeleton structure from FILE_TAXONOMY.md\n\nconst commits = items[0].json.commits || [];\nconst violations = [];\nconst validFiles = [];\n\n// Define allowed paths\nconst RULES = {\n  sop: /^\\/CHRONICLE\\/SOP\\/.+\\.md$/,\n  python_core: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/(core|api)\\/.+\\.py$/,\n  python_tools: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/tools\\/.+\\.py$/,\n  tests: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/tests\\/test_.+\\.py$/,\n  web: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/web\\/.+\\.(js|css|html|json)$/,\n  modules: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/web\\/modules\\/.+/,\n  workflows: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/n8n_workflows\\/.+\\.json$/,\n  jules_mission: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/JULES_.+\\.md$/,\n  backup: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/backup\\/.+/,\n  logs: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/logs\\/.+/,\n  furnace: /^\\/furnace\\/.+/,\n  chronicle_scripts: /^\\/CHRONICLE\\/scripts\\/.+\\.sh$/\n};\n\n// Check each changed file\nfor (const commit of commits) {\n  const files = [...(commit.added || []), ...(commit.modified || [])];\n  \n  for (const file of files) {\n    let isValid = false;\n    let matchedRule = null;\n    \n    for (const [ruleName, pattern] of Object.entries(RULES)) {\n      if (pattern.test('/' + file)) {\n        isValid = true;\n        matchedRule = ruleName;\n        break;\n      }\n    }\n    \n    // Allow root config files\n    if (!isValid && /^[^/]+\\.(md|json|sh|py|gitignore)$/.test(file)) {\n      isValid = true;\n      matchedRule = 'root_config';\n    }\n    \n    if (isValid) {\n      validFiles.push({ file, rule: matchedRule });\n    } else {\n      violations.push({ file, reason: 'Does not match any allowed path pattern' });\n    }\n  }\n}\n\nreturn [{\n  json: {\n    valid: violations.length === 0,\n    violation_count: violations.length,\n    valid_file_count: validFiles.length,\n    violations: violations,\n    valid_files: validFiles,\n    commit_author: commits[0]?.author?.name || 'unknown',\n    timestamp: new Date().toISOString()\n  }\n}];"
+                "functionCode": "// FILE TAXONOMY VALIDATOR - FOSS VERSION\n// Enforces the skeleton structure from FILE_TAXONOMY.md\n\nconst commits = items[0].json.commits || [];\nconst violations = [];\nconst validFiles = [];\n\nconst RULES = {\n  sop: /^\\/CHRONICLE\\/SOP\\/.+\\.md$/,\n  python_core: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/(core|api)\\/.+\\.py$/,\n  python_tools: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/tools\\/.+\\.py$/,\n  tests: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/tests\\/test_.+\\.py$/,\n  web: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/web\\/.+\\.(js|css|html|json)$/,\n  modules: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/web\\/modules\\/.+/,\n  workflows: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/n8n_workflows\\/.+\\.json$/,\n  jules_mission: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/JULES_.+\\.md$/,\n  backup: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/backup\\/.+/,\n  logs: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/logs\\/.+/,\n  furnace: /^\\/furnace\\/.+/,\n  chronicle_scripts: /^\\/CHRONICLE\\/scripts\\/.+\\.sh$/\n};\n\nfor (const commit of commits) {\n  const files = [...(commit.added || []), ...(commit.modified || [])];\n  for (const file of files) {\n    let isValid = false;\n    let matchedRule = null;\n    for (const [ruleName, pattern] of Object.entries(RULES)) {\n      if (pattern.test('/' + file)) {\n        isValid = true;\n        matchedRule = ruleName;\n        break;\n      }\n    }\n    if (!isValid && /^[^/]+\\.(md|json|sh|py|gitignore)$/.test(file)) {\n      isValid = true;\n      matchedRule = 'root_config';\n    }\n    if (isValid) {\n      validFiles.push({ file, rule: matchedRule });\n    } else {\n      violations.push({ file, reason: 'Path not in FILE_TAXONOMY.md' });\n    }\n  }\n}\n\nconst result = {\n  valid: violations.length === 0,\n  violation_count: violations.length,\n  valid_file_count: validFiles.length,\n  violations: violations,\n  commit_author: commits[0]?.author?.name || 'unknown',\n  timestamp: new Date().toISOString()\n};\n\nconsole.log('📁 Structure Validation:', JSON.stringify(result));\nreturn [{ json: result }];"
             },
             "name": "Validate Structure",
             "type": "n8n-nodes-base.function",
@@ -32,7 +32,7 @@
                 "conditions": {
                     "boolean": [
                         {
-                            "value1": "={{$json[\"valid\"]}}",
+                            "value1": "={{$json.valid}}",
                             "value2": true
                         }
                     ]
@@ -48,7 +48,7 @@
         },
         {
             "parameters": {
-                "url": "http://localhost:3000/api/mission/log",
+                "url": "={{$env.ARK_API_URL || 'http://localhost:3000'}}/api/mission/log",
                 "method": "POST",
                 "bodyParametersUi": {
                     "parameter": [
@@ -58,13 +58,16 @@
                         },
                         {
                             "name": "valid_files",
-                            "value": "={{$json[\"valid_file_count\"]}}"
+                            "value": "={{$json.valid_file_count}}"
                         },
                         {
                             "name": "author",
-                            "value": "={{$json[\"commit_author\"]}}"
+                            "value": "={{$json.commit_author}}"
                         }
                     ]
+                },
+                "options": {
+                    "timeout": 5000
                 }
             },
             "name": "Log Success",
@@ -73,25 +76,25 @@
             "position": [
                 900,
                 200
-            ]
+            ],
+            "continueOnFail": true
         },
         {
             "parameters": {
-                "channel": "#ark-alerts",
-                "text": "⚠️ **FILE TAXONOMY VIOLATION**\n\nAuthor: {{$json[\"commit_author\"]}}\nViolations: {{$json[\"violation_count\"]}}\n\n```\n{{JSON.stringify($json[\"violations\"], null, 2)}}\n```\n\nPlease review FILE_TAXONOMY.md and fix placement."
+                "functionCode": "// Log violation to console (sovereign - no external deps)\nconst data = items[0].json;\nconsole.error('⚠️ FILE TAXONOMY VIOLATION');\nconsole.error('Author:', data.commit_author);\nconsole.error('Violations:', JSON.stringify(data.violations, null, 2));\nreturn items;"
             },
-            "name": "Alert Violation",
-            "type": "n8n-nodes-base.slack",
+            "name": "Log Violation (Console)",
+            "type": "n8n-nodes-base.function",
             "typeVersion": 1,
             "position": [
                 900,
                 400
             ],
-            "notes": "Replace with Discord/Email if no Slack"
+            "notes": "Logs to n8n console - no Slack/Discord needed"
         },
         {
             "parameters": {
-                "url": "http://localhost:3000/api/mission/log",
+                "url": "={{$env.ARK_API_URL || 'http://localhost:3000'}}/api/mission/log",
                 "method": "POST",
                 "bodyParametersUi": {
                     "parameter": [
@@ -101,22 +104,26 @@
                         },
                         {
                             "name": "violations",
-                            "value": "={{JSON.stringify($json[\"violations\"])}}"
+                            "value": "={{JSON.stringify($json.violations)}}"
                         },
                         {
                             "name": "author",
-                            "value": "={{$json[\"commit_author\"]}}"
+                            "value": "={{$json.commit_author}}"
                         }
                     ]
+                },
+                "options": {
+                    "timeout": 5000
                 }
             },
-            "name": "Log Violation",
+            "name": "Log Violation to Ark",
             "type": "n8n-nodes-base.httpRequest",
             "typeVersion": 3,
             "position": [
                 1120,
                 400
-            ]
+            ],
+            "continueOnFail": true
         }
     ],
     "connections": {
@@ -153,18 +160,18 @@
                 ],
                 [
                     {
-                        "node": "Alert Violation",
+                        "node": "Log Violation (Console)",
                         "type": "main",
                         "index": 0
                     }
                 ]
             ]
         },
-        "Alert Violation": {
+        "Log Violation (Console)": {
             "main": [
                 [
                     {
-                        "node": "Log Violation",
+                        "node": "Log Violation to Ark",
                         "type": "main",
                         "index": 0
                     }
@@ -177,6 +184,6 @@
     "tags": [
         "validation",
         "structure",
-        "enforcement"
+        "foss"
     ]
 }
