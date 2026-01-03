@@ -1,0 +1,50 @@
+{
+    "agent": "n8n",
+    "display_name": "n8n Automation Engine",
+    "role": "automation",
+    "endpoints": {
+        "ark_base": "http://localhost:3000",
+        "ledger": "/api/ledger",
+        "mint": "/api/mint",
+        "balance": "/api/balance",
+        "logs": "/api/mission/log",
+        "hardware": "/api/hardware/sensors",
+        "evolution": "/api/evolution"
+    },
+    "file_access": {
+        "read": [
+            "ledger/",
+            "logs/",
+            "backup/"
+        ],
+        "write": [
+            "logs/",
+            "backup/"
+        ]
+    },
+    "workflow_directory": "n8n_workflows/",
+    "backup_path": "backup/",
+    "log_path": "logs/",
+    "cron_jobs": [
+        {
+            "name": "daily_backup",
+            "schedule": "0 3 * * *",
+            "workflow": "daily_chronicle_backup.json"
+        },
+        {
+            "name": "hardware_poll",
+            "schedule": "*/5 * * * *",
+            "workflow": "hardware_sensor_mint.json"
+        }
+    ],
+    "webhooks": [
+        {
+            "path": "/webhook/github",
+            "purpose": "GitHub push events"
+        },
+        {
+            "path": "/webhook/validate-structure",
+            "purpose": "File structure validation"
+        }
+    ]
+}

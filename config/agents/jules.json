@@ -1,0 +1,25 @@
+{
+    "agent": "jules",
+    "display_name": "Jules (Google GitHub Agent)",
+    "branch_prefix": "jules/",
+    "commit_prefix": "[Jules]",
+    "file_access": [
+        "07_Code/The_Ark/core/",
+        "07_Code/The_Ark/api/",
+        "07_Code/The_Ark/tests/",
+        "07_Code/The_Ark/tools/",
+        "07_Code/The_Ark/docs/",
+        "07_Code/The_Ark/hardware/"
+    ],
+    "blocked_paths": [
+        "CHRONICLE/",
+        "ledger/village_ledger_py.json",
+        ".env",
+        "*.key"
+    ],
+    "requires_pr": true,
+    "can_push_main": false,
+    "can_merge": false,
+    "mission_file_pattern": "JULES_*.md",
+    "onboarding_doc": "JULES_ONBOARDING.md"
+}

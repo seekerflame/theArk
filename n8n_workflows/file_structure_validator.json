@@ -1,0 +1,182 @@
+{
+    "name": "File Structure Validator",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "validate-structure",
+                "responseMode": "onReceived"
+            },
+            "name": "Validation Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                240,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "functionCode": "// FILE TAXONOMY VALIDATOR\n// Enforces the skeleton structure from FILE_TAXONOMY.md\n\nconst commits = items[0].json.commits || [];\nconst violations = [];\nconst validFiles = [];\n\n// Define allowed paths\nconst RULES = {\n  sop: /^\\/CHRONICLE\\/SOP\\/.+\\.md$/,\n  python_core: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/(core|api)\\/.+\\.py$/,\n  python_tools: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/tools\\/.+\\.py$/,\n  tests: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/tests\\/test_.+\\.py$/,\n  web: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/web\\/.+\\.(js|css|html|json)$/,\n  modules: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/web\\/modules\\/.+/,\n  workflows: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/n8n_workflows\\/.+\\.json$/,\n  jules_mission: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/JULES_.+\\.md$/,\n  backup: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/backup\\/.+/,\n  logs: /^\\/abundancetoken\\/07_Code\\/The_Ark\\/logs\\/.+/,\n  furnace: /^\\/furnace\\/.+/,\n  chronicle_scripts: /^\\/CHRONICLE\\/scripts\\/.+\\.sh$/\n};\n\n// Check each changed file\nfor (const commit of commits) {\n  const files = [...(commit.added || []), ...(commit.modified || [])];\n  \n  for (const file of files) {\n    let isValid = false;\n    let matchedRule = null;\n    \n    for (const [ruleName, pattern] of Object.entries(RULES)) {\n      if (pattern.test('/' + file)) {\n        isValid = true;\n        matchedRule = ruleName;\n        break;\n      }\n    }\n    \n    // Allow root config files\n    if (!isValid && /^[^/]+\\.(md|json|sh|py|gitignore)$/.test(file)) {\n      isValid = true;\n      matchedRule = 'root_config';\n    }\n    \n    if (isValid) {\n      validFiles.push({ file, rule: matchedRule });\n    } else {\n      violations.push({ file, reason: 'Does not match any allowed path pattern' });\n    }\n  }\n}\n\nreturn [{\n  json: {\n    valid: violations.length === 0,\n    violation_count: violations.length,\n    valid_file_count: validFiles.length,\n    violations: violations,\n    valid_files: validFiles,\n    commit_author: commits[0]?.author?.name || 'unknown',\n    timestamp: new Date().toISOString()\n  }\n}];"
+            },
+            "name": "Validate Structure",
+            "type": "n8n-nodes-base.function",
+            "typeVersion": 1,
+            "position": [
+                460,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{$json[\"valid\"]}}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "name": "Is Valid?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                680,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "http://localhost:3000/api/mission/log",
+                "method": "POST",
+                "bodyParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "event",
+                            "value": "structure_validation_passed"
+                        },
+                        {
+                            "name": "valid_files",
+                            "value": "={{$json[\"valid_file_count\"]}}"
+                        },
+                        {
+                            "name": "author",
+                            "value": "={{$json[\"commit_author\"]}}"
+                        }
+                    ]
+                }
+            },
+            "name": "Log Success",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 3,
+            "position": [
+                900,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "channel": "#ark-alerts",
+                "text": "⚠️ **FILE TAXONOMY VIOLATION**\n\nAuthor: {{$json[\"commit_author\"]}}\nViolations: {{$json[\"violation_count\"]}}\n\n```\n{{JSON.stringify($json[\"violations\"], null, 2)}}\n```\n\nPlease review FILE_TAXONOMY.md and fix placement."
+            },
+            "name": "Alert Violation",
+            "type": "n8n-nodes-base.slack",
+            "typeVersion": 1,
+            "position": [
+                900,
+                400
+            ],
+            "notes": "Replace with Discord/Email if no Slack"
+        },
+        {
+            "parameters": {
+                "url": "http://localhost:3000/api/mission/log",
+                "method": "POST",
+                "bodyParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "event",
+                            "value": "structure_validation_failed"
+                        },
+                        {
+                            "name": "violations",
+                            "value": "={{JSON.stringify($json[\"violations\"])}}"
+                        },
+                        {
+                            "name": "author",
+                            "value": "={{$json[\"commit_author\"]}}"
+                        }
+                    ]
+                }
+            },
+            "name": "Log Violation",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 3,
+            "position": [
+                1120,
+                400
+            ]
+        }
+    ],
+    "connections": {
+        "Validation Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Validate Structure",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Validate Structure": {
+            "main": [
+                [
+                    {
+                        "node": "Is Valid?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Is Valid?": {
+            "main": [
+                [
+                    {
+                        "node": "Log Success",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Alert Violation",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Alert Violation": {
+            "main": [
+                [
+                    {
+                        "node": "Log Violation",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {},
+    "staticData": null,
+    "tags": [
+        "validation",
+        "structure",
+        "enforcement"
+    ]
+}

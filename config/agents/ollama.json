@@ -1,0 +1,21 @@
+{
+    "agent": "ollama",
+    "display_name": "Ollama Local LLM",
+    "role": "advisor",
+    "model": "llama3.2",
+    "fallback_model": "mistral",
+    "context_window": 8192,
+    "temperature": 0.7,
+    "base_url": "http://localhost:11434",
+    "output_via": "n8n_webhook",
+    "file_access": "none",
+    "can_execute_code": false,
+    "use_cases": [
+        "mission_proposal",
+        "code_review_advisory",
+        "documentation_drafting",
+        "brainstorming"
+    ],
+    "system_prompt_path": "config/prompts/ollama_steward.txt",
+    "max_tokens": 2048
+}
