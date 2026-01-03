@@ -20,6 +20,7 @@ from api.system import register_system_routes
 from api.steward import register_steward_routes
 from api.economy import register_economy_routes
 from api.social import register_social_routes
+from api.hardware import register_hardware_routes
 
 # Configuration
 PORT = 3000
@@ -29,7 +30,7 @@ WEB_DIR = os.path.join(os.getcwd(), 'web')
 USERS_FILE = os.path.join('core', 'users.json')
 
 # Logging
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] [%(request_id)s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] %(message)s')
 logger = logging.getLogger("ArkOS")
 
 # Instances
@@ -49,6 +50,7 @@ register_system_routes(router, ledger, identity, peers, sensors, energy, auth_de
 register_steward_routes(router, ledger, energy, auth_decorator)
 register_economy_routes(router, ledger, sensors, auth_decorator)
 register_social_routes(router, ledger, auth_decorator)
+register_hardware_routes(router, ledger, sensors, auth_decorator)
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -121,9 +123,23 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
         else:
             self.send_error("File Not Found", status=404)
 
+def sensor_polling_loop():
+    while True:
+        try:
+            sensors.poll()
+            time.sleep(10)
+        except Exception as e:
+            logger.error(f"Sensor polling error: {e}")
+            time.sleep(10)
+
 if __name__ == '__main__':
     syncer.start()
     steward.start()
+
+    # Start Sensor Polling Thread
+    t_sensors = threading.Thread(target=sensor_polling_loop, daemon=True)
+    t_sensors.start()
+
     with socketserver.ThreadingTCPServer(("", PORT), ArkHandler) as httpd:
         logger.info(f"Ark OS Modular Core v1.2 ONLINE at port {PORT}")
         httpd.serve_forever()

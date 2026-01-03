@@ -2,6 +2,7 @@ import json
 import os
 import time
 import logging
+import threading
 
 logger = logging.getLogger("ArkOS.Sensors")
 
@@ -9,6 +10,7 @@ class SensorRegistry:
     def __init__(self, registry_file):
         self.registry_file = registry_file
         self.sensors = {}
+        self.lock = threading.Lock()
         self.load()
 
     def load(self):
@@ -18,17 +20,37 @@ class SensorRegistry:
             except: pass
 
     def save(self):
-        os.makedirs(os.path.dirname(self.registry_file), exist_ok=True)
+        directory = os.path.dirname(self.registry_file)
+        if directory:
+            os.makedirs(directory, exist_ok=True)
         with open(self.registry_file, 'w') as f: json.dump(self.sensors, f, indent=2)
 
     def update(self, s_id, s_type, value):
-        self.sensors[s_id] = {
-            "type": s_type,
-            "last_value": value,
-            "last_seen": time.time(),
-            "status": "ONLINE"
-        }
-        self.save()
+        with self.lock:
+            self.sensors[s_id] = {
+                "type": s_type,
+                "last_value": value,
+                "last_seen": time.time(),
+                "status": "ONLINE"
+            }
+            self.save()
+
+    def poll(self):
+        """
+        Checks for stale sensors and marks them OFFLINE.
+        This constitutes 'polling' the state of the sensor network.
+        """
+        now = time.time()
+        changed = False
+
+        with self.lock:
+            for s_id, data in list(self.sensors.items()):
+                if now - data['last_seen'] > 60 and data['status'] == 'ONLINE':
+                    data['status'] = 'OFFLINE'
+                    changed = True
+
+            if changed:
+                self.save()
 
     def get_metabolic_yield(self):
         if not self.sensors: return 0.0
