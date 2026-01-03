@@ -3125,7 +3125,120 @@ function main() {
                     <button onclick="window.uploadProof('${t.quest_id}')" class="btn btn-primary" style="padding: 8px 16px;">UPLOAD PROOF</button>
                 </div>
                 `).join('') || '<div style="color:var(--text-muted); text-align:center;">All critical paths cleared! 🏁</div>';
+
+        // Render FBCC Team Leaderboard
+        renderFBCCLeaderboard();
+        renderFBCCMilestones();
     };
+
+    // FBCC Team Leaderboard Renderer
+    window.renderFBCCLeaderboard = function () {
+        const container = document.getElementById('fbcc-leaderboard');
+        const totalAtEl = document.getElementById('leaderboard-total-at');
+        const updateTimeEl = document.getElementById('leaderboard-update-time');
+        if (!container) return;
+
+        const swarms = ["CHASSIS", "DRIVETRAIN", "SYSTEMS", "BODY"];
+        const swarmIcons = { CHASSIS: "🛠️", DRIVETRAIN: "⚙️", SYSTEMS: "⚡", BODY: "🎨" };
+        const swarmColors = { CHASSIS: "#F59E0B", DRIVETRAIN: "#10B981", SYSTEMS: "#3B82F6", BODY: "#8B5CF6" };
+
+        // Calculate AT per swarm from ledger
+        const swarmData = swarms.map(swarm => {
+            const swarmLabor = appState.history.filter(h =>
+                h.task.includes(swarm) && (h.type === 'LABOR' || h.type === 'XP')
+            );
+            const totalAT = swarmLabor.reduce((sum, h) => sum + (h.at || h.xp || 0), 0);
+            const memberCount = new Set(swarmLabor.map(h => h.user)).size || 1;
+            const hourlyRate = swarmLabor.length > 0 ? Math.round(totalAT / Math.max(memberCount, 1)) : 0;
+
+            return {
+                name: swarm,
+                icon: swarmIcons[swarm],
+                color: swarmColors[swarm],
+                totalAT: totalAT,
+                members: memberCount,
+                hourlyRate: hourlyRate
+            };
+        });
+
+        // Sort by total AT
+        swarmData.sort((a, b) => b.totalAT - a.totalAT);
+
+        // Add rank
+        swarmData.forEach((team, i) => team.rank = i + 1);
+
+        // Calculate grand total
+        const grandTotal = swarmData.reduce((sum, t) => sum + t.totalAT, 0);
+        if (totalAtEl) totalAtEl.textContent = grandTotal.toLocaleString();
+        if (updateTimeEl) updateTimeEl.textContent = 'Updated ' + new Date().toLocaleTimeString();
+
+        // Render
+        container.innerHTML = swarmData.map((team, i) => `
+            <div style="display: flex; align-items: center; gap: 15px; padding: 12px 16px; background: ${i === 0 ? 'rgba(245,158,11,0.08)' : 'rgba(16,185,129,0.03)'}; border-radius: 10px; border-left: 4px solid ${team.color}; transition: transform 0.2s;">
+                <div style="width: 32px; height: 32px; background: ${team.color}20; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+                    ${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : team.icon}
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-weight: bold; color: var(--primary-light);">${team.icon} ${team.name}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">${team.members} member${team.members > 1 ? 's' : ''} • ~${team.hourlyRate} AT/member</div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 1.3rem; font-weight: bold; color: ${team.color};">${team.totalAT.toLocaleString()}</div>
+                    <div style="font-size: 0.7rem; color: var(--text-muted);">AT</div>
+                </div>
+            </div>
+        `).join('');
+    };
+
+    // FBCC Milestones Renderer
+    window.renderFBCCMilestones = function () {
+        const container = document.getElementById('fbcc-milestones');
+        if (!container) return;
+
+        const milestones = [
+            { id: 'frame', name: 'Frame Complete', icon: '🏗️', targetDate: 'Day 3', completed: false },
+            { id: 'drivetrain', name: 'Drivetrain Installed', icon: '⚙️', targetDate: 'Day 7', completed: false },
+            { id: 'electrical', name: 'Electrical Done', icon: '⚡', targetDate: 'Day 12', completed: false },
+            { id: 'body', name: 'Body Mounted', icon: '🚗', targetDate: 'Day 16', completed: false },
+            { id: 'paint', name: 'Paint & Finish', icon: '🎨', targetDate: 'Day 19', completed: false },
+            { id: 'qc', name: 'QC Passed', icon: '✅', targetDate: 'Day 21', completed: false }
+        ];
+
+        // Check completion from history
+        milestones.forEach(m => {
+            m.completed = appState.history.some(h =>
+                h.task && h.task.toLowerCase().includes(m.id)
+            );
+        });
+
+        container.innerHTML = milestones.map((m, i) => {
+            const status = m.completed ? 'completed' : (i === 0 || milestones[i - 1]?.completed) ? 'active' : 'locked';
+            const bgColor = status === 'completed' ? 'rgba(16,185,129,0.15)' :
+                status === 'active' ? 'rgba(245,158,11,0.15)' : 'rgba(100,116,139,0.1)';
+            const borderColor = status === 'completed' ? '#10B981' :
+                status === 'active' ? '#F59E0B' : '#64748b';
+            const textColor = status === 'locked' ? 'var(--text-muted)' : 'var(--primary-light)';
+
+            return `
+                <div style="padding: 10px 16px; background: ${bgColor}; border: 1px solid ${borderColor}; border-radius: 20px; display: flex; align-items: center; gap: 8px; opacity: ${status === 'locked' ? '0.5' : '1'};">
+                    <span style="font-size: 1.1rem;">${status === 'completed' ? '✅' : status === 'active' ? '⏳' : '🔒'}</span>
+                    <span style="color: ${textColor}; font-size: 0.85rem; font-weight: ${status === 'active' ? 'bold' : 'normal'};">${m.name}</span>
+                    <span style="font-size: 0.7rem; color: var(--text-muted);">${m.targetDate}</span>
+                </div>
+            `;
+        }).join('');
+    };
+
+    window.refreshLeaderboard = function () {
+        renderFBCCLeaderboard();
+        renderFBCCMilestones();
+        const btn = event?.target;
+        if (btn) {
+            btn.textContent = '✓ Refreshed';
+            setTimeout(() => btn.textContent = '🔄 Refresh', 1500);
+        }
+    };
+
     window.syncWithLedger = syncWithLedger;
     window.saveState = saveState;
     window.logToTerminal = logToTerminal;

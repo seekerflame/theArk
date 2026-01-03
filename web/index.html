@@ -838,6 +838,38 @@
             <!-- Swarm Cards Injected JS -->
         </div>
 
+        <!-- FBCC Team Leaderboard -->
+        <div class="glass-panel"
+            style="margin-top: 30px; border: 1px solid rgba(245,158,11,0.2); background: linear-gradient(135deg, rgba(245,158,11,0.02), transparent);">
+            <div class="section-header"
+                style="border-bottom: 1px solid rgba(245,158,11,0.1); padding-bottom: 15px; margin-bottom: 15px;">
+                <h3>🏆 Live Team Leaderboard</h3>
+                <span id="leaderboard-update-time" style="font-size: 0.7rem; color: var(--text-muted);">Updated just
+                    now</span>
+            </div>
+            <div id="fbcc-leaderboard" style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Team rows injected by JS -->
+            </div>
+            <div
+                style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(16,185,129,0.1); display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                    <span id="leaderboard-total-at" style="color: var(--primary-light); font-weight: bold;">0</span> AT
+                    minted this session
+                </div>
+                <button onclick="window.refreshLeaderboard()" class="btn-xs"
+                    style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); color: #F59E0B;">🔄
+                    Refresh</button>
+            </div>
+        </div>
+
+        <!-- Build Milestones -->
+        <div class="glass-panel" style="margin-top: 30px;">
+            <h3>📍 Build Milestones</h3>
+            <div id="fbcc-milestones" style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <!-- Milestone badges injected by JS -->
+            </div>
+        </div>
+
         <div class="glass-panel" style="margin-top: 30px;">
             <h3>📋 Critical Path Items</h3>
             <div id="truck-critical-tasks" style="margin-top: 15px;">
