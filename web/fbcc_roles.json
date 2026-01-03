@@ -1,0 +1,201 @@
+{
+    "roles": [
+        {
+            "id": "maslow_prime",
+            "name": "Maslow Prime Officer",
+            "icon": "🛡️",
+            "description": "Biological Security lead. Ensures the base of the pyramid (Heat, Water, Safety) is unshakable.",
+            "category": "CRITICAL",
+            "competencies": [
+                "Infrastructure hardening",
+                "Firewood/Thermal management",
+                "Water system resilience",
+                "Emergency response",
+                "Biological security audits"
+            ],
+            "default_tasks": [
+                {
+                    "title": "Thermal Audit",
+                    "description": "Verify all heaters and stoves are safe and functional. 2-day fuel buffer check.",
+                    "standard_time": 0.5,
+                    "bounty_at": 10,
+                    "frequency": "daily"
+                },
+                {
+                    "title": "Water Purity & Pressure Check",
+                    "description": "Verify pump function and filter status.",
+                    "standard_time": 0.5,
+                    "bounty_at": 10,
+                    "frequency": "daily"
+                },
+                {
+                    "title": "Site Safety Sweep",
+                    "description": "Remove trip hazards, secure loose materials, check fire lanes.",
+                    "standard_time": 1,
+                    "bounty_at": 15,
+                    "frequency": "daily"
+                }
+            ]
+        },
+        {
+            "id": "hearth_keeper",
+            "name": "Hearth Keeper",
+            "icon": "🍳",
+            "description": "The soul of the village. Responsible for meals, comfort, and ensuring workers are fed and rested.",
+            "category": "CRITICAL",
+            "competencies": [
+                "Meal planning and bulk cooking",
+                "Food storage and preservation",
+                "Kitchen sanitation",
+                "Dietary accommodation",
+                "Inventory management"
+            ],
+            "default_tasks": [
+                {
+                    "title": "Breakfast Execution",
+                    "description": "Nutritious protein-heavy meal ready by 7:30 AM.",
+                    "standard_time": 1.5,
+                    "bounty_at": 20,
+                    "frequency": "daily"
+                },
+                {
+                    "title": "Lunch/Hydration Station",
+                    "description": "Midday fuel and electrolyte restocking.",
+                    "standard_time": 2,
+                    "bounty_at": 25,
+                    "frequency": "daily"
+                },
+                {
+                    "title": "Dinner & Debrief Prep",
+                    "description": "Main evening meal and organization of communal space.",
+                    "standard_time": 2.5,
+                    "bounty_at": 30,
+                    "frequency": "daily"
+                },
+                {
+                    "title": "The Nest Sweep",
+                    "description": "Sanitize common habitations and mudrooms.",
+                    "standard_time": 1,
+                    "bounty_at": 15,
+                    "frequency": "daily"
+                }
+            ]
+        },
+        {
+            "id": "chief_engineer",
+            "name": "Chief Engineer",
+            "icon": "📐",
+            "description": "Technical architect. Responsible for CAD accuracy and system integration.",
+            "category": "CRITICAL",
+            "competencies": [
+                "FreeCAD proficiency",
+                "Mechanical engineering",
+                "Material science",
+                "System architecture"
+            ],
+            "default_tasks": [
+                {
+                    "title": "Technical Review",
+                    "description": "Verify build prints against actual fabrication state.",
+                    "standard_time": 1,
+                    "bounty_at": 25,
+                    "frequency": "daily"
+                },
+                {
+                    "title": "BOM reconciliation",
+                    "description": "Confirm all materials needed for tomorrow are on-site.",
+                    "standard_time": 1,
+                    "bounty_at": 20,
+                    "frequency": "daily"
+                }
+            ]
+        },
+        {
+            "id": "swarm_lead",
+            "name": "Swarm Lead",
+            "icon": "🐝",
+            "description": "Orchestrates the extreme manufacturing swarm. Manages workflow and multi-machine sync.",
+            "category": "CRITICAL",
+            "competencies": [
+                "Team orchestration",
+                "Extreme manufacturing protocols",
+                "Conflict resolution",
+                "Quality control"
+            ],
+            "default_tasks": [
+                {
+                    "title": "Morning Swarm Standup",
+                    "description": "Establish goals and machine assignments.",
+                    "standard_time": 0.5,
+                    "bounty_at": 10,
+                    "frequency": "daily"
+                },
+                {
+                    "title": "QC Validation",
+                    "description": "Final inspection of completed modules before handover.",
+                    "standard_time": 1,
+                    "bounty_at": 20,
+                    "frequency": "per_unit"
+                }
+            ]
+        },
+        {
+            "id": "fabricator",
+            "name": "Fabricator",
+            "icon": "👨‍🏭",
+            "description": "The hands of the mission. Welds, cuts, and assembles the machines of abundance.",
+            "category": "GROWTH",
+            "competencies": [
+                "MIG/TIG Welding",
+                "Plasma cutting",
+                "Tool mastery",
+                "Jig setup"
+            ],
+            "default_tasks": [
+                {
+                    "title": "Module Fabrication",
+                    "description": "Execute build according to design specs and jigs.",
+                    "standard_time": 4,
+                    "bounty_at": 45,
+                    "frequency": "per_unit"
+                },
+                {
+                    "title": "Precision Cut List",
+                    "description": "Process raw steel into validated components.",
+                    "standard_time": 2,
+                    "bounty_at": 25,
+                    "frequency": "per_unit"
+                }
+            ]
+        },
+        {
+            "id": "tech_steward",
+            "name": "Tech Steward",
+            "icon": "💻",
+            "description": "Digital nervous system manager. Servers, Mesh, and Digital Ledger integrity.",
+            "category": "KNOWLEDGE",
+            "competencies": [
+                "Linux sysadmin",
+                "Networking (NetBird/Mesh)",
+                "Python/JS development",
+                "Data sovereignty"
+            ],
+            "default_tasks": [
+                {
+                    "title": "Ledger Pulse Check",
+                    "description": "Verify hash integrity and block sync across mesh.",
+                    "standard_time": 0.5,
+                    "bounty_at": 10,
+                    "frequency": "daily"
+                },
+                {
+                    "title": "Mesh Propagation Check",
+                    "description": "Confirm peer visibility and sync health.",
+                    "standard_time": 0.5,
+                    "bounty_at": 10,
+                    "frequency": "daily"
+                }
+            ]
+        }
+    ]
+}

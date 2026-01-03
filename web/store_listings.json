@@ -1,0 +1,57 @@
+[
+  {
+    "id": "item_001",
+    "seller": "TheArchitect",
+    "title": "Heirloom Tomato Seeds (50 pack)",
+    "description": "Cherokee Purple, grown regeneratively. No GMO.",
+    "category": "SEEDS",
+    "price_at": 5,
+    "status": "AVAILABLE",
+    "image_emoji": "\ud83c\udf45",
+    "created": 1734567890
+  },
+  {
+    "id": "item_002",
+    "seller": "Marcin",
+    "title": "Beef Tallow (1 Gallon)",
+    "description": "Rendered from grass-fed cattle. For cooking or soap.",
+    "category": "FOOD",
+    "price_at": 25,
+    "status": "AVAILABLE",
+    "image_emoji": "\ud83e\udd69",
+    "created": 1734567900
+  },
+  {
+    "id": "item_003",
+    "seller": "Gaia_Node_01",
+    "title": "Hand Forged Spade",
+    "description": "Made from recycled steel. Built to last.",
+    "category": "TOOLS",
+    "price_at": 100,
+    "status": "AVAILABLE",
+    "image_emoji": "\ud83d\udee0\ufe0f",
+    "created": 1734568000
+  },
+  {
+    "title": "Test Apple",
+    "description": "A shiny red apple",
+    "price_at": 10,
+    "category": "FOOD",
+    "image_emoji": "\ud83c\udf4e",
+    "seller": "seller_1766612692",
+    "id": "1766612692",
+    "status": "AVAILABLE"
+  },
+  {
+    "title": "Test Apple",
+    "description": "A shiny red apple",
+    "price_at": 10,
+    "category": "FOOD",
+    "image_emoji": "\ud83c\udf4e",
+    "seller": "seller_1766612735",
+    "id": "1766612735",
+    "status": "SOLD",
+    "buyer": "buyer_1766612735",
+    "sold_at": 1766612735.97074
+  }
+]

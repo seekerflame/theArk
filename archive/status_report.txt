@@ -1,0 +1,11 @@
+--- DIAGNOSTIC REPORT ---
+Wed Dec 31 14:08:51 PST 2025
+Checking Python:
+/opt/homebrew/bin/python3
+Checking Processes:
+eternalflame     23055   2.7  0.1 435282992  24432 s011  S+    1:54PM   0:19.19 /opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python server.py
+eternalflame     20648   0.0  0.1 435312112   9328   ??  S     1:50PM   0:00.84 /opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python /Users/eternalflame/.antigravity/extensions/ms-python.python-2025.20.1-universal/python_files/run-jedi-language-server.py
+Checking Port 3000:
+COMMAND   PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+Python  23055 eternalflame    3u  IPv4 0xdba59aad0f222830      0t0  TCP *:hbci (LISTEN)
+--- END ---

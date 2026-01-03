@@ -1,0 +1,57 @@
+{
+    "name": "Abundance Token - Village Node",
+    "short_name": "Village Node",
+    "description": "Decentralized village economy powered by labor-backed currency",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#10B981",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "categories": [
+        "productivity",
+        "finance",
+        "social"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Live Tangle",
+            "short_name": "Tangle",
+            "description": "View live network traffic",
+            "url": "/#view-tangle",
+            "icons": [
+                {
+                    "src": "icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Mint Labor",
+            "short_name": "Mint",
+            "description": "Log labor and mint tokens",
+            "url": "/#view-mint",
+            "icons": [
+                {
+                    "src": "icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
+    "prefer_related_applications": false
+}

@@ -1,0 +1,3603 @@
+[
+  {
+    "hash": "genesis_py_0000",
+    "parents": [],
+    "data": {
+      "block_type": "GENESIS",
+      "task": "Python Genesis",
+      "verified": true
+    },
+    "timestamp": 1765401159
+  },
+  {
+    "hash": "e45af850e878f02765adf14188a7c216",
+    "parents": [
+      "genesis_py_0000"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26055",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765403129
+  },
+  {
+    "hash": "1f4ab9d8c9bef5101412747513177c1a",
+    "parents": [
+      "e45af850e878f02765adf14188a7c216"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #16291",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765403191
+  },
+  {
+    "hash": "129c7ae68ae062a7d85b79051b62fe3e",
+    "parents": [
+      "1f4ab9d8c9bef5101412747513177c1a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7685",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765403223
+  },
+  {
+    "hash": "ee4e96719d3e16e3686bc51423599bf4",
+    "parents": [
+      "129c7ae68ae062a7d85b79051b62fe3e"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26196",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765403290
+  },
+  {
+    "hash": "27a278ef63350b7e341f8648a3c90d49",
+    "parents": [
+      "ee4e96719d3e16e3686bc51423599bf4"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #4351",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765403532
+  },
+  {
+    "hash": "b2c76fbbe944f82bd3fd677d3532cd90",
+    "parents": [
+      "27a278ef63350b7e341f8648a3c90d49"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24269",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765403685
+  },
+  {
+    "hash": "da7449d7a4f53eb393e815e58c2bf3c3",
+    "parents": [
+      "b2c76fbbe944f82bd3fd677d3532cd90"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #25377",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765404077
+  },
+  {
+    "hash": "edb962dc562126b13dd0c6115912e28b",
+    "parents": [
+      "da7449d7a4f53eb393e815e58c2bf3c3"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #4800",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765404259
+  },
+  {
+    "hash": "0180a0fe25e5a06387ac2cf6c99bae17",
+    "parents": [
+      "edb962dc562126b13dd0c6115912e28b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24523",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765404412
+  },
+  {
+    "hash": "8f45dbfca5ec8bec2acae2b38be0289d",
+    "parents": [
+      "0180a0fe25e5a06387ac2cf6c99bae17"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #9373",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765404504
+  },
+  {
+    "hash": "6f2689a01e135a3fbd6ae5d2ac01b835",
+    "parents": [
+      "8f45dbfca5ec8bec2acae2b38be0289d"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #16291",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765404626
+  },
+  {
+    "hash": "3ce4290ea4726c8c2dcf7cec30e368e2",
+    "parents": [
+      "6f2689a01e135a3fbd6ae5d2ac01b835"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13520",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765404838
+  },
+  {
+    "hash": "a3b50de99498b8123d462312e5d02668",
+    "parents": [
+      "3ce4290ea4726c8c2dcf7cec30e368e2"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17270",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765405051
+  },
+  {
+    "hash": "2ef07b223669a4fe2041139794361a17",
+    "parents": [
+      "a3b50de99498b8123d462312e5d02668"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17580",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765405113
+  },
+  {
+    "hash": "11cda04f44e2eac5e684a3fb1e464965",
+    "parents": [
+      "2ef07b223669a4fe2041139794361a17"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #22686",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765405205
+  },
+  {
+    "hash": "3bea8f8bb17e42ec330e2ed29b0fc8b8",
+    "parents": [
+      "11cda04f44e2eac5e684a3fb1e464965"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #369",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765405567
+  },
+  {
+    "hash": "103c5c49e892555cb459c6b9397f5757",
+    "parents": [
+      "3bea8f8bb17e42ec330e2ed29b0fc8b8"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13147",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765405630
+  },
+  {
+    "hash": "bc405dcc5ce181df29c1fe514557a391",
+    "parents": [
+      "103c5c49e892555cb459c6b9397f5757"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #14175",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765405902
+  },
+  {
+    "hash": "f113c3b1f0f019fc918dcf808386bf32",
+    "parents": [
+      "bc405dcc5ce181df29c1fe514557a391"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #10222",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765405934
+  },
+  {
+    "hash": "4a3f6597d2eab8df166e80b7ad21a00b",
+    "parents": [
+      "f113c3b1f0f019fc918dcf808386bf32"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #28432",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765405966
+  },
+  {
+    "hash": "801ee9eb1c7cf076d902d00bbed45f6d",
+    "parents": [
+      "4a3f6597d2eab8df166e80b7ad21a00b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #6597",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765406299
+  },
+  {
+    "hash": "a934490aa7814c73eaeb417375aebbba",
+    "parents": [
+      "801ee9eb1c7cf076d902d00bbed45f6d"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11864",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765406451
+  },
+  {
+    "hash": "8a6524706ba67b2ba414aa764199883c",
+    "parents": [
+      "a934490aa7814c73eaeb417375aebbba"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5617",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765406693
+  },
+  {
+    "hash": "f5c20ec9b518d5bdcbeb53f31d1476fe",
+    "parents": [
+      "8a6524706ba67b2ba414aa764199883c"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #21674",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765406725
+  },
+  {
+    "hash": "a5898eefbc8abe92ff460f89beba3232",
+    "parents": [
+      "f5c20ec9b518d5bdcbeb53f31d1476fe"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #2427",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765406758
+  },
+  {
+    "hash": "fbc49d4d611fe9a35e82a14f0dd8d6c1",
+    "parents": [
+      "a5898eefbc8abe92ff460f89beba3232"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18670",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765407120
+  },
+  {
+    "hash": "1a0e3ad8c9bd37d33d56b12c202f01bf",
+    "parents": [
+      "fbc49d4d611fe9a35e82a14f0dd8d6c1"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11881",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765407362
+  },
+  {
+    "hash": "113b63f75b43b28a1f59d187ad6fd2a1",
+    "parents": [
+      "1a0e3ad8c9bd37d33d56b12c202f01bf"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7338",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765407665
+  },
+  {
+    "hash": "f1418b9b21e7323fcca28549f5eaa1a2",
+    "parents": [
+      "113b63f75b43b28a1f59d187ad6fd2a1"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #25558",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765407727
+  },
+  {
+    "hash": "02c97fcdd16c5ffd389d64c6b63105be",
+    "parents": [
+      "f1418b9b21e7323fcca28549f5eaa1a2"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #8956",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765407969
+  },
+  {
+    "hash": "6fe5c94524414b1e1425febfcf3a8109",
+    "parents": [
+      "02c97fcdd16c5ffd389d64c6b63105be"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #21537",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408212
+  },
+  {
+    "hash": "446cf194f396bc2d999e640aacd36446",
+    "parents": [
+      "6fe5c94524414b1e1425febfcf3a8109"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #30009",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408274
+  },
+  {
+    "hash": "ce46d4ff24b9569584e4e33d1c12acff",
+    "parents": [
+      "446cf194f396bc2d999e640aacd36446"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11437",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408456
+  },
+  {
+    "hash": "cfb58855dbb851e923debc4a75eb5003",
+    "parents": [
+      "ce46d4ff24b9569584e4e33d1c12acff"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17524",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408488
+  },
+  {
+    "hash": "4b785f6baabdb3eec5eeee99a6f98480",
+    "parents": [
+      "cfb58855dbb851e923debc4a75eb5003"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #8799",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408550
+  },
+  {
+    "hash": "d4a126c9c92455f6c2336301e57560d9",
+    "parents": [
+      "4b785f6baabdb3eec5eeee99a6f98480"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17103",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408582
+  },
+  {
+    "hash": "17316d07d89658ac280bc107fb0a820a",
+    "parents": [
+      "d4a126c9c92455f6c2336301e57560d9"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #98",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408644
+  },
+  {
+    "hash": "b925ba3c52351b94ae3a46b58605f2b4",
+    "parents": [
+      "17316d07d89658ac280bc107fb0a820a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #23122",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408797
+  },
+  {
+    "hash": "78d957eac58497fcb1805460469b82f7",
+    "parents": [
+      "b925ba3c52351b94ae3a46b58605f2b4"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #22765",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408859
+  },
+  {
+    "hash": "b022bd399585df69852583347eceff86",
+    "parents": [
+      "78d957eac58497fcb1805460469b82f7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18841",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765408921
+  },
+  {
+    "hash": "cfe50cadb09d63a19c9a2d3c09ee49fc",
+    "parents": [
+      "b022bd399585df69852583347eceff86"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26197",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765409073
+  },
+  {
+    "hash": "e0b138830e853f011656ded48b23611b",
+    "parents": [
+      "cfe50cadb09d63a19c9a2d3c09ee49fc"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7603",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765409105
+  },
+  {
+    "hash": "6177574881cbc06fef722c2a52beef55",
+    "parents": [
+      "e0b138830e853f011656ded48b23611b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26722",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765413383
+  },
+  {
+    "hash": "7695cf816fa2f1fae37d716056fd703a",
+    "parents": [
+      "6177574881cbc06fef722c2a52beef55"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7697",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765413566
+  },
+  {
+    "hash": "f20440591a4d0fd600fca32843ff4782",
+    "parents": [
+      "7695cf816fa2f1fae37d716056fd703a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #14323",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765414048
+  },
+  {
+    "hash": "d914c666b6d39c64c29bf801b7af0d6e",
+    "parents": [
+      "f20440591a4d0fd600fca32843ff4782"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11258",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765414201
+  },
+  {
+    "hash": "c8b8d8697cd5493c6311204cdf32d8f6",
+    "parents": [
+      "d914c666b6d39c64c29bf801b7af0d6e"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #31754",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765414323
+  },
+  {
+    "hash": "944129d013090be51b749dc1120b31fa",
+    "parents": [
+      "c8b8d8697cd5493c6311204cdf32d8f6"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #32574",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765414746
+  },
+  {
+    "hash": "1910fbc16e496f3645e16d72d2632987",
+    "parents": [
+      "944129d013090be51b749dc1120b31fa"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #25953",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765414958
+  },
+  {
+    "hash": "19d92c426c19b10a508f0b055ff138d9",
+    "parents": [
+      "1910fbc16e496f3645e16d72d2632987"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18762",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765414990
+  },
+  {
+    "hash": "a61098c93cb9a567164ba5838fb0a43d",
+    "parents": [
+      "19d92c426c19b10a508f0b055ff138d9"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #1539",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415112
+  },
+  {
+    "hash": "7c0f3d225e0597ef35fc29a222c8fa24",
+    "parents": [
+      "a61098c93cb9a567164ba5838fb0a43d"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #14392",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415145
+  },
+  {
+    "hash": "93a5b3340f9ded14b88a742929c18cbb",
+    "parents": [
+      "7c0f3d225e0597ef35fc29a222c8fa24"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #4777",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415177
+  },
+  {
+    "hash": "b9c262d3f8a92ff6e0fbcf61a9092f42",
+    "parents": [
+      "93a5b3340f9ded14b88a742929c18cbb"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #14433",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415239
+  },
+  {
+    "hash": "b8e3a5720d0c3ce6c265d6908042f20b",
+    "parents": [
+      "b9c262d3f8a92ff6e0fbcf61a9092f42"
+    ],
+    "data": {
+      "task": "[RETRO] 5 Gallon Fuel Container",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/5_Gallon_Fuel_Conainer",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Wed Nov 19, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "a056862294a27b9fbd475335a360d0a8",
+    "parents": [
+      "b8e3a5720d0c3ce6c265d6908042f20b"
+    ],
+    "data": {
+      "task": "[RETRO] SEH FAQ",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/SEH_FAQ",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Wed Nov 19, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "f72df79ae4cdb1d823660f3e5741d68a",
+    "parents": [
+      "a056862294a27b9fbd475335a360d0a8"
+    ],
+    "data": {
+      "task": "[RETRO] BCC",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/BCC",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Wed Nov 19, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "71cc627e3436c70c24bbe3b77fc2ad8f",
+    "parents": [
+      "f72df79ae4cdb1d823660f3e5741d68a"
+    ],
+    "data": {
+      "task": "[RETRO] Irresistible Offer",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/Irresistible_Offer",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Tue Dec 18, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "310e818fba152bc6deae104db95f1add",
+    "parents": [
+      "71cc627e3436c70c24bbe3b77fc2ad8f"
+    ],
+    "data": {
+      "task": "[RETRO] Cut List Macro",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/Cut_List_Macro_in_FreeCAD",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Tue Dec 18, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "0f89c1049341417ae6b9abbadde8c592",
+    "parents": [
+      "310e818fba152bc6deae104db95f1add"
+    ],
+    "data": {
+      "task": "[RETRO] Cost Reduction Collab",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/Cost_Reduction_Collaboration",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Sun Dec 16, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "dc4fe6cf7ee0f2640f8ca9da47f4a902",
+    "parents": [
+      "0f89c1049341417ae6b9abbadde8c592"
+    ],
+    "data": {
+      "task": "[RETRO] Heat Pump Sourcing",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/Heat_Pump_Sourcing",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Wed Dec 11, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "bdf4d8a4651d7278368977cde8228aeb",
+    "parents": [
+      "dc4fe6cf7ee0f2640f8ca9da47f4a902"
+    ],
+    "data": {
+      "task": "[RETRO] Inverter Sourcing",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/Inverter_Sourcing",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Wed Dec 11, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "0ba0f637f5c84a0a1b5474bef220e956",
+    "parents": [
+      "bdf4d8a4651d7278368977cde8228aeb"
+    ],
+    "data": {
+      "task": "[RETRO] Hangar Design",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/Hangar",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Fri Dec 7, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415422
+  },
+  {
+    "hash": "dc209937be4a70384662583f550f2f80",
+    "parents": [
+      "0ba0f637f5c84a0a1b5474bef220e956"
+    ],
+    "data": {
+      "task": "[RETRO] Truss Design",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/Truss_Design",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Fri Dec 7, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415423
+  },
+  {
+    "hash": "d0d8a99f119001ceb62a0fbc63130380",
+    "parents": [
+      "dc209937be4a70384662583f550f2f80"
+    ],
+    "data": {
+      "task": "[RETRO] Wall Module Test",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/Wall_Module_Test",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Thu Dec 6, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415423
+  },
+  {
+    "hash": "ed12ef23c489035a487b23e4592228df",
+    "parents": [
+      "d0d8a99f119001ceb62a0fbc63130380"
+    ],
+    "data": {
+      "task": "[RETRO] Rapid Learning Pedagogy",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/OSE_Rapid_Learning_Pedagogy",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Tue Dec 4, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415423
+  },
+  {
+    "hash": "6a9361ad42d4c458e8fdc874b4b69190",
+    "parents": [
+      "ed12ef23c489035a487b23e4592228df"
+    ],
+    "data": {
+      "task": "[RETRO] SH6 Finishing",
+      "hours": 1.0,
+      "standard_time": 1.0,
+      "efficiency": "100%",
+      "complexity": 1.0,
+      "proof": "https://wiki.opensourceecology.org/wiki/SH6_Finishing",
+      "reward": 10.0,
+      "minter": "Marcin Jakubowski",
+      "description": "Retroactive minting for work logged on Mon Dec 3, 2025",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415423
+  },
+  {
+    "hash": "935c232edc0266734e00c50967509c61",
+    "parents": [
+      "6a9361ad42d4c458e8fdc874b4b69190"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #22011",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415511
+  },
+  {
+    "hash": "65fb6a348b4544404a3a9dd4077c953c",
+    "parents": [
+      "935c232edc0266734e00c50967509c61"
+    ],
+    "data": {
+      "task": "\ud83d\udcbb Write Feature Module",
+      "hours": 1,
+      "standard_time": 2,
+      "efficiency": "200%",
+      "complexity": 3,
+      "proof": "example.com",
+      "reward": 90,
+      "minter": "Marcin",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415556
+  },
+  {
+    "hash": "0f7915642038852139ad37c052bfab66",
+    "parents": [
+      "65fb6a348b4544404a3a9dd4077c953c"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #16583",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415604
+  },
+  {
+    "hash": "025bdee98a64b14bc2c7876ce670725a",
+    "parents": [
+      "0f7915642038852139ad37c052bfab66"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11414",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415636
+  },
+  {
+    "hash": "866ef85388deeac79648a2e223fe045b",
+    "parents": [
+      "025bdee98a64b14bc2c7876ce670725a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5054",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415698
+  },
+  {
+    "hash": "055165ad4c694c0ccb9b70a346123790",
+    "parents": [
+      "866ef85388deeac79648a2e223fe045b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #14168",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765415820
+  },
+  {
+    "hash": "ffe432e2e1b3c9f3080211a0019c7548",
+    "parents": [
+      "055165ad4c694c0ccb9b70a346123790"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13935",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416153
+  },
+  {
+    "hash": "09aa36a509ac34481520b20b67c51b00",
+    "parents": [
+      "ffe432e2e1b3c9f3080211a0019c7548"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #3354",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416275
+  },
+  {
+    "hash": "51fe1e16c812b57c5aff8a81f392a236",
+    "parents": [
+      "09aa36a509ac34481520b20b67c51b00"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #30978",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416307
+  },
+  {
+    "hash": "f1bac33002d8a3d66331b3336578adcc",
+    "parents": [
+      "51fe1e16c812b57c5aff8a81f392a236"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #19649",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416489
+  },
+  {
+    "hash": "0b6ec886e298bf1f92cb0e1690299be9",
+    "parents": [
+      "f1bac33002d8a3d66331b3336578adcc"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #16570",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416521
+  },
+  {
+    "hash": "f64e60f573ca99bb01a962226ed3701a",
+    "parents": [
+      "0b6ec886e298bf1f92cb0e1690299be9"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15388",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416554
+  },
+  {
+    "hash": "f030062d1dee65a4aadece8c1eb322ab",
+    "parents": [
+      "f64e60f573ca99bb01a962226ed3701a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13596",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416616
+  },
+  {
+    "hash": "89235a0f868fe38b3059a95b71ebb376",
+    "parents": [
+      "f030062d1dee65a4aadece8c1eb322ab"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18949",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416648
+  },
+  {
+    "hash": "ef37020bdca5cd5da2e71fb647ca16bb",
+    "parents": [
+      "89235a0f868fe38b3059a95b71ebb376"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #28381",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416740
+  },
+  {
+    "hash": "1c3cf29f674f04e0adfb7cdc055cc633",
+    "parents": [
+      "ef37020bdca5cd5da2e71fb647ca16bb"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #4385",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765416952
+  },
+  {
+    "hash": "8d17dc22de43861e2cf8d72111511b62",
+    "parents": [
+      "1c3cf29f674f04e0adfb7cdc055cc633"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #22428",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765417015
+  },
+  {
+    "hash": "f4a7704acd607e426640501761a7bca7",
+    "parents": [
+      "8d17dc22de43861e2cf8d72111511b62"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #20679",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765417227
+  },
+  {
+    "hash": "e681c2f7805432b14cac967dfdb0b040",
+    "parents": [
+      "f4a7704acd607e426640501761a7bca7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #8699",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765417409
+  },
+  {
+    "hash": "6465a24ec905ba77bf431067085c07a8",
+    "parents": [
+      "e681c2f7805432b14cac967dfdb0b040"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7684",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765417442
+  },
+  {
+    "hash": "7e0e6acbef9be2e48afb18b32bc227d9",
+    "parents": [
+      "6465a24ec905ba77bf431067085c07a8"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #152",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765417534
+  },
+  {
+    "hash": "92f34f81a92df0d9ec5693f2aef26b42",
+    "parents": [
+      "7e0e6acbef9be2e48afb18b32bc227d9"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #10445",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418017
+  },
+  {
+    "hash": "3d9ae9d043a76646881d49383ec63dd7",
+    "parents": [
+      "92f34f81a92df0d9ec5693f2aef26b42"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #9287",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418109
+  },
+  {
+    "hash": "fc347f1edb2ff3cb3a5d18955eea5262",
+    "parents": [
+      "3d9ae9d043a76646881d49383ec63dd7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18723",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418261
+  },
+  {
+    "hash": "6d96f4f298c03645bf55e2a4a5648c9b",
+    "parents": [
+      "fc347f1edb2ff3cb3a5d18955eea5262"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26157",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418413
+  },
+  {
+    "hash": "5c3817025c9c119976d46f9f69c627ba",
+    "parents": [
+      "6d96f4f298c03645bf55e2a4a5648c9b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #32508",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418445
+  },
+  {
+    "hash": "dd38fb3692339449a571d4a5ff38a301",
+    "parents": [
+      "5c3817025c9c119976d46f9f69c627ba"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #22204",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418477
+  },
+  {
+    "hash": "53fa6ce3e808f46f2d7a2f699d799ae2",
+    "parents": [
+      "dd38fb3692339449a571d4a5ff38a301"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #8799",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418630
+  },
+  {
+    "hash": "4ea29134b1ba8610fbe2225ec67a4e2b",
+    "parents": [
+      "53fa6ce3e808f46f2d7a2f699d799ae2"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #32753",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418662
+  },
+  {
+    "hash": "2f08057c8f373276196b49098ffe9b58",
+    "parents": [
+      "4ea29134b1ba8610fbe2225ec67a4e2b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26578",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418784
+  },
+  {
+    "hash": "52d78bb9345e6dbed0bf2ff3765daaa7",
+    "parents": [
+      "2f08057c8f373276196b49098ffe9b58"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #28753",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765418876
+  },
+  {
+    "hash": "205b01963c5b2da30dd9156f4dddc376",
+    "parents": [
+      "52d78bb9345e6dbed0bf2ff3765daaa7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #20400",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765419088
+  },
+  {
+    "hash": "0af62f77b9b6f0d525c3969ea888cfb0",
+    "parents": [
+      "205b01963c5b2da30dd9156f4dddc376"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #25152",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765419271
+  },
+  {
+    "hash": "86485fad65a1a696fcb5047d534956dd",
+    "parents": [
+      "0af62f77b9b6f0d525c3969ea888cfb0"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #16093",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765420696
+  },
+  {
+    "hash": "d540eb7515b97c0266b76a26c42c391c",
+    "parents": [
+      "86485fad65a1a696fcb5047d534956dd"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26319",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765421872
+  },
+  {
+    "hash": "3f51ab0bd2016b660d1b835740df4fed",
+    "parents": [
+      "d540eb7515b97c0266b76a26c42c391c"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #23368",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765422085
+  },
+  {
+    "hash": "ab1cdd9b68e3af56380ea81bc05791de",
+    "parents": [
+      "3f51ab0bd2016b660d1b835740df4fed"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11054",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765422327
+  },
+  {
+    "hash": "eb2c659f4e378169a1d1525040ab3d8f",
+    "parents": [
+      "ab1cdd9b68e3af56380ea81bc05791de"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #30415",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765422749
+  },
+  {
+    "hash": "a2e8cc7ed3131d5313f784a059b5dc31",
+    "parents": [
+      "eb2c659f4e378169a1d1525040ab3d8f"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #32515",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765422811
+  },
+  {
+    "hash": "9e152f6b922623d1357b54474307599d",
+    "parents": [
+      "a2e8cc7ed3131d5313f784a059b5dc31"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #20182",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765422904
+  },
+  {
+    "hash": "50fdca10b29296e7587945c306d100df",
+    "parents": [
+      "9e152f6b922623d1357b54474307599d"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24225",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765422966
+  },
+  {
+    "hash": "e68d1cd5a231354c0a3c477ad4fb7d99",
+    "parents": [
+      "50fdca10b29296e7587945c306d100df"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #29561",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765423028
+  },
+  {
+    "hash": "eeb98abb3823c63a12f23bc20cf3ac65",
+    "parents": [
+      "e68d1cd5a231354c0a3c477ad4fb7d99"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7044",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765423210
+  },
+  {
+    "hash": "3151ceef9745065381d38efc874ecffd",
+    "parents": [
+      "eeb98abb3823c63a12f23bc20cf3ac65"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #1154",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765423302
+  },
+  {
+    "hash": "7ee037c7c9edff0d8aac2c0c11f84453",
+    "parents": [
+      "3151ceef9745065381d38efc874ecffd"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #27465",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765423605
+  },
+  {
+    "hash": "30bd0740128273bfc8d3ce9ab48f614f",
+    "parents": [
+      "7ee037c7c9edff0d8aac2c0c11f84453"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #4758",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765423667
+  },
+  {
+    "hash": "1666a73892fccb9f3bc9af07a408d717",
+    "parents": [
+      "30bd0740128273bfc8d3ce9ab48f614f"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #27314",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765423759
+  },
+  {
+    "hash": "d156e9c574b7e0d13895c50985673a72",
+    "parents": [
+      "1666a73892fccb9f3bc9af07a408d717"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #21522",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765423941
+  },
+  {
+    "hash": "dbf1822d23892bb12234c4521fe90c0b",
+    "parents": [
+      "d156e9c574b7e0d13895c50985673a72"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24207",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765424003
+  },
+  {
+    "hash": "f339d4dcb13adf6feca6156643c97db3",
+    "parents": [
+      "dbf1822d23892bb12234c4521fe90c0b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #29542",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765424306
+  },
+  {
+    "hash": "04fc145e136aabd109d283da38b246ac",
+    "parents": [
+      "f339d4dcb13adf6feca6156643c97db3"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #1485",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765424338
+  },
+  {
+    "hash": "369caf3e54c0ae9d47b7c00a82fabb72",
+    "parents": [
+      "04fc145e136aabd109d283da38b246ac"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #224",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765424370
+  },
+  {
+    "hash": "e2a6849991bab6af1826e34505554fd5",
+    "parents": [
+      "369caf3e54c0ae9d47b7c00a82fabb72"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18984",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765424432
+  },
+  {
+    "hash": "9d3ecab9a445570066ee8e12608eaff1",
+    "parents": [
+      "e2a6849991bab6af1826e34505554fd5"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #3183",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765424585
+  },
+  {
+    "hash": "1ff5ff4be7e530c57985e4630042786b",
+    "parents": [
+      "9d3ecab9a445570066ee8e12608eaff1"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #16238",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765424617
+  },
+  {
+    "hash": "5b6ca6eaecaded8c47f4f17ba30d6f71",
+    "parents": [
+      "1ff5ff4be7e530c57985e4630042786b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #32563",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765424739
+  },
+  {
+    "hash": "6d7e23e75d3daf09d6d56fe737ccfed2",
+    "parents": [
+      "5b6ca6eaecaded8c47f4f17ba30d6f71"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5518",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765425011
+  },
+  {
+    "hash": "ba4c78795e6873462c27f63880150eb3",
+    "parents": [
+      "6d7e23e75d3daf09d6d56fe737ccfed2"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17031",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765425284
+  },
+  {
+    "hash": "793b2dea8a695c4cc5726a8d309f89a4",
+    "parents": [
+      "ba4c78795e6873462c27f63880150eb3"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #19465",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765425406
+  },
+  {
+    "hash": "4f07a07fee740e209fad59a1a24376ef",
+    "parents": [
+      "793b2dea8a695c4cc5726a8d309f89a4"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #28571",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765425438
+  },
+  {
+    "hash": "8098412eee4ea5a6fa857dcc3691eb68",
+    "parents": [
+      "4f07a07fee740e209fad59a1a24376ef"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #21859",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765425500
+  },
+  {
+    "hash": "965f6339b632a6524af273af1a68215f",
+    "parents": [
+      "8098412eee4ea5a6fa857dcc3691eb68"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #27765",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765425742
+  },
+  {
+    "hash": "9846ea533fdf896f327835ef6000a304",
+    "parents": [
+      "965f6339b632a6524af273af1a68215f"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13650",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765425925
+  },
+  {
+    "hash": "7f4050db02f94d62c66345e50d64dc46",
+    "parents": [
+      "9846ea533fdf896f327835ef6000a304"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7313",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765426077
+  },
+  {
+    "hash": "8349afd057cb5eaf103ca442aa9fa05a",
+    "parents": [
+      "7f4050db02f94d62c66345e50d64dc46"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #30620",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765426349
+  },
+  {
+    "hash": "3aac6ec34d8fedb5ed8c7ce59924cd44",
+    "parents": [
+      "8349afd057cb5eaf103ca442aa9fa05a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #27883",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765426472
+  },
+  {
+    "hash": "163ce7279b96e601e240c3af2f95a128",
+    "parents": [
+      "3aac6ec34d8fedb5ed8c7ce59924cd44"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #489",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765444337
+  },
+  {
+    "hash": "9e92e0fd2991f80c29e5809590acc84a",
+    "parents": [
+      "163ce7279b96e601e240c3af2f95a128"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #29611",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765446898
+  },
+  {
+    "hash": "031d3f8d08fdc2107809ccb420a7e141",
+    "parents": [
+      "9e92e0fd2991f80c29e5809590acc84a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #8184",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765471508
+  },
+  {
+    "hash": "2e03be795b7de448f7563e98d9c625d0",
+    "parents": [
+      "031d3f8d08fdc2107809ccb420a7e141"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #216",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765474153
+  },
+  {
+    "hash": "73a0b7488350f234faca12d25ccdf21a",
+    "parents": [
+      "2e03be795b7de448f7563e98d9c625d0"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15970",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765479828
+  },
+  {
+    "hash": "ba602084d1ae5efaf8d073a83599c993",
+    "parents": [
+      "73a0b7488350f234faca12d25ccdf21a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15113",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765488121
+  },
+  {
+    "hash": "f0042559ccdcf45347b73371c2703ca7",
+    "parents": [
+      "ba602084d1ae5efaf8d073a83599c993"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15406",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765495677
+  },
+  {
+    "hash": "42d28e5fd0abe19cebb2ac905d41ad71",
+    "parents": [
+      "f0042559ccdcf45347b73371c2703ca7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #32429",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765495709
+  },
+  {
+    "hash": "9c60944bfc42e77bcd5388156d119f29",
+    "parents": [
+      "42d28e5fd0abe19cebb2ac905d41ad71"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #14674",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765495832
+  },
+  {
+    "hash": "f79f98a3b59eadb1251c50009812eaef",
+    "parents": [
+      "9c60944bfc42e77bcd5388156d119f29"
+    ],
+    "data": {
+      "task": "Drill Studs for Romex (Kitchen)",
+      "hours": 2.5,
+      "standard_time": 2.5,
+      "efficiency": "100%",
+      "complexity": 1,
+      "proof": "Self-verified",
+      "reward": 25,
+      "minter": "Marcin",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765495976
+  },
+  {
+    "hash": "0135479fc0be92799ae3993b24c1316a",
+    "parents": [
+      "f79f98a3b59eadb1251c50009812eaef"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #21884",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765496014
+  },
+  {
+    "hash": "62d8c5817c746b49465ef91f202b0508",
+    "parents": [
+      "0135479fc0be92799ae3993b24c1316a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #8727",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765496166
+  },
+  {
+    "hash": "91a6c7bf5f772a23810e7e6088a67ae7",
+    "parents": [
+      "62d8c5817c746b49465ef91f202b0508"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5266",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765496469
+  },
+  {
+    "hash": "551a1a55d0403ad68d172533a3d09c55",
+    "parents": [
+      "91a6c7bf5f772a23810e7e6088a67ae7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #3536",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765496621
+  },
+  {
+    "hash": "f71f188c14897267221168547b15cb2c",
+    "parents": [
+      "551a1a55d0403ad68d172533a3d09c55"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #9536",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765496653
+  },
+  {
+    "hash": "47ebc2eaf43459bed893572aef4f98be",
+    "parents": [
+      "f71f188c14897267221168547b15cb2c"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #4250",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765496715
+  },
+  {
+    "hash": "da9c26a2bd838ed957341a8427a25696",
+    "parents": [
+      "47ebc2eaf43459bed893572aef4f98be"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #31207",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765497138
+  },
+  {
+    "hash": "3164244f165c2e537018f70be3483ed4",
+    "parents": [
+      "da9c26a2bd838ed957341a8427a25696"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5493",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765497200
+  },
+  {
+    "hash": "79cf3e7e3e124464eeb19518176de1f3",
+    "parents": [
+      "3164244f165c2e537018f70be3483ed4"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7906",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765497472
+  },
+  {
+    "hash": "85c29a98d7e09d109f2a960155eb7bb2",
+    "parents": [
+      "79cf3e7e3e124464eeb19518176de1f3"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26947",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765497594
+  },
+  {
+    "hash": "5ce3867d3e02186fbd18ec6d22d877ad",
+    "parents": [
+      "85c29a98d7e09d109f2a960155eb7bb2"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13609",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765497657
+  },
+  {
+    "hash": "7f7a3a4bd623bd79cac146351c6ed4bf",
+    "parents": [
+      "5ce3867d3e02186fbd18ec6d22d877ad"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #22430",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765498598
+  },
+  {
+    "hash": "719b294e3f17482032849bb8806a48b7",
+    "parents": [
+      "7f7a3a4bd623bd79cac146351c6ed4bf"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #27894",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765498961
+  },
+  {
+    "hash": "190fa9114afc634993b3e99f896618a0",
+    "parents": [
+      "719b294e3f17482032849bb8806a48b7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #1237",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765499053
+  },
+  {
+    "hash": "b9f3ca84ff0028b716dcc8808c82c20d",
+    "parents": [
+      "190fa9114afc634993b3e99f896618a0"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #2849",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765499115
+  },
+  {
+    "hash": "7d71944d8cf666ab8f6a2955769c4f4d",
+    "parents": [
+      "b9f3ca84ff0028b716dcc8808c82c20d"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15736",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765499388
+  },
+  {
+    "hash": "3f6ffe4c3bdd03b07df92cf3f2f286ca",
+    "parents": [
+      "7d71944d8cf666ab8f6a2955769c4f4d"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13374",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765499540
+  },
+  {
+    "hash": "034a1d77cda4385f6b256e90f6247c29",
+    "parents": [
+      "3f6ffe4c3bdd03b07df92cf3f2f286ca"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #19635",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765499604
+  },
+  {
+    "hash": "7870dd0c30c031ed42eddb0a753d5ed0",
+    "parents": [
+      "034a1d77cda4385f6b256e90f6247c29"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #28049",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765499848
+  },
+  {
+    "hash": "278989d2ce2f141a6373978c2d8cb264",
+    "parents": [
+      "7870dd0c30c031ed42eddb0a753d5ed0"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #19470",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500120
+  },
+  {
+    "hash": "a61ed8b35b433a9fb35e0242c2132efb",
+    "parents": [
+      "278989d2ce2f141a6373978c2d8cb264"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #3770",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500212
+  },
+  {
+    "hash": "3f3656e85eb647bd8df5449c40fe4689",
+    "parents": [
+      "a61ed8b35b433a9fb35e0242c2132efb"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #20346",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500365
+  },
+  {
+    "hash": "3f7bb37c9aba12d30de681e500d57f47",
+    "parents": [
+      "3f3656e85eb647bd8df5449c40fe4689"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #19141",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500427
+  },
+  {
+    "hash": "2e372650ebac1ab721f08dfc5daf134b",
+    "parents": [
+      "3f7bb37c9aba12d30de681e500d57f47"
+    ],
+    "data": {
+      "task": "\u26a1 Install Outlet",
+      "hours": 2,
+      "standard_time": 0.5,
+      "efficiency": "25%",
+      "complexity": 1,
+      "proof": "example.com",
+      "reward": 5,
+      "minter": "Marcin",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500634
+  },
+  {
+    "hash": "1caf28a43aaab79d2989131a1292971b",
+    "parents": [
+      "2e372650ebac1ab721f08dfc5daf134b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #23212",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500729
+  },
+  {
+    "hash": "79597c250f2dbabf38a10c25c6d5aae6",
+    "parents": [
+      "1caf28a43aaab79d2989131a1292971b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #4149",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500851
+  },
+  {
+    "hash": "dbffa294a8bb61cddb4bfcd4ad3f3c90",
+    "parents": [
+      "79597c250f2dbabf38a10c25c6d5aae6"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15501",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500913
+  },
+  {
+    "hash": "c183f607f9c98dd54575cc7a513e219f",
+    "parents": [
+      "dbffa294a8bb61cddb4bfcd4ad3f3c90"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24300",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500945
+  },
+  {
+    "hash": "78be7492dab927f13cb88563f371196b",
+    "parents": [
+      "c183f607f9c98dd54575cc7a513e219f"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #10759",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765500978
+  },
+  {
+    "hash": "d17e44117e548d332206b52260e4aac4",
+    "parents": [
+      "78be7492dab927f13cb88563f371196b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5841",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501014
+  },
+  {
+    "hash": "300aed30783c4dc57ede53af2de24b4d",
+    "parents": [
+      "d17e44117e548d332206b52260e4aac4"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #25336",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501048
+  },
+  {
+    "hash": "3ec699522ed12af94769ae3671994208",
+    "parents": [
+      "300aed30783c4dc57ede53af2de24b4d"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #6223",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501140
+  },
+  {
+    "hash": "53289706ddf132fecc9e8e3bd9342104",
+    "parents": [
+      "3ec699522ed12af94769ae3671994208"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #4012",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501352
+  },
+  {
+    "hash": "55ce2a9e7e79a7da133f4d06c1d86e1c",
+    "parents": [
+      "53289706ddf132fecc9e8e3bd9342104"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24027",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501384
+  },
+  {
+    "hash": "34764462329c4c6a4c000e2192aefe8f",
+    "parents": [
+      "55ce2a9e7e79a7da133f4d06c1d86e1c"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #2475",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501657
+  },
+  {
+    "hash": "337dd128ac5f557432864b8fe0d1e15a",
+    "parents": [
+      "34764462329c4c6a4c000e2192aefe8f"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18519",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501719
+  },
+  {
+    "hash": "af19b8d3cee4e8df8a26c42de76ed123",
+    "parents": [
+      "337dd128ac5f557432864b8fe0d1e15a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24999",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501781
+  },
+  {
+    "hash": "e55279ab61a2d21aa62e76fe62d13a34",
+    "parents": [
+      "af19b8d3cee4e8df8a26c42de76ed123"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #8167",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501843
+  },
+  {
+    "hash": "074e5842366c2aa3aa63e109dcca5e4e",
+    "parents": [
+      "e55279ab61a2d21aa62e76fe62d13a34"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #23575",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501875
+  },
+  {
+    "hash": "b286d3f90a60a294f40d5cd18546d900",
+    "parents": [
+      "074e5842366c2aa3aa63e109dcca5e4e"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #19530",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765501998
+  },
+  {
+    "hash": "5c5d18afc39e4c5f406afc0aed2f360b",
+    "parents": [
+      "b286d3f90a60a294f40d5cd18546d900"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #27810",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765502090
+  },
+  {
+    "hash": "aaa089f4fc56e9f11283cdfa476a4e40",
+    "parents": [
+      "5c5d18afc39e4c5f406afc0aed2f360b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24312",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765502182
+  },
+  {
+    "hash": "d34d67d0612737e0534f938f98be5a21",
+    "parents": [
+      "aaa089f4fc56e9f11283cdfa476a4e40"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #10744",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765502304
+  },
+  {
+    "hash": "59325bf3aee931a432fb11deecceebd8",
+    "parents": [
+      "d34d67d0612737e0534f938f98be5a21"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7182",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765502457
+  },
+  {
+    "hash": "4cd3865c8448591b5d24fe5520094e81",
+    "parents": [
+      "59325bf3aee931a432fb11deecceebd8"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #29627",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765502699
+  },
+  {
+    "hash": "cfd37f3a841efc81e489d7cbd169c867",
+    "parents": [
+      "4cd3865c8448591b5d24fe5520094e81"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #3876",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765502851
+  },
+  {
+    "hash": "386787e65ca162f1c6d10bbb855d1dcd",
+    "parents": [
+      "cfd37f3a841efc81e489d7cbd169c867"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15618",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765502914
+  },
+  {
+    "hash": "8215585f5d8867a36159188e73413847",
+    "parents": [
+      "386787e65ca162f1c6d10bbb855d1dcd"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #26134",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765502946
+  },
+  {
+    "hash": "8aeaded1ab3462fd14d07f83a91a8c85",
+    "parents": [
+      "8215585f5d8867a36159188e73413847"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #10046",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765503248
+  },
+  {
+    "hash": "11b90de893146d6e43dbbea4f89d647b",
+    "parents": [
+      "8aeaded1ab3462fd14d07f83a91a8c85"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17370",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765503490
+  },
+  {
+    "hash": "9c6445cbe33bb7a8ff75ccabc16e07d6",
+    "parents": [
+      "11b90de893146d6e43dbbea4f89d647b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5127",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765503522
+  },
+  {
+    "hash": "3db357eda26ddc81b12129e55add8160",
+    "parents": [
+      "9c6445cbe33bb7a8ff75ccabc16e07d6"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17875",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765503675
+  },
+  {
+    "hash": "c318fc2af94727959940b900fa9cc4f6",
+    "parents": [
+      "3db357eda26ddc81b12129e55add8160"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #16091",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765503887
+  },
+  {
+    "hash": "8a29c5859378af1cf58b5d9d79253ca8",
+    "parents": [
+      "c318fc2af94727959940b900fa9cc4f6"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #10547",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765504190
+  },
+  {
+    "hash": "fc38d09910dd51d82fbafa5cb011db43",
+    "parents": [
+      "8a29c5859378af1cf58b5d9d79253ca8"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #29421",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765504312
+  },
+  {
+    "hash": "5a04bfcedd744bcd0d6c441d1527cd45",
+    "parents": [
+      "fc38d09910dd51d82fbafa5cb011db43"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #29318",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765504404
+  },
+  {
+    "hash": "3fd1d79dca6927e89b54399ff125e09b",
+    "parents": [
+      "5a04bfcedd744bcd0d6c441d1527cd45"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18290",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765504466
+  },
+  {
+    "hash": "e81c10dc282e8402c628554f32352ee8",
+    "parents": [
+      "3fd1d79dca6927e89b54399ff125e09b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #22147",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765504558
+  },
+  {
+    "hash": "0b65b6f641749cf906498717f7095fcb",
+    "parents": [
+      "e81c10dc282e8402c628554f32352ee8"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #22243",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765504590
+  },
+  {
+    "hash": "60e15db1e8d2d64ab313fa146bef7a7b",
+    "parents": [
+      "0b65b6f641749cf906498717f7095fcb"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #28656",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765504772
+  },
+  {
+    "hash": "c8e6b30748e5226b60f1b53f3902b7ce",
+    "parents": [
+      "60e15db1e8d2d64ab313fa146bef7a7b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15491",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765504955
+  },
+  {
+    "hash": "97ea2940a259fdc1d20cd9c540766bd9",
+    "parents": [
+      "c8e6b30748e5226b60f1b53f3902b7ce"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #1163",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505107
+  },
+  {
+    "hash": "5a3feed1fbcf9922dbd18d8d4c81cfe7",
+    "parents": [
+      "97ea2940a259fdc1d20cd9c540766bd9"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #10616",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505199
+  },
+  {
+    "hash": "f7b180f8093636d929d74b4a0420e56a",
+    "parents": [
+      "5a3feed1fbcf9922dbd18d8d4c81cfe7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #30370",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505231
+  },
+  {
+    "hash": "81c06f828fb5a90c5965fbeabe94fc44",
+    "parents": [
+      "f7b180f8093636d929d74b4a0420e56a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #21075",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505293
+  },
+  {
+    "hash": "9dcb6ffc0d7138ba2937dcc1320cd07e",
+    "parents": [
+      "81c06f828fb5a90c5965fbeabe94fc44"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #27419",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505385
+  },
+  {
+    "hash": "c0cec217d0566d204b177a31ec5e74ba",
+    "parents": [
+      "9dcb6ffc0d7138ba2937dcc1320cd07e"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5208",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505448
+  },
+  {
+    "hash": "1b449d58ee89f795677b1ce1db6b8b5e",
+    "parents": [
+      "c0cec217d0566d204b177a31ec5e74ba"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11952",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505480
+  },
+  {
+    "hash": "7260c5d3561cf3194797cc9f55076831",
+    "parents": [
+      "1b449d58ee89f795677b1ce1db6b8b5e"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #3932",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505542
+  },
+  {
+    "hash": "8082eabcf903ca60fccab524750dda86",
+    "parents": [
+      "7260c5d3561cf3194797cc9f55076831"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #10648",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505634
+  },
+  {
+    "hash": "b8e4a1b770d14ad155411af3ed4f4acd",
+    "parents": [
+      "8082eabcf903ca60fccab524750dda86"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11059",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505846
+  },
+  {
+    "hash": "32402ff8571d9256ee4dae83a491dd5e",
+    "parents": [
+      "b8e4a1b770d14ad155411af3ed4f4acd"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #27955",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765505908
+  },
+  {
+    "hash": "e1101b5973fb15b6cb35f22abab08b30",
+    "parents": [
+      "32402ff8571d9256ee4dae83a491dd5e"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #11176",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765506001
+  },
+  {
+    "hash": "3e911c45644462e6de2f68170577aa7b",
+    "parents": [
+      "e1101b5973fb15b6cb35f22abab08b30"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #32207",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765506033
+  },
+  {
+    "hash": "900d3d8c6ea62721951457c4aa22baf5",
+    "parents": [
+      "3e911c45644462e6de2f68170577aa7b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13985",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765506245
+  },
+  {
+    "hash": "e9c384dfebda12411af45e2c573d12b3",
+    "parents": [
+      "900d3d8c6ea62721951457c4aa22baf5"
+    ],
+    "data": {
+      "task": "jckson",
+      "hours": 0.5,
+      "standard_time": 0.5,
+      "efficiency": "100%",
+      "complexity": 1,
+      "proof": "example.com",
+      "reward": 5,
+      "minter": "Volunteer",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765506504
+  },
+  {
+    "hash": "705ccd788b45fd0dc67f84e0455c4fd7",
+    "parents": [
+      "e9c384dfebda12411af45e2c573d12b3"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #18039",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765506727
+  },
+  {
+    "hash": "9936d8cbed639d8c09416d0593849d52",
+    "parents": [
+      "705ccd788b45fd0dc67f84e0455c4fd7"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #29500",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765506790
+  },
+  {
+    "hash": "4346c232f27599b1f83105650af4dc8c",
+    "parents": [
+      "9936d8cbed639d8c09416d0593849d52"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #20258",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765506852
+  },
+  {
+    "hash": "1d30d3bbec048e920104524f71acc956",
+    "parents": [
+      "4346c232f27599b1f83105650af4dc8c"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #20289",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765507004
+  },
+  {
+    "hash": "d1432d12e294f8cf316521e35eb98652",
+    "parents": [
+      "1d30d3bbec048e920104524f71acc956"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15638",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765507126
+  },
+  {
+    "hash": "405a26e6e0c60f9975846aeb58b107b4",
+    "parents": [
+      "d1432d12e294f8cf316521e35eb98652"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #24642",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765507158
+  },
+  {
+    "hash": "d858e5a75e474bfd7ae759328a4c50a1",
+    "parents": [
+      "405a26e6e0c60f9975846aeb58b107b4"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #25131",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765507491
+  },
+  {
+    "hash": "fa9280150d527eadbce7f98473158c48",
+    "parents": [
+      "d858e5a75e474bfd7ae759328a4c50a1"
+    ],
+    "data": {
+      "task": "Civilization OS Retrofit",
+      "hours": 4,
+      "complexity": 3,
+      "proof": "AUTO-GENERATED",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765507694
+  },
+  {
+    "hash": "4930e137bc9c3c8fcc999bc21754d0b5",
+    "parents": [
+      "fa9280150d527eadbce7f98473158c48"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #13525",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765507793
+  },
+  {
+    "hash": "57668e8340f075ff7bd0d909f80cc0d2",
+    "parents": [
+      "4930e137bc9c3c8fcc999bc21754d0b5"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #7768",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765508036
+  },
+  {
+    "hash": "5d85ba0111edfe7c663b2a3f733ec76a",
+    "parents": [
+      "57668e8340f075ff7bd0d909f80cc0d2"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #2189",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765508308
+  },
+  {
+    "hash": "066c816f8ab660d838d285504b52ec4a",
+    "parents": [
+      "5d85ba0111edfe7c663b2a3f733ec76a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17710",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765508491
+  },
+  {
+    "hash": "599aa884ed17a807a3bd528e30c19cf2",
+    "parents": [
+      "066c816f8ab660d838d285504b52ec4a"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #5418",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765508673
+  },
+  {
+    "hash": "b7005dfef61af2ea7e0adb329d857c9b",
+    "parents": [
+      "599aa884ed17a807a3bd528e30c19cf2"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #15651",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765508705
+  },
+  {
+    "hash": "2a312c234b641dc4232688cf3e0e2c23",
+    "parents": [
+      "b7005dfef61af2ea7e0adb329d857c9b"
+    ],
+    "data": {
+      "task": "Auto-Op: System Check #17070",
+      "hours": 0.1,
+      "complexity": 1,
+      "proof": "AUTO",
+      "block_type": "MINT",
+      "verified": true
+    },
+    "timestamp": 1765508827
+  }
+]

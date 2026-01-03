@@ -1,0 +1,244 @@
+= Abundance Token Civilization System =
+
+__TOC__
+
+= PART 1: THE STRATEGY =
+
+== The Irresistible Offer: "The Freedom Franchise" ==
+We are not selling a "token" or a "governance model." No one cares about that.
+We are selling '''immediate freedom from the Rat Race.'''
+
+=== 1. The Dream Outcome ===
+"Own a mortgage-free, self-sustaining micro-home and the skills to feed yourself forever."
+
+=== 2. Perceived Likelihood of Achievement ===
+* '''Not Speculation''': We don't show them a whitepaper. We show them a '''Tractor''' we built for $800. We show them a '''House''' built in 5 days.
+* '''Social Proof''': "See the 50 people already living this way."
+
+=== 3. Time Delay ===
+* '''Old Way''': 30-year mortgage.
+* '''Our Way''': '''2-Year Time Share Path'''.
+** Commit 2 years (or weekends equivalent) to the Guild.
+** Walk away with a house and a trade.
+
+=== 4. Effort & Sacrifice ===
+* '''The Fear''': "I have to be a farmer/engineer."
+* '''The Fix''': "No. You just have to show up. We have the ''' 'Zero to Hero' ''' system. We teach you. You play with cool machines. It feels like LEGOs, not labor."
+
+=== The "Grand Slam" Offer for Outsiders ===
+To get dollars flowing IN, we sell '''"The Weekend Escape"'''.
+* '''Offer''': "Come spend 3 days at the OSE Campus. Learn to build a brick press. Eat organic food we grew. Sleep in a micro-house."
+* '''Price''': $1,500 (Fiat).
+* '''The Magic''':
+# '''They Pay Us''': Revenue buys steel/cement for the next house.
+# '''They Build Us''': During the workshop, they build a machine we keep.
+# '''They Convert''': 20% will say, "I never want to go back to my cubicle. How do I stay?"
+# '''The Upsell''': "Join the 2-Year Freedom Path."
+
+=== Feasibility NOW (The Small Scale) ===
+You don't need a blockchain for the first 5 people.
+# '''The MVP''': User buys a workshop ticket (Stripe/Cash).
+# '''The Ledger''': We record their "Impact Points" on a simple public dashboard (The temporary "Testnet").
+# '''The Interaction''': They scan a QR code on the machine they built. "I made this."
+# '''The Result''': The system works socially before it works technically. The feeling of "I belong" happens instantly.
+
+----
+
+== Civilization Monetary Plan: The Open Source Economy ==
+
+=== The Prime Directive ===
+To create a monetary system where '''Value = Life Regeneration'''.
+We do not optimize for profit. We optimize for '''Evolution'''.
+
+=== 1. The Foundation: "The 4 Seasons of Value" ===
+
+==== Season 1: Scarcity (The Anchor) ====
+* '''Reality''': We live in a physical world. We need steel, land, and energy.
+* '''Mechanism''': '''Bitcoin (BTC)'''.
+** The "Village Vault" holds BTC.
+** This is our shield against the dying fiat world.
+** '''Rule''': We export high-value machines (CNC, Tractors) to earn BTC. We never sell our land for fiat.
+
+==== Season 2: Labor (The Engine) ====
+* '''Reality''': Nothing moves without human will.
+* '''Mechanism''': '''Abundance Token (AT)'''.
+** 1 AT ≈ 1 Hour of Basic Regenerative Labor.
+** '''Minting''': Only created when verified work happens (Proof of Regeneration).
+** '''Burning''': Burnt when engaging the community's assets (e.g., using the Fab Lab).
+
+==== Season 3: Reputation (The Soul) ====
+* '''Reality''': Trust scales faster than contracts.
+* '''Mechanism''': '''Impact Score'''.
+** Non-transferable.
+** Earned by mentoring, verifying, and stewarding.
+** '''Power''': High score = Governance weight + Ability to mint higher value (Credit Limit).
+
+==== Season 4: Abundance (The Goal) ====
+* '''Reality''': A paid-off house produces shelter forever at near-zero cost.
+* '''Mechanism''': '''The Commons'''.
+** As debt is destroyed (houses built), the cost of living drops to zero.
+** Money becomes less necessary. The civilization "graduates" from economics.
+
+=== 2. The Course Integration: "Future Builders Crash Course 7" ===
+'''The "Coin" is the Diploma.'''
+
+* '''Module 1: The Download (Wallet Setup)'''
+** Action: Students install the "Compass" App.
+** Lesson: "This is not a crypto wallet. This is your Citizenship."
+
+* '''Module 2: The Sweat Equity (First Mint)'''
+** Task: "Build the Brick Press" (Coursework).
+** Reward: The machine is built. The student mints 50 AT.
+** Lesson: Money comes from creation, not speculation.
+
+* '''Module 3: The Interdependence (The Trade)'''
+** Action: Student A (who made bricks) trades 10 AT with Student B (who cooked lunch).
+** Lesson: We are an economy. We don't need Walmart.
+
+* '''Module 4: The Exit (The Offer)'''
+** The Pitch: "You have earned 50 AT and a 'Builder Lvl 1' Badge."
+** Choice A: Cash out (Sell AT to the Treasury for USD/BTC and leave).
+** Choice B: '''Invest'''. Use your AT to buy a share in the next "Time Share House".
+** Result: 80% stay.
+
+=== 3. The 100-Year Exit Strategy ===
+How do we ensure this doesn't become a tyranny?
+* '''The Keys Burn''': At Year 10 (or Milestone X), the Admin Keys for the contract are verified burned. The algorithm rules supreme.
+* '''The Land Trust''': All land acquired is put into a "Community Land Trust" with a charter that forbids sale.
+* '''The "Starship" Clause''': If the node fails, the people can "fork" the village. They take their Reputation and AT to a new node. Portable Sovereignty.
+
+=== 4. Immediate Nuance: The "Free Rider" Defense ===
+* '''Problem''': What if someone joins, eats our food, and does nothing?
+* '''Defense''': The '''"Sunlight Protocol"'''.
+** Everything is public. "Standard Time" for a task is known.
+** If you take 20 hours to do a 4-hour job, your Reputation craters.
+** Low Reputation = No access to the Common Kitchen.
+** Social ostracization is older and stronger than police.
+
+= PART 2: ECONOMICS & PROTOCOLS =
+
+== Work Conversion Protocol: Gamifying the Economy ==
+
+=== 1. The Core Loop (The "Game Loop") ===
+We replace "Job" with "Quest". We replace "Wage" with "Loot".
+
+# '''Quest Generation (Bounty Board)'''
+#* Input: A need is identified (e.g., "We need 500 bricks for the new house").
+#* Valuation: The '''Commons Circle''' estimates the effort. "Standard Time: 20 hours."
+#* Posting: The Quest goes live on the Compass App.
+# '''Quest Acceptance (Looking for Group)'''
+#* User: Opens app, sees "Brick Pressing Quest".
+#* Action: Taps "Accept". (If they need a team, they "Start Party" and invite neighbors).
+# '''The Grind (Execution)'''
+#* Work: The user physically presses the bricks.
+#* Proof: They log progress periodically (Batch 1 done, Photo).
+# '''The Verification (Boss Fight)'''
+#* Verifier: A Steward (Quality Control) inspects the bricks.
+#* Pass: "Bricks are solid." -> Transaction Signed.
+#* Fail: "Bricks are cracking. Redo Batch 5."
+# '''The Reward (Level Up)'''
+#* '''Mint''': 200 AT minted to User's wallet.
+#* '''XP''': User gains +20 XP in "Masonry" (Working towards Journeyer Badge).
+
+=== 2. Collective Valuation (Min-Maxing Value) ===
+How do we decide a Quest is worth 200 AT?
+
+==== The "Planning Poker" Protocol ====
+We do not let a central planner decide prices. We use the '''Wisdom of the Crowd'''.
+# '''Session''': The "Construction Circle" meets (Weekly or Async).
+# '''Nomination''': "We need to fix the Barn Roof."
+# '''Vote''': All Journeyers vote on the "Standard Time" (Effort).
+#* Alice: "4 hours."
+#* Bob: "6 hours."
+#* Charlie: "4 hours."
+# '''Consensus''': Average is ~4.5 hours. Set Bounty at 50 AT.
+# '''Dynamic Adjustment''': If no one takes the quest for 3 days, the Bounty auto-increases (Dutch Auction) until someone accepts. The market finds the true price.
+
+== Barter Logic: Livestock Case Study ==
+=== The Core Formula ===
+We do not pay for time alone (slowness) nor output alone (corner-cutting). We pay for '''Proven Value'''.
+
+'''Value (AT) = (Hours x BaseRate x SkillMultiplier) + OutcomeBonus'''
+
+* '''Base Rate''': 10 AT/hr (Universal Floor).
+* '''Skill Multiplier multiplier''': 1.0x (Apprentice), 1.5x (Journeyer), 2.0x (Steward).
+* '''Outcome Bonus''': 50% of time saved.
+
+=== Storyboard: Chicken Tractor Build ===
+* '''Goal''': Build Module C (Standard Time: 10 hrs). Bounty Cap: 150 AT.
+* '''Apprentice Ned''': Takes 12 hrs. Paid for 10 hrs * 1.0 = '''100 AT'''.
+* '''Steward Maria''': Takes 4 hrs. Paid for 4 hrs * 2.0 = 80 AT. + Efficiency Bonus (3 hrs * 10) = 30 AT. Total '''110 AT'''.
+* '''Result''': Maria earns nearly 3x per hour effectively.
+
+== Reputation Economics ==
+=== Scarcity as the Anchor ===
+* '''BTC is the Vault''': Stores surplus.
+* '''AT is the Flow''': Measures labor velocity.
+
+=== Crystallizing Reputation ===
+* '''Staking''': A Master must Stake Reputation to verify a Novice.
+* If Novice fails, Master loses Reputation.
+* This allows trust to scale beyond Dunbar's number.
+
+= PART 3: TECHNOLOGY =
+
+== Why Blockchain? (The Appliance Philosophy) ==
+'''Question''': "Why not a spreadsheet? We don't want to hire 10 devs."
+'''Answer''':
+# '''Sovereignty''': A spreadsheet has an "Admin". An admin can delete your house. A ledger has no admin.
+# '''Scale''': Allows Village A to trade with Village B without trusting them personally.
+# '''The Appliance''': We treat software like a Refrigerator. We finish it, freeze it, and run it on '''Talos Linux'''. No updates, no DevOps. It just runs.
+
+== Abundance DAG Whitepaper (Draft) ==
+=== Abstract ===
+A modular, GhostDAG-based ledger. Prioritizes Soundness (Rust), Throughput (DAG), and Mobile-Verification (MMR).
+
+=== Core Structures ===
+* '''Vertex''': The unit of the graph.
+* '''GhostDAG''': Consensus protocol allowing parallel blocks.
+* '''Impact Record''': The schema for "Regenerative Actions" (Geo, Time, Type, Metrics).
+
+=== Proof of Regeneration ===
+Consensus weight is determined by valid Impact Scores, not just CPU power.
+
+== Mesh Architecture ==
+* '''Hardware''': Intel NUC 13 Pro ("Village Node").
+* '''OS''': Talos Linux (Immutable).
+* '''Network''': Yggdrasil (End-to-End Encrypted Mesh IPv6).
+* '''Stack''': Kubernetes (K3s) running the DAG + Nextcloud + HomeAssistant.
+
+== App UX: "The Compass" ==
+* '''Design''': Game HUD. NOT a crypto wallet.
+* '''Home Screen''': User's Impact Ring (Green=Eco, Gold=Labor).
+* '''Action''': One big button -> '''SCAN QR'''.
+* '''Flow''': Build Wall -> Scan Code -> Get Paid.
+
+= PART 4: PSYCHOLOGY & ROADMAP =
+
+== FAQ & Narrative ==
+* '''Don't say Crypto'''. Say '''Civic Accounting'''.
+* '''Don't say Mining'''. Say '''Earning'''.
+* '''Is this a Ponzi?''' No. We pay in Housing/Food, not promises.
+* '''What if price crashes?''' 1 AT = 1 Hour. Labor doesn't crash.
+
+== Timeline ==
+* '''Day 1 (Now)''': CLI Faucet & Testnet.
+* '''Day 7''': Web Dashboard ("The Compass" Prototype).
+* '''Day 30''': First physical trade (Eggs for Labor).
+
+= PART 5: GOVERNANCE =
+
+== Governance Model ==
+* '''Structure''': Holacracy-inspired Circles.
+* '''Constitution''': The Supreme Law.
+* '''Circles''':
+** '''General Company Circle (GCC)''': The Anchor.
+** '''Reputation & Identity Circle''': Verify humans.
+** '''Technology & Infrastructure''': Maintain the Mesh.
+** '''Stewardship & Commons''': Land and Resource management.
+
+== Competency Framework (Zero to Hero) ==
+* '''Apprentice''': "I am learning." (Needs supervision).
+* '''Journeyer''': "I can do it." (Independent).
+* '''Steward''': "I can teach it." (Mastery).
+* '''The Guarantee''': We hold the flashlight. You just walk the path.

@@ -1,0 +1,129 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hoursInterval": 1
+                        }
+                    ]
+                }
+            },
+            "id": "eaaa6b1a-8b1a-4b1a-8b1a-8b1a8b1a8b1a",
+            "name": "Schedule Trigger",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://project-gamma-woods-kay.trycloudflare.com/api/evolution",
+                "options": {}
+            },
+            "id": "baaa6b1a-8b1a-4b1a-8b1a-8b1a8b1a8b1a",
+            "name": "Audit System State",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://project-gamma-woods-kay.trycloudflare.com/api/steward/think",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "context",
+                            "value": "={{ $json }}"
+                        },
+                        {
+                            "name": "prompt",
+                            "value": "Based on the metabolic yield and evolution cycles, propose one technical upgrade for the Ark OS."
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "caaa6b1a-8b1a-4b1a-8b1a-8b1a8b1a8b1a",
+            "name": "Steward Ollama Brain",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                850,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://project-gamma-woods-kay.trycloudflare.com/api/mission/propose",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "title",
+                            "value": "={{ $json.proposal.title }}"
+                        },
+                        {
+                            "name": "description",
+                            "value": "={{ $json.proposal.description }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "daaa6b1a-8b1a-4b1a-8b1a-8b1a8b1a8b1a",
+            "name": "Push to Ledger",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                1050,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Schedule Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Audit System State",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Audit System State": {
+            "main": [
+                [
+                    {
+                        "node": "Steward Ollama Brain",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Steward Ollama Brain": {
+            "main": [
+                [
+                    {
+                        "node": "Push to Ledger",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

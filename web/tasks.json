@@ -1,0 +1,102 @@
+[
+    {
+        "id": "seh7-elec-001",
+        "title": "Install Main Panel (Rough-in)",
+        "description": "Mount 200A main breaker panel to utility wall. Install weatherhead and meter socket.",
+        "category": "Electrical",
+        "standard_time": 4.0,
+        "bounty": 40,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-elec-002",
+        "title": "Drill Studs for Romex (Kitchen)",
+        "description": "Drill 3/4 inch holes in studs for kitchen counter circuits. Ensure center alignment.",
+        "category": "Electrical",
+        "standard_time": 2.5,
+        "bounty": 25,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-elec-003",
+        "title": "Install Outlet Boxes (Living Room)",
+        "description": "Mount single-gang outlet boxes at 12 inch height throughout living room. Mark circuits.",
+        "category": "Electrical",
+        "standard_time": 1.5,
+        "bounty": 15,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-elec-004",
+        "title": "Pull Romex to Panel",
+        "description": "Run 12/2 and 14/2 Romex from outlet boxes to main panel. Leave 24 inch service loops.",
+        "category": "Electrical",
+        "standard_time": 3.0,
+        "bounty": 30,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-plumb-001",
+        "title": "Install Mixing Valve (Shower)",
+        "description": "Solder and mount shower mixing valve. Pressure test connections.",
+        "category": "Plumbing",
+        "standard_time": 2.0,
+        "bounty": 20,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-plumb-002",
+        "title": "DWV Rough-in (Bathroom)",
+        "description": "Install 3-inch PVC drain line for toilet and 2-inch for sink/shower. Slope 1/4 inch per foot.",
+        "category": "Plumbing",
+        "standard_time": 5.0,
+        "bounty": 50,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-plumb-003",
+        "title": "Install Water Heater",
+        "description": "Mount and connect tankless water heater. Install shut-off valves and expansion tank.",
+        "category": "Plumbing",
+        "standard_time": 4.0,
+        "bounty": 40,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-gen-001",
+        "title": "Organize Tool Stall",
+        "description": "Sort and hang all power tools. Sweep floor and label storage bins.",
+        "category": "General",
+        "standard_time": 1.0,
+        "bounty": 10,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-gen-002",
+        "title": "Clean Workshop",
+        "description": "Sweep floors, organize workbench, dispose of scrap materials properly.",
+        "category": "General",
+        "standard_time": 1.5,
+        "bounty": 15,
+        "status": "OPEN",
+        "assignee": null
+    },
+    {
+        "id": "seh7-gen-003",
+        "title": "Inventory Materials Check",
+        "description": "Count and log all electrical and plumbing supplies. Update inventory spreadsheet.",
+        "category": "General",
+        "standard_time": 2.0,
+        "bounty": 20,
+        "status": "OPEN",
+        "assignee": null
+    }
+]

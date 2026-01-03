@@ -1,0 +1,42 @@
+[
+    {
+        "id": "seed_q1",
+        "title": "Build 50 Gallon Drum Filter",
+        "description": "Construct a bio-filter using a standard 50-gallon drum for the aquaponics system.",
+        "reward_at": 50,
+        "xp": 100,
+        "category": "ECO",
+        "party_size": 2,
+        "status": "OPEN"
+    },
+    {
+        "id": "seed_q2",
+        "title": "Flash ESP32 Controllers",
+        "description": "Flash the latest firmware onto 10 ESP32 units for the sensor grid.",
+        "reward_at": 20,
+        "xp": 50,
+        "category": "TECH",
+        "party_size": 1,
+        "status": "OPEN"
+    },
+    {
+        "id": "seed_q3",
+        "title": "Plant Heirloom Tomatoes",
+        "description": "Plant 20 seedlings in Bed A.",
+        "reward_at": 15,
+        "xp": 30,
+        "category": "AGRI",
+        "party_size": 3,
+        "status": "OPEN"
+    },
+    {
+        "id": "seed_q4",
+        "title": "Construct Solar Rack",
+        "description": "Assemble the aluminum racking for the new solar array.",
+        "reward_at": 80,
+        "xp": 200,
+        "category": "ENERGY",
+        "party_size": 4,
+        "status": "OPEN"
+    }
+]

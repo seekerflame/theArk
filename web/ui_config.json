@@ -1,0 +1,146 @@
+{
+    "version": "1.0.0",
+    "codename": "The Ark",
+    "theme": {
+        "primary": "#10B981",
+        "primary_glow": "rgba(16, 185, 129, 0.5)",
+        "bg_dark": "#0f172a",
+        "glass_bg": "rgba(30, 41, 59, 0.7)"
+    },
+    "modules": [
+        {
+            "id": "dashboard",
+            "name": "Mission Control",
+            "icon": "🚀",
+            "enabled": true,
+            "order": 1
+        },
+        {
+            "id": "jobs",
+            "name": "Job Board",
+            "icon": "📋",
+            "enabled": true,
+            "order": 2
+        },
+        {
+            "id": "bounties",
+            "name": "Bounty Board",
+            "icon": "⚔️",
+            "enabled": true,
+            "order": 2.5
+        },
+        {
+            "id": "wallet",
+            "name": "Sovereign Wallet",
+            "icon": "💰",
+            "enabled": true,
+            "order": 3
+        },
+        {
+            "id": "techtree",
+            "name": "Tech Tree",
+            "icon": "🧬",
+            "enabled": true,
+            "order": 4
+        },
+        {
+            "id": "evolution",
+            "name": "Evolution",
+            "icon": "🧬",
+            "enabled": true,
+            "order": 4.5
+        },
+        {
+            "id": "builddeck",
+            "name": "Build Deck",
+            "icon": "🏎️",
+            "enabled": true,
+            "order": 4.6
+        },
+        {
+            "id": "wiki",
+            "name": "Knowledge Base",
+            "icon": "📚",
+            "enabled": true,
+            "order": 5
+        },
+        {
+            "id": "chronicle",
+            "name": "The Chronicle Lord",
+            "icon": "📜",
+            "enabled": true,
+            "order": 5.5
+        },
+        {
+            "id": "leaderboard",
+            "name": "Leaderboard",
+            "icon": "🏅",
+            "enabled": true,
+            "order": 6
+        },
+        {
+            "id": "map",
+            "name": "Mesh Map",
+            "icon": "🗺️",
+            "enabled": true,
+            "order": 7
+        },
+        {
+            "id": "hardware",
+            "name": "Infrastructure",
+            "icon": "🛠️",
+            "enabled": true,
+            "order": 7.5
+        },
+        {
+            "id": "tangle",
+            "name": "Live Tangle",
+            "icon": "🕸️",
+            "enabled": true,
+            "order": 8
+        },
+        {
+            "id": "steward",
+            "name": "Steward AI",
+            "icon": "🧠",
+            "enabled": true,
+            "order": 8.5
+        },
+        {
+            "id": "store",
+            "name": "The Mycelium",
+            "icon": "🌿",
+            "enabled": true,
+            "order": 9
+        },
+        {
+            "id": "mobility",
+            "name": "Universal Mobility",
+            "icon": "🛸",
+            "enabled": true,
+            "order": 9.5
+        },
+        {
+            "id": "console",
+            "name": "Terminal Console",
+            "icon": "💻",
+            "enabled": true,
+            "order": 10
+        },
+        {
+            "id": "auth",
+            "name": "Sovereign Access",
+            "icon": "🔐",
+            "enabled": true,
+            "order": 11
+        },
+        {
+            "id": "admin",
+            "name": "Admin Deck",
+            "icon": "🛡️",
+            "enabled": true,
+            "order": 99,
+            "role_required": "ADMIN"
+        }
+    ]
+}

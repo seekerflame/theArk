@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesh Visualizer - Ark OS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        #mesh-canvas {
+            width: 100vw;
+            height: 100vh;
+            cursor: move;
+        }
+
+        .mesh-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 12px;
+        }
+
+        .mesh-stats {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-glow"></div>
+
+    <nav class="mesh-nav">
+        <button class="nav-item glass-panel" onclick="window.location.href='index.html'" style="padding: 10px 20px;">←
+            Back to Dash</button>
+        <div class="glass-panel" style="padding: 10px 20px;">
+            <span style="color: var(--text-muted);">Mode:</span>
+            <span style="color: var(--primary-light); font-weight: 700;">PROXIMITY_MESH</span>
+        </div>
+    </nav>
+
+    <canvas id="mesh-canvas"></canvas>
+
+    <div class="mesh-stats glass-panel">
+        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">
+            Federated Peers</div>
+        <div id="peer-count" style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">--</div>
+        <div style="font-size: 0.7rem; color: var(--primary-light); margin-top: 5px;">MESH_PROTOCOL: STABLE</div>
+    </div>
+
+    <script src="mesh_visualizer.js"></script>
+</body>
+
+</html>

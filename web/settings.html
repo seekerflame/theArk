@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Abundance Token</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    <div class="app-container">
+        <header class="glass-panel">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html"
+                        style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:10px;">
+                        <div class="logo-icon"></div>
+                        <h1>Settings</h1>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <section class="glass-panel">
+            <div class="section-header">
+                <h2>Profile</h2>
+            </div>
+            <div class="form-group">
+                <label>Display Name</label>
+                <input type="text" id="display-name" placeholder="Enter your display name">
+            </div>
+            <div class="form-group">
+                <label>Skills (comma separated)</label>
+                <input type="text" id="skills" placeholder="Welding, Carpentry, Farming">
+            </div>
+            <button class="btn-submit" onclick="saveProfile()">Save Profile</button>
+        </section>
+
+        <section class="glass-panel">
+            <div class="section-header">
+                <h2>Appearance</h2>
+            </div>
+            <div class="form-group">
+                <label>Theme</label>
+                <select id="theme-select">
+                    <option value="dark">Dark (Default)</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="glass-panel">
+            <div class="section-header">
+                <h2>Privacy</h2>
+                <span style="font-size:11px;color:#10B981;">🔒 Your data is yours</span>
+            </div>
+            <div class="form-group" style="display:flex;justify-content:space-between;align-items:center;">
+                <label style="margin:0;">Share my location on Village Map</label>
+                <input type="checkbox" id="share-location" style="width:20px;height:20px;">
+            </div>
+            <p style="font-size:11px;color:#94a3b8;margin-top:5px;">If enabled, shows your approximate area (not exact
+                GPS). Off by default.</p>
+        </section>
+
+        <section class="glass-panel">
+            <div class="section-header">
+                <h2>Data</h2>
+            </div>
+            <button class="btn-secondary" onclick="exportData()" style="width:100%;margin-bottom:10px;">📥 Export Labor
+                History</button>
+            <button class="btn-secondary" onclick="clearData()"
+                style="width:100%;border-color:#ef4444;color:#ef4444;">🗑️ Clear All Data</button>
+        </section>
+
+        <section class="glass-panel">
+            <div class="section-header">
+                <h2>Account</h2>
+            </div>
+            <button class="btn-submit" onclick="logout()"
+                style="background:linear-gradient(135deg,#ef4444,#dc2626);width:100%;">🚪 Logout</button>
+        </section>
+    </div>
+
+    <script>
+        function saveProfile() {
+            var name = document.getElementById('display-name').value;
+            var skills = document.getElementById('skills').value;
+            var profile = JSON.parse(localStorage.getItem('abundanceProfile') || '{}');
+            profile.displayName = name;
+            profile.skills = skills.split(',').map(function (s) { return s.trim(); });
+            localStorage.setItem('abundanceProfile', JSON.stringify(profile));
+            alert('Profile saved!');
+        }
+
+        function exportData() {
+            var state = localStorage.getItem('abundanceState');
+            var blob = new Blob([state || '{}'], { type: 'application/json' });
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'abundance_history.json';
+            a.click();
+        }
+
+        function clearData() {
+            if (confirm('This will delete ALL your local data. Are you sure?')) {
+                localStorage.clear();
+                window.location = 'index.html';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('abundanceUser');
+            window.location = 'index.html';
+        }
+
+        // Load saved profile
+        var profile = JSON.parse(localStorage.getItem('abundanceProfile') || '{}');
+        if (profile.displayName) document.getElementById('display-name').value = profile.displayName;
+        if (profile.skills) document.getElementById('skills').value = profile.skills.join(', ');
+    </script>
+</body>
+
+</html>

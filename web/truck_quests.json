@@ -1,0 +1,250 @@
+[
+    {
+        "quest_id": "xm_truck_pre_01",
+        "title": "Safety: Shop Orientation",
+        "description": "Mandatory safety briefing for the shop floor. Eyes, ears, fire lanes.",
+        "category": "EXTREME",
+        "bounty_at": 50,
+        "requirements": [
+            "None"
+        ],
+        "icon": "🦺",
+        "estimated_time": "1h",
+        "swarm": "ALL"
+    },
+    {
+        "quest_id": "xm_chassis_cut_01",
+        "title": "CHASSIS: Main Rail Cutting",
+        "description": "Cut 2x4 box tubing for main frame rails per print #A1.",
+        "category": "EXTREME",
+        "bounty_at": 200,
+        "requirements": [
+            "Band Saw"
+        ],
+        "icon": "✂️",
+        "estimated_time": "2h",
+        "swarm": "CHASSIS"
+    },
+    {
+        "quest_id": "xm_chassis_jig_01",
+        "title": "CHASSIS: Frame Jig Setup",
+        "description": "Level the welding table and setup the frame jig fixtures.",
+        "category": "EXTREME",
+        "bounty_at": 400,
+        "requirements": [
+            "Precision Level"
+        ],
+        "icon": "📐",
+        "estimated_time": "4h",
+        "swarm": "CHASSIS"
+    },
+    {
+        "quest_id": "xm_chassis_tack_01",
+        "title": "CHASSIS: Main Frame Tack Weld",
+        "description": "Fit up main rails and crossmembers. Tack weld only.",
+        "category": "EXTREME",
+        "bounty_at": 500,
+        "requirements": [
+            "MIG/TIG"
+        ],
+        "icon": "🔥",
+        "estimated_time": "4h",
+        "swarm": "CHASSIS"
+    },
+    {
+        "quest_id": "xm_chassis_weld_01",
+        "title": "CHASSIS: Final Weld Out (Root Pass)",
+        "description": "Full penetration welds on main frame joints (Top/Bottom).",
+        "category": "EXTREME",
+        "bounty_at": 800,
+        "requirements": [
+            "Certified Welder"
+        ],
+        "icon": "👨‍🏭",
+        "estimated_time": "8h",
+        "swarm": "CHASSIS"
+    },
+    {
+        "quest_id": "xm_suspension_mounts_01",
+        "title": "CHASSIS: Suspension Hardpoints",
+        "description": "Weld 4-link brackets to the frame.",
+        "category": "EXTREME",
+        "bounty_at": 600,
+        "requirements": [
+            "Welding"
+        ],
+        "icon": "🚙",
+        "estimated_time": "4h",
+        "swarm": "CHASSIS"
+    },
+    {
+        "quest_id": "xm_engine_prep_01",
+        "title": "DRIVE: Godzilla Engine Prep",
+        "description": "Uncrate Ford 7.3L. Install alternator, PS pump, and starter.",
+        "category": "EXTREME",
+        "bounty_at": 300,
+        "requirements": [
+            "Mechanic"
+        ],
+        "icon": "⚙️",
+        "estimated_time": "3h",
+        "swarm": "DRIVETRAIN"
+    },
+    {
+        "quest_id": "xm_trans_mate_01",
+        "title": "DRIVE: Trans Mating",
+        "description": "Mate the 10R140 transmission to the engine block.",
+        "category": "EXTREME",
+        "bounty_at": 400,
+        "requirements": [
+            "Heavy Lift"
+        ],
+        "icon": "⛓️",
+        "estimated_time": "2h",
+        "swarm": "DRIVETRAIN"
+    },
+    {
+        "quest_id": "xm_engine_mount_01",
+        "title": "DRIVE: Crane Drop In",
+        "description": "Lower engine/trans assembly into chassis and bolt to mounts.",
+        "category": "EXTREME",
+        "bounty_at": 500,
+        "requirements": [
+            "Crane Op",
+            "Team of 3"
+        ],
+        "icon": "🏗️",
+        "estimated_time": "2h",
+        "swarm": "DRIVETRAIN"
+    },
+    {
+        "quest_id": "xm_driveshaft_01",
+        "title": "DRIVE: Driveshaft Angle Check",
+        "description": "Measure pinion angle and transfer case output angle.",
+        "category": "EXTREME",
+        "bounty_at": 200,
+        "requirements": [
+            "Angle Finder"
+        ],
+        "icon": "📏",
+        "estimated_time": "1h",
+        "swarm": "DRIVETRAIN"
+    },
+    {
+        "quest_id": "xm_brake_lines_01",
+        "title": "SYS: Brake Line Fabrication",
+        "description": "Bend and flare stainless brake hardlines.",
+        "category": "EXTREME",
+        "bounty_at": 400,
+        "requirements": [
+            "Bender"
+        ],
+        "icon": "🛑",
+        "estimated_time": "4h",
+        "swarm": "SYSTEMS"
+    },
+    {
+        "quest_id": "xm_fuel_sys_01",
+        "title": "SYS: Fuel Cell Install",
+        "description": "Mount fuel cell and run -8 AN lines to fuel rail.",
+        "category": "EXTREME",
+        "bounty_at": 400,
+        "requirements": [
+            "Plumbing"
+        ],
+        "icon": "⛽",
+        "estimated_time": "3h",
+        "swarm": "SYSTEMS"
+    },
+    {
+        "quest_id": "xm_wiring_ecu_01",
+        "title": "SYS: Godzilla Control Pack",
+        "description": "Install Ford Control Pack harness and mount ECU.",
+        "category": "EXTREME",
+        "bounty_at": 1000,
+        "requirements": [
+            "Electrical"
+        ],
+        "icon": "⚡",
+        "estimated_time": "6h",
+        "swarm": "SYSTEMS"
+    },
+    {
+        "quest_id": "xm_cooling_01",
+        "title": "SYS: Radiator Mount",
+        "description": "Fabricate radiator mounts and install fans.",
+        "category": "EXTREME",
+        "bounty_at": 300,
+        "requirements": [
+            "Fab"
+        ],
+        "icon": "❄️",
+        "estimated_time": "3h",
+        "swarm": "SYSTEMS"
+    },
+    {
+        "quest_id": "xm_body_panels_01",
+        "title": "BODY: Aluminum Panel Cut",
+        "description": "Cut floor pans and firewall from 1/8 aluminum.",
+        "category": "EXTREME",
+        "bounty_at": 300,
+        "requirements": [
+            "Plasma/Shear"
+        ],
+        "icon": "🛡️",
+        "estimated_time": "4h",
+        "swarm": "BODY"
+    },
+    {
+        "quest_id": "xm_seat_mounts_01",
+        "title": "BODY: Seat Rail Fab",
+        "description": "Weld in seat sliders for driver/passenger.",
+        "category": "EXTREME",
+        "bounty_at": 300,
+        "requirements": [
+            "Welding"
+        ],
+        "icon": "💺",
+        "estimated_time": "2h",
+        "swarm": "BODY"
+    },
+    {
+        "quest_id": "xm_dash_01",
+        "title": "BODY: Dashboard Layout",
+        "description": "Layout gauges, switches, and ignition.",
+        "category": "EXTREME",
+        "bounty_at": 200,
+        "requirements": [
+            "Design"
+        ],
+        "icon": "📟",
+        "estimated_time": "2h",
+        "swarm": "BODY"
+    },
+    {
+        "quest_id": "xm_first_start_01",
+        "title": "TEST: First Ignition",
+        "description": "Prime oil, check fuel pressure, fire engine.",
+        "category": "EXTREME",
+        "bounty_at": 5000,
+        "requirements": [
+            "ALL HANDS"
+        ],
+        "icon": "🔑",
+        "estimated_time": "1h",
+        "swarm": "ALL"
+    },
+    {
+        "quest_id": "xm_mud_test_01",
+        "title": "TEST: Mud Pit Validation",
+        "description": "Full send in the mud pit. Verify 4WD engagement.",
+        "category": "EXTREME",
+        "bounty_at": 2000,
+        "requirements": [
+            "Driver"
+        ],
+        "icon": "🏁",
+        "estimated_time": "1h",
+        "swarm": "TEST"
+    }
+]

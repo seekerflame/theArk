@@ -1,0 +1,608 @@
+{
+    "project": "Seed Eco-Home 7",
+    "description": "Complete build quest tree for constructing a regenerative micro-home",
+    "total_quests": 52,
+    "estimated_hours": 480,
+    "at_bounty_total": 4800,
+    "phases": [
+        {
+            "phase": "Foundation",
+            "quests": [
+                {
+                    "id": "seh7_001",
+                    "title": "Site Survey & Marking",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Tape Measure",
+                        "Stakes"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_002",
+                    "title": "Excavate Foundation Trenches",
+                    "hours": 8,
+                    "at": 80,
+                    "requirements": [
+                        "Excavator",
+                        "Physical Labor"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_003",
+                    "title": "Install Gravel Base (4in)",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Gravel",
+                        "Compactor"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_004",
+                    "title": "Build Formwork for Slab",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "2x4 Lumber",
+                        "Nails"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_005",
+                    "title": "Install Rebar Grid",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Rebar",
+                        "Wire Ties"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_006",
+                    "title": "Pour Concrete Slab",
+                    "hours": 8,
+                    "at": 80,
+                    "requirements": [
+                        "Concrete Truck",
+                        "Crew of 3"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_007",
+                    "title": "Cure & Finish Slab",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Trowel",
+                        "Patience"
+                    ],
+                    "category": "CONSTRUCTION"
+                }
+            ]
+        },
+        {
+            "phase": "Framing",
+            "quests": [
+                {
+                    "id": "seh7_008",
+                    "title": "Cut Bottom Plate",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Miter Saw",
+                        "2x6 Lumber"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_009",
+                    "title": "Install Anchor Bolts",
+                    "hours": 3,
+                    "at": 30,
+                    "requirements": [
+                        "Drill",
+                        "Anchor Bolts"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_010",
+                    "title": "Frame Wall Sections (South)",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "Framing Nailer",
+                        "Studs"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_011",
+                    "title": "Frame Wall Sections (North)",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "Framing Nailer",
+                        "Studs"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_012",
+                    "title": "Frame Wall Sections (East/West)",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "Framing Nailer",
+                        "Studs"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_013",
+                    "title": "Raise & Plumb Walls",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Level",
+                        "Crew of 2"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_014",
+                    "title": "Install Top Plate",
+                    "hours": 3,
+                    "at": 30,
+                    "requirements": [
+                        "2x6 Lumber",
+                        "Nails"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_015",
+                    "title": "Frame Roof Trusses",
+                    "hours": 8,
+                    "at": 80,
+                    "requirements": [
+                        "Truss Pattern",
+                        "2x4 Lumber"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_016",
+                    "title": "Install Roof Sheathing",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "OSB Sheets",
+                        "Screw Gun"
+                    ],
+                    "category": "CONSTRUCTION"
+                }
+            ]
+        },
+        {
+            "phase": "Electrical",
+            "quests": [
+                {
+                    "id": "seh7_017",
+                    "title": "Run Main Service Line",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Conduit",
+                        "Wire"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_018",
+                    "title": "Mount Main Panel",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Breaker Box",
+                        "Drill"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_019",
+                    "title": "Install Outlet Boxes (Living)",
+                    "hours": 3,
+                    "at": 30,
+                    "requirements": [
+                        "Junction Boxes",
+                        "Romex"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_020",
+                    "title": "Install Outlet Boxes (Bedroom)",
+                    "hours": 3,
+                    "at": 30,
+                    "requirements": [
+                        "Junction Boxes",
+                        "Romex"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_021",
+                    "title": "Install Light Switches",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Switch Boxes",
+                        "Wire"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_022",
+                    "title": "Run Circuit 1 (120V)",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "14-2 Romex",
+                        "Fish Tape"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_023",
+                    "title": "Run Circuit 2 (240V Appliances)",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "12-2 Romex",
+                        "Fish Tape"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_024",
+                    "title": "Install GFCI Outlets (Wet Areas)",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "GFCI Outlets"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_025",
+                    "title": "Connect Breakers to Panel",
+                    "hours": 3,
+                    "at": 30,
+                    "requirements": [
+                        "Circuit Breakers"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_026",
+                    "title": "Final Electrical Inspection",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Multimeter",
+                        "Code Book"
+                    ],
+                    "category": "CONSTRUCTION"
+                }
+            ]
+        },
+        {
+            "phase": "Plumbing",
+            "quests": [
+                {
+                    "id": "seh7_027",
+                    "title": "Install Water Main Line",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "PEX Pipe",
+                        "Crimping Tool"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_028",
+                    "title": "Mount Water Heater",
+                    "hours": 3,
+                    "at": 30,
+                    "requirements": [
+                        "Tank-less Heater",
+                        "Mounting Bracket"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_029",
+                    "title": "Run Hot/Cold Lines to Kitchen",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "PEX",
+                        "Manifold"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_030",
+                    "title": "Run Hot/Cold Lines to Bathroom",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "PEX",
+                        "Manifold"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_031",
+                    "title": "Install Drain Lines (3in PVC)",
+                    "hours": 5,
+                    "at": 50,
+                    "requirements": [
+                        "PVC Pipe",
+                        "Primer/Glue"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_032",
+                    "title": "Install Vent Stack",
+                    "hours": 3,
+                    "at": 30,
+                    "requirements": [
+                        "Vent Pipe",
+                        "Roof Jack"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_033",
+                    "title": "Mount Toilet Flange",
+                    "hours": 1,
+                    "at": 10,
+                    "requirements": [
+                        "Flange",
+                        "Screws"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_034",
+                    "title": "Install Shower Pan",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Pre-formed Pan",
+                        "Mortar"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_035",
+                    "title": "Pressure Test Plumbing",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Pressure Gauge",
+                        "Air Pump"
+                    ],
+                    "category": "CONSTRUCTION"
+                }
+            ]
+        },
+        {
+            "phase": "Insulation & Drywall",
+            "quests": [
+                {
+                    "id": "seh7_036",
+                    "title": "Install Wall Insulation (R-21)",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "Fiberglass Batts",
+                        "Stapler"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_037",
+                    "title": "Install Ceiling Insulation (R-38)",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "Blown Cellulose",
+                        "Blower"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_038",
+                    "title": "Hang Drywall (Walls)",
+                    "hours": 8,
+                    "at": 80,
+                    "requirements": [
+                        "Drywall Sheets",
+                        "Screw Gun"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_039",
+                    "title": "Hang Drywall (Ceiling)",
+                    "hours": 8,
+                    "at": 80,
+                    "requirements": [
+                        "Drywall Lift",
+                        "Screws"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_040",
+                    "title": "Tape & Mud Seams (1st Coat)",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "Joint Compound",
+                        "Tape"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_041",
+                    "title": "Tape & Mud Seams (2nd Coat)",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "Joint Compound",
+                        "Sanding Sponge"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_042",
+                    "title": "Final Sand & Prime",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Sandpaper",
+                        "Primer"
+                    ],
+                    "category": "CONSTRUCTION"
+                }
+            ]
+        },
+        {
+            "phase": "Finishing",
+            "quests": [
+                {
+                    "id": "seh7_043",
+                    "title": "Install Interior Doors",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Pre-hung Doors",
+                        "Shims"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_044",
+                    "title": "Install Baseboard Trim",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Trim Boards",
+                        "Finish Nailer"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_045",
+                    "title": "Install Kitchen Cabinets",
+                    "hours": 6,
+                    "at": 60,
+                    "requirements": [
+                        "Cabinets",
+                        "Shims"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_046",
+                    "title": "Install Countertop",
+                    "hours": 3,
+                    "at": 30,
+                    "requirements": [
+                        "Countertop Slab",
+                        "Silicone"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_047",
+                    "title": "Install Sink & Faucet",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Sink",
+                        "Faucet"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_048",
+                    "title": "Install Toilet",
+                    "hours": 1,
+                    "at": 10,
+                    "requirements": [
+                        "Toilet",
+                        "Wax Ring"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_049",
+                    "title": "Install Shower Fixtures",
+                    "hours": 2,
+                    "at": 20,
+                    "requirements": [
+                        "Shower Head",
+                        "Valve"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_050",
+                    "title": "Paint Walls (Primer + 2 Coats)",
+                    "hours": 12,
+                    "at": 120,
+                    "requirements": [
+                        "Paint",
+                        "Rollers"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_051",
+                    "title": "Install Flooring",
+                    "hours": 8,
+                    "at": 80,
+                    "requirements": [
+                        "Vinyl Planks",
+                        "Underlayment"
+                    ],
+                    "category": "CONSTRUCTION"
+                },
+                {
+                    "id": "seh7_052",
+                    "title": "Final Walkthrough & Punch List",
+                    "hours": 4,
+                    "at": 40,
+                    "requirements": [
+                        "Inspection Checklist"
+                    ],
+                    "category": "CONSTRUCTION"
+                }
+            ]
+        }
+    ]
+}

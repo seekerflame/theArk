@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSE Digital Twin: Factor e Farm</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #1a1a1a;
+            font-family: 'Inter', sans-serif;
+            color: white;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        canvas {
+            background-color: #2b3a42;
+            cursor: crosshair;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #10B981;
+        }
+
+        p {
+            margin: 0;
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        #coords {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .toolbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tool-btn {
+            background: #3B82F6;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tool-btn:hover {
+            background: #2563EB;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="canvas-container">
+        <canvas id="farmMap"></canvas>
+
+        <div id="ui-layer">
+            <h1>🌍 Factor e Farm (Digital Twin)</h1>
+            <p>Mode: Planning (Macro View)</p>
+            <p>Scale: 1px = 10cm</p>
+        </div>
+
+        <div class="toolbar">
+            <button class="tool-btn" onclick="setMode('VIEW')">✋ Pan</button>
+            <button class="tool-btn" onclick="setMode('BUILD')">🏗️ Build</button>
+            <button class="tool-btn" onclick="addMachine('Tractor')">🚜 Add Tractor</button>
+            <button class="tool-btn" onclick="addMachine('Microhouse')">🏠 Add Microhouse</button>
+        </div>
+
+        <div id="coords">X: 0, Y: 0</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('farmMap');
+        const ctx = canvas.getContext('2d');
+
+        // State
+        let machines = [];
+        let scale = 1;
+        let offsetX = 0;
+        let offsetY = 0;
+        let isDragging = false;
+        let startX, startY;
+
+        // Resize
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            draw();
+        }
+        window.addEventListener('resize', resize);
+
+        // Interaction
+        canvas.addEventListener('mousedown', e => {
+            isDragging = true;
+            startX = e.clientX - offsetX;
+            startY = e.clientY - offsetY;
+        });
+
+        canvas.addEventListener('mouseup', () => isDragging = false);
+
+        canvas.addEventListener('mousemove', e => {
+            if (isDragging) {
+                offsetX = e.clientX - startX;
+                offsetY = e.clientY - startY;
+                draw();
+            }
+            document.getElementById('coords').innerText = `X: ${Math.round(e.clientX - offsetX)}, Y: ${Math.round(e.clientY - offsetY)}`;
+        });
+
+        // Logic
+        function addMachine(type) {
+            // Random pos near center
+            const x = -offsetX + (canvas.width / 2) + (Math.random() * 100 - 50);
+            const y = -offsetY + (canvas.height / 2) + (Math.random() * 100 - 50);
+
+            machines.push({
+                id: Date.now(),
+                type: type,
+                x: x,
+                y: y,
+                w: type === 'Tractor' ? 40 : 100,
+                h: type === 'Tractor' ? 60 : 100,
+                color: type === 'Tractor' ? '#FBBF24' : '#10B981'
+            });
+            draw();
+        }
+
+        function draw() {
+            // Clear
+            ctx.fillStyle = '#1e293b'; // Dirt/Ground color
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save();
+            ctx.translate(offsetX, offsetY);
+            ctx.scale(scale, scale);
+
+            // Draw Grid
+            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx.lineWidth = 1;
+            const gridSize = 100;
+
+            // Simple infinite grid illusion
+            const left = -offsetX;
+            const top = -offsetY;
+
+            for (let x = Math.floor(left / gridSize) * gridSize; x < left + canvas.width; x += gridSize) {
+                ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, top + canvas.height); ctx.stroke();
+            }
+            for (let y = Math.floor(top / gridSize) * gridSize; y < top + canvas.height; y += gridSize) {
+                ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(left + canvas.width, y); ctx.stroke();
+            }
+
+            // Draw Machines
+            machines.forEach(m => {
+                // Shadow
+                ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                ctx.fillRect(m.x + 5, m.y + 5, m.w, m.h);
+
+                // Body
+                ctx.fillStyle = m.color;
+                ctx.fillRect(m.x, m.y, m.w, m.h);
+
+                // Label
+                ctx.fillStyle = 'white';
+                ctx.font = '10px Arial';
+                ctx.fillText(m.type, m.x, m.y - 5);
+            });
+
+            // Draw "Center" of Farm
+            ctx.fillStyle = '#EF4444';
+            ctx.beginPath();
+            ctx.arc(0, 0, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Init
+        resize();
+        // Add dummy initial structures
+        machines.push({ type: 'Microhouse', x: -100, y: -100, w: 100, h: 100, color: '#10B981' });
+        draw();
+
+    </script>
+</body>
+
+</html>

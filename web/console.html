@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTIGRAVITY CONSOLE</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --text-main: #33ff33;
+            --text-dim: #004400;
+            --alert: #ffaa00;
+            --scanline: rgba(18, 16, 16, 0.5);
+            --crt-blue: #00ffff;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+            height: 100vh;
+            overflow: hidden;
+            text-shadow: 0 0 2px var(--text-dim);
+        }
+
+        /* CRT Effects */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--text-main);
+            }
+
+            to {
+                text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 7px var(--text-main);
+            }
+        }
+
+        .container {
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            border-bottom: 2px solid var(--text-main);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 4px;
+        }
+
+        .status-badge {
+            border: 2px solid var(--alert);
+            padding: 5px 15px;
+            color: var(--alert);
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
+
+        .stat-box {
+            min-width: 120px;
+        }
+
+        .stat-val {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--crt-blue);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .matrix-logs {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            min-height: 0;
+        }
+
+        .log-panel {
+            border: 1px solid var(--text-dim);
+            background: rgba(0, 20, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .log-title {
+            background: var(--text-main);
+            color: black;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .log-content {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-size: 12px;
+            color: rgba(51, 255, 51, 0.9);
+            line-height: 1.4;
+            scrollbar-width: thin;
+            scrollbar-color: var(--text-main) #000;
+        }
+
+        .cli-input-area {
+            margin-top: 20px;
+            border-top: 1px solid var(--text-dim);
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .prompt {
+            color: var(--crt-blue);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        #cli-input {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            flex: 1;
+            outline: none;
+            caret-color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scanlines"></div>
+    <div class="container">
+        <div class="header">
+            <h1 class="glow">⚡ ANTIGRAVITY</h1>
+            <div style="display:flex; gap:15px; align-items:flex-end;">
+                <a href="index.html"
+                    style="color:var(--text-main); font-size:11px; text-decoration:none; border:1px solid var(--text-dim); padding:4px 8px; margin-bottom:2px;">[ESC]
+                    RETURN TO APP</a>
+                <div class="status-badge" id="status-badge">SYSTEM STANDBY</div>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-val" id="cycle-count">0000</div>
+                <div class="stat-label">Cycles</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="uptime-val">--:--</div>
+                <div class="stat-label">T-Minus</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="agent-status" style="color: var(--alert)">...</div>
+                <div class="stat-label">Agent State</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="mem-usage">12MB</div>
+                <div class="stat-label">Memory</div>
+            </div>
+        </div>
+
+        <div class="matrix-logs">
+            <div class="log-panel">
+                <div class="log-title">
+                    <span>AUTO_OPERATOR.LOG</span>
+                    <span>Running...</span>
+                </div>
+                <div class="log-content" id="log-auto">Initializing stream...</div>
+            </div>
+
+            <div class="log-panel">
+                <div class="log-title">AGENT_UPLINK.LOG</div>
+                <div class="log-content" id="log-agent">Link Established...</div>
+            </div>
+
+            <div class="log-panel">
+                <div class="log-title">STEWARD_EVENTS</div>
+                <div class="log-content" id="log-steward">Listening...</div>
+            </div>
+        </div>
+
+        <div class="cli-input-area">
+            <span class="prompt">seeker@antigravity:~#</span>
+            <input type="text" id="cli-input" placeholder="Type command..." autocomplete="off">
+        </div>
+    </div>
+
+    <script>
+        const cliInput = document.getElementById('cli-input');
+        const autoLog = document.getElementById('log-auto');
+
+        cliInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                const cmd = this.value.trim();
+                if (cmd) executeCommand(cmd);
+                this.value = '';
+            }
+        });
+
+        function executeCommand(cmd) {
+            appendLog(`> ${cmd}`);
+            const args = cmd.split(' ');
+            const command = args[0].toLowerCase();
+
+            switch (command) {
+                case 'help':
+                    appendLog("AVAILABLE COMMANDS: status, clear, reboot, verify, whoami");
+                    break;
+                case 'status':
+                    appendLog("SYSTEM STATUS: OPTIMAL. AGENT ACTIVE.");
+                    break;
+                case 'clear':
+                    autoLog.innerText = '';
+                    break;
+                case 'whoami':
+                    appendLog("USER: Seeker [ADMIN]");
+                    break;
+                case 'reboot':
+                    appendLog("INITIATING REBOOT SEQUENCE...");
+                    setTimeout(() => appendLog("Just kidding. I can't restart the server yet."), 1000);
+                    break;
+                case 'verify':
+                    appendLog("Triggering Verification Audit...");
+                    fetch('/api/verify_all', { method: 'POST' })
+                        .then(r => r.json())
+                        .then(d => appendLog("RESULT: " + d.message));
+                    break;
+                default:
+                    appendLog(`UNKNOWN COMMAND: ${cmd}. Type 'help' for options.`);
+            }
+        }
+
+        function appendLog(text) {
+            const line = document.createElement('div');
+            line.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+            autoLog.appendChild(line);
+            autoLog.scrollTop = autoLog.scrollHeight;
+        }
+
+        async function fetchMetrics() {
+            let apiBase = '';
+            if (window.location.protocol === 'file:') apiBase = 'http://localhost:3000';
+
+            const token = localStorage.getItem('at_token');
+
+            try {
+                const res = await fetch(apiBase + '/api/evolution', {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
+                const data = await res.json();
+                const nodeData = data.data || data;
+
+                document.getElementById('cycle-count').innerText = (nodeData.evolution_cycles || 0).toString().padStart(4, '0');
+                document.getElementById('uptime-val').innerText = (nodeData.genesis_time || "00:00:00").split(' ')[1] || "99.9%";
+                document.getElementById('agent-status').innerText = nodeData.status || "ONLINE";
+
+                if (nodeData.status === 'ONLINE' || nodeData.active_missions) {
+                    document.getElementById('status-badge').style.borderColor = "var(--text-main)";
+                    document.getElementById('status-badge').style.color = "var(--text-main)";
+                    document.getElementById('status-badge').innerText = "SYSTEM ONLINE";
+                    document.getElementById('agent-status').style.color = "var(--text-main)";
+                } else {
+                    document.getElementById('status-badge').style.borderColor = "var(--alert)";
+                    document.getElementById('status-badge').style.color = "var(--alert)";
+                    document.getElementById('status-badge').innerText = "SYSTEM DEGRADED";
+                }
+
+                document.getElementById('mem-usage').innerText = (Math.random() * 5 + 10).toFixed(1) + "MB";
+            } catch (e) {
+                // Silent fail
+            }
+        }
+
+        async function fetchLogs() {
+            let apiBase = '';
+            if (window.location.protocol === 'file:') apiBase = 'http://localhost:3000';
+
+            const token = localStorage.getItem('at_token');
+
+            try {
+                const res = await fetch(apiBase + '/api/logs', {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
+                const wrapper = await res.json();
+                const data = wrapper.data || wrapper;
+
+                if (data['auto_operator.log']) {
+                    const txt = data['auto_operator.log'].join('');
+                    autoLog.innerText = txt || "Log stream hungry. Awaiting system events...";
+                    autoLog.scrollTop = autoLog.scrollHeight;
+                }
+
+                const stewardLog = document.getElementById('log-steward');
+                if (data['ark_steward.log']) {
+                    stewardLog.innerText = data['ark_steward.log'].join('') || "Steward listening for directives...";
+                    stewardLog.scrollTop = stewardLog.scrollHeight;
+                }
+
+                const agentLog = document.getElementById('log-agent');
+                if (data['agent_uplink.log']) {
+                    agentLog.innerText = data['agent_uplink.log'].join('') || "Uplink stable. No recent telemetry.";
+                    agentLog.scrollTop = agentLog.scrollHeight;
+                }
+            } catch (e) {
+                // Silent fail
+            }
+        }
+
+        setInterval(() => {
+            fetchMetrics();
+            fetchLogs();
+        }, 2000);
+
+        fetchMetrics();
+        fetchLogs();
+
+        // Intro
+        appendLog("INITIALIZING ANTIGRAVITY KERNEL...");
+        setTimeout(() => appendLog("LOADING MODULES..."), 500);
+        setTimeout(() => appendLog("CONNECTING TO GAIA..."), 1000);
+
+        cliInput.focus();
+        document.addEventListener('click', () => cliInput.focus());
+    </script>
+</body>
+
+</html>

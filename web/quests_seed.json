@@ -1,0 +1,72 @@
+[
+    {
+        "quest_id": "q_001",
+        "title": "Repair Hydroponics Pump A",
+        "category": "CRITICAL",
+        "description": "The main pump in Sector 4 is fluctuating. Verify flow rate and replace seals if needed.",
+        "location": "Greenhouse 1 (Sector 4)",
+        "bounty_at": 50,
+        "estimated_time": "2 hours",
+        "requirements": [
+            "Plumbing_Lvl_1"
+        ],
+        "status": "OPEN",
+        "icon": "🔧"
+    },
+    {
+        "quest_id": "q_002",
+        "title": "Plant Wheat in Sector 7",
+        "category": "GROWTH",
+        "description": "Clear the remaining debris and sow the winter wheat crop.",
+        "location": "Sector 7 Field",
+        "bounty_at": 100,
+        "estimated_time": "4 hours",
+        "requirements": [
+            "Agriculture_Lvl_1"
+        ],
+        "status": "OPEN",
+        "icon": "🌾"
+    },
+    {
+        "quest_id": "q_003",
+        "title": "Wire New Solar Controller",
+        "category": "CRITICAL",
+        "description": "Connect the MPPT controller to the new battery bank. DANGER: High Voltage.",
+        "location": "Power Shed B",
+        "bounty_at": 75,
+        "estimated_time": "3 hours",
+        "requirements": [
+            "Electrical_Lvl_2"
+        ],
+        "status": "OPEN",
+        "icon": "⚡"
+    },
+    {
+        "quest_id": "q_004",
+        "title": "Teach 'Intro to CAD' Class",
+        "category": "KNOWLEDGE",
+        "description": "Host a workshop on FreeCAD basics for new apprentices.",
+        "location": "Design Lab",
+        "bounty_at": 40,
+        "estimated_time": "1 hour",
+        "requirements": [
+            "CAD_Lvl_3"
+        ],
+        "status": "OPEN",
+        "icon": "👨‍🏫"
+    },
+    {
+        "quest_id": "q_005",
+        "title": "Build Tiny House Frame",
+        "category": "GROWTH",
+        "description": "Assemble the wall panels for Unit 3 using the CNC cut sheets.",
+        "location": "Workshop",
+        "bounty_at": 150,
+        "estimated_time": "8 hours",
+        "requirements": [
+            "Carpentry_Lvl_1"
+        ],
+        "status": "OPEN",
+        "icon": "🏠"
+    }
+]

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Control Center</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <!-- Markdown Parser -->
+    <script src="app.js?v=2.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --glass: rgba(30, 41, 59, 0.8);
+            --border: rgba(255, 255, 255, 0.1);
+            --green: #10B981;
+            --yellow: #FBBF24;
+            --red: #EF4444;
+            --blue: #3B82F6;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-online {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .card h2 {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--green), #059669);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .link-list a {
+            display: block;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .link-list a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #last-sync-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 GAIA Control Center</h1>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <a href="antigravity.html"
+                    style="text-decoration: none; font-size: 12px; color: var(--muted); border: 1px solid var(--border); padding: 4px 8px; border-radius: 4px;">TERMINAL</a>
+                <span class="status-badge status-online">● SYSTEM ACTIVE</span>
+            </div>
+        </header>
+
+        <div class="grid">
+            <!-- Stats & Pulse -->
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <h2>Community Pulse</h2>
+                    <!-- Colorful Node Indicators -->
+                    <div style="display:flex; gap:6px;">
+                        <div title="Identity Serv"
+                            style="width:10px; height:10px; border-radius:50%; background:#3B82F6; box-shadow:0 0 5px #3B82F6;">
+                        </div> <!-- Blue -->
+                        <div title="Ledger Node"
+                            style="width:10px; height:10px; border-radius:50%; background:#10B981; box-shadow:0 0 5px #10B981;">
+                        </div> <!-- Green -->
+                        <div title="Warn System"
+                            style="width:10px; height:10px; border-radius:50%; background:#FBBF24; box-shadow:0 0 5px #FBBF24;">
+                        </div> <!-- Yellow -->
+                        <div title="AI Agent"
+                            style="width:10px; height:10px; border-radius:50%; background:#A855F7; box-shadow:0 0 5px #A855F7;">
+                        </div> <!-- Purple -->
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat" onclick="window.open('explorer.html')"
+                        style="cursor:pointer; transition:transform 0.2s;"
+                        onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <div class="stat-value" id="block-count">-</div>
+                        <div class="stat-label">Blocks Mined ↗</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="wiki-status-icon">⏳</div>
+                        <div class="stat-label">Wiki Sync</div>
+                    </div>
+                    <!-- Mesh Status -->
+                    <div class="stat" onclick="window.location.href='index.html#map-section'"
+                        style="cursor:pointer; transition:transform 0.2s;"
+                        onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <div class="stat-value" id="mesh-status">🗺️</div>
+                        <div class="stat-label">Live Map ↗</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="active-users">0</div>
+                        <div class="stat-label">Evolutions</div>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; text-align: center;">
+                    <span id="sentinel-report" style="font-size: 11px; color: var(--blue); font-style: italic;">Auditor
+                        Pending...</span>
+                    <br>
+                </div>
+            </div>
+
+            <!-- Multiplayer Feed -->
+            <div class="card" style="grid-row: span 2;">
+                <h2>🎮 Multiplayer Ops</h2>
+                <div id="ops-feed"
+                    style="height: 200px; overflow-y: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+                    <div style="color: var(--muted); text-align: center; padding-top: 20px;">Waiting for signal...</div>
+                </div>
+            </div>
+
+            <script>
+                // Simply inject tooltip logic here or rely on the main script
+            </script>
+
+            <!-- Links -->
+            <div class="card">
+                <h2>📚 Live Documentation</h2>
+                <div class="link-list">
+                    <a href="https://wiki.opensourceecology.org/wiki/User:Seeker/Abundance_Token" target="_blank"
+                        style="border-left: 2px solid var(--blue);">🏠 External Wiki Index</a>
+                    <a href="library/Master_SOP_Index.md" target="_blank"
+                        style="border-left: 2px solid var(--green);">📋 Local SOP Master Index</a>
+                    <a href="library/Gaia_Protocols/00_Master_Operations_Manual.md" target="_blank"
+                        style="border-left: 2px solid var(--green);">🌍 Gaia Operations Manual</a>
+                    <a href="library/Gaia_Protocols/03_Local_Logistics_Executables.md" target="_blank"
+                        style="border-left: 2px solid var(--yellow);">🚚 Logistics & Executables</a>
+                    <a href="library/Gaia_Protocols/04_Efficiency_Algorithm.md" target="_blank"
+                        style="border-left: 2px solid var(--red);">⚡ Efficiency Algo (Working Backwards)</a>
+                    <a href="https://wiki.opensourceecology.org/wiki/User:Seeker/Abundance_Token/Ledger" target="_blank"
+                        style="border-left: 2px solid var(--blue);">📊 Live Cloud Ledger</a>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="card">
+                <h2>⚡ Actions</h2>
+                <button class="btn" onclick="triggerSync()">🔄 Force Wiki Sync</button>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                    <button class="btn btn-secondary" onclick="window.open('explorer.html')">🔍 Explorer</button>
+                    <button class="btn btn-secondary" onclick="window.open('index.html')">📱 App</button>
+                </div>
+            </div>
+
+            <!-- Network -->
+            <div class="card">
+                <h2>🌐 Connection Info</h2>
+                <div
+                    style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                    <div style="margin-bottom: 5px;"><span style="color: var(--blue);">Local IP:</span> 192.168.0.104
+                    </div>
+                    <div style="margin-bottom: 5px;"><span style="color: var(--blue);">Port:</span> 3000</div>
+                    <div><span style="color: var(--blue);">Share Link:</span></div>
+                    <div style="word-break: break-all; margin-top: 2px;">http://192.168.0.104:3000/web/</div>
+                </div>
+                <p style="font-size: 11px; color: var(--muted); margin-top: 10px;">
+                    *Ensure devices are on the same WiFi.<br>
+                    *Disable VPN if connection fails.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dynamic Host Detection
+        const HOST = window.location.hostname;
+        const PORT = window.location.port || '3000';
+        const BASE_URL = `http://${HOST}:${PORT}`;
+
+        // Update Connection Info on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            const connInfo = document.querySelector('.card:last-child div');
+            if (connInfo) {
+                connInfo.innerHTML = `
+                    <div style="margin-bottom: 5px;"><span style="color: var(--blue);">Local IP:</span> ${HOST}</div>
+                    <div style="margin-bottom: 5px;"><span style="color: var(--blue);">Port:</span> ${PORT}</div>
+                    <div><span style="color: var(--blue);">Share Link:</span></div>
+                    <div style="word-break: break-all; margin-top: 2px;">${BASE_URL}/web/</div>
+                `;
+            }
+        });
+
+        async function updateStats() {
+            // Blocks
+            try {
+                const res = await fetch('/api/graph');
+                const blocks = await res.json();
+                document.getElementById('block-count').textContent = blocks.length;
+
+                // Evolutions (Derived from Blocks)
+                // MVP: 1 Block = 1 Evolution Point/Level for visibility
+                const evolutionLevel = blocks.length;
+                document.getElementById('active-users').textContent = evolutionLevel;
+                document.querySelector('#active-users + .stat-label').textContent = "Evolutions";
+
+                // Count WIKI blocks
+                const revisions = blocks.filter(b => b.data && b.data.block_type === 'WIKI').length;
+                // We can display revisions elsewhere if needed, or cycle them? 
+                // For now, let's keep Evolutions as the primary metric user asked for.
+
+                // Sentinel Report
+                try {
+                    const res = await fetch('/auditor_report.json?t=' + Date.now());
+                    if (res.ok) {
+                        const report = await res.json();
+                        const el = document.getElementById('sentinel-report');
+                        el.innerText = `"${report.narrative}"`;
+                        el.style.color = "var(--blue)";
+                    } else {
+                        throw new Error('Report not found');
+                    }
+                } catch (e) {
+                    document.getElementById('sentinel-report').innerText = "The Wind is silent.";
+                }
+
+                // Wiki Status
+                try {
+                    const res = await fetch('/wiki_status.json?t=' + Date.now());
+                    if (res.ok) {
+                        const stat = await res.json();
+                        const icon = stat.status === 'ONLINE' || stat.status === 'SYNCED' ? '✅' : '⚠️';
+                        document.getElementById('wiki-status-icon').textContent = icon;
+                        document.getElementById('wiki-message').textContent = stat.message;
+                        document.getElementById('last-sync-time').textContent = 'Last: ' + stat.last_sync;
+                    } else {
+                        throw new Error('Status not found');
+                    }
+                } catch (e) {
+                    document.getElementById('wiki-status-icon').textContent = '❓';
+                    document.getElementById('wiki-message').textContent = 'Waiting for status...';
+                }
+
+                // Multiplayer Ops
+                const ops = blocks.filter(b => b.data && b.data.block_type === 'OP').reverse();
+                const feed = document.getElementById('ops-feed');
+                if (ops.length > 0) {
+                    feed.innerHTML = ops.map(op => `
+                        <div style="margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
+                            <span style="color: var(--yellow);">[${op.data.player_id || 'Unknown'}]</span>
+                            <span style="color: var(--text);">${op.data.op_type}: ${op.data.asset}</span>
+                            <div style="color: var(--muted); font-size: 9px;">${new Date(op.timestamp * 1000).toLocaleTimeString()}</div>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error("Critical Update Error:", err);
+                // Even if critical error, try to show something if possible or retry
+            }
+        }
+
+        async function triggerSync() {
+            const btn = document.querySelector('button[onclick="triggerSync()"]');
+            const originalText = btn.textContent;
+            btn.textContent = "⏳ Syncing...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/sync', { method: 'POST' });
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    alert('Sync Successful!\n' + data.message);
+                } else {
+                    alert('Sync Failed:\n' + data.message);
+                }
+            } catch (e) {
+                alert('Network Error during sync');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                updateStats(); // Refresh stats immediately
+            }
+        }
+
+        updateStats();
+        setInterval(updateStats, 2000);
+    </script>
+</body>
+
+</html>
