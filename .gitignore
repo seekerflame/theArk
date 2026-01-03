@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+
+# Environment & Secrets
+.env
+*.key
+*.pem
+config/secrets.json
+
+# Village Data (Keep Local)
+village_ledger_py.json
+data/*.json
+hardware/*.json
+federation/*.json
+uploads/
+*.db
+*.sqlite
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if using any JS tooling)
+node_modules/
+package-lock.json
+
+# Temporary files
+tmp/
+temp/
+*.tmp

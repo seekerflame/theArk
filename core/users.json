@@ -1,0 +1,202 @@
+{
+  "centennial_user": {
+    "password": "ff2f12ec5c6a2e9ef6b61c958ed701c327469190a18075fd909ec2a9b42b94f2",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x61d65fdef74249ae9f77a006f3947f47c964590c",
+    "role": "USER",
+    "created_at": 1766609761.440913,
+    "assigned_role": "site_lead",
+    "role_name": "Site Lead"
+  },
+  "seh8_tester": {
+    "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xd06aedc04582d5365e2fbe8c95dd51d624dfbacc",
+    "role": "USER",
+    "created_at": 1766611379.55302,
+    "assigned_role": "site_lead",
+    "role_name": "Site Lead"
+  },
+  "seller_1766612692": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x332ff888dce768803fb38df58643b6f79972329c",
+    "role": "USER",
+    "created_at": 1766612692.73963
+  },
+  "buyer_1766612692": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x4044ddf36a1014ee9f7bfc13b4b0ffd923b01a32",
+    "role": "USER",
+    "created_at": 1766612692.742228
+  },
+  "seller_1766612735": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xfb5d17a216105fcffc7e8ccfc61478e6e084238f",
+    "role": "USER",
+    "created_at": 1766612735.958346
+  },
+  "buyer_1766612735": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x21c99553d97d3e426c568047bba0422050d71e06",
+    "role": "USER",
+    "created_at": 1766612735.960798
+  },
+  "party_leader_1766613321": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x8633d093d69c2c016db613112b8e3acc7bb68791",
+    "role": "USER",
+    "created_at": 1766613321.5228941
+  },
+  "party_member_1766613321": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x073ed977057610979b8c70e76daa1413033c5ec6",
+    "role": "USER",
+    "created_at": 1766613321.525436
+  },
+  "stress_user_0_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x4ca2c4946ead522e3ff3b72e554e1c97f9c0e1b6",
+    "role": "USER",
+    "created_at": 1766613797.4078872
+  },
+  "stress_user_1_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xf78d01c787b97ca4ae1230a2e67ecfbba9e85d78",
+    "role": "USER",
+    "created_at": 1766613797.447319
+  },
+  "stress_user_2_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x55ac72580419b5c24e3c1732b57f6d8e82351a35",
+    "role": "USER",
+    "created_at": 1766613797.500618
+  },
+  "stress_user_3_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xe73a30eac618731beb65387fa371499d26262cc6",
+    "role": "USER",
+    "created_at": 1766613797.550459
+  },
+  "stress_user_4_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x19acac3d03f4a5ab07fb40070bee48288c9ce64a",
+    "role": "USER",
+    "created_at": 1766613797.601985
+  },
+  "stress_user_5_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xfa268054b432832a25bcc9d9b2af151b18b20b44",
+    "role": "USER",
+    "created_at": 1766613797.654537
+  },
+  "stress_user_6_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xe5d606d98e234e57b6ac5f411d3ab0ff389bb53c",
+    "role": "USER",
+    "created_at": 1766613797.704512
+  },
+  "stress_user_7_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x7d9613f402db0d4e11b97d95ac844d6e833017e1",
+    "role": "USER",
+    "created_at": 1766613797.7681532
+  },
+  "stress_user_8_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x56c7723d9084b2c37ddc0fe55a64a5ec5d4c7fa7",
+    "role": "USER",
+    "created_at": 1766613797.80671
+  },
+  "stress_user_9_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x9c02f645fa415f6d0ef8bee5197fe502849a88bb",
+    "role": "USER",
+    "created_at": 1766613797.859854
+  },
+  "stress_user_10_1766613797": {
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xbe21d96ad050f2345f3c8bf54e4afdd7b4dbdc1a",
+    "role": "USER",
+    "created_at": 1766613797.911437
+  },
+  "verify_user_1766615365": {
+    "password": "4c335f0badf63d720b4e36fee6647d7f0b5814e0b1c93a5b8171b0e3d99df468",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xfbd62ef96430e7b4ad05caa54da15d76a56cb406",
+    "role": "USER",
+    "created_at": 1766615365.27296
+  },
+  "verify_user_1766615376": {
+    "password": "4c335f0badf63d720b4e36fee6647d7f0b5814e0b1c93a5b8171b0e3d99df468",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x3ce1902fa6c7fd8fac1ad12ac31495d67060487e",
+    "role": "USER",
+    "created_at": 1766615376.936233
+  },
+  "verify_user_1766615516": {
+    "password": "4c335f0badf63d720b4e36fee6647d7f0b5814e0b1c93a5b8171b0e3d99df468",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x530664fa0d705142c29647e8909061f2d49382b5",
+    "role": "USER",
+    "created_at": 1766615516.7424011
+  },
+  "verify_user_1766615585": {
+    "password": "4c335f0badf63d720b4e36fee6647d7f0b5814e0b1c93a5b8171b0e3d99df468",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xe314555935ffc3479d0dc5d225dc97ab99c8eabe",
+    "role": "USER",
+    "created_at": 1766615585.2867022
+  },
+  "verify_user_1766615598": {
+    "password": "4c335f0badf63d720b4e36fee6647d7f0b5814e0b1c93a5b8171b0e3d99df468",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x66688119c2c66eca3eb9d1a542a9011d79b9a102",
+    "role": "USER",
+    "created_at": 1766615598.1878579
+  },
+  "jetski_user_2": {
+    "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xc46b1d4da37fa0c110ee741411fd420cb80beffe",
+    "role": "USER",
+    "created_at": 1767052493.3802052
+  },
+  "jetski_official_user": {
+    "password": "466b6e79e4bf9e9d0cb4e2ff5557dea77354cf575073beee8db4e5fc4d754037",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0xc0219726d62ac4d1382f5b977988db90423c8eda",
+    "role": "USER",
+    "created_at": 1767052503.72477
+  },
+  "ADMIN": {
+    "password": "b153927875d34ea4115eea2c920acf79d0b033d019c92b9b0626a49a50527e40",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x835d6dc88b708bc646d6db82c853ef4182fabbd4",
+    "role": "USER",
+    "created_at": 1767132198.053731
+  },
+  "test_user_80": {
+    "password": "10a6e6cc8311a3e2bcc09bf6c199adecd5dd59408c343e926b129c4914f3cb01",
+    "mnemonic": "word word word word word word word word word word word word",
+    "address": "0x2910f30b5cf0158371261e73c3fbb6534c1a607c",
+    "role": "USER",
+    "created_at": 1767260225.5845802
+  }
+}
