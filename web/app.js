@@ -54,7 +54,8 @@ function main() {
         nodes: [],
         ledger: [],
         lastId: 0,
-        currentChannel: 'general'
+        currentChannel: 'general',
+        pendingSwap: JSON.parse(localStorage.getItem('at_pending_swap') || 'null')
     };
 
     // Deep Proxy Handler for nested objects
@@ -2484,8 +2485,29 @@ function main() {
         if (walletBalance) walletBalance.textContent = appState.balance.toFixed(2);
         if (walletXP) walletXP.textContent = Math.floor(appState.xp).toLocaleString();
 
-        // ADD WIKI SYNC BUTTON
+        // ART WALK MODE: Enhanced Mobile Actions
         const walletView = document.getElementById('view-wallet');
+        const isArtWalk = document.body.classList.contains('art-walk-mode');
+
+        // Remove existing art walk containers if re-rendering
+        const existingArtWalk = document.getElementById('art-walk-mobile-actions');
+        if (existingArtWalk) existingArtWalk.remove();
+
+        if (isArtWalk && walletView) {
+            const artWalkGroup = document.createElement('div');
+            artWalkGroup.id = 'art-walk-mobile-actions';
+            artWalkGroup.style.marginTop = '20px';
+            artWalkGroup.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button class="btn-primary mobile-one-hand-btn" onclick="switchView('mint')">⚡ QUICK MINT LABOR</button>
+                    <button class="btn-secondary mobile-one-hand-btn" style="background:var(--secondary-glow); border:1px solid var(--secondary);" onclick="renderExchangeUI()">⚡ BUY AT (SWAP BTC)</button>
+                    <button class="btn-secondary mobile-one-hand-btn" onclick="window.renderSendModal()">↗ SEND AT TO PEER</button>
+                </div>
+            `;
+            walletView.prepend(artWalkGroup);
+        }
+
+        // ADD WIKI SYNC BUTTON
         if (walletView && !document.getElementById('wiki-sync-btn-container')) {
             const btnGroup = document.createElement('div');
             btnGroup.id = 'wiki-sync-btn-container';
@@ -3679,6 +3701,21 @@ function main() {
             updateUI();
             initGaiaGuide();
 
+            // 4. Restore Pending Swap
+            if (appState.pendingSwap) {
+                const now = Date.now();
+                const timeout = 3600 * 1000; // 1 hour timeout
+                if (now - appState.pendingSwap.timestamp < timeout) {
+                    console.log("[EXCHANGE] Restoring pending swap...");
+                    renderExchangeUI();
+                    showLightningInvoice(appState.pendingSwap.invoice, appState.pendingSwap.hash, appState.pendingSwap.amount);
+                } else {
+                    console.log("[EXCHANGE] Pending swap expired.");
+                    appState.pendingSwap = null;
+                    localStorage.removeItem('at_pending_swap');
+                }
+            }
+
             // Engagement System Init
             if (window.renderDailyQuests) renderDailyQuests();
             if (window.updateStreak) updateStreak();
@@ -3711,6 +3748,307 @@ function main() {
             updateUI(); // Try to show at least something
         }
     }
+
+    // --- SEND AT (P2P TRANFERS) ---
+    window.renderSendModal = function () {
+        const container = document.getElementById('send-modal-container');
+        if (!container) return;
+
+        container.style.pointerEvents = 'auto';
+        container.innerHTML = `
+            <div class="exchange-modal glass-panel" style="border-color: var(--primary);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h2 style="margin:0; color:var(--primary-light);">↗ Send AT</h2>
+                    <button onclick="window.closeSendModal()" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+                </div>
+                
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Transfer Abundance Tokens to another villager.</p>
+                
+                <div class="form-group">
+                    <label>Recipient Username</label>
+                    <input type="text" id="send-recipient" placeholder="Enter username..." class="input-dark">
+                </div>
+                
+                <div class="form-group">
+                    <label>Amount (AT)</label>
+                    <input type="number" id="send-amount" value="1.0" min="0.01" step="0.01" class="input-dark">
+                </div>
+                
+                <div style="margin-top:20px;">
+                    <button onclick="window.sendAT()" class="btn-primary" style="width:100%;">
+                        CONFIRM TRANSFER
+                    </button>
+                </div>
+            </div>
+        `;
+    };
+
+    window.closeSendModal = function () {
+        const container = document.getElementById('send-modal-container');
+        if (container) {
+            container.innerHTML = '';
+            container.style.pointerEvents = 'none';
+        }
+    };
+
+    window.sendAT = async function () {
+        const recipient = document.getElementById('send-recipient').value.trim();
+        const amount = parseFloat(document.getElementById('send-amount').value);
+
+        if (!recipient) return alert("Recipient required.");
+        if (isNaN(amount) || amount <= 0) return alert("Invalid amount.");
+        if (amount > appState.balance) return alert("Insufficient balance.");
+
+        try {
+            const res = await apiFetch('/api/wallet/send', {
+                method: 'POST',
+                body: { recipient: recipient, amount: amount }
+            });
+
+            if (res.status === 'success') {
+                window.notifyUser(`Sent ${amount} AT to ${recipient}`, 'success');
+                window.closeSendModal();
+                syncWithLedger();
+                if (window.playSound) window.playSound('success');
+            } else {
+                alert(res.message || "Transfer failed.");
+            }
+        } catch (e) {
+            console.error("[WALLET] Send failed:", e);
+            alert("Network error. Is the server online?");
+        }
+    };
+
+    // --- LIGHTNING BRIDGE (BTC ↔ AT EXCHANGE) ---
+    window.renderExchangeUI = async function () {
+        const container = document.getElementById('exchange-modal-container');
+        if (!container) return;
+
+        container.style.pointerEvents = 'auto';
+
+        // If we have a pending swap, show it instead of the quote form
+        if (appState.pendingSwap) {
+            container.innerHTML = `
+                <div class="exchange-modal glass-panel" style="border-color: var(--secondary);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <h2 style="margin:0; color:var(--secondary-light);">⚡ Active Swap</h2>
+                        <button onclick="window.closeExchangeModal()" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+                    </div>
+                    <div id="exchange-flow-step"></div>
+                    <div style="margin-top:15px; text-align:center;">
+                        <button class="btn-xs" style="background:rgba(239, 68, 68, 0.1); color:#EF4444; border:1px solid rgba(239, 68, 68, 0.2);" onclick="window.cancelPendingSwap()">Cancel Swap</button>
+                    </div>
+                </div>
+            `;
+            window.showLightningInvoice(appState.pendingSwap.invoice, appState.pendingSwap.hash, appState.pendingSwap.amount);
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="exchange-modal glass-panel" style="border-color: var(--secondary);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h2 style="margin:0; color:var(--secondary-light);">⚡ Lightning Bridge</h2>
+                    <button onclick="window.closeExchangeModal()" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+                </div>
+                
+                <div id="exchange-flow-step">
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Convert Bitcoin (Lightning) to Abundance Tokens.</p>
+                    
+                    <div class="form-group">
+                        <label>Buy Amount (AT)</label>
+                        <input type="number" id="buy-amount" value="10" min="1" class="input-dark" oninput="window.updateExchangeQuote()">
+                    </div>
+                    
+                    <div id="exchange-quote" style="background:rgba(139, 92, 246, 0.05); padding:15px; border-radius:12px; border:1px solid rgba(139, 92, 246, 0.1); margin-bottom:20px; transition: all 0.3s ease;">
+                        <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text-muted);">
+                            <span>Current Rate:</span>
+                            <span id="quote-rate-display">Fetching...</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-top:10px; font-weight:bold;">
+                            <span>Total Due:</span>
+                            <span id="quote-total" style="color:var(--secondary-light);">-- Sats</span>
+                        </div>
+                    </div>
+                    
+                    <button id="btn-generate-invoice" onclick="window.initiateLightningPurchase()" class="btn-primary" style="width:100%; background:var(--secondary); color:white; border:none; box-shadow:0 0 15px var(--secondary-glow); transition:all 0.3s;">
+                        GENERATE INVOICE
+                    </button>
+                    
+                    <div style="margin-top:15px; font-size:0.7rem; color:var(--text-dim); text-align:center;">
+                        Rates update every 30s. Bridge powered by LND REST.
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Start Price Polling
+        window.updateExchangeQuote();
+        if (window.pricePollingInterval) clearInterval(window.pricePollingInterval);
+        window.pricePollingInterval = setInterval(window.updateExchangeQuote, 30000);
+    };
+
+    window.closeExchangeModal = function () {
+        const container = document.getElementById('exchange-modal-container');
+        if (container) {
+            container.innerHTML = '';
+            container.style.pointerEvents = 'none';
+        }
+        if (window.exchangePollingInterval) clearInterval(window.exchangePollingInterval);
+        if (window.pricePollingInterval) clearInterval(window.pricePollingInterval);
+    };
+
+    window.cancelPendingSwap = function () {
+        if (!confirm("Stop tracking this payment? This will NOT refund any sent BTC.")) return;
+        appState.pendingSwap = null;
+        localStorage.removeItem('at_pending_swap');
+        if (window.exchangePollingInterval) clearInterval(window.exchangePollingInterval);
+        window.renderExchangeUI();
+    };
+
+    window.updateExchangeQuote = async function () {
+        const input = document.getElementById('buy-amount');
+        if (!input) return;
+        const amt = parseFloat(input.value) || 0;
+        const quoteEl = document.getElementById('quote-total');
+        const rateEl = document.getElementById('quote-rate-display');
+        const quoteBox = document.getElementById('exchange-quote');
+
+        if (amt <= 0) {
+            if (quoteEl) quoteEl.innerText = "0 Sats";
+            return;
+        }
+
+        try {
+            // Subtle flash to show update
+            if (quoteBox) quoteBox.style.borderColor = 'var(--secondary)';
+
+            const res = await apiFetch(`/api/exchange/quote?amount=${amt}`);
+
+            setTimeout(() => {
+                if (quoteBox) quoteBox.style.borderColor = 'rgba(139, 92, 246, 0.1)';
+            }, 500);
+
+            if (res.sats_amount) {
+                if (quoteEl) quoteEl.innerText = `${res.sats_amount.toLocaleString()} Sats`;
+                if (rateEl) rateEl.innerText = `1 AT = ${Math.round(res.sats_amount / amt).toLocaleString()} Sats`;
+
+                // Show floating preview on the button
+                const btn = document.getElementById('btn-generate-invoice');
+                if (btn) btn.innerHTML = `GENERATE INVOICE <span style="font-size:0.7rem; opacity:0.7; margin-left:8px;">(${res.sats_amount.toLocaleString()} Sats)</span>`;
+            }
+        } catch (e) {
+            console.warn("[EXCHANGE] Quote failed:", e);
+            if (rateEl) rateEl.innerText = "Error fetching rate";
+        }
+    };
+
+    window.initiateLightningPurchase = async function () {
+        const amount = parseFloat(document.getElementById('buy-amount').value);
+        if (isNaN(amount) || amount <= 0) return alert("Invalid amount.");
+
+        if (window.pricePollingInterval) clearInterval(window.pricePollingInterval);
+
+        const flow = document.getElementById('exchange-flow-step');
+        flow.innerHTML = `
+            <div style="text-align:center; padding:40px;">
+                <div class="logo-icon pulse-active" style="margin: 0 auto 20px; width:60px; height:60px;"></div>
+                <div class="payment-status-pulse">ENGAGING LIGHTNING NODE...</div>
+            </div>
+        `;
+
+        try {
+            const res = await apiFetch('/api/exchange/buy', {
+                method: 'POST',
+                body: { amount: amount }
+            });
+
+            if (res.payment_request) {
+                // Save to persistent state
+                appState.pendingSwap = {
+                    invoice: res.payment_request,
+                    hash: res.payment_hash,
+                    amount: amount,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('at_pending_swap', JSON.stringify(appState.pendingSwap));
+
+                window.showLightningInvoice(res.payment_request, res.payment_hash, amount);
+            } else {
+                alert("Failed to generate invoice. Is the node online?");
+                window.renderExchangeUI();
+            }
+        } catch (e) {
+            console.error("[EXCHANGE] Error:", e);
+            alert("Bridge Communication Error.");
+            window.renderExchangeUI();
+        }
+    };
+
+    window.showLightningInvoice = function (invoice, hash, amount) {
+        const flow = document.getElementById('exchange-flow-step');
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(invoice)}`;
+
+        flow.innerHTML = `
+            <div style="text-align:center;">
+                <div class="qr-container" style="box-shadow: 0 0 30px var(--secondary-glow);">
+                    <img src="${qrUrl}" alt="Lightning Invoice">
+                </div>
+                <div style="margin-bottom:15px; padding: 0 20px;">
+                    <code style="display:block; font-size:0.6rem; color:var(--text-muted); background:rgba(0,0,0,0.4); padding:10px; border-radius:8px; max-height:45px; overflow:hidden; text-overflow:ellipsis; border: 1px solid var(--glass-border);">${invoice}</code>
+                    <button class="btn-xs" style="margin-top:8px; width:100%; height:32px;" onclick="navigator.clipboard.writeText('${invoice}'); window.notifyUser('Invoice Copied', 'info')">📋 Copy Raw Invoice</button>
+                </div>
+                <div class="payment-status-pulse" style="margin-bottom:10px;">WAITING FOR BTC SETTLEMENT...</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); background:rgba(16,185,129,0.05); padding:8px; border-radius:8px; margin:0 20px;">
+                    Bridge will mint <strong>${amount} AT</strong> upon confirmation.
+                </div>
+            </div>
+        `;
+
+        // Start Polling
+        if (window.exchangePollingInterval) clearInterval(window.exchangePollingInterval);
+        window.exchangePollingInterval = setInterval(() => {
+            window.checkInvoiceStatus(hash, amount);
+        }, 3000);
+    };
+
+    window.checkInvoiceStatus = async function (hash, amount) {
+        try {
+            const res = await apiFetch(`/api/exchange/status?hash=${hash}&amount=${amount}`);
+            if (res.status === 'complete' || res.status === 'success') {
+                clearInterval(window.exchangePollingInterval);
+
+                // Clear pending swap
+                appState.pendingSwap = null;
+                localStorage.removeItem('at_pending_swap');
+
+                window.showExchangeSuccess(amount);
+                if (window.syncWithLedger) syncWithLedger();
+                if (window.notifyUser) window.notifyUser(`Bridge Verified: +${amount} AT Minted`, "success", "Exchange");
+            } else if (res.status === 'CANCELED' || res.status === 'EXPIRED') {
+                clearInterval(window.exchangePollingInterval);
+                appState.pendingSwap = null;
+                localStorage.removeItem('at_pending_swap');
+                alert("Lightning Invoice Expired or Canceled.");
+                window.renderExchangeUI();
+            }
+        } catch (e) {
+            console.warn("[EXCHANGE] Status sync failed:", e);
+        }
+    };
+    window.showExchangeSuccess = function (amount) {
+        const flow = document.getElementById('exchange-flow-step');
+        flow.innerHTML = `
+            <div style="text-align:center; padding:20px;">
+                <div style="font-size:4rem; margin-bottom:20px;">✅</div>
+                <h3 style="color:var(--primary);">PAYMENT SETTLED</h3>
+                <p style="color:var(--text-main); font-weight:bold;">+${amount} AT Minted to your account.</p>
+                <div style="margin-top:20px;">
+                    <button class="btn-primary" onclick="window.closeExchangeModal()" style="width:100%;">CONTINUE</button>
+                </div>
+            </div>
+        `;
+        if (window.playSound) window.playSound('success');
+    };
 
     initializeSystem();
 } // end main
@@ -3755,3 +4093,39 @@ window.addEventListener('load', () => {
         window.notifyUser("Sovereign Protocol Active. Welcome to the Ark.", "mission", "Antigravity");
     }, 2000);
 });
+
+// ART WALK MODE TOGGLE
+window.toggleArtWalkMode = function () {
+    const isEnabled = document.body.classList.toggle('art-walk-mode');
+    localStorage.setItem('ark_art_walk_mode', isEnabled);
+
+    const statusEl = document.getElementById('art-walk-status');
+    if (statusEl) {
+        statusEl.textContent = isEnabled ? 'ON' : 'OFF';
+        statusEl.style.color = isEnabled ? '#10B981' : 'rgba(255,255,255,0.6)';
+    }
+
+    // Refresh UI if in relevant views
+    if (appState.currentView === 'wallet') renderWalletUI();
+    if (appState.currentView === 'dashboard') updateDashboardStats();
+
+    if (isEnabled) {
+        if (window.showNotification) showNotification("ART WALK MODE: ACTIVE", "UI Optimized for mobile efficiency.", "info");
+    }
+};
+
+// INITIALIZE ART WALK MODE
+(function initArtWalk() {
+    const saved = localStorage.getItem('ark_art_walk_mode') === 'true';
+    if (saved) {
+        document.body.classList.add('art-walk-mode');
+        // Small delay to ensure DOM items like #art-walk-status are parsed
+        setTimeout(() => {
+            const statusEl = document.getElementById('art-walk-status');
+            if (statusEl) {
+                statusEl.textContent = 'ON';
+                statusEl.style.color = '#10B981';
+            }
+        }, 500);
+    }
+})();

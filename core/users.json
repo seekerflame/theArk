@@ -198,5 +198,30 @@
     "address": "0x2910f30b5cf0158371261e73c3fbb6534c1a607c",
     "role": "USER",
     "created_at": 1767260225.5845802
+  },
+  "agent_testtester123": {
+    "password": "password123",
+    "role": "WORKER",
+    "created_at": 1767515516.517715
+  },
+  "unique_agent_647495": {
+    "password": "password123",
+    "role": "WORKER",
+    "created_at": 1767515611.429655
+  },
+  "agent_alpha": {
+    "password": "password123",
+    "role": "WORKER",
+    "created_at": 1767515989.0209181
+  },
+  "tester_123456789": {
+    "password": "password123",
+    "role": "WORKER",
+    "created_at": 1767516185.181491
+  },
+  "user_648054": {
+    "password": "password123",
+    "role": "WORKER",
+    "created_at": 1767516270.479249
   }
 }

@@ -435,6 +435,43 @@ body.zen-mode .mobile-toggle {
     .btn-primary {
         padding: 12px !important;
     }
+
+    /* Art Walk / Mobile Efficiency Layouts */
+    .wallet-card-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .mobile-one-hand-btn {
+        padding: 20px !important;
+        font-size: 1.1rem !important;
+    }
+}
+
+/* Art Walk Mode UI Overrides */
+body.art-walk-mode .desktop-only {
+    display: none !important;
+}
+
+body.art-walk-mode .glass-panel {
+    border-radius: 16px;
+    padding: 16px;
+}
+
+body.art-walk-mode .nav-item {
+    padding: 15px 20px;
+}
+
+body.art-walk-mode .civ-sidebar {
+    background: #05080f !important;
+}
+
+body.art-walk-mode .mobile-one-hand-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 }
 
 /* Ensure mobile toggle is hidden on desktop */
@@ -797,5 +834,125 @@ body.zen-mode .mobile-toggle {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* --- Exchange Bridge Styles --- */
+#exchange-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11000;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#exchange-modal-container>* {
+    pointer-events: auto;
+}
+
+.exchange-modal,
+.send-modal {
+    background: var(--surface-dark);
+    border: 1px solid var(--secondary);
+    box-shadow: 0 0 50px var(--secondary-glow);
+    border-radius: 24px;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    animation: modalSlideUp 0.3s var(--transition-bounce) forwards;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#send-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11000;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#send-modal-container>* {
+    pointer-events: auto;
+}
+
+@media (max-width: 600px) {
+
+    .exchange-modal,
+    .send-modal {
+        padding: 20px;
+        border-radius: 16px;
+        width: 95%;
+    }
+
+    .qr-container {
+        width: 200px !important;
+        height: 200px !important;
+        padding: 10px !important;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 14px !important;
+        /* Larger touch targets */
+    }
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.qr-container {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 20px auto;
+    width: 250px;
+    height: 250px;
+}
+
+.qr-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.payment-status-pulse {
+    animation: statusPulse 2s infinite;
+    color: var(--secondary-light);
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+@keyframes statusPulse {
+    0% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
     }
 }

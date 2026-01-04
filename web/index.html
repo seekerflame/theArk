@@ -212,6 +212,8 @@
                     style="margin-top: 20px; border-top: 1px solid rgba(16,185,129,0.1); padding-top: 10px; padding-bottom: 20px;">
                     <button class="nav-item" onclick="switchView('auth')" style="color: #60A5FA;">🔐 Sovereign
                         Access</button>
+                    <button class="nav-item" onclick="toggleArtWalkMode()" style="color: #FBBF24;">🎨 Art Walk Mode
+                        <span id="art-walk-status" style="font-size: 0.6rem; opacity: 0.6;">OFF</span></button>
                     <button class="nav-item" onclick="window.openFeedbackForm()" style="color: #F87171;">🐞 Report
                         Bug</button>
                 </div>
@@ -547,9 +549,11 @@
                     </div>
                 </div>
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button class="btn-primary" onclick="switchView('mint')" style="flex:1;">+ Mint
-                        Labor</button>
-                    <button class="btn-secondary" style="flex:1;">↗ Send AT</button>
+                    <button class="btn-primary" onclick="switchView('mint')" style="flex:1;">+ Mint Labor</button>
+                    <button class="btn-secondary" onclick="renderExchangeUI()"
+                        style="flex:1; background: var(--secondary-glow); border: 1px solid var(--secondary); color: var(--secondary-light);">⚡
+                        Buy AT</button>
+                    <button class="btn-secondary" onclick="window.renderSendModal()" style="flex:1;">↗ Send AT</button>
                 </div>
             </div>
 
@@ -567,6 +571,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <!-- VIEW: MINT (Hidden Form) -->
@@ -1150,44 +1155,12 @@
     <script src="sound_engine.js"></script>
     <script src="mobility_module.js"></script>
     <script src="bounty_board.js"></script>
-    <script src="app.js?v=2.5"></script>
+    <!-- Global Modals -->
+    <div id="exchange-modal-container"></div>
+    <div id="send-modal-container"></div>
+    <div id="feedback-modal-container"></div>
 
-    <!-- n8n Chat Integration (Disabled until Webhook is ready) -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-    <script type="module">
-        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-        createChat({
-            webhookUrl: '', 
-            mode: 'window',
-            showWelcomeScreen: true,
-            initialMessages: [
-                'Hello! I am the OSE Steward AI. How can I assist you with the Civilization OS?'
-            ],
-            i18n: {
-                en: {
-                    title: 'OSE Steward',
-                    subtitle: 'Autonomous Operator',
-                    footer: 'Powered by OSE Ark',
-                    getStarted: 'New Conversation',
-                    inputPlaceholder: 'Type your instruction...',
-                },
-            },
-            style: {
-                width: 400,
-                height: 600,
-                position: 'right',
-                backgroundColor: '#0f172a',
-                tokenColor: '#10B981',
-                avatarBackgroundColor: '#10B981',
-                avatarColor: '#ffffff',
-                botMessageBackgroundColor: '#1e293b',
-                botMessageColor: 'var(--text-main)',
-                userMessageBackgroundColor: '#10B981',
-                userMessageColor: '#ffffff',
-            }
-        });
-    </script> -->
+    <script src="app.js?v=2.6"></script>
 </body>
 
 </html>
