@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ark-os
+    env: python
+    buildCommand: ""
+    startCommand: python3 server.py
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ARK_MOCK_EXCHANGE
+        value: "1"

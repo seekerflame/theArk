@@ -1,0 +1,2 @@
+# Standard library only as per server.py notes.
+# Any minimal dependencies if discovered later should be added here.

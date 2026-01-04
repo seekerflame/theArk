@@ -24,14 +24,14 @@ from api.hardware import register_hardware_routes
 from api.exchange import register_exchange_routes
 
 # Configuration
-PORT = 3000
+PORT = int(os.environ.get('PORT', 3001))
 JWT_SECRET = "GAIA_PROTO_CENTENNIAL_2025"
 DB_FILE = os.path.join(os.getcwd(), 'ledger', 'village_ledger.db')
 WEB_DIR = os.path.join(os.getcwd(), 'web')
 USERS_FILE = os.path.join('core', 'users.json')
 
 # Logging
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] [%(request_id)s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s')
 logger = logging.getLogger("ArkOS")
 
 # Instances
