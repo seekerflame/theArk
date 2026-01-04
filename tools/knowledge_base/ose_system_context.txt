@@ -1,0 +1,85 @@
+# Open Source Ecology Knowledge Base
+You are an expert on the Open Source Ecology project and the Global Village Construction Set (GVCS).
+The GVCS consists of 50 industrial machines needed to build a small, sustainable civilization.
+
+## Key Machines by Category:
+
+### Habitat
+CEB Press, Cement Mixer, Sawmill, Bulldozer, Backhoe
+
+### Agriculture
+LifeTrac, Seeder, Hay Rake, Well-Drilling Rig, MicroTrac, Soil Pulverizer, Spader, Hay Cutter, Trencher, Bakery Oven, Dairy Milker, Microcombine, Baler
+
+### Industry
+Multimachine, Ironworker, Laser Cutter, Welder, Plasma Cutter, CNC Torch Table, Metal Roller, Rod and Wire Mill, Press Forge, Universal Rotor, 3D Printer, 3D Scanner, CNC Circuit Mill, Industrial Robot, Chipper Hammermill, Drill Press, Induction Furnace
+
+### Energy
+Power Cube, Gasifier Burner, Solar Concentrator, Electric Motor Generator, Hydraulic Motor, Steam Engine, Heat Exchanger, Wind Turbine, Pelletizer, Universal Power Supply, Nickel-Iron Battery
+
+### Materials
+Aluminum Extractor, Bioplastic Extruder
+
+### Transportation
+Open Source Car, Open Source Truck
+
+## Detailed Knowledge:
+
+**CEB Press** (Habitat)
+Hint: Last updated Jan 2018 Link to CEB Press Build June 2015 EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: CEB Press The CEB Story 2012. from Open Source Ecology on Vimeo . CEB Press &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Cement Mixer** (Habitat)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Cement Mixer Cement Mixer &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Sawmill** (Habitat)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Sawmill Sawmill &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Bulldozer** (Habitat)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Bulldozer Bulldozer &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Backhoe** (Habitat)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Backhoe
+
+**LifeTrac** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HR HU ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: LifeTrac The LifeTrac Story 2012. from Open Source Ecology on Vimeo . LifeTrac &#160;&#160;&#160; LifeTrac III Home &#160;|&#160; Research & Development &#160; | &#160; Build It &#160;| &#160; User's Manual &#160;| &#160; Community Feedback &#160;&#160;&#160;
+
+**Seeder** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Seeder Seeder &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Hay Rake** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Hay Rake Hay Rake &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Well-Drilling Rig** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Well-Drilling Rig Well-Drilling Rig &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160; Main > Water Contents 1 Overview 2 Description 3 Product Ecology 4 Components 5 Status 6 Internal Links 7 External Links Overview Well-Dri
+
+**MicroTrac** (Agriculture)
+Hint: See Tractor Construction Set 2017 for more design details, and burndown graph. MicroTrac v17.10 Short description Specifications Product Ecology Uses Power Cube License OSHWA and OSI compliant. CC-BY-SA-4.0 International, GPLv3, DIN SPEC 3105 . Tracks 1/2" x2" steel bar welded track Power Cube 16-27 hp as needed Key Specification Open source design for Distributive Enterprise and lifetime design. Construction 1/4"x4" perforated steel tubine, 3" shafts for wheels and loader arm Productivity
+
+**Soil Pulverizer** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Rototiller Rototiller &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Spader** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Spader Spader &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Hay Cutter** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Hay Cutter Hay Cutter &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Trencher** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Trencher Trencher &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Bakery Oven** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Bakery Oven Bakery Oven &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Dairy Milker** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Dairy Milker Dairy Milker &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Microcombine** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Microcombine Microcombine &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Baler** (Agriculture)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Baler Baler &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
+
+**Multimachine** (Industry)
+EN AR BG BN CS DE EL EO ES FR HE HI HR HU ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: CNC Machine CNC Machine &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160; File:CNC Machine.png Hint: 2018 Update: see current work at D3D CNC Circuit Mill
+
+**Ironworker** (Industry)
+EN AR BG BN CS DE EL EO ES FR HE HI HU HR ID IT JA LT NL NO PA PL PT RO RU SV TH TR UK VI ZH-HANS Article Title: Ironworker Ironworker &#160;&#160;&#160; Home &#160;|&#160; Research & Development &#160; | &#160; Bill of Materials &#160;| &#160; Manufacturing Instructions &#160;| &#160; User's Manual &#160;| &#160; User Reviews &#160;&#160;&#160;
