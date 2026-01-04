@@ -1,0 +1,174 @@
+{
+    "name": "Code Contribution Auto-Mint (FOSS)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "github-pr",
+                "responseMode": "onReceived",
+                "responseData": "allEntries"
+            },
+            "name": "GitHub PR Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                240,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{$json[\"action\"]}}",
+                            "operation": "equal",
+                            "value2": "closed"
+                        },
+                        {
+                            "value1": "={{$json[\"pull_request\"][\"merged\"]}}",
+                            "operation": "equal",
+                            "value2": "true"
+                        }
+                    ]
+                }
+            },
+            "name": "Is Merged PR?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                460,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "functionCode": "// Extract PR stats and classify complexity\nconst pr = items[0].json.pull_request || {};\nconst additions = pr.additions || 0;\nconst deletions = pr.deletions || 0;\nconst lines_changed = additions + deletions;\nconst files = pr.changed_files || 0;\n\n// Classify complexity based on file paths\nlet complexity = 'standard';\nconst title = (pr.title || '').toLowerCase();\nconst body = (pr.body || '').toLowerCase();\n\nif (title.includes('doc') || title.includes('readme') || title.includes('typo')) {\n  complexity = 'trivial';\n} else if (title.includes('core') || title.includes('security') || title.includes('ledger')) {\n  complexity = 'complex';\n} else if (title.includes('crypto') || title.includes('architecture') || title.includes('bridge')) {\n  complexity = 'expert';\n}\n\nreturn [{\n  json: {\n    author: pr.user?.login || 'unknown',\n    lines_changed: lines_changed,\n    complexity: complexity,\n    pr_url: pr.html_url || '',\n    commit_hash: pr.merge_commit_sha || '',\n    title: pr.title || 'Unknown PR'\n  }\n}];"
+            },
+            "name": "Extract PR Stats",
+            "type": "n8n-nodes-base.function",
+            "typeVersion": 1,
+            "position": [
+                680,
+                300
+            ],
+            "notes": "Classifies complexity based on PR title keywords"
+        },
+        {
+            "parameters": {
+                "url": "={{$env.ARK_API_URL || 'http://localhost:3001'}}/api/mint/code",
+                "method": "POST",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer {{$env.ARK_SERVICE_TOKEN}}"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "lines_changed",
+                            "value": "={{$json.lines_changed}}"
+                        },
+                        {
+                            "name": "complexity",
+                            "value": "={{$json.complexity}}"
+                        },
+                        {
+                            "name": "pr_url",
+                            "value": "={{$json.pr_url}}"
+                        },
+                        {
+                            "name": "commit_hash",
+                            "value": "={{$json.commit_hash}}"
+                        }
+                    ]
+                },
+                "options": {
+                    "timeout": 10000
+                }
+            },
+            "name": "Mint Code AT",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 3,
+            "position": [
+                900,
+                300
+            ],
+            "continueOnFail": true,
+            "notes": "Calls /api/mint/code on The Ark. Requires ARK_SERVICE_TOKEN env var."
+        },
+        {
+            "parameters": {
+                "functionCode": "// Log the mint result\nconst result = items[0].json;\nconst prData = $node['Extract PR Stats'].json;\nconsole.log(`🏆 Code Mint: ${prData.author} earned ${result.reward || 'unknown'} AT for ${prData.lines_changed} lines`);\nreturn items;"
+            },
+            "name": "Log Result",
+            "type": "n8n-nodes-base.function",
+            "typeVersion": 1,
+            "position": [
+                1120,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "GitHub PR Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Is Merged PR?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Is Merged PR?": {
+            "main": [
+                [
+                    {
+                        "node": "Extract PR Stats",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract PR Stats": {
+            "main": [
+                [
+                    {
+                        "node": "Mint Code AT",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Mint Code AT": {
+            "main": [
+                [
+                    {
+                        "node": "Log Result",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {},
+    "staticData": null,
+    "tags": [
+        "automation",
+        "github",
+        "code-mint",
+        "foss"
+    ]
+}

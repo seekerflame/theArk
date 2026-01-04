@@ -11,7 +11,9 @@ __pycache__/
 *.key
 *.pem
 config/secrets.json
+config/treasury_config.json
 core/secrets.json
+
 core/users.json
 
 # Village Data (Keep Local)

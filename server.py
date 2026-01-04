@@ -14,6 +14,8 @@ from core.federation import PeerManager, FederationSyncer
 from core.steward import StewardNexus
 from core.energy import EnergyMonitor
 from core.router import Router, requires_auth, admin_only
+from core.justice import JusticeSteward
+
 
 # API Modules
 from api.system import register_system_routes
@@ -22,6 +24,13 @@ from api.economy import register_economy_routes
 from api.social import register_social_routes
 from api.hardware import register_hardware_routes
 from api.exchange import register_exchange_routes
+from api.quests import register_quest_routes
+from api.treasury import register_treasury_routes
+from api.justice import register_justice_routes
+
+
+# Bot Modules
+from core.treasury_bot import TreasuryBot
 
 # Configuration
 PORT = int(os.environ.get('PORT', 3001))
@@ -42,6 +51,9 @@ peers = PeerManager(os.path.join('federation', 'federation_registry.json'), PORT
 syncer = FederationSyncer(ledger, peers, PORT)
 energy = EnergyMonitor(ledger, sensors=sensors)
 steward = StewardNexus(ledger, sensors, server_file='server.py')
+treasury = TreasuryBot(ledger)
+justice = JusticeSteward(ledger, identity)
+
 
 # Routing
 router = Router()
@@ -49,10 +61,15 @@ auth_decorator = requires_auth(identity)
 
 register_system_routes(router, ledger, identity, peers, sensors, energy, auth_decorator)
 register_steward_routes(router, ledger, energy, auth_decorator)
-register_economy_routes(router, ledger, sensors, auth_decorator)
+register_economy_routes(router, ledger, sensors, justice, auth_decorator)
+
 register_social_routes(router, ledger, auth_decorator)
 register_hardware_routes(router, sensors, auth_decorator)
 register_exchange_routes(router, ledger, auth_decorator)
+register_justice_routes(router, ledger, justice, auth_decorator)
+
+register_quest_routes(router, ledger, auth_decorator)
+register_treasury_routes(router, treasury, auth_decorator)
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -128,6 +145,7 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
 if __name__ == '__main__':
     syncer.start()
     steward.start()
+    treasury.start()
     with socketserver.ThreadingTCPServer(("", PORT), ArkHandler) as httpd:
         logger.info(f"Ark OS Modular Core v1.2 ONLINE at port {PORT}")
         httpd.serve_forever()

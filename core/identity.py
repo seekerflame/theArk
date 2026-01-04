@@ -30,9 +30,16 @@ class IdentityManager:
 
     def register(self, username, password):
         if username in self.users: return False, "User exists"
-        self.users[username] = {"password": password, "role": "WORKER", "created_at": time.time()}
+        self.users[username] = {
+            "password": password, 
+            "role": "WORKER", 
+            "roles": ["WORKER"],
+            "certifications": {}, 
+            "created_at": time.time()
+        }
         self.save()
         return True, "Welcome to the Ark"
+
 
     def login(self, username, password):
         user = self.users.get(username)
@@ -61,3 +68,16 @@ class IdentityManager:
             if data['exp'] < time.time(): return None
             return data
         except: return None
+
+    @staticmethod
+    def get_role_multipliers():
+        return {
+            "WORKER": 1.0,
+            "BUILDER": 1.0,
+            "WELDER": 1.5,      # Safety pay / Skill bonus
+            "ORACLE": 1.2,      # Trust bonus
+            "FARMER": 1.1,      # Nutrient sovereignty
+            "ARCHITECT": 1.3,   # Master design
+            "CODE_MINT": 1.0    # Base for code (handled elsewhere)
+        }
+

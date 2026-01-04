@@ -1,0 +1,69 @@
+{
+    "prompts": [
+        {
+            "id": "hero_village",
+            "category": "vision",
+            "prompt": "A beautiful self-sufficient eco-village at sunrise. Solar panels on rooftops, gardens everywhere, people working together happily. Kids running through paths. Warm golden light. Studio Ghibli meets documentary style. Hopeful and inspiring.",
+            "duration": "10-15s",
+            "use": "Opening shot for presentations"
+        },
+        {
+            "id": "token_magic",
+            "category": "technology",
+            "prompt": "Golden sparkles fly up from hands finishing real work - welding, gardening, building. Sparkles swirl together into a glowing coin that pulses with energy. Magical, satisfying, like unlocking a reward in a video game.",
+            "duration": "8-10s",
+            "use": "AT concept explanation"
+        },
+        {
+            "id": "quest_complete",
+            "category": "gamification",
+            "prompt": "A person finishes building something and colorful confetti explodes everywhere! A glowing QUEST COMPLETE badge appears floating above them. Gold coins shower down. Video game celebration style, bright and joyful!",
+            "duration": "6-8s",
+            "use": "Gamification demo"
+        },
+        {
+            "id": "mesh_network",
+            "category": "future",
+            "prompt": "Earth from space with glowing golden dots appearing one by one across continents - villages connecting. Thin golden lines form a beautiful network. Camera zooms out to show Moon and Mars with villages too. Epic, hopeful sci-fi.",
+            "duration": "12-15s",
+            "use": "Federation/mesh concept"
+        },
+        {
+            "id": "story_work",
+            "category": "story",
+            "prompt": "A young person works intently in a sunny outdoor workshop, hands building something from wood and metal. Sawdust floats in golden sunlight beams. Close-up of focused eyes, then hands placing the final piece. Documentary realism, warm natural lighting.",
+            "duration": "8s",
+            "use": "Story sequence clip 1"
+        },
+        {
+            "id": "story_magic",
+            "category": "story",
+            "prompt": "The same person's hands hover over their completed creation. Suddenly golden light particles begin rising from the finished work like embers floating upward. Their eyes widen with wonder. Magical realism, golden hour lighting.",
+            "duration": "8s",
+            "use": "Story sequence clip 2"
+        },
+        {
+            "id": "story_reward",
+            "category": "story",
+            "prompt": "The swirling golden particles converge and compress into a brilliant glowing coin floating in the air. FLASH - a celebration explosion of colorful confetti and light! A holographic QUEST COMPLETE badge materializes. Pure triumph.",
+            "duration": "8s",
+            "use": "Story sequence clip 3"
+        },
+        {
+            "id": "story_village",
+            "category": "story",
+            "prompt": "Pull back wide shot: the person walks toward a vibrant village community. Other people wave and cheer. Everyone has subtle golden glows around them. Gardens, solar panels, people building together. Drone shot rising to show the whole thriving village at sunset.",
+            "duration": "8s",
+            "use": "Story sequence clip 4"
+        }
+    ],
+    "categories": [
+        "vision",
+        "technology",
+        "gamification",
+        "future",
+        "story"
+    ],
+    "version": "1.0",
+    "updated": "2026-01-04"
+}

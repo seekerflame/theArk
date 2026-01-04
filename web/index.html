@@ -182,6 +182,9 @@
                     <button class="nav-item" onclick="switchView('wallet')">💰 Wallet</button>
                     <button class="nav-item" onclick="switchView('techtree')">🧬 Tech Tree</button>
                     <button class="nav-item" onclick="switchView('evolution')">📈 Evolution</button>
+                    <button class="nav-item" onclick="switchView('treasury')" style="color: #FBBF24;">🏦 Treasury
+                        Bot</button>
+
 
                     <div
                         style="margin-top: 20px; padding-left: 15px; margin-bottom: 8px; font-size: 10px; color: var(--text-muted); text-transform: uppercase;">
@@ -200,7 +203,10 @@
                     <button class="nav-item" onclick="switchView('steward_ai')">🤖 Steward AI</button>
                     <button class="nav-item" onclick="switchView('mycelium')">🌿 The Mycelium</button>
                     <button class="nav-item" onclick="switchView('mobility')">🛸 Universal Mobility</button>
+                    <button class="nav-item" onclick="switchView('oracle_deck')" style="color: #A78BFA;">👁️ Oracle
+                        Deck</button>
                 </nav>
+
 
                 <div
                     style="margin-top: 20px; padding-left: 15px; font-size: 10px; color: var(--text-muted); text-transform: uppercase;">
@@ -483,7 +489,105 @@
             </div>
     </div>
 
+    <!-- VIEW: TREASURY BOT -->
+    <div id="view-treasury" class="app-view" style="display: none;">
+        <div class="section-header" style="margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <h2 style="margin: 0;">🏦 The Sovereign Trader</h2>
+                <div class="badge" id="bot-simulation-badge"
+                    style="background: rgba(245, 158, 11, 0.1); color: #F59E0B; border: 1px solid #F59E0B;">
+                    SIMULATION MODE</div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Autonomous Treasury Management & Value Protection.
+            </p>
+        </div>
+
+        <div class="grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+            <!-- Column 1: Balances & Stats -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Treasury Balances -->
+                <div class="glass-panel" style="border-top: 4px solid #10B981;">
+                    <h3>💰 Treasury Reserves</h3>
+                    <div id="treasury-balances"
+                        style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                        <div style="text-align: center; padding: 20px; color: var(--text-muted);">Synchronizing...</div>
+                    </div>
+                </div>
+
+                <!-- Bot Status -->
+                <div class="glass-panel" style="border-top: 4px solid #3B82F6;">
+                    <h3>🤖 Bot Intelligence</h3>
+                    <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>System Status</span>
+                            <span id="bot-status-indicator" style="color: #10B981; font-weight: bold;">ONLINE</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Total Exposure</span>
+                            <span id="bot-exposure" style="color: #FBBF24;">4.2%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Max Drawdown</span>
+                            <span style="color: #EF4444;">10.0%</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; border-top: 1px solid rgba(16,185,129,0.1); padding-top: 15px;">
+                        <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Active
+                            Strategies</span>
+                        <div id="bot-strategies-list"
+                            style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                            <!-- Injected JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Market Data & Actions -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- AT Protection Gauge -->
+                <div class="glass-panel" style="border-top: 4px solid #FBBF24; background: rgba(0,0,0,0.3);">
+                    <h3>🛡️ AT Protection Pulse</h3>
+                    <div style="margin-top: 20px; text-align: center;">
+                        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Sovereign
+                            Floor</div>
+                        <div style="font-size: 1.5rem; color: #FBBF24; font-weight: 800; margin: 5px 0;">0.00000800 BTC
+                        </div>
+                        <div id="at-stability-status" style="font-size: 0.85rem; color: #10B981;">● STABLE</div>
+                    </div>
+                    <div
+                        style="margin-top: 15px; height: 4px; background: rgba(251, 191, 36, 0.1); border-radius: 2px; overflow: hidden;">
+                        <div id="at-stability-fill" style="width: 100%; height: 100%; background: #FBBF24;"></div>
+                    </div>
+                </div>
+
+                <!-- Live Trade Log -->
+                <div class="glass-panel" style="flex: 1; display: flex; flex-direction: column;">
+                    <h3>📡 Live Trade Signal</h3>
+                    <div id="treasury-trade-log"
+                        style="flex: 1; min-height: 200px; max-height: 350px; overflow-y: auto; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--text-muted); margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        <div style="color: #10B981;">[SYSTEM] Sovereign Trader core initialized.</div>
+                        <div>[SYSTEM] Awaiting market tick...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bot Settings (Admin Only) -->
+        <div class="glass-panel" style="margin-top: 20px; border-left: 4px solid #F87171;">
+            <h3>⚙️ Treasury Control Deck</h3>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+                <button class="btn-secondary" style="border: 1px solid rgba(16,185,129,0.2); padding: 12px;">🔄 Force
+                    Sync</button>
+                <button class="btn-secondary" style="border: 1px solid rgba(239, 68, 68, 0.2); color: #EF4444;"
+                    onclick="window.toggleTreasuryBot()">⛔ Emergency Stop</button>
+                <button class="btn-primary" onclick="window.renderTreasuryModal()">🔧 Config Bot</button>
+            </div>
+        </div>
+    </div>
+
     <!-- VIEW: JOBS -->
+
     <div id="view-jobs" class="app-view" style="display: none;">
         <div class="section-header">
             <h2>Job Board (SEH7)</h2>
@@ -514,7 +618,70 @@
         </div>
     </div>
 
+    <!-- VIEW: ORACLE DECK -->
+    <div id="view-oracle_deck" class="app-view" style="display: none;">
+        <div class="section-header" style="margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <h2 style="margin: 0;">👁️ Oracle Deck</h2>
+                <div class="badge"
+                    style="background: rgba(167, 139, 250, 0.1); color: #A78BFA; border: 1px solid #A78BFA;">VALIDATOR
+                    ACCESS</div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Truth Verification & Certification of Sovereign
+                Labor.</p>
+        </div>
+
+        <div class="grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+            <!-- Column 1: Pending Validations -->
+            <div class="glass-panel" style="border-top: 4px solid #A78BFA;">
+                <h3>📜 Pending Proofs of Work</h3>
+                <div id="oracle-pending-list"
+                    style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        Synchronizing reality...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: User certifications -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="glass-panel">
+                    <h3>🎖️ Certification Hub</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Grant roles and
+                        multipliers to verified contributors.</p>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Target Username</label>
+                        <input type="text" id="certify-username" placeholder="Username..." class="input-dark">
+                    </div>
+                    <div class="form-group">
+                        <label>Grant Role</label>
+                        <select id="certify-role" class="input-dark" style="width:100%;">
+                            <option value="WELDER">WELDER (1.5x Multiplier)</option>
+                            <option value="ORACLE">ORACLE (Trust Node)</option>
+                            <option value="BUILDER">BUILDER (1.0x)</option>
+                            <option value="FARMER">FARMER (1.1x)</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="window.certifyUser()"
+                        style="width: 100%; background: #A78BFA; margin-top: 10px;">CERTIFY CITIZEN</button>
+                </div>
+
+                <div class="glass-panel" style="background: rgba(0,0,0,0.2);">
+                    <h3>⚖️ Verification Policy</h3>
+                    <ul
+                        style="font-size: 0.8rem; color: var(--text-muted); padding-left: 20px; margin-top: 10px; line-height: 1.5;">
+                        <li>Verify physical proof (Photos/Video).</li>
+                        <li>Check GPS/Timestamp consistency.</li>
+                        <li>Apply "Safety Pay" for risky welding tasks.</li>
+                        <li>Ensure decentralized integrity.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- VIEW: WALLET -->
+
     <div id="view-wallet" class="app-view" style="display: none;">
         <div class="section-header" style="margin-bottom: 20px;">
             <h2>💳 Wallet</h2>
@@ -554,6 +721,10 @@
                         style="flex:1; background: var(--secondary-glow); border: 1px solid var(--secondary); color: var(--secondary-light);">⚡
                         Buy AT</button>
                     <button class="btn-secondary" onclick="window.renderSendModal()" style="flex:1;">↗ Send AT</button>
+                    <button class="btn-primary" onclick="window.renderCodeMintModal()"
+                        style="flex:1; background: #6366F1; border: 1px solid rgba(99,102,241,0.2);">💻 Code
+                        Mint</button>
+
                 </div>
             </div>
 

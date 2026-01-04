@@ -223,7 +223,9 @@ function main() {
             if (viewId === 'wallet') renderWalletUI();
             if (viewId === 'techtree') renderTechTree(appState.xp);
             if (viewId === 'leaderboard') renderLeaderboard();
+            if (viewId === 'treasury') renderTreasuryUI();
             if (viewId === 'dashboard' && window.updateDashboardStats) window.updateDashboardStats();
+
         }
 
         // 3. Check for Level Up
@@ -758,23 +760,50 @@ function main() {
     window.wikiPages = window.wikiCategories.flatMap(c => c.pages);
 
     // --- JOB BOARD LOGIC ---
-    // --- JOB BOARD LOGIC ---
     window.claimTask = function (id) {
         var task = appState.tasks.find(t => t.id === id || t.quest_id === id);
-        if (task) {
-            // Calls backend
-            apiFetch('/api/party/join', {
-                method: 'POST',
-                body: { quest_id: task.quest_id || task.id }
-            }).then(data => {
-                if (data.status === 'success') {
-                    logToTerminal(`[PARTY] Joined: ${task.title}`);
-                    syncWithLedger(); // Refresh
-                } else {
-                    alert("Join Failed: " + data.message);
+        if (!task) return alert('Quest not found');
+
+        const questId = task.quest_id || task.id;
+        const offerType = task.offer_type || 'FIXED';
+
+        // Show different UI based on offer type
+        if (offerType === 'NEGOTIATE') {
+            const acceptTerms = confirm(`Quest: ${task.title}\nProposed: ${task.base_at || task.bounty_at} AT\n\nAccept these terms? (Cancel to counter-offer)`);
+            if (!acceptTerms) {
+                const counter = prompt(`Enter your counter-offer in AT:`);
+                if (counter) {
+                    apiFetch('/api/quests/claim', {
+                        method: 'POST',
+                        body: { quest_id: questId, accept_terms: false, counter_offer: parseFloat(counter) }
+                    }).then(data => {
+                        logToTerminal(`[QUEST] Counter-offer sent for: ${task.title}`);
+                        syncWithLedger();
+                    });
                 }
-            });
+                return;
+            }
         }
+
+        // Claim quest (FIXED, ROLE_MULTIPLIED, BARTER, or accepted NEGOTIATE)
+        apiFetch('/api/quests/claim', {
+            method: 'POST',
+            body: { quest_id: questId, accept_terms: true }
+        }).then(data => {
+            if (data.status === 'claimed' || data.status === 'claimed_barter') {
+                logToTerminal(`[QUEST] Claimed: ${task.title} for ${data.agreed_at || 'TBD'} AT`);
+                task.status = 'IN_PROGRESS';
+                task.worker = appState.currentUser.name;
+                saveState();
+                syncWithLedger();
+                renderJobBoard();
+            } else {
+                alert("Claim Failed: " + (data.message || 'Unknown error'));
+            }
+        }).catch(e => {
+            console.error('[QUEST] Claim error:', e);
+            alert('Failed to claim quest');
+        });
     };
 
     window.delegateTask = function (id) {
@@ -799,6 +828,35 @@ function main() {
             saveState(); updateUI();
             logToTerminal(`[JOB] Dropped: ${task.title}`);
         }
+    };
+
+    // Validate a completed quest (Owner/Oracle only)
+    window.validateQuest = function (questId, approved = true) {
+        const feedback = approved ? '' : prompt('Reason for rejection:') || '';
+
+        apiFetch('/api/quests/validate', {
+            method: 'POST',
+            body: {
+                quest_id: questId,
+                approved: approved,
+                feedback: feedback
+            }
+        }).then(data => {
+            if (data.status === 'completed') {
+                logToTerminal(`[ORACLE] Quest validated! ${data.worker} earned ${data.at_minted} AT`);
+                alert(`Quest Completed!\n\nWorker: ${data.worker}\nAT Minted: ${data.at_minted}`);
+                syncWithLedger();
+                renderJobBoard();
+            } else if (data.status === 'rejected') {
+                logToTerminal(`[ORACLE] Quest rejected: ${feedback}`);
+                alert('Quest sent back for revisions.');
+                renderJobBoard();
+            } else {
+                alert('Validation failed: ' + (data.message || 'Unknown error'));
+            }
+        }).catch(e => {
+            console.error('[ORACLE] Validation error:', e);
+        });
     };
 
     function renderJobBoard() {
@@ -951,8 +1009,31 @@ function main() {
     }
 
     window.uploadProof = function (questId) {
-        window.currentUploadQuestId = questId;
-        document.getElementById('proof-upload-input').click();
+        // Open proof submission modal
+        const proofDesc = prompt('Describe your completed work (proof of completion):');
+        if (!proofDesc) return;
+
+        apiFetch('/api/quests/submit', {
+            method: 'POST',
+            body: {
+                quest_id: questId,
+                proof: {
+                    description: proofDesc,
+                    submitted_at: Date.now()
+                }
+            }
+        }).then(data => {
+            if (data.status === 'submitted') {
+                logToTerminal(`[QUEST] Proof submitted for quest ${questId.substring(0, 8)}`);
+                alert('Proof submitted! Awaiting validation.');
+                syncWithLedger();
+                renderJobBoard();
+            } else {
+                alert('Submission failed: ' + (data.message || 'Unknown error'));
+            }
+        }).catch(e => {
+            console.error('[QUEST] Proof submission error:', e);
+        });
     };
 
     // --- MINTING LOGIC (Connected to Backend) ---
@@ -2519,7 +2600,73 @@ function main() {
         `;
             walletView.appendChild(btnGroup);
         }
+
+        // --- RENDER HISTORY ---
+        renderWalletHistory();
     }
+
+    function renderWalletHistory() {
+        const container = document.getElementById('wallet-history');
+        if (!container) return;
+
+        // Filter ledger for blocks relevant to current user
+        const username = appState.currentUser.name;
+        const myActions = rawState.ledger.filter(b => {
+            const d = b.data || {};
+            return (d.minter === username || d.sender === username || d.receiver === username || d.worker === username);
+        }).reverse();
+
+        if (myActions.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 30px; color: var(--text-muted);">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">📭</div>
+                    <p>No transactions yet.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = myActions.slice(0, 10).map(b => {
+            const d = b.data || {};
+            const isMint = ['MINT', 'LABOR', 'CODE_MINT'].includes(b.type);
+            const amt = d.reward || d.at || d.at_reward || (d.hours ? d.hours * 10 : 0);
+            const status = d.verified === false ? 'PENDING' : 'VERIFIED';
+
+            return `
+                <div class="glass-panel" style="padding: 12px; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; border-left: 2px solid ${isMint ? '#10B981' : '#60A5FA'};">
+                    <div>
+                        <div style="font-weight: 600;">${b.type}: ${d.task || d.description || 'Transfer'}</div>
+                        <div style="font-size: 0.75rem; opacity: 0.6;">${new Date(b.timestamp * 1000).toLocaleString()}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-weight: 700; color: ${isMint ? '#10B981' : '#F1F5F9'};">${isMint ? '+' : ''}${amt.toFixed(2)} AT</div>
+                        <div style="display: flex; gap: 8px; margin-top: 5px; justify-content: flex-end;">
+                            <span style="font-size: 0.65rem; padding: 2px 6px; background: rgba(0,0,0,0.3); border-radius: 4px;">${status}</span>
+                            <button onclick="window.openDisputeModal('${b.hash}')" style="background: none; border: none; font-size: 0.9rem; cursor: pointer; color: #EF4444; title: 'Flag/Dispute'">🚩</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    window.openDisputeModal = function (blockHash) {
+        const reason = prompt("Describe the issue (e.g. Fraudulent claim, Incorrect hours, Math error):");
+        if (!reason) return;
+
+        apiFetch('/api/justice/dispute', {
+            method: 'POST',
+            body: { block_hash: blockHash, reason: reason }
+        }).then(res => {
+            if (res.status === 'disputed') {
+                logToTerminal(`[JUSTICE] Block ${blockHash.substring(0, 8)} flagged for review.`);
+                alert(res.message);
+            } else {
+                alert("Flagging failed: " + res.message);
+            }
+        });
+    };
+
 
     window.showWikiImportModal = function () {
         const modal = document.createElement('div');
@@ -2570,6 +2717,67 @@ function main() {
             btn.disabled = false;
         });
     }
+
+    // --- TREASURY BOT LOGIC ---
+    function renderTreasuryUI() {
+        const container = document.getElementById('treasury-balances');
+        if (!container) return;
+
+        apiFetch('/api/treasury/status')
+            .then(data => {
+                // Update Simulation Badge
+                const simBadge = document.getElementById('bot-simulation-badge');
+                if (simBadge) {
+                    simBadge.innerText = data.simulation ? 'SIMULATION MODE' : 'PRODUCTION MODE';
+                    simBadge.style.color = data.simulation ? '#F59E0B' : '#10B981';
+                    simBadge.style.borderColor = data.simulation ? '#F59E0B' : '#10B981';
+                }
+
+                // Update Balances
+                container.innerHTML = data.accounts.map(acc => `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; background:rgba(0,0,0,0.2); border-radius:8px;">
+                        <span style="font-size:0.9rem; font-weight:600;">${acc.name}</span>
+                        <span style="color:${acc.balance.currency === 'AT' ? 'var(--primary-light)' : '#f1f5f9'}; font-weight:700;">
+                            ${acc.balance.amount} ${acc.balance.currency}
+                        </span>
+                    </div>
+                `).join('');
+
+                // Update Strategies
+                const stratList = document.getElementById('bot-strategies-list');
+                if (stratList) {
+                    stratList.innerHTML = data.active_strategies.map(s => `
+                        <div class="badge" style="background:rgba(59,130,246,0.1); color:#60A5FA; border:1px solid #60A5FA;">${s}</div>
+                    `).join('');
+                }
+
+                // Update Status
+                const statusEl = document.getElementById('bot-status-indicator');
+                if (statusEl) {
+                    statusEl.innerText = data.status;
+                    statusEl.style.color = data.status === 'ONLINE' ? '#10B981' : '#EF4444';
+                }
+            })
+            .catch(e => {
+                container.innerHTML = `<div style="color:#EF4444; padding:20px;">Failed to fetch treasury data.</div>`;
+            });
+    }
+
+    window.toggleTreasuryBot = function () {
+        const confirmMsg = "Emergency Stop will pause all autonomous trading. Proceed?";
+        if (confirm(confirmMsg)) {
+            logToTerminal("[TREASURY] Manual override: Emergency Stop engaged.");
+            // In a real setup, we'd call a POST endpoint to stop it
+        }
+    }
+
+    window.pollTreasury = function () {
+        if (document.getElementById('view-treasury').style.display !== 'none') {
+            renderTreasuryUI();
+        }
+    }
+    setInterval(window.pollTreasury, 5000);
+
 
     // --- STEWARD AI CHAT (Unified) ---
     window.stewardHistory = [];
@@ -2995,11 +3203,11 @@ function main() {
 
     // --- GAIA MISSION GUIDE (Animated Helper) ---
     window.onboardingSteps = [
-        { id: 'auth', title: '🔐 Establish Identity', view: 'auth', check: () => appState.token != null },
-        { id: 'jobs', title: '📋 Join a Party', view: 'jobs', check: () => appState.history.some(h => h.task.startsWith('PARTY:')) },
-        { id: 'mint', title: '⚡ Mint your first AT', view: 'mint', check: () => appState.balance > 100 },
-        { id: 'techtree', title: '🧬 Research Technology', view: 'techtree', check: () => appState.xp > 0 },
-        { id: 'mobility', title: '🛸 Signal Presence', view: 'mobility', check: () => true } // Placeholder check
+        { id: 'auth', title: '🔐 Establish Identity', desc: 'Create your sovereign wallet', view: 'auth', check: () => appState.token != null },
+        { id: 'jobs', title: '📋 Claim your first Quest', desc: 'Accept a task from the board', view: 'jobs', check: () => appState.tasks && appState.tasks.some(t => t.worker === appState.currentUser?.name || t.assignee === appState.currentUser?.name) },
+        { id: 'submit', title: '📤 Submit Proof of Work', desc: 'Upload evidence of completion', view: 'jobs', check: () => appState.history && appState.history.some(h => h.type === 'QUEST_UPDATE' && h.data?.status === 'PENDING_VALIDATION') },
+        { id: 'mint', title: '⚡ Earn your first AT', desc: 'Get validated and receive tokens', view: 'wallet', check: () => appState.balance > 0 },
+        { id: 'techtree', title: '🧬 Unlock Technology', desc: 'Spend XP on the Tech Tree', view: 'techtree', check: () => appState.xp > 50 }
     ];
 
     window.openOnboarding = function () {
@@ -3285,6 +3493,18 @@ function main() {
         if (viewName === 'builddeck') {
             renderBuildDeckUI();
         }
+        if (viewName === 'treasury') {
+            renderTreasuryUI();
+        }
+        if (viewName === 'oracle_deck') {
+            renderOracleDeck();
+        }
+
+        if (viewName === 'oracle_deck') {
+            renderOracleDeck();
+        }
+
+
         if (viewName === 'store' && window.renderMyceliumStore) {
             window.renderMyceliumStore();
         }
@@ -3790,6 +4010,171 @@ function main() {
             container.style.pointerEvents = 'none';
         }
     };
+
+    // --- CODE MINT MODAL ---
+    window.renderCodeMintModal = function () {
+        const container = document.getElementById('send-modal-container'); // Reuse same container
+        if (!container) return;
+
+        container.style.pointerEvents = 'auto';
+        container.innerHTML = `
+            <div class="exchange-modal glass-panel" style="border-color: #6366F1; max-width: 500px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h2 style="margin:0; color:#818CF8;">💻 Code Contribution</h2>
+                    <button onclick="window.closeSendModal()" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+                </div>
+                
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">
+                    Manually claim AT for local code work, architectural designs, or documentation.
+                </p>
+                
+                <div class="form-group">
+                    <label>Task / Description</label>
+                    <input type="text" id="mint-code-desc" placeholder="e.g. Optimized ledger indexing" class="input-dark">
+                </div>
+                
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div class="form-group">
+                        <label>Lines Changed (Est.)</label>
+                        <input type="number" id="mint-code-lines" value="50" min="1" class="input-dark">
+                    </div>
+                    <div class="form-group">
+                        <label>Complexity</label>
+                        <select id="mint-code-complexity" class="input-dark" style="width:100%; padding:8px; background:#0f172a; border:1px solid var(--border); border-radius:4px; color:var(--primary-light);">
+                            <option value="trivial">Trivial (0.5x)</option>
+                            <option value="standard" selected>Standard (1.0x)</option>
+                            <option value="complex">Complex (2.0x)</option>
+                            <option value="expert">Expert (3.0x)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:10px;">
+                    <label>Proof URL / Commit (Optional)</label>
+                    <input type="text" id="mint-code-proof" placeholder="https://github.com/... or commit hash" class="input-dark">
+                </div>
+                
+                <div style="margin-top:20px;">
+                    <button id="btn-submit-code-mint" onclick="window.submitCodeMint()" class="btn-primary" style="width:100%; background:#6366F1;">
+                        SUBMIT CONTRIBUTION
+                    </button>
+                </div>
+            </div>
+        `;
+    };
+
+    window.submitCodeMint = async function () {
+        const desc = document.getElementById('mint-code-desc').value.trim();
+        const lines = parseInt(document.getElementById('mint-code-lines').value);
+        const complexity = document.getElementById('mint-code-complexity').value;
+        const proof = document.getElementById('mint-code-proof').value.trim();
+
+        if (!desc) return alert("Task description required.");
+        if (isNaN(lines) || lines <= 0) return alert("Valid lines count required.");
+
+        const btn = document.getElementById('btn-submit-code-mint');
+        btn.disabled = true;
+        btn.innerText = "MINTING...";
+
+        try {
+            const res = await apiFetch('/api/mint/code', {
+                method: 'POST',
+                body: {
+                    description: desc,
+                    lines_changed: lines,
+                    complexity: complexity,
+                    commit_hash: proof.length === 40 ? proof : "", // Crude commit vs URL check
+                    pr_url: proof.startsWith('http') ? proof : ""
+                }
+            });
+
+            if (res.hash) {
+                logToTerminal(`[CODE] Successfully minted contribution. Reward: ${res.reward.toFixed(2)} AT`);
+                window.closeSendModal();
+                if (window.syncWithLedger) await window.syncWithLedger();
+                alert(`Contribution Recorded! You earned ${res.reward.toFixed(2)} AT.`);
+            } else {
+                alert("Minting failed: " + res.message);
+                btn.disabled = false;
+                btn.innerText = "SUBMIT CONTRIBUTION";
+            }
+        } catch (e) {
+            alert("Error: " + e.message);
+            btn.disabled = false;
+            btn.innerText = "SUBMIT CONTRIBUTION";
+        }
+    };
+
+    // --- ORACLE DECK LOGIC ---
+    function renderOracleDeck() {
+        const container = document.getElementById('oracle-pending-list');
+        if (!container) return;
+
+        apiFetch('/api/quests?status=PENDING_VALIDATION')
+            .then(quests => {
+                if (quests.length === 0) {
+                    container.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted);">Reality is in sync. No pending tasks.</div>`;
+                    return;
+                }
+
+                container.innerHTML = quests.map(q => `
+                    <div class="glass-panel" style="border-left:4px solid #FBBF24; padding:20px;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <h4 style="margin:0;">${q.title}</h4>
+                                <p style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">Worker: <strong>${q.worker}</strong> | Reward: <strong>${q.agreed_at} AT</strong></p>
+                            </div>
+                            <div class="badge" style="background:rgba(251,191,36,0.1); color:#FBBF24; border:1px solid #FBBF24;">PENDING</div>
+                        </div>
+                        <div style="margin-top:15px; padding:10px; background:rgba(0,0,0,0.2); border-radius:6px; font-size:0.85rem;">
+                            <strong>Proof Submitted:</strong> ${JSON.stringify(q.proof || {})}
+                        </div>
+                        <div style="margin-top:20px; display:flex; gap:10px;">
+                            <button class="btn-primary" onclick="window.validateProof('${q.quest_id}', true)" style="flex:1; background:#10B981;">✅ VALIDATE (MINT)</button>
+                            <button class="btn-secondary" onclick="window.validateProof('${q.quest_id}', false)" style="flex:1; border-color:#EF4444; color:#EF4444;">❌ REJECT</button>
+                        </div>
+                    </div>
+                `).join('');
+            });
+    }
+
+    window.validateProof = function (questId, approved) {
+        const feedback = prompt(approved ? "Feedback for worker (optional):" : "Reason for rejection:");
+        if (!approved && !feedback) return;
+
+        apiFetch('/api/quests/validate', {
+            method: 'POST',
+            body: { quest_id: questId, approved: approved, feedback: feedback }
+        }).then(res => {
+            if (res.status === 'completed' || res.status === 'rejected') {
+                logToTerminal(`[ORACLE] Quest ${questId} ${approved ? 'Validated' : 'Rejected'}.`);
+                renderOracleDeck();
+            } else {
+                alert("Validation failed: " + res.message);
+            }
+        });
+    };
+
+    window.certifyUser = function () {
+        const username = document.getElementById('certify-username').value.trim();
+        const role = document.getElementById('certify-role').value;
+        if (!username) return alert("Username required.");
+
+        apiFetch('/api/roles/certify', {
+            method: 'POST',
+            body: { username: username, role: role, level: 1 }
+        }).then(res => {
+            if (res.status === 'certified') {
+                logToTerminal(`[ORACLE] Certified ${username} as ${role}.`);
+                alert(`${username} is now a certified ${role}!`);
+                document.getElementById('certify-username').value = '';
+            } else {
+                alert("Certification failed: " + res.message);
+            }
+        });
+    };
+
+
 
     window.sendAT = async function () {
         const recipient = document.getElementById('send-recipient').value.trim();
