@@ -20,6 +20,8 @@ from api.system import register_system_routes
 from api.steward import register_steward_routes
 from api.economy import register_economy_routes
 from api.social import register_social_routes
+from api.hardware import register_hardware_routes
+from api.exchange import register_exchange_routes
 
 # Configuration
 PORT = 3000
@@ -38,7 +40,7 @@ identity = IdentityManager(USERS_FILE, JWT_SECRET)
 sensors = SensorRegistry(os.path.join('hardware', 'sensor_registry.json'))
 peers = PeerManager(os.path.join('federation', 'federation_registry.json'), PORT)
 syncer = FederationSyncer(ledger, peers, PORT)
-energy = EnergyMonitor(ledger)
+energy = EnergyMonitor(ledger, sensors=sensors)
 steward = StewardNexus(ledger, sensors, server_file='server.py')
 
 # Routing
@@ -49,6 +51,8 @@ register_system_routes(router, ledger, identity, peers, sensors, energy, auth_de
 register_steward_routes(router, ledger, energy, auth_decorator)
 register_economy_routes(router, ledger, sensors, auth_decorator)
 register_social_routes(router, ledger, auth_decorator)
+register_hardware_routes(router, sensors, auth_decorator)
+register_exchange_routes(router, ledger, auth_decorator)
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
