@@ -145,6 +145,20 @@ def run_bridge(server_url, device_id, sim_mode=True):
                         resp = requests.post(server_url, json=payload, timeout=2)
                         if resp.status_code == 200:
                             print(f"[SENT] {sensor.full_id}: {json.dumps(data)}")
+
+                            # Handle Commands
+                            r_json = resp.json()
+                            if r_json.get('data') and 'commands' in r_json['data']:
+                                for cmd in r_json['data']['commands']:
+                                    print(f"⚡ [CMD] {cmd.get('action')}: {cmd.get('params')}")
+                                    # Execute command logic here (simulation)
+                                    if cmd.get('action') == 'REBOOT':
+                                        print("   > REBOOTING SENSOR...")
+                                    if cmd.get('action') == 'SET_POLL':
+                                        global DEFAULT_POLL_INTERVAL
+                                        DEFAULT_POLL_INTERVAL = int(cmd.get('params', 5))
+                                        print(f"   > POLL INTERVAL SET TO {DEFAULT_POLL_INTERVAL}s")
+
                         else:
                             print(f"[FAIL] Server Error: {resp.status_code}")
                     except requests.exceptions.ConnectionError:

@@ -40,24 +40,16 @@ class StewardNexus:
     def perform_metabolic_audit(self):
         now = time.time()
 
-        # Sensor Liveness
+        # Sensor Liveness (Check status marked by SensorRegistry.poll)
+        # We don't need to mark them OFFLINE here again, just react to it.
         for s_id, s in self.sensors.sensors.items():
-            if now - s['last_seen'] > 300 and s['status'] == 'ONLINE':
-                s['status'] = 'OFFLINE'
-                self.ledger.add_block('CHRONICLE', {
-                    'event': 'METABOLIC_FAULT',
-                    'message': f'Sensor {s_id} ({s["type"]}) has flatlined. Dispatching repair proposal.',
-                    'source': 'STEWARD'
-                })
-                self.ledger.add_block('QUEST', {
-                    'quest_id': f'repair_{s_id}_{int(now)}',
-                    'title': f'🔧 Repair Sensor {s_id}',
-                    'reward': 25.0,
-                    'owner': 'STEWARD',
-                    'status': 'OPEN',
-                    'created_at': now
-                })
-        self.sensors.save()
+            if s['status'] == 'OFFLINE':
+                # Check if we already have an open repair quest for this?
+                # For simplicity, we just log if it's recently offline or periodic check
+                # Ideally we check ledger for existing open quest.
+                pass
+
+        # Energy / Hardware Optimization
 
         # Energy / Hardware Optimization
         energy_state = self.energy.get_status()

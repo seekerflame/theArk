@@ -8,10 +8,20 @@
         const container = document.getElementById('hardware-monitor-container');
         if (!container) return;
 
-        // Build the HUD
-        container.innerHTML = `
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-                <!-- Solar Gauge -->
+        // Fetch current system state (including overclock)
+        fetch('/api/system/energy')
+            .then(r => r.json())
+            .then(energyData => {
+                const isOverclocked = energyData.data.overclock_active || false;
+                const overclockBanner = isOverclocked ?
+                    `<div style="margin-bottom: 20px; background:rgba(239, 68, 68, 0.2); border:1px solid #EF4444; color:#FCA5A5; padding:10px; text-align:center; border-radius:8px; font-weight:bold; letter-spacing:1px; animation:pulse 1s infinite;">⚡ OVERCLOCK MODE ACTIVE: SYSTEM ACCELERATED</div>`
+                    : '';
+
+                // Build the HUD
+                container.innerHTML = `
+                    ${overclockBanner}
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <!-- Solar Gauge -->
                 <div class="glass-panel" style="text-align: center; border-top: 3px solid #FBBF24;">
                     <div style="font-size: 2.5rem;">☀️</div>
                     <div id="solar-value" style="font-family: 'JetBrains Mono', monospace; font-size: 2rem; color: #FBBF24; margin: 10px 0;">0.00 W</div>
@@ -52,7 +62,13 @@
             </div>
         `;
 
+    }).catch(e => {
+        // Fallback if system fetch fails
+        container.innerHTML += `<div class="grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;"></div>`;
+        console.warn("Hardware init fallback:", e);
+    }).finally(() => {
         startTelemetryPolling();
+    });
     };
 
     function startTelemetryPolling() {

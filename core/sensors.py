@@ -10,6 +10,7 @@ class SensorRegistry:
     def __init__(self, registry_file):
         self.registry_file = registry_file
         self.sensors = {}
+        self.command_queue = {} # device_id -> [commands]
         self.lock = threading.Lock()
         self.load()
 
@@ -34,6 +35,20 @@ class SensorRegistry:
                 "status": "ONLINE"
             }
             self.save()
+
+    def queue_command(self, device_id, command):
+        with self.lock:
+            if device_id not in self.command_queue:
+                self.command_queue[device_id] = []
+            self.command_queue[device_id].append(command)
+
+    def get_pending_commands(self, device_id):
+        with self.lock:
+            if device_id in self.command_queue and self.command_queue[device_id]:
+                cmds = self.command_queue[device_id]
+                self.command_queue[device_id] = [] # Clear after reading
+                return cmds
+            return []
 
     def poll(self):
         """

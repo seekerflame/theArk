@@ -32,4 +32,22 @@ def register_hardware_routes(router, ledger, sensors, requires_auth):
             # Check if we should mint
             pass # Logic for minting can be added here or kept in simulation logic
 
-        h.send_json({"status": "received", "sensor_id": s_id})
+        # Check for pending commands
+        device_id = p.get('device_id')
+        cmds = []
+        if device_id:
+            cmds = sensors.get_pending_commands(device_id)
+
+        h.send_json({"status": "received", "sensor_id": s_id, "commands": cmds})
+
+    @router.post('/api/hardware/command')
+    @requires_auth
+    def h_hardware_command(h, user, p):
+        device_id = p.get('device_id')
+        cmd = p.get('command')
+
+        if not device_id or not cmd:
+            return h.send_error("Missing device_id or command")
+
+        sensors.queue_command(device_id, cmd)
+        h.send_json({"status": "queued", "device_id": device_id, "command": cmd})
