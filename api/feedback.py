@@ -1,6 +1,7 @@
 import time
 import json
 import os
+import logging
 
 def register_feedback_routes(router, ledger, requires_auth):
 
@@ -29,11 +30,8 @@ def register_feedback_routes(router, ledger, requires_auth):
         block_hash = ledger.add_block('FEEDBACK', data)
 
         # Also log to a file for easy grep
-        try:
-            with open('feedback.log', 'a') as f:
-                f.write(f"[{time.ctime()}] [{f_type}] {user}: {msg}\n")
-        except:
-            pass
+        logger = logging.getLogger("ArkOS.Feedback")
+        logger.info(f"[{f_type}] {user}: {msg}")
 
         h.send_json({
             "status": "success",

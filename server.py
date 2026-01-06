@@ -13,6 +13,7 @@ from core.sensors import SensorRegistry
 from core.federation import PeerManager, FederationSyncer
 from core.steward import StewardNexus
 from core.energy import EnergyMonitor
+from core.btc_bridge import BTCBridge
 from core.router import Router, requires_auth, admin_only
 
 # API Modules
@@ -22,6 +23,7 @@ from api.economy import register_economy_routes
 from api.social import register_social_routes
 from api.hardware import register_hardware_routes
 from api.feedback import register_feedback_routes
+from api.federation import register_federation_routes
 
 # Configuration
 PORT = 3000
@@ -41,7 +43,8 @@ sensors = SensorRegistry(os.path.join('hardware', 'sensor_registry.json'))
 peers = PeerManager(os.path.join('federation', 'federation_registry.json'), PORT)
 syncer = FederationSyncer(ledger, peers, PORT)
 energy = EnergyMonitor(ledger)
-steward = StewardNexus(ledger, sensors, server_file='server.py')
+btc_bridge = BTCBridge()
+steward = StewardNexus(ledger, sensors, energy, btc_bridge, server_file='server.py')
 
 # Routing
 router = Router()
@@ -53,6 +56,7 @@ register_economy_routes(router, ledger, sensors, auth_decorator)
 register_social_routes(router, ledger, auth_decorator)
 register_hardware_routes(router, ledger, sensors, auth_decorator)
 register_feedback_routes(router, ledger, auth_decorator)
+register_federation_routes(router, peers)
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
