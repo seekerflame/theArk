@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Mode - The Ark</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow: hidden;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #hud {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 250px;
+        }
+
+        #hud h2 {
+            color: #64ffda;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .hud-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 0.9em;
+        }
+
+        .hud-label {
+            color: #888;
+        }
+
+        .hud-value {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        #constraints-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 280px;
+        }
+
+        #constraints-panel h3 {
+            color: #64ffda;
+            margin-bottom: 15px;
+        }
+
+        .constraint-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        .constraint-pass {
+            border-left: 3px solid #10b981;
+        }
+
+        .constraint-fail {
+            border-left: 3px solid #ef4444;
+        }
+
+        .constraint-warn {
+            border-left: 3px solid #f59e0b;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-pass {
+            background: #10b981;
+        }
+
+        .status-fail {
+            background: #ef4444;
+        }
+
+        .status-warn {
+            background: #f59e0b;
+        }
+
+        #toolbar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 12px;
+            padding: 15px 25px;
+        }
+
+        .tool-btn {
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            color: #64ffda;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+
+        .tool-btn:hover {
+            background: rgba(100, 255, 218, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tool-btn.active {
+            background: #64ffda;
+            color: #0a0a0a;
+        }
+
+        #mode-indicator {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(100, 255, 218, 0.2);
+            border: 1px solid #64ffda;
+            color: #64ffda;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+
+        #physics-stats {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvas-container">
+        <canvas id="physics-canvas"></canvas>
+    </div>
+
+    <div id="hud">
+        <h2>🏗️ Building Mode</h2>
+        <div class="hud-row">
+            <span class="hud-label">Components:</span>
+            <span class="hud-value" id="component-count">0</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-label">Physics Bodies:</span>
+            <span class="hud-value" id="body-count">0</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-label">Simulation:</span>
+            <span class="hud-value" id="sim-status">Running</span>
+        </div>
+    </div>
+
+    <div id="constraints-panel">
+        <h3>⚡ Constraint Checks</h3>
+        <div id="constraint-list">
+            <div class="constraint-item constraint-pass">
+                <span>Stability</span>
+                <div class="status-indicator status-pass"></div>
+            </div>
+            <div class="constraint-item constraint-warn">
+                <span>Snow Load (40 psf)</span>
+                <div class="status-indicator status-warn"></div>
+            </div>
+            <div class="constraint-item constraint-pass">
+                <span>Racking Resistance</span>
+                <div class="status-indicator status-pass"></div>
+            </div>
+            <div class="constraint-item constraint-pass">
+                <span>R-Value (R-19+)</span>
+                <div class="status-indicator status-pass"></div>
+            </div>
+            <div class="constraint-item constraint-fail">
+                <span>Connections</span>
+                <div class="status-indicator status-fail"></div>
+            </div>
+        </div>
+        <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <div class="hud-row">
+                <span class="hud-label">Constructability Score:</span>
+                <span class="hud-value" style="color: #f59e0b;">72%</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="mode-indicator">🎯 Solo Build Mode</div>
+
+    <div id="toolbar">
+        <button class="tool-btn active" data-tool="stud">2x4 Stud</button>
+        <button class="tool-btn" data-tool="beam">4x8 Beam</button>
+        <button class="tool-btn" data-tool="panel">OSB Panel</button>
+        <button class="tool-btn" data-tool="connection">Connection</button>
+        <button class="tool-btn" data-tool="delete">🗑️ Delete</button>
+        <button class="tool-btn" data-tool="simulate">▶️ Simulate</button>
+    </div>
+
+    <div id="physics-stats">
+        FPS: <span id="fps">60</span> |
+        Step: <span id="step-time">0.0</span>ms |
+        Engine: Rapier.js
+    </div>
+
+    <script type="module">
+        // Rapier.js Physics Integration
+        // Using CDN for quick setup - production would bundle this
+
+        import RAPIER from 'https://cdn.skypack.dev/@dimforge/rapier2d-compat';
+
+        class BuildingPhysics {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.components = [];
+                this.selectedTool = 'stud';
+                this.running = true;
+                this.lastTime = 0;
+                this.frameCount = 0;
+                this.fpsTime = 0;
+
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            async init() {
+                // Initialize Rapier physics
+                await RAPIER.init();
+
+                // Create physics world with gravity
+                const gravity = { x: 0.0, y: 9.81 };
+                this.world = new RAPIER.World(gravity);
+
+                // Create ground
+                this.createGround();
+
+                // Start simulation
+                this.loop();
+
+                // Setup input
+                this.setupInput();
+
+                console.log('🏗️ Building Physics initialized with Rapier.js');
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.scale = 50; // Pixels per meter
+                this.offsetX = this.canvas.width / 2;
+                this.offsetY = this.canvas.height - 100;
+            }
+
+            createGround() {
+                // Ground is a static rigid body
+                const groundDesc = RAPIER.RigidBodyDesc.fixed()
+                    .setTranslation(0.0, 0.0);
+                const groundBody = this.world.createRigidBody(groundDesc);
+
+                // Ground collider (wide platform)
+                const groundCollider = RAPIER.ColliderDesc.cuboid(20.0, 0.5);
+                this.world.createCollider(groundCollider, groundBody);
+
+                this.groundBody = groundBody;
+            }
+
+            addComponent(x, y, type) {
+                let width, height, color;
+
+                switch (type) {
+                    case 'stud':
+                        width = 0.089; // 3.5 inches in meters
+                        height = 2.44; // 8 feet in meters
+                        color = '#d4a574';
+                        break;
+                    case 'beam':
+                        width = 0.184; // 7.25 inches
+                        height = 0.089; // 3.5 inches (laid flat)
+                        color = '#8b6914';
+                        break;
+                    case 'panel':
+                        width = 1.22; // 4 feet
+                        height = 2.44; // 8 feet
+                        color = '#c4a35a';
+                        break;
+                    default:
+                        width = 0.1;
+                        height = 0.1;
+                        color = '#888';
+                }
+
+                // Convert screen coords to physics coords
+                const physX = (x - this.offsetX) / this.scale;
+                const physY = -(y - this.offsetY) / this.scale;
+
+                // Create dynamic rigid body
+                const bodyDesc = RAPIER.RigidBodyDesc.dynamic()
+                    .setTranslation(physX, physY);
+                const body = this.world.createRigidBody(bodyDesc);
+
+                // Create collider
+                const colliderDesc = RAPIER.ColliderDesc.cuboid(width / 2, height / 2)
+                    .setRestitution(0.1)
+                    .setFriction(0.8);
+                this.world.createCollider(colliderDesc, body);
+
+                const component = {
+                    body,
+                    type,
+                    width,
+                    height,
+                    color,
+                    id: Date.now()
+                };
+
+                this.components.push(component);
+                this.updateHUD();
+
+                return component;
+            }
+
+            setupInput() {
+                // Tool selection
+                document.querySelectorAll('.tool-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.selectedTool = btn.dataset.tool;
+
+                        if (this.selectedTool === 'simulate') {
+                            this.running = !this.running;
+                            btn.textContent = this.running ? '⏸️ Pause' : '▶️ Simulate';
+                            document.getElementById('sim-status').textContent = this.running ? 'Running' : 'Paused';
+                        }
+                    });
+                });
+
+                // Click to place
+                this.canvas.addEventListener('click', (e) => {
+                    if (this.selectedTool === 'simulate' || this.selectedTool === 'delete') return;
+                    this.addComponent(e.clientX, e.clientY, this.selectedTool);
+                });
+            }
+
+            updateHUD() {
+                document.getElementById('component-count').textContent = this.components.length;
+                document.getElementById('body-count').textContent = this.world.bodies.len();
+            }
+
+            step() {
+                if (!this.running) return;
+
+                const stepStart = performance.now();
+                this.world.step();
+                const stepTime = performance.now() - stepStart;
+                document.getElementById('step-time').textContent = stepTime.toFixed(1);
+            }
+
+            render() {
+                const ctx = this.ctx;
+
+                // Clear
+                ctx.fillStyle = '#0a0a0a';
+                ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Draw grid
+                ctx.strokeStyle = 'rgba(100, 255, 218, 0.1)';
+                ctx.lineWidth = 1;
+                const gridSize = this.scale; // 1 meter grid
+
+                for (let x = this.offsetX % gridSize; x < this.canvas.width; x += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, this.canvas.height);
+                    ctx.stroke();
+                }
+
+                for (let y = this.offsetY % gridSize; y < this.canvas.height; y += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(this.canvas.width, y);
+                    ctx.stroke();
+                }
+
+                // Draw ground
+                ctx.fillStyle = '#2a5a2a';
+                ctx.fillRect(0, this.offsetY, this.canvas.width, 100);
+
+                // Draw components
+                for (const comp of this.components) {
+                    const pos = comp.body.translation();
+                    const rot = comp.body.rotation();
+
+                    const screenX = pos.x * this.scale + this.offsetX;
+                    const screenY = -pos.y * this.scale + this.offsetY;
+
+                    ctx.save();
+                    ctx.translate(screenX, screenY);
+                    ctx.rotate(-rot);
+
+                    // Component body
+                    ctx.fillStyle = comp.color;
+                    ctx.fillRect(
+                        -comp.width * this.scale / 2,
+                        -comp.height * this.scale / 2,
+                        comp.width * this.scale,
+                        comp.height * this.scale
+                    );
+
+                    // Border
+                    ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(
+                        -comp.width * this.scale / 2,
+                        -comp.height * this.scale / 2,
+                        comp.width * this.scale,
+                        comp.height * this.scale
+                    );
+
+                    ctx.restore();
+                }
+            }
+
+            loop(time = 0) {
+                // FPS calculation
+                this.frameCount++;
+                if (time - this.fpsTime >= 1000) {
+                    document.getElementById('fps').textContent = this.frameCount;
+                    this.frameCount = 0;
+                    this.fpsTime = time;
+                }
+
+                this.step();
+                this.render();
+
+                requestAnimationFrame((t) => this.loop(t));
+            }
+        }
+
+        // Initialize
+        const canvas = document.getElementById('physics-canvas');
+        const physics = new BuildingPhysics(canvas);
+        physics.init();
+    </script>
+</body>
+
+</html>
