@@ -20,6 +20,8 @@ from api.system import register_system_routes
 from api.steward import register_steward_routes
 from api.economy import register_economy_routes
 from api.social import register_social_routes
+from api.hardware import register_hardware_routes
+from api.bridge import register_bridge_routes
 
 # Configuration
 PORT = 3000
@@ -49,6 +51,8 @@ register_system_routes(router, ledger, identity, peers, sensors, energy, auth_de
 register_steward_routes(router, ledger, energy, auth_decorator)
 register_economy_routes(router, ledger, sensors, auth_decorator)
 register_social_routes(router, ledger, auth_decorator)
+register_hardware_routes(router, ledger, sensors, auth_decorator)
+register_bridge_routes(router)
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):

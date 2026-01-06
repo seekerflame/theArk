@@ -133,6 +133,14 @@ curl -X POST http://localhost:3000/api/steward/think \
 - `POST /api/mission/propose` - AI proposal submission
 - `GET /api/mission/list` - Active missions
 
+### Hardware & Bridge Endpoints
+
+- `POST /api/hardware` - Ingest sensor data & auto-mint AT
+- `GET /api/hardware/list` - List active sensors
+- `GET /api/bridge/status` - Check BTC/Lightning bridge status
+- `GET /api/bridge/rate` - Get AT/BTC exchange rate
+- `POST /api/bridge/swap` - Request AT<->BTC swap
+
 ## 🌐 Federation
 
 Connect your node to the global mesh:
@@ -188,6 +196,6 @@ The Ark operates on the principle that **absolute survival sovereignty** is achi
 
 ---
 
-**Current Kardashev Level**: Type 0.73  
-**Mission Status**: ALPHA v1.0 - Modular Sharding Complete  
-**Next Milestone**: Type 0.75 (Hardware Bridge Integration)
+**Current Kardashev Level**: Type 0.75
+**Mission Status**: BETA v1.1 - Hardware Bridge Online
+**Next Milestone**: Type 0.80 (Federated Marketplaces)
