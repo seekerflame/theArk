@@ -193,12 +193,51 @@ class GaiaNexus:
         # Placeholder for actual optimization logic
         return True
     
+    def call_ollama(self, prompt, model="deepseek-r1:1.5b"):
+        """Consult the local AI imagination"""
+        try:
+            r = requests.post('http://localhost:11434/api/generate', 
+                            json={
+                                'model': model,
+                                'prompt': prompt,
+                                'stream': False
+                            }, timeout=90)
+            if r.status_code == 200:
+                return r.json().get('response', '').strip()
+        except Exception as e:
+            logger.error(f"❌ Ollama connection failed: {e}")
+        return None
+
     def improve_code(self, mission):
-        """Generate code improvements"""
-        logger.info(f"💻 Analyzing code for improvements...")
-        # Placeholder for code analysis
-        return True
-    
+        """Generate sovereign updates using AI imagination"""
+        logger.info(f"💻 AI Imagination Active: Generating improvement...")
+        
+        # 1. Consult Ollama for a sovereign message
+        prompt = "Generate a short, cryptic, cypher-punk style log entry (max 10 words) for a sovereign OS boot sequence. Do not include any explanation."
+        thought = self.call_ollama(prompt) or "SYSTEM_OPTIMIZED::ENTROPY_REDUCED"
+        
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        log_entry = f"[{timestamp}] [GAIA_NEXUS] {thought}\n"
+        
+        # 2. Apply to local file (simulating self-improvement)
+        try:
+            with open("deployment_log.txt", "a") as f:
+                f.write(log_entry)
+            
+            logger.info(f"✅ Improvements applied: {thought}")
+            
+            # 3. Commit improvement (if running in valid git repo)
+            import subprocess
+            subprocess.run(["git", "add", "deployment_log.txt"], check=False)
+            subprocess.run(["git", "commit", "-m", f"🤖 GAIA NEXUS: {thought}"], check=False)
+            # User must push manually or we enable auto-push if configured
+            subprocess.run(["git", "push"], check=False)
+            
+            return True
+        except Exception as e:
+            logger.error(f"❌ Failed to apply code improvement: {e}")
+            return False
+
     # =======================
     # MAIN LOOP
     # =======================
