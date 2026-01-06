@@ -169,7 +169,7 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
         response = {"status": "success", "request_id": os.urandom(4).hex(), "data": data, "timestamp": time.time()}
         self.wfile.write(json.dumps(response).encode())
 
-    def send_error(self, message, status=400):
+    def send_json_error(self, message, status=400):
         self.send_response(status)
         self.send_header('Content-Type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -195,7 +195,7 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
         elif path == '/' or path.endswith('.html') or path.endswith('.js') or path.endswith('.css') or path.endswith('.png'):
             self.serve_static()
         else:
-            self.send_error("Not Found", status=404)
+            self.send_json_error("Not Found", status=404)
 
     def do_POST(self):
         path = self.path.split('?')[0]
@@ -204,7 +204,7 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
         if '/auth/' in path:
             client_ip = self.client_address[0]
             if not check_rate_limit(client_ip, path):
-                self.send_error("Rate limited. Try again in 60 seconds.", status=429)
+                self.send_json_error("Rate limited. Try again in 60 seconds.", status=429)
                 return
         
         if path in router.routes['POST']:
@@ -213,9 +213,9 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
                 payload = json.loads(self.rfile.read(content_length)) if content_length > 0 else {}
                 router.routes['POST'][path](self, payload)
             except Exception as e:
-                self.send_error(f"Invalid Request: {str(e)}")
+                self.send_json_error(f"Invalid Request: {str(e)}")
         else:
-            self.send_error("Not Found", status=404)
+            self.send_json_error("Not Found", status=404)
 
     def serve_static(self):
         path = self.path.split('?')[0]
@@ -231,7 +231,7 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             with open(file_path, 'rb') as f: self.wfile.write(f.read())
         else:
-            self.send_error("File Not Found", status=404)
+            self.send_json_error("File Not Found", status=404)
 
 if __name__ == '__main__':
     syncer.start()
