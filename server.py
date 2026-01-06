@@ -41,10 +41,14 @@ from core.treasury_bot import TreasuryBot
 
 # Configuration
 PORT = int(os.environ.get('PORT', 3000))
-JWT_SECRET = "GAIA_PROTO_CENTENNIAL_2025"
+JWT_SECRET = os.environ.get('JWT_SECRET', 'dev_only_secret_change_in_production')
 DB_FILE = os.path.join(os.getcwd(), 'ledger', 'village_ledger.db')
 WEB_DIR = os.path.join(os.getcwd(), 'web')
 USERS_FILE = os.path.join('core', 'users.json')
+
+# Security Warning
+if JWT_SECRET == 'dev_only_secret_change_in_production':
+    logging.warning("⚠️  Using default JWT_SECRET - set JWT_SECRET env var for production!")
 
 # Logging
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s')
@@ -123,6 +127,32 @@ try:
 except ImportError:
     logger.warning("⚠️  AI Memory System not available")
 
+# Rate Limiting (simple in-memory, resets on restart)
+rate_limit_store = {}
+RATE_LIMIT_WINDOW = 60  # seconds
+RATE_LIMIT_MAX = 30  # requests per window for auth endpoints
+
+def check_rate_limit(ip, endpoint):
+    """Returns True if request should be allowed, False if rate limited"""
+    key = f"{ip}:{endpoint}"
+    now = time.time()
+    
+    if key not in rate_limit_store:
+        rate_limit_store[key] = {"count": 1, "window_start": now}
+        return True
+    
+    entry = rate_limit_store[key]
+    if now - entry["window_start"] > RATE_LIMIT_WINDOW:
+        # Reset window
+        rate_limit_store[key] = {"count": 1, "window_start": now}
+        return True
+    
+    if entry["count"] >= RATE_LIMIT_MAX:
+        return False
+    
+    entry["count"] += 1
+    return True
+
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -169,6 +199,14 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = self.path.split('?')[0]
+        
+        # Rate limit auth endpoints
+        if '/auth/' in path:
+            client_ip = self.client_address[0]
+            if not check_rate_limit(client_ip, path):
+                self.send_error("Rate limited. Try again in 60 seconds.", status=429)
+                return
+        
         if path in router.routes['POST']:
             content_length = int(self.headers.get('Content-Length', 0))
             try:

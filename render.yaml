@@ -23,7 +23,7 @@ services:
       - key: ARK_API_URL
         value: https://ark-os-production.onrender.com
       - key: AI_AGENT_TOKEN
-        value: "REPLACE_WITH_REAL_TOKEN"
+        sync: false  # Set manually in Render dashboard after creating AI user
     
   # Background Worker for AI Memory
   - type: worker

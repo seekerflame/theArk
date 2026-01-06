@@ -8,12 +8,18 @@ __pycache__/
 
 # Environment & Secrets
 .env
+.env.*
 *.key
 *.pem
+*secret*
+*credential*
 config/secrets.json
 config/treasury_config.json
 core/secrets.json
+.wiki_credentials
+demo_credentials.json
 
+# User data (contains password hashes)
 core/users.json
 
 # Village Data (Keep Local)
