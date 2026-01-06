@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Mirror | Ark OS Kiosk</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --primary: #7C3AED;
+            --secondary: #10B981;
+            --text: #E5E7EB;
+            --accent: #F59E0B;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* IDLE STATE: "Are you Bored?" */
+        #idle-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            z-index: 100;
+            cursor: pointer;
+            transition: opacity 0.5s;
+        }
+        #idle-screen.hidden { opacity: 0; pointer-events: none; }
+        
+        .bored-text {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+        .tap-hint {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            opacity: 0.6;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* ACTIVE STATE: Quest Board */
+        #quest-board {
+            width: 100%;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .header h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .location-badge {
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Quest Cards */
+        .quest-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .quest-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .quest-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+        }
+        .quest-card.labor { border-left: 4px solid var(--accent); }
+        .quest-card.social { border-left: 4px solid var(--secondary); }
+        .quest-card.raid { border-left: 4px solid #EF4444; }
+        
+        .quest-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+        .quest-title { font-size: 1.3rem; font-weight: 600; }
+        .reward {
+            background: var(--secondary);
+            color: #000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .quest-desc { opacity: 0.7; line-height: 1.5; }
+        .quest-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            opacity: 0.5;
+        }
+        
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #9333EA);
+            color: white;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn:active { transform: scale(0.98); }
+        
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- IDLE SCREEN -->
+<div id="idle-screen" onclick="activate()">
+    <div class="bored-text">Bored?</div>
+    <div class="tap-hint">Tap to discover quests</div>
+</div>
+
+<!-- QUEST BOARD -->
+<div id="quest-board" style="display:none;">
+    <button class="back-btn" onclick="deactivate()">← Back</button>
+    
+    <div class="header">
+        <h1>⚡ Quest Board</h1>
+        <span class="location-badge" id="location">📍 Loading...</span>
+    </div>
+    
+    <div class="quest-list" id="quest-list">
+        <!-- Quests loaded dynamically -->
+    </div>
+    
+    <div class="actions">
+        <button class="btn btn-primary" onclick="postQuest()">📝 Post a Quest</button>
+        <button class="btn btn-secondary" onclick="scanQR()">📷 Scan QR</button>
+    </div>
+</div>
+
+<script>
+const API_URL = 'http://localhost:3000'; // Or your Ark OS server
+
+// Sample quests (will be replaced by API call)
+const SAMPLE_QUESTS = [
+    {
+        id: 1,
+        title: "Help organize the shop window",
+        description: "Need someone to help rearrange the display. Takes about 30 mins.",
+        reward: 2.5,
+        type: "labor",
+        merchant: "The Art Vault",
+        duration: "30 min"
+    },
+    {
+        id: 2,
+        title: "Bar Crawl Bingo",
+        description: "Visit 3 spots on First Friday, collect stamps. Free drink at the end!",
+        reward: 0.5,
+        type: "social",
+        merchant: "First Friday Collective",
+        duration: "2 hours"
+    },
+    {
+        id: 3,
+        title: "Community Garden Clean-Up (Raid)",
+        description: "Join 10+ people to prepare the community garden for spring. Food provided!",
+        reward: 5.0,
+        type: "raid",
+        merchant: "Kern Community Garden",
+        duration: "3 hours"
+    }
+];
+
+function activate() {
+    document.getElementById('idle-screen').classList.add('hidden');
+    document.getElementById('quest-board').style.display = 'block';
+    loadQuests();
+    getLocation();
+}
+
+function deactivate() {
+    document.getElementById('idle-screen').classList.remove('hidden');
+    document.getElementById('quest-board').style.display = 'none';
+}
+
+async function loadQuests() {
+    const list = document.getElementById('quest-list');
+    list.innerHTML = '';
+
+    // Try API first, fall back to samples
+    let quests = SAMPLE_QUESTS;
+    try {
+        const res = await fetch(`${API_URL}/api/social/templates`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.data && data.data.templates) {
+                quests = data.data.templates;
+            }
+        }
+    } catch (e) {
+        console.log('Using sample quests (API unavailable)');
+    }
+
+    quests.forEach(q => {
+        const card = document.createElement('div');
+        card.className = `quest-card ${q.type || q.quest_type || 'labor'}`;
+        card.innerHTML = `
+            <div class="quest-header">
+                <div class="quest-title">${q.title}</div>
+                <div class="reward">${q.reward || q.reward_per_person || 1} AT</div>
+            </div>
+            <div class="quest-desc">${q.description}</div>
+            <div class="quest-meta">
+                <span>📍 ${q.merchant || 'Local'}</span>
+                <span>⏱ ${q.duration || q.max_duration_hours + ' hrs' || '1 hour'}</span>
+            </div>
+        `;
+        card.onclick = () => acceptQuest(q);
+        list.appendChild(card);
+    });
+}
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+            document.getElementById('location').textContent = `📍 Downtown Bakersfield`;
+        }, () => {
+            document.getElementById('location').textContent = `📍 Location unavailable`;
+        });
+    }
+}
+
+function acceptQuest(quest) {
+    alert(`🎯 Quest Accepted: ${quest.title}\n\nEarn ${quest.reward || quest.reward_per_person} AT upon completion!\n\nShow this screen to the merchant to get started.`);
+}
+
+function postQuest() {
+    alert('📝 Post a Quest\n\nThis feature requires merchant login.\nScan your merchant QR to authenticate.');
+}
+
+function scanQR() {
+    alert('📷 QR Scanner\n\nCamera integration coming soon!\nFor now, type the quest code manually.');
+}
+
+// Auto-return to idle after 2 minutes of inactivity
+let idleTimer;
+document.addEventListener('touchstart', resetIdle);
+document.addEventListener('click', resetIdle);
+
+function resetIdle() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(deactivate, 120000);
+}
+</script>
+
+</body>
+</html>
