@@ -19,6 +19,8 @@ from core.triple_verification import TripleVerification
 from core.quest_system import QuestSystem
 from core.inventory import InventorySystem
 from core.fiat_bridge import FiatBridge, register_fiat_routes
+from core.party_quests import PartyQuestSystem
+from core.harvest_marketplace import HarvestMarketplace
 
 
 # API Modules
@@ -62,6 +64,8 @@ verification = TripleVerification(ledger, identity)
 quest_system = QuestSystem(ledger, identity)
 inventory = InventorySystem(ledger, identity)
 fiat_bridge = FiatBridge(ledger)
+party_quests = PartyQuestSystem(ledger, identity, quest_system)
+harvest = HarvestMarketplace(ledger, inventory)
 
 
 # Routing
@@ -84,6 +88,8 @@ register_role_routes(router, ledger, identity, auth_decorator)
 register_fiat_routes(router, ledger, fiat_bridge, auth_decorator)
 logger.info("💰 Fiat Bridge loaded (Card ↔ BTC ↔ AT ↔ Bank)")
 logger.info("📦 Inventory System loaded")
+logger.info("👨‍👩‍👧 Party Quests loaded (families + groups)")
+logger.info("🥬 Harvest Marketplace loaded (sell produce)")
 
 # AI Memory System Integration
 try:
