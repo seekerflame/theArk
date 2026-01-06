@@ -15,6 +15,8 @@ from core.steward import StewardNexus
 from core.energy import EnergyMonitor
 from core.router import Router, requires_auth, admin_only
 from core.justice import JusticeSteward
+from core.triple_verification import TripleVerification
+from core.quest_system import QuestSystem
 
 
 # API Modules
@@ -27,13 +29,14 @@ from api.exchange import register_exchange_routes
 from api.quests import register_quest_routes
 from api.treasury import register_treasury_routes
 from api.justice import register_justice_routes
+from api.roles import register_role_routes
 
 
 # Bot Modules
 from core.treasury_bot import TreasuryBot
 
 # Configuration
-PORT = int(os.environ.get('PORT', 3001))
+PORT = int(os.environ.get('PORT', 3000))
 JWT_SECRET = "GAIA_PROTO_CENTENNIAL_2025"
 DB_FILE = os.path.join(os.getcwd(), 'ledger', 'village_ledger.db')
 WEB_DIR = os.path.join(os.getcwd(), 'web')
@@ -53,6 +56,8 @@ energy = EnergyMonitor(ledger, sensors=sensors)
 steward = StewardNexus(ledger, sensors, server_file='server.py')
 treasury = TreasuryBot(ledger)
 justice = JusticeSteward(ledger, identity)
+verification = TripleVerification(ledger, identity)
+quest_system = QuestSystem(ledger, identity)
 
 
 # Routing
@@ -61,15 +66,26 @@ auth_decorator = requires_auth(identity)
 
 register_system_routes(router, ledger, identity, peers, sensors, energy, auth_decorator)
 register_steward_routes(router, ledger, energy, auth_decorator)
-register_economy_routes(router, ledger, sensors, justice, auth_decorator)
+register_economy_routes(router, ledger, sensors, identity, justice, auth_decorator, quest_system, verification)
+
 
 register_social_routes(router, ledger, auth_decorator)
 register_hardware_routes(router, sensors, auth_decorator)
 register_exchange_routes(router, ledger, auth_decorator)
 register_justice_routes(router, ledger, justice, auth_decorator)
 
-register_quest_routes(router, ledger, auth_decorator)
+register_quest_routes(router, ledger, identity, auth_decorator)
 register_treasury_routes(router, treasury, auth_decorator)
+register_role_routes(router, ledger, identity, auth_decorator)
+
+# AI Memory System Integration
+try:
+    from core.ai_memory import create_ai_memory_api
+    create_ai_memory_api(router, ledger, auth_decorator)
+    logger.info("🧠 AI Memory System loaded")
+except ImportError:
+    logger.warning("⚠️  AI Memory System not available")
+
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
