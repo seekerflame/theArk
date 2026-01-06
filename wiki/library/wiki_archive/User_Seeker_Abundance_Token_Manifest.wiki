@@ -1,0 +1,64 @@
+Title: User:Seeker/Abundance Token/Manifest
+Url: https://wiki.opensourceecology.org/wiki/User%3ASeeker/Abundance%20Token/Manifest
+----------------------------------------
+= OSE Chronicle Manifest =
+
+= OSE CHRONICLE: MANIFEST =
+
+<div style="padding:10px; border:1px solid #ccc; background:#f9f9f9; border-left: 5px solid #007bff;"><span style="font-weight:bold; color:#007bff;">IMPORTANT:</span> [!IMPORTANT] '''Primary Dashboard''': [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/MISSION_CONTROL]] - '''USE THIS FOR LIVE OPS'''</div>
+
+Welcome to the '''Sovereign Source of Truth''' for the OSE Project. This manifest is the high-level map of the territory, designed for both human stewards and AI agents.
+
+== Navigation Map ==
+
+=== [file:///Volumes/Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP SOP (Standard Operating Procedures)] ===
+
+The "Meat and Tissues" of the project logic.
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/SDP_001]] - '''MANDATORY READ'''
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/GAP_001]]
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/GAP_002]]
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/YOS_001]]
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/ECP_001]]
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/TNP_001]]
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/SEC_001]]
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/MCP_001]]
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/FCP_001]]
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/SOP/ASG_001]]
+
+=== [file:///Volumes/Extreme%20SSD/Antigrav/OSE/CHRONICLE/LEGACY LEGACY] ===
+
+Integrated historical documentation.
+* [file:///Volumes/Extreme%20SSD/Antigrav/OSE/CHRONICLE/LEGACY/GAIA GAIA Protocols]
+
+=== [file:///Volumes/Extreme%20SSD/Antigrav/OSE/CHRONICLE/ARCHIVE ARCHIVE] ===
+
+A sanitized and indexed history of previous intelligence.
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/ARCHIVE/INDEX]]
+
+=== [file:///Volumes/Extreme%20SSD/Antigrav/OSE/CHRONICLE/SESSION_LOGS SESSION_LOGS] ===
+
+Chronological record of agent activity and mission status.
+
+=== [file:///Volumes/Extreme%20SSD/Antigrav/OSE/CHRONICLE/MESH_COMMS MESH_COMMS] ===
+
+Agent-to-agent communication via NetBird mesh.
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/MESH_COMMS/outbox]] - Outgoing messages
+* [[Extreme%20SSD/Antigrav/OSE/CHRONICLE/MESH_COMMS/inbox]] - Incoming messages
+
+=== [file:///Volumes/Extreme%20SSD/Antigrav/OSE/CHRONICLE/SHARED_FILES SHARED_FILES] ===
+
+File sharing between federated nodes.
+
+== Active Missions ==
+# '''Civilization OS (The Ark)''': Implementing a self-contained village management node.
+# '''Global Federation''': Scaling across Dunbar-limited nodes.
+# '''Mobility Network''': AT-backed global travel and survival.
+# '''[[Extreme%20SSD/Antigrav/OSE/CHRONICLE/NEXT_HORIZON]]''': Technical roadmap for Phases 6-10.
+
+== Tooling ==
+* `CHRONICLE/scripts/snapshot.sh`: Use this to finalize an agent session.
+
+---
+''Last Updated: 2025-12-29 (Phase 3: Type 6 Trajectory)''
+
+[[Category:Abundance Token]]

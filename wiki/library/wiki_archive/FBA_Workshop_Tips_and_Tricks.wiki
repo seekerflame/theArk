@@ -1,0 +1,4 @@
+Title: FBA Workshop Tips and Tricks
+Url: https://wiki.opensourceecology.org/wiki/FBA%20Workshop%20Tips%20and%20Tricks
+----------------------------------------
+*to operate on material: When material is heavy - move the tool. When the tool is heavy, move the material.Apply this to hand tools, gantry tools, tool heads.

@@ -1,0 +1,156 @@
+Title: User:Seeker/Abundance Token/Guide
+Url: https://wiki.opensourceecology.org/wiki/User%3ASeeker/Abundance%20Token/Guide
+----------------------------------------
+= Abundance Token: Explained Like You're a College Student =
+
+== What Is This Thing? ==
+
+Imagine you're in a co-op house. Everyone does chores. But instead of a chore wheel that no one follows, you have an app that:
+# '''Logs what you did''' ("I washed dishes - 1 hour")
+# '''Gives you points''' (10 AT for that hour)
+# '''Lets you spend points''' (50 AT = a week of meals)
+
+That's it. '''Abundance Token (AT) is a points system for real work.'''
+
+---
+
+== The 4 Circles (Value Sources) ==
+
+Where does value come from in a village? Four sources:
+
+<pre>
+         ┌────────────┐
+         │   PEOPLE   │  (Care, Self-Maintenance)
+         └─────┬──────┘
+               │
+    ┌──────────┴──────────┐
+    │                     │
+┌───┴───┐           ┌─────┴─────┐
+│ LABOR │◄─────────►│   TOOLS   │
+└───┬───┘           └─────┬─────┘
+    │                     │
+    └──────────┬──────────┘
+               │
+         ┌─────┴──────┐
+         │    ECO     │  (Land, Energy, Nutrients)
+         └────────────┘
+</pre>
+
+{| class="wikitable"
+! Circle !! What It Is !! Example !! AT Relevance
+|-
+| '''People''' || Human wellbeing, rest, learning || Sleep, eat, shower || NOT paid (it's baseline)
+|-
+| '''Labor''' || Work that creates value || Build a wall, cook food || PAID (core use case)
+|-
+| '''Tools''' || Machines that amplify labor || Brick press, tractor || Paid to build/maintain
+|-
+| '''Eco''' || Nature's contribution || Soil, sun, water || Future: Eco-credits (sensors)
+|}
+
+=== The 4th Circle: PEOPLE ===
+
+This is the one you were looking for. People need to '''rest, eat, learn, heal'''. This is ''not'' paid in AT because it's the '''baseline of being human'''. The system supports it (free showers if you work 15hrs/week) but doesn't transactionalize it.
+
+---
+
+== What Exactly Is the Use Case? ==
+
+'''AT is for tracking and rewarding LABOR in a high-trust community.'''
+
+{| class="wikitable"
+! AT is FOR !! AT is NOT FOR
+|-
+| Logging hours worked || Tracking your location
+|-
+| Trading value between villagers || Buying stuff from Amazon
+|-
+| Funding community projects || Replacing USD (we're too small)
+|-
+| Proving you contributed || Controlling behavior
+|}
+
+=== The Specific Use Case (Tomorrow's Test) ===
+# '''You''' log "Built Furnace Prototype - 7 hours".
+# '''Your buddy''' verifies it (clicks the node, turns it green).
+# '''You''' send him 10 AT for helping.
+# '''Both transactions''' appear on the DAG.
+
+---
+
+== How Does the DAG Work? ==
+
+=== What is a DAG? ===
+
+A '''Directed Acyclic Graph''' is like a family tree for transactions.
+
+<pre>
+[Genesis] ──► [Mint: "Weld Frame"] ──► [Verify: ✓]
+                    │
+                    └──► [Transfer: 10 AT to Buddy]
+</pre>
+* Each box = a '''Block''' (a record of something that happened).
+* Arrows = '''Parents''' (what came before).
+* No loops (you can't go back in time).
+
+=== Why Not a Blockchain? ===
+
+Blockchains are slow (wait for 10 minutes to confirm). DAGs are fast (instant confirmation as long as you reference a valid parent).
+
+---
+
+== The IoT Idea (Pee Sensor) ==
+
+You asked: "What if I pee on a sensor that tracks tree nutrients?"
+
+=== How It Would Work ===
+# '''Sensor''' detects nitrogen levels in soil.
+# '''Sensor''' logs: "Nitrogen +5% at Tree #7".
+# '''System''' auto-mints: "Eco-Credit: 2 AT" to whoever tagged that tree as their "responsibility".
+
+=== The Catch ===
+* This is '''Phase 2''' (we don't have sensors yet).
+* For now, you'd log it manually: "Fertilized Tree #7 - 0.1 hours".
+* The system trusts you. If you lie, your reputation suffers.
+
+---
+
+== Testing Tomorrow: What I Need ==
+
+{| class="wikitable"
+! What !! Why
+|-
+| '''You + Buddy on same network''' || Both need to access `localhost:3000` (or I expose it to LAN)
+|-
+| '''Two browsers/devices''' || One logs in as "Founder", one as "Marcin"
+|-
+| '''A real task''' || Something you can actually log ("Tested furnace - 1 hour")
+|}
+
+=== The Test Script ===
+# '''Founder''' logs "Built Furnace - 4 hours" → Yellow node appears.
+# '''Marcin''' clicks the node → Verify → Turns green.
+# '''Founder''' opens Transfer, sends 20 AT to Marcin.
+# '''Both''' see the purple TX node on the graph.
+# '''Success''': Value flowed. Proof is on the ledger.
+
+---
+
+== What's an "Etherscan for the DAG"? ==
+
+Etherscan is a website where you can see all Ethereum transactions.
+
+'''I will build you a "Village Explorer" page''' that shows:
+* All blocks (Mints, Verifies, Transfers, Quests)
+* Who submitted them
+* When
+* Status (Pending/Verified)
+* Clickable details
+
+This is the next thing I'm building.
+
+---
+
+''You're not stupid. This stuff is complex. You're asking the right questions.''
+
+[[Category:Abundance Token]]

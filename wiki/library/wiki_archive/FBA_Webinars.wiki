@@ -1,0 +1,47 @@
+Title: FBA Webinars
+Url: https://wiki.opensourceecology.org/wiki/FBA%20Webinars
+----------------------------------------
+'''Join the Future Builder Academy Webinar Series'''
+
+As part of our Future Builder Academy, we’re hosting a series of live webinars exploring critical topics in open source economic development, including:
+*Successes and failures of the open source movement - software and hardware
+*Building experimental prototype communities of tomorrow
+*Scalable collaboration techniques for transitioning to a collaboratively-literate world
+*Creating paradise at scale
+*The open, collaborative economy transition
+*Achieving financial freedom and purpose, starting with materials means
+*Moving from the surveillance state to an open source panopticon
+*Solving the housing crisis
+*Strengthening civic engagement and democracy
+*Advancing open source manufacturing
+*And much more
+
+'''Our goal is to raise awareness about the path to a post-scarcity economy grounded in abundance thinking.'''  And to invite people 
+*These webinars will provide timeless knowledge, mental models, and foundational insights to world-building in real life.
+*Content is relevant to real-life agency - including the [[1000 Hour Curriculum]], and may feed into [[Radio Free World]] broadcasts .
+*The intended audience is anyone wishing to increase their agency as a world builder
+*Our broad program involves open sourcing 50 critical tools for building productive infrastructures of civilization (the [[Global Village Construction Set]]) by 2028 with a $50M budget to liberate approximately $11T of human primary and secondary production. This webinar feeds into this mission.
+*The longer-term program is to open source source the entire technosphere, including more advanced areas such as space ships and microchips.
+
+'''Webinar Format'''
+*20 minutes of presentation
+*30 minutes of live Q&A
+*Weekly sessions, starting September 1, 2025
+*Live global webinars occur at 1 PM or 3 PM CST USA time.
+*Live USA webinars occur at 7 PM CST USA time.
+*Full 2-month schedule to be released on September 1
+
+'''How to Participate'''
+*'''Watch for Free:''' Recorded sessions will be posted to the [[OSE YouTube Channel]] shortly after each webinar (unless the content is too sensitive for release). 
+*'''Join Live:''' To attend live and ask questions, sign up by donating any amount that you believe the webinar will be worth to you: 
+
+<html>
+<style>.pp-5CU2AM4NNPA2N{text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;}</style>
+<form action="https://www.paypal.com/ncp/payment/5CU2AM4NNPA2N" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+  <input class="pp-5CU2AM4NNPA2N" type="submit" value="Pay" />
+  <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
+  <section style="font-size: 0.75rem;"> Powered by <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
+</form>
+</html>
+
+The webinars are open to everyone.

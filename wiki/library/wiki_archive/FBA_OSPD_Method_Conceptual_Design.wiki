@@ -1,0 +1,7 @@
+Title: FBA OSPD Method Conceptual Design
+Url: https://wiki.opensourceecology.org/wiki/FBA%20OSPD%20Method%20Conceptual%20Design
+----------------------------------------
+*The concept coming together in the [[OSE Prospectus 2026]] is this as v0.1 - [https://chatgpt.com/share/6951d2a4-1d18-8010-ad77-ecb1c3a86b8d] - whch uses negotiation with real suppliers as part of an integrated OSPD method. 
+*This can be used on 12 month cycles to build in a more formal and integrated design process where we interact with real suppliers and go through the rigors of that process, while taking on financial accountability to budget and spend money wisely. 
+*This teaches us to convert financial capital effectively into open source production knowhow - and all the rigor that is required to make this work - as opposed to collapse into chaos with money burned and no working product/documentation.
+*It is a manifestation of the Purpose aspect of the [[FBA Autonomy, Mastery, Purpose Conceptual Design]]

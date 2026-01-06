@@ -1,7 +1,7 @@
 {
-    "name": "Abundance Token - Village Node",
-    "short_name": "Village Node",
-    "description": "Decentralized village economy powered by labor-backed currency",
+    "name": "Civilization OS",
+    "short_name": "Ark OS",
+    "description": "Sovereign Node for a Type 1 Civilization",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#0f172a",

@@ -1,0 +1,51 @@
+Title: FBA Contract
+Url: https://wiki.opensourceecology.org/wiki/FBA%20Contract
+----------------------------------------
+=Product=
+*1 page letter - [https://docs.google.com/document/d/1r5Fmflm1cp4XIlU1xImEHo2C2Rpsp2nHpIZVhqv1IMI/edit?tab=t.0]
+=Development=
+*Chat - [https://chatgpt.com/share/689e70b6-ac14-8010-901b-212a9567fde9]
+
+=Text=
+
+See [[FBA Contract Development Text]]
+
+=Parts=
+*program description
+*Tracks, their curriculum requirements, and outcomes such as $95k starting pay, etc. Description of tracks, where Builder is involved primarily with building, but without design training, ltl ( learning how to learn), or lth (learning how to be a human). 
+*Remote option - for collaborative literacy, prototyping, or learning how to learn
+*year schedule, vacations, time off, 2 hrs volunteer time per week on various campus tasks
+*curriculum - general pattern, plus special topics based on current project and student requests pending 2028 completion date filter.
+*ose status, duties, and responsibilities
+*apprentice status, duties, and responsibilities
+*infrastructure use
+*collaboration requirements setting a baseline for being 'helpful' and situationally aware level of collaborative literacy
+*work study pay via skill certification, other pay
+*duration of contract
+*payment terms.
+*Entry level culture requirements (collaborative, helpful, situationally aware)
+*Acceptance - pay, waivers, photo release,
+
+=More=
+*Liability waiver
+*Photographic release
+*General liability insurance
+*Workers comp
+*schedule
+*Drug policy
+*Dismissal
+
+=Tracks Description=
+*FBA contract development - [https://chatgpt.com/share/68997d25-0afc-8010-8a7a-d5b8fc3b7506]
+*Tracks design - [https://chatgpt.com/share/6896d8e9-4a48-8010-8776-b332bb624fa0]
+*Curiculum summary - [https://chatgpt.com/share/689e7629-3b38-8010-9714-ec8f2d73abbd]
+*Offer letter drafts - [https://chatgpt.com/share/68997d25-0afc-8010-8a7a-d5b8fc3b7506]
+
+=Program Description=
+
+da
+
+
+=Links=
+*[[One Million]] explained.
+*[[FBA Contracts]]

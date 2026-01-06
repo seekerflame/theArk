@@ -1,12 +1,21 @@
-# 🌍 The Ark - Civilization OS (v0.73)
+# 🌍 The Ark - Civilization OS (v1.2.0)
 
 > **Building the infrastructure for a Type 1 Civilization, one node at a time.**
+
+**Status**: ✅ OPERATIONAL | **Kardashev Level**: Type 0.73 | **Ledger Blocks**: 292
 
 The Ark is a self-sovereign village operating system that enables communities of up to 150 people to achieve absolute survival sovereignty through decentralized labor markets, real-time energy tracking, and AI-assisted governance.
 
 ## 🎯 Mission
 
 Enable the transition from Type 0.7 → Type 6 Civilization via **Abundance Tokens (AT)**, where 1 AT = 1 Hour of Validated Labor.
+
+## 🔗 Quick Links
+
+- 🌐 **Live Dashboard**: [http://localhost:3000](http://localhost:3000)
+- 📊 **System Status**: Run `python3 tools/health_dashboard.py`
+- 📚 **Wiki Documentation**: [OSE Wiki](<https://wiki.open> sourceecology.org/wiki/User:Seeker/Abundance_Token)
+- 🤖 **n8n Automation**: [http://localhost:5678](http://localhost:5678)
 
 ## 🏗️ Architecture
 

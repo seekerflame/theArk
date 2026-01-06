@@ -223,5 +223,102 @@
     "password": "password123",
     "role": "WORKER",
     "created_at": 1767516270.479249
+  },
+  "superadmin": {
+    "password": "superpassword",
+    "role": "ADMIN",
+    "roles": [
+      "ADMIN",
+      "ORACLE"
+    ],
+    "certifications": {},
+    "verified_hours": 1000,
+    "safety_grade": 100,
+    "created_at": 1767579801.957911,
+    "mnemonic": "ark seed node labor mint value gaia tribe build grid power earth"
+  },
+  "worker_1767579862": {
+    "password": "password123",
+    "mnemonic": "hand seed life flow soul path mind power grid mint spirit ark",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1767579862.956307
+  },
+  "worker_1767579915": {
+    "password": "password123",
+    "mnemonic": "truth grid flow core gaia soul life open spirit seed bond power",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1767579915.3213608
+  },
+  "worker_1767579966": {
+    "password": "password123",
+    "mnemonic": "power open seed labor node bond build grid mind mint gaia ark",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1767579966.3425121
+  },
+  "worker_1767580080": {
+    "password": "password123",
+    "mnemonic": "hand node bond tribe life value ark earth flow mint soul build",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1767580080.7871292
+  },
+  "worker_1767580126": {
+    "password": "password123",
+    "mnemonic": "ark core hand node seed earth grid gaia labor source build flow",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1767580126.329188
+  },
+  "worker_1767580196": {
+    "password": "password123",
+    "mnemonic": "hand build seed source labor grid spirit core earth open flow path",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 5.0,
+    "safety_grade": 100.0,
+    "created_at": 1767580196.353457
+  },
+  "worker_1767580215": {
+    "password": "password123",
+    "mnemonic": "mind core tribe power seed life labor ark grid gaia open build",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 5.0,
+    "safety_grade": 100.0,
+    "created_at": 1767580215.6149251
   }
 }

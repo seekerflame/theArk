@@ -631,22 +631,29 @@
                 Labor.</p>
         </div>
 
-        <div class="grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-            <!-- Column 1: Pending Validations -->
-            <div class="glass-panel" style="border-top: 4px solid #A78BFA;">
-                <h3>📜 Pending Proofs of Work</h3>
-                <div id="oracle-pending-list"
-                    style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
-                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
-                        Synchronizing reality...
+        <!-- ORACLE TABS -->
+        <div
+            style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+            <button class="nav-item active" onclick="switchOracleTab('queue')" id="tab-btn-queue">📜 Queue</button>
+            <button class="nav-item" onclick="switchOracleTab('factory')" id="tab-btn-factory">🏭 Role Factory</button>
+            <button class="nav-item" onclick="switchOracleTab('citizens')" id="tab-btn-citizens">👥 Citizens</button>
+        </div>
+
+        <div id="oracle-tab-queue" class="oracle-tab">
+            <div class="grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                <div class="glass-panel" style="border-top: 4px solid #A78BFA;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin: 0;">📜 Pending Proofs</h3>
+                        <button class="btn-primary" onclick="window.batchValidate()"
+                            style="font-size: 0.8rem; background: #8B5CF6;">⚡ BATCH VALIDATE</button>
+                    </div>
+                    <div id="oracle-pending-list" style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="text-align: center; padding: 40px; color: var(--text-muted);">Synchronizing...</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Column 2: User certifications -->
-            <div style="display: flex; flex-direction: column; gap: 20px;">
                 <div class="glass-panel">
-                    <h3>🎖️ Certification Hub</h3>
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Grant roles and
                         multipliers to verified contributors.</p>
                     <div class="form-group" style="margin-top: 15px;">
@@ -678,7 +685,43 @@
                 </div>
             </div>
         </div>
+
+        <!-- NEW: ROLE FACTORY TAB -->
+        <div id="oracle-tab-factory" class="oracle-tab" style="display: none;">
+            <div class="glass-panel" style="max-width: 600px; border-top: 4px solid #10B981;">
+                <h3>🏭 Role Factory</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+                    Define new economic roles instantly. Multipliers are recorded on the ledger.
+                </p>
+                <div class="form-group">
+                    <label>Role Name (e.g. MECHANIC)</label>
+                    <input type="text" id="new-role-name" placeholder="UPPERCASE_NAME" class="input-dark">
+                </div>
+                <div class="form-group">
+                    <label>Base Multiplier (e.g. 1.25)</label>
+                    <input type="number" id="new-role-mult" value="1.0" step="0.05" class="input-dark">
+                </div>
+                <button class="btn-primary" onclick="window.defineRole()" style="width: 100%; background: #10B981;">MINT
+                    ROLE ON LEDGER</button>
+            </div>
+        </div>
+
+        <!-- NEW: CITIZENS TAB -->
+        <div id="oracle-tab-citizens" class="oracle-tab" style="display: none;">
+            <div class="glass-panel" style="border-top: 4px solid #3B82F6;">
+                <h3>👥 Citizen Tier Visualizer</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+                    Track human evolution across the village.
+                </p>
+                <div id="citizen-list"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">Scanning population...
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <!-- VIEW: WALLET -->
 
@@ -715,6 +758,21 @@
                         <div style="font-size: 0.75rem; color: var(--text-muted);">Total XP</div>
                     </div>
                 </div>
+
+                <div style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div
+                        style="background: rgba(167, 139, 250, 0.05); padding: 10px; border-radius: 8px; text-align: center;">
+                        <div id="wallet-tier" style="font-size: 1rem; font-weight: 700; color: #A78BFA;">🌱 Apprentice
+                        </div>
+                        <div style="font-size: 0.65rem; color: var(--text-muted);">Current Tier</div>
+                    </div>
+                    <div
+                        style="background: rgba(251, 191, 36, 0.05); padding: 10px; border-radius: 8px; text-align: center;">
+                        <div id="wallet-hm" style="font-size: 1rem; font-weight: 700; color: #FBBF24;">1.00x</div>
+                        <div style="font-size: 0.65rem; color: var(--text-muted);">Holistic Multiplier</div>
+                    </div>
+                </div>
+
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
                     <button class="btn-primary" onclick="switchView('mint')" style="flex:1;">+ Mint Labor</button>
                     <button class="btn-secondary" onclick="renderExchangeUI()"
@@ -1218,6 +1276,8 @@
                     style="flex:1;">Login</button>
                 <button onclick="showAuthMode('register')" id="btn-mode-register" class="btn-secondary"
                     style="flex:1; background:transparent;">Register</button>
+                <button onclick="showAuthMode('restore')" id="btn-mode-restore" class="btn-secondary"
+                    style="flex:1; background:transparent;">Restore</button>
             </div>
 
             <!-- LOGIN FORM -->
@@ -1240,6 +1300,21 @@
                 <input type="password" id="reg-password" class="input-dark" placeholder="Set Password"
                     style="width: 100%; margin-bottom: 20px; padding: 12px;" autocomplete="new-password">
                 <button type="submit" class="btn-primary" style="background: #8B5CF6; width: 100%;">Generate
+                    Identity</button>
+            </form>
+
+            <!-- RESTORE FORM -->
+            <form id="auth-restore-form" style="display: none;"
+                onsubmit="event.preventDefault(); window.performRestore();">
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Restore your Sovereign
+                    Identity using your 12-word Seed Phrase.</p>
+                <input type="text" id="restore-username" class="input-dark" placeholder="Username"
+                    style="width: 100%; margin-bottom: 10px; padding: 12px;">
+                <textarea id="restore-mnemonic" class="input-dark" placeholder="12-word Seed Phrase..."
+                    style="width: 100%; margin-bottom: 10px; padding: 12px; height: 80px;"></textarea>
+                <input type="password" id="restore-password" class="input-dark" placeholder="Set New Password"
+                    style="width: 100%; margin-bottom: 20px; padding: 12px;">
+                <button type="submit" class="btn-primary" style="background: #F59E0B; width: 100%;">Restore
                     Identity</button>
             </form>
 
@@ -1270,7 +1345,10 @@
             <div class="glass-panel">
                 <h3>System Controls</h3>
                 <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
-                    <button class="btn-secondary" style="text-align: left;">🔄 Force Wiki Sync</button>
+                    <button id="wiki-sync-btn" class="btn-secondary" style="text-align: left;"
+                        onclick="window.triggerWikiSync()">🔄 Force Wiki Sync</button>
+                    <div id="wiki-sync-status" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">
+                        Last sync: Unknown</div>
                     <button class="btn-secondary" style="text-align: left;">🧹 Prune Ghost Nodes</button>
                     <button class="btn-secondary"
                         style="text-align: left; color: #EF4444; border: 1px solid #EF4444;">🛑 Emergency

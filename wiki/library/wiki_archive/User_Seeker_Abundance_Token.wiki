@@ -1,0 +1,33 @@
+Title: User:Seeker/Abundance Token
+Url: https://wiki.opensourceecology.org/wiki/User%3ASeeker/Abundance%20Token
+----------------------------------------
+= Abundance Token System =
+''Powered by GAIA • Synced: 2026-01-05 15:06:10''
+
+== Status ==
+* '''Network''': '''TESTNET''' (Simulated Village)
+* '''Blocks''': 4
+
+== Documentation Index ==
+{| class="wikitable"
+|-
+! Section !! Wiki Page
+|-
+| 🏹 '''Onboarding''' || [[User:Seeker/Abundance_Token/Onboarding]]
+|-
+| 💎 '''The Offer''' || [[User:Seeker/Abundance_Token/Irresistible_Offer]]
+|-
+| 🪙 '''Tokenomics''' || [[User:Seeker/Abundance_Token/Tokenomics]]
+|-
+| 📜 '''The Journey''' || [[User:Seeker/Abundance_Token/The_Journey]]
+|-
+| 🎓 '''The Guide''' || [[User:Seeker/Abundance_Token/Guide]]
+|-
+| 📋 '''History''' || [[User:Seeker/Abundance_Token/History]]
+|-
+| 🗺️ '''Manifest''' || [[User:Seeker/Abundance_Token/Manifest]]
+|-
+| 🛡️ '''SOPs''' || [[User:Seeker/Abundance_Token/SOPs]]
+|}
+
+[[Category:Abundance Token]]

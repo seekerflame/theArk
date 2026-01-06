@@ -1,0 +1,21 @@
+Title: FBA Curriculum
+Url: https://wiki.opensourceecology.org/wiki/FBA%20Curriculum
+----------------------------------------
+=Overview=
+*2/3 schedule - 2 days build of real homes, 3 days school. Learning Center (Rapid Learning Facility) - as supporting infrastructure
+*Collaborative design is persistent throughout
+**Collaborative CAD - including training AI (Chat, Antigravity, etc) - to modify modules for us
+**Collaborative BOM - [[vBOM]] and including up to training AI to produce vBOMs automatically from links, then converting CAD modules into vBOMs
+**Collaborative Build - includes both instructionals and actual builds. Train AI to generate these via [[Sufficient Digitization]]
+*Lumber production reduces build cost $20k per house
+*3D printing reduces build cost $20k per house. [[Shredder]], [[Bioplastic Extruder]], [[3D Printer]]
+*CEB reduces build cost $5k per house
+*Open Source Quarry reduces build cost $5k per house
+*Induction Furnace reduces material cost by $3k per house (metal corrugated roofing, rebar, fasteners and hardware) - [[Open Source Screw Machine]]
+*Open source machines reduce build cost by $4000 per house ([[Tractor]], [[Trencher]], [[Universal Rotor]] (auger), 
+*Open sourc fuel production reduces build cost by $2000 (fuel costs) - [[Open Source Plastic Pyrolysis]]
+*Leverages digital fabrication in [[CNC Torch Table]], [[Multimachine]] (open source screw machine, open source CNC machining center, etc)
+*We build out those of the [[500 Modules]] relevant to the above, as [[500 Rapid Learning Modules]] in the [[Learning Center]] - refactoring from the 500 modules directly into rapid learning education modules in the Rapid Learning Facility.
+
+*1 day Collaborative Design - (1) design guide based on extensive build experience - after 1 build. (2) CAD-BOM-Build (3). Calculations, Workflow, and production engineering. We collaborate on the same working doc, use Dev Template. We are going to rinse and repeat until we can handle it. We have Remote Track where people descend for a build at end of 2 months: 1 week build sprint every 2 months.
+*1 Day - Architectures: designing civilization that works. Institutions - built environment - universal basic assets infrastructure.

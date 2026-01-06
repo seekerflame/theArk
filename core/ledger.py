@@ -15,7 +15,9 @@ class VillageLedger:
         self.load()
 
     def init_db(self):
-        os.makedirs(os.path.dirname(self.db_file), exist_ok=True)
+        db_dir = os.path.dirname(self.db_file)
+        if db_dir:
+            os.makedirs(db_dir, exist_ok=True)
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
         cursor.execute("""

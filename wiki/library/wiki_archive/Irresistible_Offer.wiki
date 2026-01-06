@@ -1,0 +1,229 @@
+Title: Irresistible Offer
+Url: https://wiki.opensourceecology.org/wiki/Irresistible%20Offer
+----------------------------------------
+=Work Doc=
+<html> <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSNmN1RaiwWN7WNTO5YkgdMORY7kxKMRSJpFId5brJnboXD3MpCRfSgUyyNHOJE8GbrlvYnRa3qB_Dd/pubembed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe> </html>
+
+[https://docs.google.com/presentation/d/1_LnWRYtkBVAsFf6CSCZwpD7EThivTgs3Zz8WuBGyG2o/edit?slide=id.g3b2434b0f5d_0_60#slide=id.g3b2434b0f5d_0_60 edit]
+
+=Irrisistible Offer Specification Questions=
+
+Image we are to 'save the world.' OSE is offering a [[Future Builders Academy Apprenticeship]] to make worldbuilding a new 'career' option. We are inventing a new economic sector - the zero marginal cost abundance economy based on [[Universal Basic Resources]] - a step in language  beyond [[Universal Basic Assets]] and transcending the limitations of [[Universal Basic Income]].
+
+Some questions are:
+#What would be required for an immersion education/production program would make you drop everything (job, school, bring your family with, stop whatever [[Bullshit Job]] you are doing, etc) - and join full time with 100% of your energy (revolution is not a part time job) on March 1 or April 1 (or later if program needs more development) at Factor e Farm along with a cohort of 24 people? This would set a blueprint for a scalable model of 10x in a year if the first 24 person cohort is working.
+#Tell me about the details that you would need to attend: cost (from you) or pay (to you), time requirements - curriculum - who the rest of the cohort would be - Infrastructure Requirement at Factor e Farm - work week and free time - evaluation and certification - nature of work - nature of the study program - service aspect (we learn character by service). Etc. Give as much detail as you can imaging - as if you were creating your own dream education program.
+#Describe in as much detail as possible what a typical day would look like in such a program.
+#After you list some of the above, try to propose how this would be executed. Assume that we can secure the resources, publicity, recruiting, etc - required to do start the Apprenticeship effectively. You can ignore the current description of the apprenticeship - and start from scratch if you don't like what is offered.
+
+=Matt Feedback=
+Hi Marcin,
+
+I spent a good amount of time going through the video pitch and the application deck. Before I get into the details, I want to give you the context for where my thinking comes from.
+
+Over the last few years, I’ve spent an enormous amount of time talking with young people — especially 16–24-year-old men — and trying to deeply understand what they want, what they fear, what they’re missing, and what makes them hesitate. That work is what informed The Preparation. It’s a program built specifically to address the void that young people feel right now. Not the theoretical void, but the emotional and practical one they live with every day.
+
+What I’m going to share with you below comes directly from that work — from studying “the market,” if you want to call it that. Meaning: real conversations with real young men and women trying to figure out their lives. Everything here is meant to be constructive and helpful, because I genuinely respect the ambition of what you’re building.
+
+Here are the main things that stand out.
+
+1. The people you want aren’t looking for a better university.
+They’re looking for a different path altogether.
+
+Right now, your materials recreate the basic skeleton of a university: four-year timeline, semesters, credit hours, tuition tiers, breaks, and tracks.
+
+The kind of people who would thrive in your environment are trying to get away from all of that. They don’t want “college, but different.” They want something that feels like a whole new life path. A mission. A proving ground. A place to build themselves. But it has to feel practical. They need to be able to justify what they're doing to themselves and others.  
+
+Your current framing unintentionally signals “university, but with more tools.”
+
+That’s not what your ideal student wants.
+
+2. The four-year structure is working against you.
+This is probably the single biggest friction point. A four-year commitment feels:
+
+intimidating
+abstract
+slow
+and hard to visualize
+Young people today don’t think in four-year blocks. They think in cycles, seasons, and opportunities. A four-year path feels like being locked into the same thing that everyone knows already doesn’t work.
+
+University puts people — especially young men — into a four-year ice bath. You take all their energy, drive, and momentum and pace it out over semesters.
+
+There’s no reason your program needs to stretch across that timeline. You could achieve the foundational skills — the ones that actually change someone’s life — in a year or less when the structure is tight.
+
+Ask yourself honestly: What can be accomplished in one year if everything unnecessary is stripped away?
+
+You’ll be surprised how much can.
+
+3. Young people aren’t trying to “change the world” yet.
+They’re trying to become capable.
+
+This is the major disconnect between your vision and their psychology: high-level ideals sound like more ideological imposition to a generation that’s been bombarded with it since childhood. It feels totally fake to most young men.
+
+Your materials talk a lot about:
+
+rebuilding civilization
+collaborating at scale
+becoming world-changers
+open-sourcing the future
+designing new institutions
+That’s your level of thinking. It’s where you operate. But a young man who doesn’t yet know how to change the oil in his truck cannot relate to that level of abstraction.
+
+They know, deep down, that they must change themselves first.
+
+Competence → Confidence → Independence → Leadership → Then maybe world-changing.
+
+Your program currently starts at the end of that chain. It needs to begin at the beginning.
+
+4. You already have proof this works: your builder crash courses.
+Why? Because they function as cycles.
+
+Your short-term builder bootcamps succeed because they:
+
+have a clear outcome
+have a defined time commitment
+give a tangible skill
+let people see their progress quickly
+Those are cycles.
+
+Cycles work.
+
+A four-year abstraction doesn’t. A one-month abstraction won't work. 
+
+If the Apprenticeship were structured as a sequence of 2–6 week cycles, each with specific deliverables and outcomes, it would appeal to far more students and far more parents. They need to see:
+
+“At the end of Cycle 1, you will be able to do X.” “At the end of Cycle 2, you’ll be able to do Y.” “At the end of Year 1, you’ll be competent in A–Z.”
+
+Right now the deliverables are very hard to see because they’re buried under big-picture language. That big-picture language is more likely to attract dreamers than doers. Most of the doers won’t be able to make sense of the terms you use.
+
+5. Your vision is huge — but the pitch must be practical, concrete, and milestone-driven.
+The heart of your program is fantastic: building, making, designing, collaborating, creating real things with your hands. But the language is extremely abstract. Terms like:
+
+“moral intelligence”
+“integrated human”
+“civilization design”
+“rapid learning infrastructure”
+“experimental civilization”
+Lose young people immediately. They don't understand those words, and they don’t know what they’ll actually do Monday morning at 8AM.
+
+The language most likely to turn off real doers — the hands-on builders, intelligent and trades-minded young men, and practical problem-solvers you actually want — includes terms like civilization design, integrated humans, moral intelligence, abundance mindset, rapid learning infrastructures, experimental civilization, open-source production ecosystems, new paradigms, global movement, swarm collaboration, and supercooperators. These words signal theory, ideology, and academic abstraction rather than work, tools, competence, and real outcomes.
+
+To the doers, this kind of terminology feels disconnected from the physical world they care about and immediately raises suspicion that the program is more about talk than capability. They’re not looking for a philosophy seminar — they’re looking for a place where they can learn skills, build things, get stronger, earn respect, and become useful in the real world.
+
+What they need is clarity:
+
+By X date, you will be able to: – frame a structure – weld safely – operate heavy tools – read blueprints – lead a small crew – build a complete module – understand energy systems – etc.
+
+Concrete outcomes make everything believable.
+
+6. Your big vision is an asset — but the on-ramp has to be built for normal humans.
+
+You naturally think at the civilizational level. But the 18-year-old who might join you is thinking at the personal level:
+
+“Am I capable?”
+“Will I fit in?”
+"What am I really signing up for?"
+“Can I actually do this?”
+"How do I explain this to my friends and family?"
+“Will this make me a stronger, more competent adult?”
+They’re not ready for world-building.
+
+They are ready for self-building.
+
+And they have a lot of basic questions and concerns. Costs, time frame, logistics, benefits, etc.
+
+If the first cycles were purely skill, capability, and hands-on competence — and the world-changing stuff emerged organically at the end — you’d create far stronger recruits.
+
+7. All of this leads to one recommendation:
+Rebuild the program around cycles and milestones.
+
+Not “four years.”
+
+Not “tracks.”
+
+Not “college but different.”
+
+Cycles.
+
+Clear outcomes.
+
+A tangible milestone at the completion of all foundational cycles.
+
+Then optional advanced cycles.
+
+Then a leadership cycle for those who show the capacity.
+
+This gives your program:
+
+clarity
+momentum
+accessibility
+emotional resonance
+parent buy-in
+and far stronger recruitment results
+
+I’m not criticizing your vision. I admire it. The ambition is real and refreshing. My feedback is purely about structure and communication — and what I’ve learned from spending years talking with young people and building a program specifically designed to meet their actual needs.
+
+Your program has enormous potential.
+
+It just needs to be redesigned so it fits the psychology, aspirations, fears, and decision-making patterns of the people you’re trying to reach.
+
+If you do that — if you lean into cycles, concrete deliverables, and capability-first structure — I think you could build something extraordinary.
+
+Happy to talk through any of this if helpful.
+
+=Nick Feedback=
+*[[Future_Builders_Academy#Irresistible_Offer%3A_Community-Based_Design Nick Proposal]]
+
+=Alfie Feedback=
+4 year course broken down into modules
+
+Have you considered that? Modules.
+where people can come for a month or 3 depend on module. Then all participants can do modules when they can or need.
+
+Different skill levels on everyone. Maybe make module exams. A test that equates to advanced understanding and that participant passes that module.
+
+Most people will not be willing to commit to a 4 year live in program.
+
+Have to acknowledge that now.
+
+ Find solution
+
+to me that's modules.
+
+Instructors are the biggest component.
+Thats possible live in leaders and will probably be paid positions. I see 5 paid positions minimum. That would be OSE leaders
+
+Learning Modules would be easy to create. A curriculum with semesters.
+
+=Problem Statement (Technical Strategy Gibberish by MJ Regarding Rapidly Scalable Infrastructure)=
+The GVCS requires mass recruiting of capable collaborators who can be taugh a functional level of collaborative literacy for swarm design-build. Skills involve full fluency in basic CAD, allowing for modular breakdown required of swarm builds. Extraction of information from CAD must be seamless, as should collaborative design based on a collaborative coordinate system for locating modules. High-functioning and scalable proficiency in wiki (documentation and collaborative orientation), Google Slides, and Google Photos must be guaranteed. With swarm design-build basics, we must provide 100 tool and 100 technique orientation, along with 745 house modules. All are to be iconized, BOM, vBOMed, and CADded up.
+
+Based on [[RLF]]-based 100 tool and 100 technique mastery of 745 house modules, we document skill burndown for every participant. 100/100/745 are nominal numbers, and these are a start. Once these are mastered, we move on to 50 machines (GVCS) and 500 modules - culminating in 2028 delivery of the [[GVCS]] at $50M price ticket and the [[Technosphere]] by 2036 at a $50B price ticket.
+
+To get there, 50 cohorts of 24 are required, totaling buildup of the core OSE facility to 1200 students and thus additional nearby land within 4 years, at a prototype cohort of 24 in 2026, 240 by 2027, and 1200 by start of 2028 - barely eking out completion of the GVCS by 2028.
+
+Scalable infrastructure means on-demand house construction - as simple studios produced from site-milled lumber for structure, CEB for thermal mass, and 3D prints covering glazing, insulation, and appliances. For these - optimized, on-demand. These all plug into the 100kW Hangar, with its supply of thermal batteries for heating and cooling. A modular biodigester adds waste treatment capacity on demand, such that heat, power, and sewer are provided. In time, we will be adding an aquaponic greenhouse for food production.
+
+With scalability cost of:
+#$750 heat pump for 750 sf at [[Heat Pump Sourcing]] has incremental cost of $125/person if each person starts in an 8x16 microhouse unit.
+#1000W average for each new person in PV power, which is industry standard. Thus, 100kW installed for 24 people - or 4 kW per person for industrial grade [[R&D&C]] activity. This means $800 in PV panel cost at 20 cents per watt - aggressive.
+
+=Jackson Feedback=
+I'm going to finish my college. Graduation is August 2026. Need to figure out VISA or citizenship.
+
+
+Physical Infrastructure must be in place. Digital Infrastructure must be in place (I am a [[ClickUp]] enjoyer personally - I tried setting up a [[FOSS]] alternative during the crash course but I didn't manage to get it going - UPDATE. I have been recommended https://cryptpad.fr/ as the FOSS alternative. I don't see gantt charts off rip which sucks but maybe we just get a seperate gantt chart tool.). To be honest, I don't think I have any desire to uproot from Canada to help build the physical infrastructure (I am an inside cat after all). I think setting up the Digital Infrastructure would be a great step in the right direction. It literally just means upgrading your collaborative literacy to the modern era. Gantt charts, tasks. 
+
+So what would an irresistible offer be? 
+
+You can't really make an offer yet I think. The offer on the table right now is uproot and help build the FBA. An offer I would consider is uproot and join the FBA.
+I'm cool to meet in the middle though, I think I will simply not uproot and help build the FBA from here.
+
+==MJ Comments==
+*Does it change that for the initial cohort, we would help every single member interested in the FBA replication track to start an FBA in their home location - first by providing the operating model - and providing the resources (financial to get land and build, swarm to build, and machines to facilitate)
+*The goal is to develop everything and address the cold start problem (getting to $5M revenue/year ASAP to make replication at the $5M in 4 years feasible elsewhere)
+*This offer is about thinking much larger than oneself - a new paradigm for education and civilizing the world
+*If you are not 'uprootable' - which aspects of your current Canada life make you not uprootable? What would it take to bring along/create/or substitute the conditions that you already have in Canada?
+*Or maybe is it perfectly fine that you operate from Canada, because your contibution does not suffer from a coordination problem - ie, all your work is aligned and remote?
+*Is your current condition sustainable financially without going into debt, and is that something that OSE can offer if you don't have financial sustainability without debt? Or is debt ok for you if it applies?

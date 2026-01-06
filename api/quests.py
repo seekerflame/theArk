@@ -11,7 +11,8 @@ Handles the full quest lifecycle:
 import time
 import json
 
-def register_quest_routes(router, ledger, requires_auth):
+def register_quest_routes(router, ledger, identity, requires_auth):
+
     
     # =====================
     # QUEST CRUD
@@ -134,38 +135,27 @@ def register_quest_routes(router, ledger, requires_auth):
         quest = _get_quest_state(ledger, quest_id)
         if not quest:
             return h.send_error("Quest not found", status=404)
+        
         if quest.get('status') != 'OPEN':
             return h.send_error("Quest not available")
-        
         offer_type = quest.get('offer_type', 'FIXED')
         
         if offer_type == 'FIXED':
-            # Direct claim - terms already set
-            update_data = {
-                'quest_id': quest_id,
-                'worker': user['sub'],
-                'status': 'IN_PROGRESS',
-                'claimed_at': time.time(),
-                'agreed_at': quest.get('base_at', 10)
-            }
-            ledger.add_block('QUEST_UPDATE', update_data)
-            h.send_json({'status': 'claimed', 'quest_id': quest_id, 'agreed_at': quest.get('base_at')})
-        
-        elif offer_type == 'ROLE_MULTIPLIED':
-            # Check if user has required role (TODO: implement role check)
-            base_at = quest.get('base_at', 10)
-            multiplier = 1.0  # TODO: Get from user's roles
-            agreed_at = base_at * multiplier
+            # Apply Holistic Multiplier
+            hm = identity.get_holistic_multiplier(user['sub'], quest.get('required_role', 'WORKER'), ledger)
+            agreed_at = quest.get('base_at', 10) * hm
+            
             update_data = {
                 'quest_id': quest_id,
                 'worker': user['sub'],
                 'status': 'IN_PROGRESS',
                 'claimed_at': time.time(),
                 'agreed_at': agreed_at,
-                'multiplier_applied': multiplier
+                'hm_applied': hm
             }
             ledger.add_block('QUEST_UPDATE', update_data)
-            h.send_json({'status': 'claimed', 'quest_id': quest_id, 'agreed_at': agreed_at})
+            return h.send_json({'status': 'claimed', 'quest_id': quest_id, 'agreed_at': agreed_at, 'hm': hm})
+
         
         elif offer_type == 'BARTER':
             # Worker can claim, will propose value after completion
@@ -177,7 +167,7 @@ def register_quest_routes(router, ledger, requires_auth):
                 'agreed_at': None  # TBD after completion
             }
             ledger.add_block('QUEST_UPDATE', update_data)
-            h.send_json({'status': 'claimed_barter', 'quest_id': quest_id, 'note': 'Propose value after completion'})
+            return h.send_json({'status': 'claimed_barter', 'quest_id': quest_id, 'note': 'Propose value after completion'})
         
         elif offer_type == 'NEGOTIATE':
             if accept_terms:
@@ -189,7 +179,7 @@ def register_quest_routes(router, ledger, requires_auth):
                     'agreed_at': quest.get('base_at', 10)
                 }
                 ledger.add_block('QUEST_UPDATE', update_data)
-                h.send_json({'status': 'claimed', 'quest_id': quest_id})
+                return h.send_json({'status': 'claimed', 'quest_id': quest_id})
             else:
                 # Worker counter-offers
                 negotiation_entry = {
@@ -207,7 +197,7 @@ def register_quest_routes(router, ledger, requires_auth):
                     'negotiation_entry': negotiation_entry
                 }
                 ledger.add_block('QUEST_UPDATE', update_data)
-                h.send_json({'status': 'negotiating', 'quest_id': quest_id})
+                return h.send_json({'status': 'negotiating', 'quest_id': quest_id})
 
     
     @router.post('/api/quests/respond')
@@ -310,58 +300,71 @@ def register_quest_routes(router, ledger, requires_auth):
         if not quest:
             return h.send_error("Quest not found", status=404)
         
-        # TODO: Add Oracle role check for third-party validation
-        if quest.get('owner') != user['sub']:
-            return h.send_error("Only quest owner can validate")
+        # Oracle role check: Owner OR certified Oracle can validate
+        user_roles = identity.get_user_roles(user['sub'], ledger)
+        is_oracle = 'ORACLE' in user_roles
+        is_owner = quest.get('owner') == user['sub']
+        
+        if not (is_owner or is_oracle):
+            return h.send_error("Only quest owner or Oracle can validate")
         if quest.get('status') != 'PENDING_VALIDATION':
             return h.send_error("Quest not pending validation")
         
         if approved:
-            # Mint AT to worker
-            base_reward = quest.get('agreed_at', quest.get('proposed_at', 10))
+            # Apply Holistic Multiplier on Validation (Final Check)
             worker = quest.get('worker')
+            role = quest.get('required_role', 'WORKER')
+            hm = identity.get_holistic_multiplier(worker, role, ledger)
             
-            # Apply role multiplier if quest is ROLE_MULTIPLIED
-            reward = base_reward
+            reward = quest.get('agreed_at', 10)
+            
+            # If terms were negotiated but not settled by HM, ensure HM logic applies
             if quest.get('offer_type') == 'ROLE_MULTIPLIED':
-                worker_roles = next((u.get('roles', ['WORKER']) for uid, u in identity.users.items() if uid == worker), ['WORKER'])
-                required_role = quest.get('required_role', 'WORKER')
-                
-                multipliers = identity.get_role_multipliers()
-                # Use the highest multiplier from worker's roles that matches or exceeds required
-                multiplier = 1.0
-                for r in worker_roles:
-                    multiplier = max(multiplier, multipliers.get(r, 1.0))
-                
-                reward = base_reward * multiplier
+                reward = quest.get('base_at', 10) * hm
 
-            
-            # Record the labor proof (this triggers balance update)
+            # Record the labor proof
             labor_data = {
                 'minter': worker,
                 'quest_id': quest_id,
                 'reward': reward,
+                'hm_applied': hm,
                 'validated_by': user['sub'],
                 'description': quest.get('title'),
                 'timestamp': time.time()
             }
             mint_hash = ledger.add_block('LABOR', labor_data)
             
+            # Update Tier Progress
+            # We assume quest duration or difficulty maps to hours
+            # For simplicity, base_at / 10 = hours liberated
+            hours_liberated = reward / 10.0
+            identity.add_verified_hours(worker, hours_liberated)
+
+            # Calculate Time to Finish (Sovereign Efficiency)
+            claimed_at = quest.get('claimed_at', quest.get('created_at', time.time()))
+            completed_at = time.time()
+            duration_sec = completed_at - claimed_at
+            duration_hr = round(duration_sec / 3600.0, 2)
+
             # Update quest status
             update_data = {
                 'quest_id': quest_id,
                 'status': 'COMPLETED',
-                'completed_at': time.time(),
+                'completed_at': completed_at,
+                'duration_seconds': duration_sec,
+                'duration_hours': duration_hr,
                 'mint_hash': mint_hash,
                 'feedback': feedback,
-                'reward_final': reward
+                'reward_final': reward,
+                'hm_final': hm
             }
             ledger.add_block('QUEST_UPDATE', update_data)
-            
-            h.send_json({
+
+            return h.send_json({
                 'status': 'completed',
                 'worker': worker,
                 'at_minted': reward,
+                'duration_hours': duration_hr,
                 'mint_hash': mint_hash
             })
 

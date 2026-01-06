@@ -1,0 +1,176 @@
+Title: FBA Autonomy, Mastery, Purpose Development
+Url: https://wiki.opensourceecology.org/wiki/FBA%20Autonomy%2C%20Mastery%2C%20Purpose%20Development
+----------------------------------------
+
+{|style="float:right;border:1px solid black"
+| {{Infobox
+|name         = Infobox
+|bodystyle    = 
+|title        = FBA Autonomy, Mastery, Purpose
+|titlestyle   = 
+
+|image        = [[File:check.png|200px|alt=Example alt text]]
+|imagestyle   = 
+|caption      = Short description
+|captionstyle = 
+|headerstyle  = background:#ccf;
+|labelstyle   = background:#ddf;
+|datastyle    = 
+
+|header1 = Specifications
+|label1  = dfd
+|data1   = dfd
+|header2 = 
+|label2  = Product Ecology
+|data2   = What other GVCS tools does this use?
+|header3 = 
+|label3  = License
+|data3   = [[OSHWA]] and [[OSI]] compliant. CC-BY-SA-4.0 International, GPLv3, [[DIN SPEC 3105]].
+|header4 = 
+|label4  = Module 1
+|data4   = Describe features of Module 1
+|header5 = 
+|label5  = Module 2
+|data5   = Describe features of Module 2
+|header6 = 
+|label6  = Key Specification
+|data6   = Key spec data point
+|header7 = 
+|label7  = Construction
+|data7   = Describe basic construction technique and materials
+|header8 = 
+|label8  = Productivity
+|data8   = Describe how this relates to industrial productivity on a small scale
+|header9 = Completion Status
+|label9  = 
+|data9   = 
+|header10 = 
+|label10  = 
+|data10   = Describe whether built, prototyped, etc. Link to relevant [[Genealogy]] and [[Status of Completion]].
+
+
+
+|belowstyle = background:#ddf;
+|below = Do you want more of this? [[Get Involved]] 
+}}
+|}
+
+=Development=
+
+
+{| class="wikitable"
+|+ Development Template
+! 
+! Description
+! Link to Work Product
+! %
+
+|-
+! scope=row | 
+| '''DESIGN''' ||  ||  
+
+|-
+! scope=row | 1
+| [[Requirements + Value Proposition]] ||   [[FBA Autonomy, Mastery, Purpose Requirements + Value Proposition]]  || 0
+
+|-
+! scope=row | 2
+| [[Industry_Standards]] || [[FBA Autonomy, Mastery, Purpose Industry Standards]] || 0
+
+|-
+! scope=row | 3
+| [[Conceptual Design]] || [[FBA Autonomy, Mastery, Purpose Conceptual Design]] || 0
+
+|-
+! scope=row | 4
+| [[Module Breakdown]] || [[FBA Autonomy, Mastery, Purpose Module Breakdown]]  || 0
+
+|-
+! scope=row | 5
+| [[Design Guide]] || [[FBA Autonomy, Mastery, Purpose Design Guide]] || 0
+
+|-
+! scope=row | 
+| '''TECHNICAL DESIGN''' ||  ||  
+
+|-
+! scope=row | 6
+| [[3D CAD]] || [[FBA Autonomy, Mastery, Purpose 3D CAD]] || 0
+
+|-
+! scope=row | 7
+| [[Basic Calculations|Calculations]] || [[FBA Autonomy, Mastery, Purpose Calculations]] || 0
+
+|-
+! scope=row | 8
+| [[Electronics Design]] || [[FBA Autonomy, Mastery, Purpose Electronics Design]] || 0
+
+|-
+! scope=row | 9
+| [[Wiring and Plumbing]] || [[FBA Autonomy, Mastery, Purpose Wiring and Plumbing]] || 0
+
+|-
+! scope=row | 10
+| [[Software]] || [[FBA Autonomy, Mastery, Purpose Software]] || 0
+
+|-
+! scope=row | 
+| '''BILL OF MATERIALS ||  ||
+
+|-
+! scope=row | 11
+| [[Proper BOM|BOM]] || [[FBA Autonomy, Mastery, Purpose BOM]] || 0
+
+|-
+! scope=row | 12
+| [[vBOM]] || [[FBA Autonomy, Mastery, Purpose vBOM]] || 0
+
+|-
+! scope=row | 13
+| [[CAM Files]] || [[FBA Autonomy, Mastery, Purpose CAM Files]] || 0
+
+|-
+! scope=row | 14
+| [[Cut List]] || [[FBA Autonomy, Mastery, Purpose Cut List]] || 0
+
+|-
+! scope=row | 
+| '''BUILD''' || || 
+
+|-
+! scope=row | 15
+| [[Build Instructions]] || [[FBA Autonomy, Mastery, Purpose Build Instructions]] || 0
+
+|-
+! scope=row | 16
+| [[Fabrication Drawings]] || [[FBA Autonomy, Mastery, Purpose Fabrication Drawings]] || 0
+
+|-
+! scope=row | 17
+| [[Exploded Part Diagram]] || [[FBA Autonomy, Mastery, Purpose Exploded Part Diagram]] || 0
+
+|-
+! scope=row | 18
+| [[Production Engineering]] || [[FBA Autonomy, Mastery, Purpose Production Engineering]] || 0
+
+|-
+! scope=row | 
+| '''LIFECYCLE DESIGN''' || || 
+
+|-
+! scope=row | 19
+| [[Build Pictures and Video]] || [[FBA Autonomy, Mastery, Purpose Build Pictures and Video]] || 0
+
+|-
+! scope=row | 20
+| [[Data Collection]] || [[FBA Autonomy, Mastery, Purpose Data Collection]] || 0
+
+|-
+! scope=row | 21
+| [[Change Log + Future Work]] || [[FBA Autonomy, Mastery, Purpose Change Log + Future Work]] || 0
+
+|-
+! scope=row | 22
+| [[Troubleshooting and Repair]] || [[FBA Autonomy, Mastery, Purpose Troubleshooting and Repair]] || 0
+
+|}

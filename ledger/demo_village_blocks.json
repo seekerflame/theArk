@@ -1,0 +1,547 @@
+[
+  {
+    "hash": "5765f23f738e1246",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674959,
+    "data": {
+      "username": "alice_builder",
+      "seed_phrase_hash": "89fa47cd6ceccb118d0c3a9813fbb32341cbb2f07344893692faaa037c97c152",
+      "registered_at": 1767674959
+    }
+  },
+  {
+    "hash": "528f7fa304e92f9b",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674960,
+    "data": {
+      "username": "alice_builder",
+      "role": "BUILDER",
+      "certified_by": "system",
+      "multiplier": 1.5,
+      "certified_at": 1767674960
+    }
+  },
+  {
+    "hash": "46bdb832e2e59aa5",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674961,
+    "data": {
+      "username": "bob_farmer",
+      "seed_phrase_hash": "1ba3a424fb51cf785e6bd968dc989f76876996a96564715f3186b539b6d570a8",
+      "registered_at": 1767674961
+    }
+  },
+  {
+    "hash": "9941222baf157360",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674962,
+    "data": {
+      "username": "bob_farmer",
+      "role": "FARMER",
+      "certified_by": "system",
+      "multiplier": 1.8,
+      "certified_at": 1767674962
+    }
+  },
+  {
+    "hash": "0029e38ceb996931",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674963,
+    "data": {
+      "username": "carol_energy",
+      "seed_phrase_hash": "51b2a53fb93a66dead865d086f7d777d506d5331c4c383fdb980020ac5734780",
+      "registered_at": 1767674963
+    }
+  },
+  {
+    "hash": "d99c0b613c709365",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674964,
+    "data": {
+      "username": "carol_energy",
+      "role": "ENERGY_TECH",
+      "certified_by": "system",
+      "multiplier": 2.0,
+      "certified_at": 1767674964
+    }
+  },
+  {
+    "hash": "ff7befc9d9ee8b99",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674965,
+    "data": {
+      "username": "dave_dev",
+      "seed_phrase_hash": "b534278654bb3d5bb4f9174defab0444ca1ee618ffdb8d8b7bcd3a7fd1b7cef8",
+      "registered_at": 1767674965
+    }
+  },
+  {
+    "hash": "b5698a74aed8d4bf",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674966,
+    "data": {
+      "username": "dave_dev",
+      "role": "DEVELOPER",
+      "certified_by": "system",
+      "multiplier": 2.5,
+      "certified_at": 1767674966
+    }
+  },
+  {
+    "hash": "6db936cff006322f",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674967,
+    "data": {
+      "username": "eve_oracle",
+      "seed_phrase_hash": "f614398131290a8f3a185e54e761dc2080291a1c6e778e6f38c33dedd5971e86",
+      "registered_at": 1767674967
+    }
+  },
+  {
+    "hash": "d88792f2770630d0",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674968,
+    "data": {
+      "username": "eve_oracle",
+      "role": "ORACLE",
+      "certified_by": "system",
+      "multiplier": 1.8,
+      "certified_at": 1767674968
+    }
+  },
+  {
+    "hash": "752a0dfeb8726211",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674969,
+    "data": {
+      "username": "frank_hearth",
+      "seed_phrase_hash": "db7cf10b84e3e136df4f6729bb1abcdef37b0b6cc844006bc19e6491e3a5c092",
+      "registered_at": 1767674969
+    }
+  },
+  {
+    "hash": "ff5fcbc8e69d3d98",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674970,
+    "data": {
+      "username": "frank_hearth",
+      "role": "HEARTH_KEEPER",
+      "certified_by": "system",
+      "multiplier": 1.6,
+      "certified_at": 1767674970
+    }
+  },
+  {
+    "hash": "5ec250cf6799b05f",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674971,
+    "data": {
+      "username": "grace_chronicler",
+      "seed_phrase_hash": "7f3c888e027335aa0b09532f0cbb18be2f9a4ad87cd7c96b39eb16d7ff4bd2ef",
+      "registered_at": 1767674971
+    }
+  },
+  {
+    "hash": "d29651bc4c7942c2",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674972,
+    "data": {
+      "username": "grace_chronicler",
+      "role": "CHRONICLER",
+      "certified_by": "system",
+      "multiplier": 1.4,
+      "certified_at": 1767674972
+    }
+  },
+  {
+    "hash": "6461ecb9db74871d",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674973,
+    "data": {
+      "username": "henry_educator",
+      "seed_phrase_hash": "d2a0cd912d62015e8b0eb610e67bee84b76b4ab4897afcea48e6a07410a92bd3",
+      "registered_at": 1767674973
+    }
+  },
+  {
+    "hash": "c5f88934bf69a5a6",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674974,
+    "data": {
+      "username": "henry_educator",
+      "role": "EDUCATOR",
+      "certified_by": "system",
+      "multiplier": 1.7,
+      "certified_at": 1767674974
+    }
+  },
+  {
+    "hash": "69eb3fbd67bc1f0b",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674975,
+    "data": {
+      "username": "iris_hardware",
+      "seed_phrase_hash": "5b4f37156c147a612b122788a30a145b515bb13c263de60aba3719dc1ea842a9",
+      "registered_at": 1767674975
+    }
+  },
+  {
+    "hash": "7be745666c2e675d",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674976,
+    "data": {
+      "username": "iris_hardware",
+      "role": "HARDWARE_ENGINEER",
+      "certified_by": "system",
+      "multiplier": 2.2,
+      "certified_at": 1767674976
+    }
+  },
+  {
+    "hash": "3b025d9255f732f5",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674977,
+    "data": {
+      "username": "jules_ai",
+      "seed_phrase_hash": "9878d01820e26a4e6b2ea5fcf761af772132f511a37f03944ec8da6837908218",
+      "registered_at": 1767674977
+    }
+  },
+  {
+    "hash": "ec5d92c03a900abc",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674978,
+    "data": {
+      "username": "jules_ai",
+      "role": "AI_STEWARD",
+      "certified_by": "system",
+      "multiplier": 2.5,
+      "certified_at": 1767674978
+    }
+  },
+  {
+    "hash": "2e3ffdd73a9f0823",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674978,
+    "data": {
+      "username": "jules_ai",
+      "role": "DEVELOPER",
+      "certified_by": "system",
+      "multiplier": 2.5,
+      "certified_at": 1767674978
+    }
+  },
+  {
+    "hash": "d26a3c3dc9cb46f7",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674979,
+    "data": {
+      "username": "kate_federation",
+      "seed_phrase_hash": "52da4fb7a0367933d02089b269d65612575bec3f462fdfa20f10246f35f79af3",
+      "registered_at": 1767674979
+    }
+  },
+  {
+    "hash": "6df275f6f96e348f",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674980,
+    "data": {
+      "username": "kate_federation",
+      "role": "FEDERATION_COORDINATOR",
+      "certified_by": "system",
+      "multiplier": 1.9,
+      "certified_at": 1767674980
+    }
+  },
+  {
+    "hash": "01e50f4c8041522d",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674981,
+    "data": {
+      "username": "leo_economist",
+      "seed_phrase_hash": "182d58b805ff45406d66a879b0a6947121c3ff4fd67004b6ca5b6073a7fb84d8",
+      "registered_at": 1767674981
+    }
+  },
+  {
+    "hash": "c11854c978ba7a3e",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674982,
+    "data": {
+      "username": "leo_economist",
+      "role": "ECONOMIST",
+      "certified_by": "system",
+      "multiplier": 2.0,
+      "certified_at": 1767674982
+    }
+  },
+  {
+    "hash": "b5672c78286d91d0",
+    "type": "USER_REGISTRATION",
+    "timestamp": 1767674983,
+    "data": {
+      "username": "maria_worker",
+      "seed_phrase_hash": "649e099034918ee14644f65dfa2bef213ca109f79a4b1dbb24cfafbea66c13a4",
+      "registered_at": 1767674983
+    }
+  },
+  {
+    "hash": "d4fb1bb569389d83",
+    "type": "ROLE_CERTIFICATION",
+    "timestamp": 1767674984,
+    "data": {
+      "username": "maria_worker",
+      "role": "WORKER",
+      "certified_by": "system",
+      "multiplier": 1.0,
+      "certified_at": 1767674984
+    }
+  },
+  {
+    "hash": "61f00bc8d094590a",
+    "type": "QUEST",
+    "timestamp": 1767674985,
+    "data": {
+      "quest_id": "quest_demo_builder_1767674985",
+      "title": "Build New Greenhouse Frame",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 40,
+      "required_role": "BUILDER",
+      "tags": [
+        "construction",
+        "greenhouse"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674985
+    }
+  },
+  {
+    "hash": "5fcbcf2bcf11b879",
+    "type": "QUEST",
+    "timestamp": 1767674986,
+    "data": {
+      "quest_id": "quest_demo_farmer_1767674986",
+      "title": "Harvest Winter Vegetables",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 15,
+      "required_role": "FARMER",
+      "tags": [
+        "agriculture",
+        "harvest"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674986
+    }
+  },
+  {
+    "hash": "4c803b52e1ae3a97",
+    "type": "QUEST",
+    "timestamp": 1767674987,
+    "data": {
+      "quest_id": "quest_demo_energy_tech_1767674987",
+      "title": "Install Solar Panel Array",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 60,
+      "required_role": "ENERGY_TECH",
+      "tags": [
+        "solar",
+        "energy"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674987
+    }
+  },
+  {
+    "hash": "1e392334d47ee9d8",
+    "type": "QUEST",
+    "timestamp": 1767674988,
+    "data": {
+      "quest_id": "quest_demo_developer_1767674988",
+      "title": "Implement Lightning Bridge",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 80,
+      "required_role": "DEVELOPER",
+      "tags": [
+        "code",
+        "api"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674988
+    }
+  },
+  {
+    "hash": "a042785bf3264215",
+    "type": "QUEST",
+    "timestamp": 1767674989,
+    "data": {
+      "quest_id": "quest_demo_oracle_1767674989",
+      "title": "Validate Yesterday's Labor",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 20,
+      "required_role": "ORACLE",
+      "tags": [
+        "validation",
+        "governance"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674989
+    }
+  },
+  {
+    "hash": "ae839dea14a521b4",
+    "type": "QUEST",
+    "timestamp": 1767674990,
+    "data": {
+      "quest_id": "quest_demo_hearth_keeper_1767674990",
+      "title": "Prepare Community Dinner",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 12,
+      "required_role": "HEARTH_KEEPER",
+      "tags": [
+        "meals",
+        "wellness"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674990
+    }
+  },
+  {
+    "hash": "2bb4d804e8f803a5",
+    "type": "QUEST",
+    "timestamp": 1767674991,
+    "data": {
+      "quest_id": "quest_demo_chronicler_1767674991",
+      "title": "Document Hardware Setup",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 18,
+      "required_role": "CHRONICLER",
+      "tags": [
+        "documentation",
+        "wiki"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674991
+    }
+  },
+  {
+    "hash": "0ba03e46ecdb621f",
+    "type": "QUEST",
+    "timestamp": 1767674992,
+    "data": {
+      "quest_id": "quest_demo_educator_1767674992",
+      "title": "Teach Welding Basics",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 25,
+      "required_role": "EDUCATOR",
+      "tags": [
+        "education",
+        "training"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674992
+    }
+  },
+  {
+    "hash": "86f71877fa1eb76d",
+    "type": "QUEST",
+    "timestamp": 1767674993,
+    "data": {
+      "quest_id": "quest_demo_hardware_engineer_1767674993",
+      "title": "Build IoT Soil Sensors",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 35,
+      "required_role": "HARDWARE_ENGINEER",
+      "tags": [
+        "hardware",
+        "iot"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674993
+    }
+  },
+  {
+    "hash": "5d7b6d0ef823fdd3",
+    "type": "QUEST",
+    "timestamp": 1767674994,
+    "data": {
+      "quest_id": "quest_demo_ai_steward_1767674994",
+      "title": "Automate Daily Backups",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 30,
+      "required_role": "AI_STEWARD",
+      "tags": [
+        "automation",
+        "n8n"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674994
+    }
+  },
+  {
+    "hash": "a28d1a70cb09feef",
+    "type": "QUEST",
+    "timestamp": 1767674995,
+    "data": {
+      "quest_id": "quest_demo_federation_coordinator_1767674995",
+      "title": "Connect to Neighbor Village",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 45,
+      "required_role": "FEDERATION_COORDINATOR",
+      "tags": [
+        "federation",
+        "mesh"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674995
+    }
+  },
+  {
+    "hash": "99fc19537f8c7bbc",
+    "type": "QUEST",
+    "timestamp": 1767674996,
+    "data": {
+      "quest_id": "quest_demo_economist_1767674996",
+      "title": "Analyze Token Velocity",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 28,
+      "required_role": "ECONOMIST",
+      "tags": [
+        "economy",
+        "tokenomics"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674996
+    }
+  },
+  {
+    "hash": "299cfb5a6115712d",
+    "type": "QUEST",
+    "timestamp": 1767674997,
+    "data": {
+      "quest_id": "quest_demo_worker_1767674997",
+      "title": "Help with Wood Splitting",
+      "offer_type": "ROLE_MULTIPLIED",
+      "base_at": 8,
+      "required_role": "WORKER",
+      "tags": [
+        "general",
+        "labor"
+      ],
+      "owner": "system",
+      "status": "OPEN",
+      "created_at": 1767674997
+    }
+  }
+]

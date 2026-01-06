@@ -1,0 +1,4 @@
+Title: Fbcc
+Url: https://wiki.opensourceecology.org/wiki/Fbcc
+----------------------------------------
+#redirect [[Future Builders Crash Course - December 2025]]

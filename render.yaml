@@ -1,6 +1,7 @@
 services:
+  # Main Ark Application
   - type: web
-    name: ark-os
+    name: ark-os-production
     env: python
     buildCommand: ""
     startCommand: python3 server.py
@@ -11,3 +12,25 @@ services:
         generateValue: true
       - key: ARK_MOCK_EXCHANGE
         value: "1"
+    
+  # AI Orchestrator - Runs 24/7
+  - type: web
+    name: ark-ai-orchestrator
+    env: python
+    buildCommand: pip install requests
+    startCommand: python3 ai_orchestrator.py
+    envVars:
+      - key: ARK_API_URL
+        value: https://ark-os-production.onrender.com
+      - key: AI_AGENT_TOKEN
+        value: "REPLACE_WITH_REAL_TOKEN"
+    
+  # Background Worker for AI Memory
+  - type: worker
+    name: ark-ai-memory-indexer
+    env: python
+    buildCommand: pip install requests
+    startCommand: python3 -c "from core.ai_memory import AIMemory; from core.ledger import VillageLedger; import time; ledger = VillageLedger('ledger/village_ledger.db'); memory = AIMemory(ledger); [memory.index_ledger() or time.sleep(3600) for _ in iter(int, 1)]"
+    envVars:
+      - key: ARK_API_URL
+        value: https://ark-os-production.onrender.com

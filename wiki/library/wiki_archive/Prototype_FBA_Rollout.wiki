@@ -1,0 +1,85 @@
+Title: Prototype FBA Rollout
+Url: https://wiki.opensourceecology.org/wiki/Prototype%20FBA%20Rollout
+----------------------------------------
+Now we have audiences.
+
+We develop the first FBA with intent of 10x replication upon proof if first FBA working.
+
+=Housing Critical Path=
+<html> <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS2qOBnwaj9t00Sr_sCV-KERRKxxd-C8r5y2Wkru_5KVAGhzg0QlNRiWbhRV8bmT-niAHLJIks325Dg/pubembed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></html>
+
+[https://docs.google.com/presentation/d/1wKq1zQQQdWpbX8J59a1SlAYKN7fCt11UVQKnc-YhtEc/edit?slide=id.g3b041243be5_0_17#slide=id.g3b041243be5_0_17 edit]
+
+=Definition of 24 Success=
+*'Working' means a crew of 24 system integrators, and 6 homes built per year. It means one new product release the first year.
+*Selective application process guarantees suitable candidates
+*Stipend first 3 months. 
+*'''Advancement opportunity 3 month  mark to Limited Partnership''' at Risk Share Level 1 - meaning 50/50 share and refocus around product delivery to make sure efficiency and productivity goals are met. This is an 'onboarding period' for rapid skill acquisition to Basic Proficiency at a minimum of $20/hr level as based on industry standards.
+*Entry level living stipend is $600 per month - for basic living expense while  housing and utilities are covered. Value of $1000 for about $16/hr equivalent based on [[Core 2/3 Schedule]].
+*Clear route for 10x, including scaling of: (1) housing, (2) food, (3) waste, (4) energy, (5) experimental facility (new factor e floor built every year), and (6) prospects for territorial expansion.
+
+=Infrastructure Rollout=
+*'''Hangar''' - production infrastructure which is a build space for multiple homes. Open source penthouse suites on roof, telehandled into place based on the [[OSE 10x12 Cabin].  Budget: $50k for finishing PV, insulation, drywall. 
+*'''RLF''' - start populating with [[1000 Modules]]. Budget: $50k for tools, finishing, heat and cooling.
+*'''Housing''' - about $5k a pop. $100k budget.
+
+=Machine Infrastructure=
+==3D Printed Plastic==
+*'''Shredder''' - plastic recycling - $5k
+*'''Filament Maker''' - plastic recycling - $10k
+*'''3D Printer Cluster''' - 
+**4 8" beds - $2k
+**4 12" beds - nema 17  - $3k
+**4 18" or 24" printers - Can do Nema 17 on XY, and Nema 23 on Z for weight handling. 2 single, 2 Dual head and 4 4 head versions with 18 or 24" beds. $8k
+*4 '''Belt Printer''' - $5k
+
+*'''Open Source Skid Steer''' with remote control and RTK GPS - $15k. 
+*'''Open Source Truck Attachment for Skid Steer''' - a steering platform with HD drive motors on 4 wheels. $10k.
+
+==Fab==
+*'''CNC torch table''' - $10k - basic production, getting back to machine
+*'''CNC Machining center''' - 3" lathe with ATC. 3' cnc HD slide, 3 dimensions in horizontal, verical. Mill head with ATC. Linux CNC + steppers. DRO in 3D with closed loop control. [[Granite Surface Plate]], $10-20k.
+*'''Aluminum spool gun''' - aluminum MIG welding - for aluminum printer beds - $300
+
+==Wood==
+*'''Sawmill''' - $25k investment, pays for itself in 1 house build. [[Norwood]].
+*'''Planer''' - for high quality wood boards. 20 fpm, 5 hp - $3k [https://www.grizzly.com/products/shop-fox-20-5-hp-planer/w1864?srsltid=AfmBOoqg6d97Gqrqlw5MpWb4DRloynPPM9fpiRvJD38sj0AT-6Bo2tcEAAo]
+
+==Rock==
+*'''CEB Press''' - $5k. Back into production for garages and homes at $2k savings per house, but much higher performance.
+*'''Rock Crusher''' - recycling concrete, rock harvesting, etc. along with jack hammer. $5k.
+
+==Fuel==
+*Plastic pyrolysis - easy fuel. $10k
+
+
+=Curriculum=
+Cohort works the [[2/3]] schedule. Every year, we work on a new 3D printed product release every week, drawing from the list of [[Seed Eco-Home 3D Printing Substitutions]].
+
+1 hour on [[LtL]], [[LtH]], and [[Civilization Design]] each week - with [[RLF]] infrastructure building, LtL exercises, LtH exercises, and collaborative R&D&C filling the rest of the time.
+
+Such that the 3 days are:
+
+#LtL (1-2 hr) focus on Collaborative Literacy and Thinking Big, R&D&C lab - 2-3 hours - 3d printed and other product development; R&D&C is half-time documenting, half time building. 1 hr - RLF practice. 1 hr - collaborative dev of RLF content
+#LtH (1-2 hr) - soft skills of Purpose and Meaning, R&D&C lab - 2-3 hours - 3d printed and other products; 1 hour RLF practice. 1 hour collaborative  RLF certifications.
+#Civ Design - 2 hrs - Design Guides/Applied Physics/Numeracy/Enteprise/. 1 hr lecture, 1 hour collaboration: module [[CAD-BOM-Build]] focusing on AI-assistent FreeCAD design workbench creation, extraction of a full BOM from each design - and generating instructionals for designing. We go between AI CAD workbenches - RLF module creation - and real digital fabrication of the same with real automation.  We work on this for all of the GVCS to create a true and powerful civilization reconstruction method of translating ideas to reality.
+
+Weekends - Projects - Independent study and build projects day. - towards open source economic product releases. Some projects involve infrastructure building and [[ZMCS]] [[UBR]] infrastructure building on campus, with a 1 hour per week volunteering requirement in cleanup/facility maintenance/infrastructure building such as new housing units for participants.
+
+These rely on [[CAD-BOM-Build]] method of swarming on [[Concurrent Engineering]] and rapid prototyping. We learn an R&D&C protocol for collaborative development. We develop according to an [[RLF Development Protocol]]. We design business models based on [[Zero Marginal Cost Economic Theory]].
+
+We build a home for the needy every year.
+
+Apprentices select personal projects, under compliance with Seed Eco-Home product ecologies.
+
+Everyone learns [[Extreme Collaboration]] - capable of productization of some good over a weekend as a crew of 24-240 people. Along with the core apprentice team, we collaboratively develop training where paying customers get trained to participate in weekends of extreme design - with a highly valuable course being a part of the deliverables. This addresses the performance criterion of effective development - the onus is on us to provide excellent training to expand collaboration.
+
+We collaborate on hosting future workshops, which may qualify for revenue share if initiative comes from Apprentices.
+
+We revenue share all product 50/50 - everything that is developed collaboratively. Marketing occurs on the OSE website or other venues. Private projects are not allowed, as all projects involve OSE infrastructure and are considered for revenue share. Revenue share will be based on peer review of collaboration. We will track enterprises, and any non-equal shares (such as someone not participating at all)
+
+=Incentives=
+*First year is the [[FreeHouse Challenge]] - getting the cost down by the amount of tech we develop. Say we build CEB press - you get to use it for 24 hrs. That means we design it for continous duty in a 12 hour shift for 6000 block produced. We give a quota, and you are motivated to develop that tech to that spec.
+*The more we open source - 1/5 or less of industry standard - the more access you have at the end.
+*You are motivated further to stay - if you stay, you gain access to Universal Basic Resources developed in that time.
+*A well-thought out Buy Out at the Bottom Contract for import-substituted value is the challenge here. We know you will benefit at a minimum of payback. But how far will it pay back depends on your level of effort. This needs careful thinking to be an effective incentive - based on what we can afford to give away.

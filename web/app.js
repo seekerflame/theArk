@@ -117,8 +117,12 @@ function main() {
             localStorage.setItem('at_username', username);
             appState.currentUser.name = username;
             appState.currentUser.role = data.user.role;
+            appState.currentUser.verified_hours = data.user.verified_hours;
+            appState.currentUser.safety_grade = data.user.safety_grade;
+            appState.currentUser.hm = data.user.hm;
             appState.balance = data.user.balance;
             return { success: true };
+
         }).catch(e => {
             console.error("[AUTH] Login failed:", e);
             return { success: false, message: e.message || 'Login service unreachable' };
@@ -563,27 +567,30 @@ function main() {
 
     // --- SOVEREIGN IDENTITY LOGIC ---
     window.showAuthMode = function (mode) {
-        var loginForm = document.getElementById('auth-login-form');
-        var regForm = document.getElementById('auth-register-form');
-
-        if (loginForm && regForm) {
-            loginForm.style.display = mode === 'login' ? 'block' : 'none';
-            regForm.style.display = mode === 'register' ? 'block' : 'none';
-        }
+        document.getElementById('auth-login-form').style.display = mode === 'login' ? 'block' : 'none';
+        document.getElementById('auth-register-form').style.display = mode === 'register' ? 'block' : 'none';
+        document.getElementById('auth-restore-form').style.display = mode === 'restore' ? 'block' : 'none';
+        document.getElementById('auth-seed-display').style.display = 'none';
 
         // Toggle Active Button Style
         const btnLogin = document.getElementById('btn-mode-login');
         const btnReg = document.getElementById('btn-mode-register');
+        const btnRestore = document.getElementById('btn-mode-restore');
 
-        if (btnLogin && btnReg) {
-            if (mode === 'login') {
-                btnLogin.style.background = '#10B981'; btnLogin.style.color = 'white';
-                btnReg.style.background = 'transparent'; btnReg.style.color = '#94a3b8';
-            } else {
-                btnReg.style.background = '#8B5CF6'; btnReg.style.color = 'white';
-                btnLogin.style.background = 'transparent'; btnLogin.style.color = '#94a3b8';
+        const btns = { login: btnLogin, register: btnReg, restore: btnRestore };
+        const colors = { login: '#10B981', register: '#8B5CF6', restore: '#F59E0B' };
+
+        Object.keys(btns).forEach(m => {
+            if (btns[m]) {
+                if (m === mode) {
+                    btns[m].style.background = colors[m];
+                    btns[m].style.color = 'white';
+                } else {
+                    btns[m].style.background = 'transparent';
+                    btns[m].style.color = '#94a3b8';
+                }
             }
-        }
+        });
         document.getElementById('auth-error').style.display = 'none';
     };
 
@@ -606,17 +613,16 @@ function main() {
             .then(r => r.json())
             .then(data => {
                 if (data.status === 'success') {
+                    // Show Mnemonic Display instead of immediate redirect
+                    document.getElementById('auth-register-form').style.display = 'none';
+                    document.getElementById('auth-seed-display').style.display = 'block';
+                    document.getElementById('seed-phrase-box').innerText = data.mnemonic;
+
+                    // Pre-auth the state
                     appState.token = data.token;
                     localStorage.setItem('at_token', data.token);
                     localStorage.setItem('at_username', user);
                     appState.currentUser.name = user;
-                    appState.currentUser.role = 'user';
-                    alert("Welcome, " + user + "! Your seed phrase: " + (data.mnemonic || 'N/A'));
-                    switchView('dashboard');
-                    updateUI();
-                    if (window.APP_CONFIG && window.APP_CONFIG.modules) {
-                        renderSidebar(window.APP_CONFIG.modules);
-                    }
                 } else {
                     errorEl.style.display = 'block';
                     errorEl.innerText = data.message;
@@ -625,6 +631,39 @@ function main() {
             .catch(err => {
                 errorEl.style.display = 'block';
                 errorEl.innerText = "Connection Error: " + err;
+            });
+    };
+
+    window.performRestore = function () {
+        const user = document.getElementById('restore-username').value;
+        const mnemonic = document.getElementById('restore-mnemonic').value;
+        const pass = document.getElementById('restore-password').value;
+        const errorEl = document.getElementById('auth-error');
+
+        if (!user || !mnemonic || !pass) {
+            errorEl.style.display = 'block';
+            errorEl.innerText = "Username, mnemonic, and new password are required.";
+            return;
+        }
+
+        fetch('/api/restore', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: user, mnemonic: mnemonic, password: pass })
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert("Identity Restored Successfully. You can now login with your new password.");
+                    showAuthMode('login');
+                } else {
+                    errorEl.style.display = 'block';
+                    errorEl.innerText = data.message;
+                }
+            })
+            .catch(err => {
+                errorEl.style.display = 'block';
+                errorEl.innerText = "Restore Error: " + err;
             });
     };
 
@@ -1873,7 +1912,15 @@ function main() {
                 });
 
                 // Trigger Tangle Update
-                if (window.renderTrafficGraph) window.renderTrafficGraph(newBlocks);
+                if (window.renderTrafficGraph) {
+                    window.renderTrafficGraph(newBlocks);
+                    // Heartbeat Pulse Trigger
+                    window.trafficNodes.forEach(node => {
+                        if (newBlocks.find(b => b.hash === node.id)) {
+                            node.pulse = 1.0;
+                        }
+                    });
+                }
                 if (window.renderTangle) renderTangle();
 
                 // Global Stat Recalculation
@@ -1967,7 +2014,8 @@ function main() {
                     vy: (Math.random() - 0.5) * 4,
                     type: b.data.block_type || 'default',
                     category: b.data.category || 'LABOR',
-                    parents: b.parents || []
+                    parents: b.parents || [],
+                    pulse: 0 // Initialize heartbeat pulse
                 });
 
                 // Track links for "mesh" look
@@ -2043,14 +2091,29 @@ function main() {
                 else if (node.type === 'WIKI') color = '#8B5CF6';
                 else if (node.type === 'GENESIS') color = '#FBBF24';
 
-                const radius = (canv.id === 'tangle-canvas-large' ? 6 : 4);
+                // Heartbeat Pulse Effect
+                if (node.pulse > 0) {
+                    node.pulse -= 0.02; // Fade out
+                    if (node.pulse < 0) node.pulse = 0;
+                }
 
-                ctx.shadowBlur = 10;
+                const baseRadius = (canv.id === 'tangle-canvas-large' ? 6 : 4);
+                const radius = baseRadius + (node.pulse * 10);
+
+                ctx.shadowBlur = 10 + (node.pulse * 30);
                 ctx.shadowColor = color;
                 ctx.fillStyle = color;
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
                 ctx.fill();
+
+                if (node.pulse > 0.1) {
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, radius + (1.0 - node.pulse) * 20, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
 
                 ctx.shadowBlur = 0;
                 ctx.fillStyle = 'rgba(16,185,129,0.7)';
@@ -2561,10 +2624,18 @@ function main() {
         var walletAddress = document.getElementById('wallet-address');
         var walletBalance = document.getElementById('wallet-balance');
         var walletXP = document.getElementById('wallet-xp');
+        var walletTier = document.getElementById('wallet-tier');
+        var walletHM = document.getElementById('wallet-hm');
 
         if (walletAddress) walletAddress.textContent = appState.currentUser.address;
         if (walletBalance) walletBalance.textContent = appState.balance.toFixed(2);
         if (walletXP) walletXP.textContent = Math.floor(appState.xp).toLocaleString();
+
+        const hours = appState.currentUser.verified_hours || 0;
+        const tier = hours >= 500 ? '🏛️ Master' : (hours >= 100 ? '🛠️ Journeyman' : '🌱 Apprentice');
+        if (walletTier) walletTier.textContent = tier;
+        if (walletHM) walletHM.textContent = `${(appState.currentUser.hm || 1.0).toFixed(2)}x`;
+
 
         // ART WALK MODE: Enhanced Mobile Actions
         const walletView = document.getElementById('view-wallet');
@@ -3247,6 +3318,57 @@ function main() {
         if (modal) modal.style.display = 'none';
     };
 
+    // --- WIKI SYNC LOGIC ---
+    window.triggerWikiSync = function () {
+        const btn = document.getElementById('wiki-sync-btn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '⏳ Syncing...';
+        btn.disabled = true;
+
+        apiFetch('/api/wiki/sync', { method: 'POST' })
+            .then(data => {
+                logToTerminal(`[WIKI] ${data.message}`);
+                // Refresh status after a short delay
+                setTimeout(updateWikiStatus, 2000);
+            })
+            .catch(e => {
+                logToTerminal(`[WIKI] Error: ${e.message}`, 'error');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+    };
+
+    function updateWikiStatus() {
+        const statusEl = document.getElementById('wiki-sync-status');
+        const btn = document.getElementById('wiki-sync-btn');
+        if (!statusEl) return;
+
+        apiFetch('/api/wiki/status')
+            .then(data => {
+                if (data.status === 'ONLINE' || data.status === 'SYNCED') {
+                    statusEl.innerHTML = `Last sync: ${data.timestamp} (${data.message})`;
+                    if (btn) {
+                        btn.innerHTML = '🔄 Force Wiki Sync';
+                        btn.disabled = false;
+                    }
+                } else if (data.status === 'SYNCING') {
+                    statusEl.innerHTML = `Sync in progress...`;
+                    if (btn) btn.innerHTML = '⏳ Syncing...';
+                } else if (data.status === 'ERROR') {
+                    statusEl.innerHTML = `⚠️ Sync Failed: ${data.message}`;
+                    if (btn) {
+                        btn.innerHTML = '🔄 Retry Wiki Sync';
+                        btn.disabled = false;
+                    }
+                }
+            })
+            .catch(e => console.warn('Failed to fetch wiki status:', e));
+    }
+
+    // Set up polling for wiki status every 30 seconds
+    setInterval(updateWikiStatus, 30000);
+    setTimeout(updateWikiStatus, 5000); // Initial check
+
     function initGaiaGuide() {
         if (document.getElementById('gaia-guide')) return;
         const guide = document.createElement('div');
@@ -3497,12 +3619,9 @@ function main() {
             renderTreasuryUI();
         }
         if (viewName === 'oracle_deck') {
-            renderOracleDeck();
+            window.switchOracleTab('queue');
         }
 
-        if (viewName === 'oracle_deck') {
-            renderOracleDeck();
-        }
 
 
         if (viewName === 'store' && window.renderMyceliumStore) {
@@ -3599,7 +3718,7 @@ function main() {
                 if (window.initHardwareMonitor) window.initHardwareMonitor();
                 break;
             case 'tangle':
-                if (window.renderTrafficGraph) window.renderTrafficGraph();
+                if (window.renderTrafficGraph) window.renderTrafficGraph(rawState.ledger);
                 break;
             case 'steward':
                 if (window.renderStewardChat) window.renderStewardChat();
@@ -4106,6 +4225,21 @@ function main() {
     };
 
     // --- ORACLE DECK LOGIC ---
+    // --- ORACLE DECK LOGIC ---
+    window.switchOracleTab = function (tab) {
+        document.querySelectorAll('.oracle-tab').forEach(t => t.style.display = 'none');
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+
+        const target = document.getElementById(`oracle-tab-${tab}`);
+        if (target) target.style.display = 'block';
+
+        const btn = document.getElementById(`tab-btn-${tab}`);
+        if (btn) btn.classList.add('active');
+
+        if (tab === 'queue') renderOracleDeck();
+        if (tab === 'citizens') renderCitizenList();
+    };
+
     function renderOracleDeck() {
         const container = document.getElementById('oracle-pending-list');
         if (!container) return;
@@ -4117,26 +4251,107 @@ function main() {
                     return;
                 }
 
-                container.innerHTML = quests.map(q => `
-                    <div class="glass-panel" style="border-left:4px solid #FBBF24; padding:20px;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                            <div>
-                                <h4 style="margin:0;">${q.title}</h4>
-                                <p style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">Worker: <strong>${q.worker}</strong> | Reward: <strong>${q.agreed_at} AT</strong></p>
+                container.innerHTML = quests.map(q => {
+                    const auditScore = q.proof?.audit_score || 0;
+                    const isHighQuality = auditScore > 0.8;
+
+                    return `
+                        <div class="glass-panel" style="border-left:4px solid ${isHighQuality ? '#10B981' : '#FBBF24'}; padding:20px;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                <div>
+                                    <h4 style="margin:0;">${q.title}</h4>
+                                    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:5px;">
+                                        Worker: <strong>${q.worker}</strong> | 
+                                        Reward: <strong>${q.agreed_at || q.base_at} AT</strong>
+                                    </p>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div class="badge" style="background:rgba(251,191,36,0.1); color:#FBBF24; border:1px solid #FBBF24;">PENDING</div>
+                                    ${auditScore ? `<div style="font-size:0.75rem; color:#10B981; margin-top:5px;">Audit: ${Math.round(auditScore * 100)}%</div>` : ''}
+                                </div>
                             </div>
-                            <div class="badge" style="background:rgba(251,191,36,0.1); color:#FBBF24; border:1px solid #FBBF24;">PENDING</div>
+                            <div style="margin-top:15px; padding:10px; background:rgba(0,0,0,0.2); border-radius:6px; font-size:0.85rem;">
+                                <strong>Proof:</strong> ${JSON.stringify(q.proof || q.description)}
+                            </div>
+                            <div style="margin-top:20px; display:flex; gap:10px;">
+                                <button class="btn-primary" onclick="window.validateProof('${q.quest_id}', true)" style="flex:1; background:#10B981;">✅ VALIDATE</button>
+                                <button class="btn-secondary" onclick="window.validateProof('${q.quest_id}', false)" style="flex:1; border-color:#EF4444; color:#EF4444;">❌ REJECT</button>
+                            </div>
                         </div>
-                        <div style="margin-top:15px; padding:10px; background:rgba(0,0,0,0.2); border-radius:6px; font-size:0.85rem;">
-                            <strong>Proof Submitted:</strong> ${JSON.stringify(q.proof || {})}
-                        </div>
-                        <div style="margin-top:20px; display:flex; gap:10px;">
-                            <button class="btn-primary" onclick="window.validateProof('${q.quest_id}', true)" style="flex:1; background:#10B981;">✅ VALIDATE (MINT)</button>
-                            <button class="btn-secondary" onclick="window.validateProof('${q.quest_id}', false)" style="flex:1; border-color:#EF4444; color:#EF4444;">❌ REJECT</button>
-                        </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             });
     }
+
+    window.batchValidate = function () {
+        if (!confirm("Approve all high-quality (Audit Score > 80%) pending proofs?")) return;
+        apiFetch('/api/quests?status=PENDING_VALIDATION').then(quests => {
+            const targets = quests.filter(q => (q.proof?.audit_score || 0) > 0.8);
+            if (targets.length === 0) {
+                alert("No high-quality items found in queue.");
+                return;
+            }
+            Promise.all(targets.map(q =>
+                apiFetch('/api/quests/validate', { method: 'POST', body: { quest_id: q.quest_id, approved: true, feedback: "Batch approved by Oracle high-trust flow." } })
+            )).then(() => {
+                logToTerminal(`[ORACLE] Batch validated ${targets.length} items.`);
+                renderOracleDeck();
+            });
+        });
+    };
+
+    window.defineRole = function () {
+        const role = document.getElementById('new-role-name').value.trim().toUpperCase();
+        const mult = document.getElementById('new-role-mult').value;
+        if (!role) return alert("Role name required");
+
+        apiFetch('/api/roles/define', {
+            method: 'POST',
+            body: { role: role, multiplier: mult }
+        }).then(res => {
+            if (res.status === 'defined') {
+                logToTerminal(`[ORACLE] New role ${role} (${mult}x) minted on ledger.`);
+                alert(`Role ${role} defined! Citizens can now be certified for this role.`);
+                document.getElementById('new-role-name').value = '';
+            }
+        });
+    };
+
+    window.renderCitizenList = function () {
+        const container = document.getElementById('citizen-list');
+        if (!container) return;
+
+        apiFetch('/api/users').then(users => {
+            container.innerHTML = Object.entries(users).map(([username, data]) => {
+                const hours = data.verified_hours || 0;
+                const tier = hours >= 500 ? '🏛️ Master' : (hours >= 100 ? '🛠️ Journeyman' : '🌱 Apprentice');
+                const grade = data.safety_grade || 100;
+
+                return `
+                    <div class="glass-panel" style="padding:15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="font-weight:700;">${username}</div>
+                            <div style="font-size:0.7rem; padding:2px 6px; background:rgba(0,0,0,0.3); border-radius:4px;">${tier}</div>
+                        </div>
+                        <div style="margin-top:10px; font-size:0.85rem;">
+                            <div style="display:flex; justify-content:space-between; color:var(--text-muted);">
+                                <span>Verified Hours:</span>
+                                <span>${hours.toFixed(1)}h</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-top:5px;">
+                                <span>Safety Grade:</span>
+                                <span style="color:${grade > 80 ? '#10B981' : '#FBBF24'}">${grade}%</span>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px;">
+                            ${(data.roles || ['WORKER']).map(r => `<span style="font-size:0.6rem; padding:2px 5px; background:rgba(255,255,255,0.05); border-radius:3px;">${r}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        });
+    };
+
 
     window.validateProof = function (questId, approved) {
         const feedback = prompt(approved ? "Feedback for worker (optional):" : "Reason for rejection:");
