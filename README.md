@@ -74,7 +74,10 @@ echo '{"blocks": []}' > village_ledger_py.json
 python3 server.py
 ```
 
-The Ark will be available at `http://localhost:3000`
+The Ark will be available at:
+
+- **Local**: `http://localhost:3000`
+- **Public (Render)**: `https://ark-os-free.onrender.com`
 
 ### First Login
 
