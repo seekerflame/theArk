@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.ark.gaia.daemon</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/python3</string>
+        <string>/Volumes/Extreme SSD/Antigrav/OSE/abundancetoken/07_Code/The_Ark/gaia_daemon.py</string>
+    </array>
+    
+    <key>WorkingDirectory</key>
+    <string>/Volumes/Extreme SSD/Antigrav/OSE/abundancetoken/07_Code/The_Ark</string>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>ARK_API_URL</key>
+        <string>http://localhost:3000</string>
+        <key>AI_AGENT_TOKEN</key>
+        <string>daemon_token</string>
+    </dict>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <true/>
+    
+    <key>StandardOutPath</key>
+    <string>/Volumes/Extreme SSD/Antigrav/OSE/abundancetoken/07_Code/The_Ark/logs/daemon_stdout.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/Volumes/Extreme SSD/Antigrav/OSE/abundancetoken/07_Code/The_Ark/logs/daemon_stderr.log</string>
+</dict>
+</plist>
