@@ -1044,6 +1044,7 @@ function main() {
             modules = [
                 { id: 'dashboard', name: 'Mission Control', icon: '🚀', enabled: true, order: 1 },
                 { id: 'jobs', name: 'Job Board', icon: '📋', enabled: true, order: 2 },
+                { id: 'exchange', name: 'Exchange', icon: '⚡', enabled: true, order: 2.2 },
                 { id: 'bounties', name: 'Bounty Board', icon: '⚔️', enabled: true, order: 2.5 },
                 { id: 'wallet', name: 'Sovereign Wallet', icon: '💰', enabled: true, order: 3 },
                 { id: 'techtree', name: 'Tech Tree', icon: '🧬', enabled: true, order: 4 },
@@ -3159,6 +3160,9 @@ function main() {
         if (viewName === 'bounties' && window.renderBountyBoard) {
             window.renderBountyBoard();
         }
+        if (viewName === 'exchange' && window.renderExchange) {
+            window.renderExchange();
+        }
         if (viewName === 'steward' && window.renderStewardChat) {
             window.renderStewardChat();
         }
@@ -3212,6 +3216,9 @@ function main() {
                 break;
             case 'bounties':
                 if (window.renderBountyBoard) window.renderBountyBoard();
+                break;
+            case 'exchange':
+                if (window.renderExchange) window.renderExchange();
                 break;
             case 'wallet':
                 if (window.renderWalletUI) window.renderWalletUI();
@@ -3490,25 +3497,114 @@ function main() {
         const container = document.getElementById('hardware-monitor-container');
         if (!container) return;
 
-        apiFetch('/api/evolution').then(data => {
-            const sensors = data.sensors || {};
+        apiFetch('/api/hardware/list').then(sensors => { // Use new hardware endpoint
+            if (!sensors || Object.keys(sensors).length === 0) {
+                 container.innerHTML = '<div style="text-align:center; padding:50px; color:var(--text-muted);">No hardware nodes detected. POST to /api/hardware/register to add sensors.</div>';
+                 return;
+            }
             container.innerHTML = `
                 <div class="grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:20px;">
-                    ${Object.entries(sensors).map(([id, s]) => `
-                        <div class="glass-panel" style="position:relative;">
-                            <div style="position:absolute; top:15px; right:15px; color:${s.status === 'ONLINE' ? '#10B981' : '#EF4444'}; font-size:0.6rem; letter-spacing:1px; font-weight:bold;">${s.status}</div>
+                    ${Object.entries(sensors).map(([id, s]) => {
+                        const isOnline = (Date.now() / 1000 - s.last_seen) < 300; // 5 mins
+                        const statusColor = isOnline ? '#10B981' : '#EF4444';
+                        const statusText = isOnline ? 'ONLINE' : 'OFFLINE';
+                        const unit = (s.meta && s.meta.unit) ? s.meta.unit : '';
+
+                        return `
+                        <div class="glass-panel" style="position:relative; border-left: 3px solid ${statusColor};">
+                            <div style="position:absolute; top:15px; right:15px; color:${statusColor}; font-size:0.6rem; letter-spacing:1px; font-weight:bold;">${statusText}</div>
                             <h4 style="margin:0 0 15px 0; color:var(--text-muted); font-size:0.8rem; letter-spacing:1px;">${s.type.toUpperCase()} NODE</h4>
-                            <div style="font-size:2rem; font-weight:bold; color:var(--text-main); font-family:'JetBrains Mono';">${s.last_value}</div>
-                            <div style="font-size:0.7rem; color:#64748b; margin-top:10px;">UID: ${id}</div>
-                            <div style="margin-top:15px; height:4px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden;">
-                                <div style="height:100%; background:var(--primary); width:70%; opacity:0.3; animation:pulse 2s infinite;"></div>
+                            <div style="font-size:2rem; font-weight:bold; color:var(--text-main); font-family:'JetBrains Mono';">
+                                ${s.last_value} <span style="font-size:1rem; color:#64748b;">${unit}</span>
                             </div>
+                            <div style="font-size:0.7rem; color:#64748b; margin-top:10px;">UID: ${id}</div>
+                            ${isOnline ? `
+                            <div style="margin-top:15px; height:4px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden;">
+                                <div style="height:100%; background:var(--primary); width:100%; opacity:0.3; animation:pulse 2s infinite;"></div>
+                            </div>` : ''}
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
             `;
         });
     }
+
+    // --- EXCHANGE LOGIC ---
+    window.renderExchange = function() {
+        window.updateQuote();
+    };
+
+    window.updateQuote = function() {
+        const input = document.getElementById('ex-amount-at');
+        if (!input) return;
+        const amount = parseFloat(input.value);
+        if (isNaN(amount) || amount <= 0) return;
+
+        apiFetch(`/api/exchange/quote?amount=${amount}`).then(data => {
+            const btcEl = document.getElementById('ex-amount-btc');
+            if (btcEl) btcEl.innerText = data.sats.toLocaleString();
+
+            const rateEl = document.getElementById('ex-rate-display');
+            if (rateEl) rateEl.innerText = `Rate: ${data.rate}`;
+        });
+    };
+
+    window.generateInvoice = function() {
+        const input = document.getElementById('ex-amount-at');
+        const amount = parseFloat(input.value);
+
+        apiFetch('/api/exchange/buy', {
+            method: 'POST',
+            body: { amount: amount }
+        }).then(data => {
+            const panel = document.getElementById('ex-invoice-panel');
+            panel.style.display = 'block';
+
+            // Set Invoice Text
+            document.getElementById('ex-invoice-string').value = data.invoice;
+
+            // Generate QR (using googleapis chart api as external dependency fallback, usually acceptable for frontend)
+            // If strictly no external, we hide the img.
+            // Using a public API for QR generation is standard for simple web apps.
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data.invoice)}`;
+            const qrImg = document.getElementById('ex-qr-img');
+            const placeholder = document.getElementById('ex-qr-placeholder');
+
+            qrImg.src = qrUrl;
+            qrImg.style.display = 'block';
+            placeholder.style.display = 'none';
+
+            // Start Polling
+            window.pollInvoice(data.payment_hash, amount);
+        }).catch(e => {
+            alert("Error: " + e.message);
+        });
+    };
+
+    window.pollInvoice = function(hash, expectedAmount) {
+        const statusMsg = document.getElementById('ex-status-msg');
+        const txMsg = document.getElementById('ex-status-tx');
+
+        // Stop any previous poll
+        if (window.invoicePollInterval) clearInterval(window.invoicePollInterval);
+
+        window.invoicePollInterval = setInterval(() => {
+            apiFetch(`/api/exchange/status?hash=${hash}&amount=${expectedAmount}`).then(res => {
+                if (res.status === 'complete' || res.status === 'already_processed') {
+                    clearInterval(window.invoicePollInterval);
+                    statusMsg.innerText = "✅ PAYMENT CONFIRMED";
+                    statusMsg.style.color = "#10B981";
+                    statusMsg.style.animation = "none";
+
+                    txMsg.style.display = 'block';
+                    txMsg.innerText = `TX: ${res.tx_id} | MINTED: ${res.at_minted} AT`;
+
+                    window.showCelebration(`⚡ Power Overwhelming! +${res.at_minted} AT`);
+                    window.syncWithLedger();
+                }
+            });
+        }, 3000); // Check every 3s
+    };
 
     window.toggleListingForm = function () {
         var el = document.getElementById('listing-form-container');

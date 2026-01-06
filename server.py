@@ -31,7 +31,7 @@ WEB_DIR = os.path.join(os.getcwd(), 'web')
 USERS_FILE = os.path.join('core', 'users.json')
 
 # Logging
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] [%(request_id)s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] %(message)s')
 logger = logging.getLogger("ArkOS")
 
 # Instances
