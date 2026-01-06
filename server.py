@@ -17,6 +17,8 @@ from core.router import Router, requires_auth, admin_only
 from core.justice import JusticeSteward
 from core.triple_verification import TripleVerification
 from core.quest_system import QuestSystem
+from core.inventory import InventorySystem
+from core.fiat_bridge import FiatBridge, register_fiat_routes
 
 
 # API Modules
@@ -58,6 +60,8 @@ treasury = TreasuryBot(ledger)
 justice = JusticeSteward(ledger, identity)
 verification = TripleVerification(ledger, identity)
 quest_system = QuestSystem(ledger, identity)
+inventory = InventorySystem(ledger, identity)
+fiat_bridge = FiatBridge(ledger)
 
 
 # Routing
@@ -77,6 +81,9 @@ register_justice_routes(router, ledger, justice, auth_decorator)
 register_quest_routes(router, ledger, identity, auth_decorator)
 register_treasury_routes(router, treasury, auth_decorator)
 register_role_routes(router, ledger, identity, auth_decorator)
+register_fiat_routes(router, ledger, fiat_bridge, auth_decorator)
+logger.info("💰 Fiat Bridge loaded (Card ↔ BTC ↔ AT ↔ Bank)")
+logger.info("📦 Inventory System loaded")
 
 # AI Memory System Integration
 try:
