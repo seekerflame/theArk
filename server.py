@@ -107,6 +107,14 @@ try:
 except ImportError as e:
     logger.warning(f"⚠️  API modules missing: {e}")
 
+# Merchant Discovery API
+try:
+    from api.merchants import register_merchant_routes
+    register_merchant_routes(router, ledger, auth_decorator)
+    logger.info("🏪 Merchant Discovery API loaded")
+except ImportError as e:
+    logger.warning(f"⚠️  Merchant API missing: {e}")
+
 # AI Memory System Integration
 try:
     from core.ai_memory import create_ai_memory_api
