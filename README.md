@@ -14,8 +14,15 @@ Enable the transition from Type 0.7 → Type 6 Civilization via **Abundance Toke
 
 - 🌐 **Live Dashboard**: [http://localhost:3000](http://localhost:3000)
 - 📊 **System Status**: Run `python3 tools/health_dashboard.py`
-- 📚 **Wiki Documentation**: [OSE Wiki](<https://wiki.open> sourceecology.org/wiki/User:Seeker/Abundance_Token)
+- 📚 **Wiki Documentation**: [OSE Wiki](https://wiki.opensourceecology.org/wiki/User:Seeker/Abundance_Token)
 - 🤖 **n8n Automation**: [http://localhost:5678](http://localhost:5678)
+
+## 📖 New Developer? Start Here
+
+- 🚀 **[Developer Overview](docs/DEVELOPER_OVERVIEW.md)** - Complete technical reference
+- 📜 **[What We've Built](docs/WHAT_WE_BUILT.md)** - Project history & features
+- 🤝 **[Contributing Guide](CONTRIBUTING.md)** - How to submit code
+- 🤖 **[AI Collaboration](AI_COLLABORATION_GUIDE.md)** - Multi-AI integration
 
 ## 🏗️ Architecture
 
