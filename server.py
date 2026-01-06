@@ -91,6 +91,14 @@ logger.info("📦 Inventory System loaded")
 logger.info("👨‍👩‍👧 Party Quests loaded (families + groups)")
 logger.info("🥬 Harvest Marketplace loaded (sell produce)")
 
+# Party & Harvest API
+try:
+    from api.party import register_party_routes
+    register_party_routes(router, party_quests, harvest, auth_decorator)
+    logger.info("🎉 Party & Harvest API endpoints registered")
+except ImportError as e:
+    logger.warning(f"⚠️  Party API not available: {e}")
+
 # AI Memory System Integration
 try:
     from core.ai_memory import create_ai_memory_api
