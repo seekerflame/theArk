@@ -94,10 +94,18 @@ logger.info("🥬 Harvest Marketplace loaded (sell produce)")
 # Party & Harvest API
 try:
     from api.party import register_party_routes
+    from api.evolution import EvolutionEngine, register_evolution_routes
+    
+    # Instance
+    evolution = EvolutionEngine(ledger, identity)
+    
     register_party_routes(router, party_quests, harvest, auth_decorator)
+    register_evolution_routes(router, evolution, auth_decorator)
+    
     logger.info("🎉 Party & Harvest API endpoints registered")
+    logger.info("🧬 Evolution Engine loaded (Perpetual Loop active)")
 except ImportError as e:
-    logger.warning(f"⚠️  Party API not available: {e}")
+    logger.warning(f"⚠️  API modules missing: {e}")
 
 # AI Memory System Integration
 try:

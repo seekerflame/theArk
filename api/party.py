@@ -1,9 +1,45 @@
-"""
-Party and Harvest API Routes
-"""
+# ========== SOCIAL & NIGHTLIFE (Bored Board Archives) ==========
+
+SOCIAL_TEMPLATES = [
+    {
+        "title": "Bar Crawl Bingo",
+        "description": "Visit 3 local spots, collect a stamp at each. Socialize and support local.",
+        "reward_per_person": 0.5,
+        "quest_type": "party",
+        "category": "social",
+        "child_friendly": False,
+        "max_duration_hours": 4,
+        "verification": "Photos of 3 drink/food receipts or stamps"
+    },
+    {
+        "title": "Art Walk Scavenger Hunt",
+        "description": "Find the 5 hidden murals in the downtown district.",
+        "reward_per_person": 1.0,
+        "quest_type": "solo",
+        "category": "social",
+        "child_friendly": True,
+        "max_duration_hours": 2,
+        "verification": "5 photos of murals"
+    },
+    {
+        "title": "Third Space Assembly",
+        "description": "Host a gathering at a local park or cafe to discuss community goals.",
+        "reward_per_person": 2.0,
+        "quest_type": "raid",
+        "category": "social",
+        "child_friendly": True,
+        "max_duration_hours": 3,
+        "verification": "Group photo + summary of discussion"
+    }
+]
 
 def register_party_routes(router, party_quests, harvest, auth_decorator):
     """Register party quests and harvest marketplace endpoints."""
+    
+    @router.get('/api/social/templates')
+    def h_social_templates(h):
+        """Get social/nightlife quest templates."""
+        h.send_json({"templates": SOCIAL_TEMPLATES})
     
     # ========== PARTY QUESTS ==========
     
