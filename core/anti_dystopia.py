@@ -112,7 +112,10 @@ def enforce_exit_rights(platform):
             "No lock-in allowed."
         )
     
-    if platform.get('export_cost') > 0:
+    # Handle both dict and object
+    export_cost = getattr(platform, 'export_cost', platform.get('export_cost', 0) if hasattr(platform, 'get') else 0)
+    
+    if export_cost > 0:
         raise DystopiaViolation(
             "VIOLATION: Data export costs money. "
             "Export must be FREE. No ransom for your own data."
@@ -140,6 +143,48 @@ def enforce_no_data_sales(revenue_model):
             "VIOLATION: Data sales revenue stream detected. "
             "Ark OS NEVER sells user data. "
             "Revenue must come from voluntary contributions or services."
+        )
+
+# CONSTRAINT 9: No Truth Policing
+def enforce_no_misinformation_bans(moderation_policy):
+    """
+    Ark OS can NEVER ban for "misinformation" or "fake news"
+    This is a slippery slope to thought police
+    """
+    forbidden_ban_reasons = [
+        'misinformation',
+        'fake_news',
+        'conspiracy_theory',
+        'unverified_claim',
+        'disinformation'
+    ]
+    
+    for reason in moderation_policy.get('ban_reasons', []):
+        if any(forbidden in reason.lower() for forbidden in forbidden_ban_reasons):
+            raise DystopiaViolation(
+                f"VIOLATION: Truth policing detected ({reason}). "
+                "Ark OS does NOT moderate 'misinformation'. "
+                "Counter bad ideas with good ideas, not censorship."
+            )
+
+# CONSTRAINT 10: Recursive Verification Required
+def enforce_verify_verifiers(oracle_system):
+    """
+    Oracles must be verified by meta-oracles
+    Power = Scrutiny (inverted incentive)
+    """
+    if not oracle_system.get('meta_oracle_enabled'):
+        raise DystopiaViolation(
+            "VIOLATION: No meta-oracle verification. "
+            "Who watches the watchmen? "
+            "Oracles must be audited by higher layer."
+        )
+    
+    if not oracle_system.get('inverted_incentive'):
+        raise DystopiaViolation(
+            "VIOLATION: Power scales without accountability. "
+            "More verifications = More audits required. "
+            "Prevent concentration of power."
         )
 
 # Run all constraint checks
@@ -175,6 +220,12 @@ def verify_anti_dystopia_compliance(system):
         enforce_no_data_sales(system.revenue)
         print("✅ No data sales")
         
+        enforce_no_misinformation_bans(system.moderation)
+        print("✅ No truth policing")
+        
+        enforce_verify_verifiers(system.oracles)
+        print("✅ Recursive verification enforced")
+        
         print("\n🎉 COMPLIANCE VERIFIED: Not dystopian (yet)")
         return True
         
@@ -197,7 +248,9 @@ if __name__ == "__main__":
         'codebase': {'license': 'AGPLv3', 'source_available': True},
         'platform': type('obj', (object,), {'export_data': lambda: None, 'export_cost': 0})(),
         'feeds': {'sort_by': 'chronological'},
-        'revenue': {'sources': ['voluntary_contributions']}
+        'revenue': {'sources': ['voluntary_contributions']},
+        'moderation': {'ban_reasons': ['violence', 'csam', 'fraud']},  # No misinformation
+        'oracles': {'meta_oracle_enabled': True, 'inverted_incentive': True}
     }
     
     class System:
