@@ -57,3 +57,41 @@ def register_economy_routes(router, ledger, sensors, requires_auth):
         
         h_res = ledger.add_block('PURCHASE', {'buyer': sender, 'item': item_id, 'amount': price, 'timestamp': time.time()})
         h.send_json({"hash": h_res, "status": "success"})
+
+    @router.get('/api/verification/pending')
+    @requires_auth
+    def h_verify_pending(h, user, p=None):
+        # Fetch blocks that need verification.
+        # In this simplified model, we scan the ledger for unverified blocks (simulated by a flag or separate list).
+        # For MVP, let's scan recent blocks of type 'LABOR' or 'PROOF'.
+        # Real impl would filter by `verified: false` in block data.
+
+        pending = []
+        for b in ledger.blocks[-50:]: # Scan last 50
+            if b['type'] in ['LABOR', 'PROOF'] and not b['data'].get('verified'):
+                pending.append(b)
+        h.send_json(pending)
+
+    @router.post('/api/verification/submit')
+    @requires_auth
+    def h_verify_submit(h, user, p):
+        # Oracle submits verification
+        block_hash = p.get('hash')
+        verdict = p.get('verdict') # VALID, INVALID
+
+        if not block_hash or not verdict:
+            return h.send_error("Missing hash or verdict")
+
+        # In a real blockchain, we'd append a VERIFICATION block referencing the target.
+        # Here we just emit a block.
+        ledger.add_block('VERIFICATION', {
+            "target_hash": block_hash,
+            "oracle": user['username'],
+            "verdict": verdict,
+            "timestamp": time.time()
+        })
+
+        # Also could update local state if we had a mutable DB, but we are append-only.
+        # The frontend will re-read the graph and see the verification block.
+
+        h.send_json({"status": "verified"})

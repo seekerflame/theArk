@@ -14,6 +14,7 @@ from core.federation import PeerManager, FederationSyncer
 from core.steward import StewardNexus
 from core.energy import EnergyMonitor
 from core.router import Router, requires_auth, admin_only
+from core.moderation import ModerationQueue
 
 # API Modules
 from api.system import register_system_routes
@@ -22,6 +23,7 @@ from api.economy import register_economy_routes
 from api.social import register_social_routes
 from api.hardware import register_hardware_routes
 from api.exchange import register_exchange_routes
+from api.moderation import register_moderation_routes
 
 # Configuration
 PORT = 3000
@@ -29,6 +31,7 @@ JWT_SECRET = "GAIA_PROTO_CENTENNIAL_2025"
 DB_FILE = os.path.join(os.getcwd(), 'ledger', 'village_ledger.db')
 WEB_DIR = os.path.join(os.getcwd(), 'web')
 USERS_FILE = os.path.join('core', 'users.json')
+MODERATION_FILE = os.path.join('core', 'moderation.json')
 
 # Logging
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] %(message)s')
@@ -42,6 +45,7 @@ peers = PeerManager(os.path.join('federation', 'federation_registry.json'), PORT
 syncer = FederationSyncer(ledger, peers, PORT)
 energy = EnergyMonitor(ledger, sensors=sensors)
 steward = StewardNexus(ledger, sensors, server_file='server.py')
+mod_queue = ModerationQueue(MODERATION_FILE)
 
 # Routing
 router = Router()
@@ -53,6 +57,7 @@ register_economy_routes(router, ledger, sensors, auth_decorator)
 register_social_routes(router, ledger, auth_decorator)
 register_hardware_routes(router, sensors, auth_decorator)
 register_exchange_routes(router, ledger, auth_decorator)
+register_moderation_routes(router, mod_queue, auth_decorator)
 
 class ArkHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
