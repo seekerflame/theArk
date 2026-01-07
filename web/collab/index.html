@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ark Mermaid Collab</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow: hidden;
+        }
+
+        #editor-pane {
+            width: 40%;
+            height: 100%;
+            border-right: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            background: #1e1e1e;
+        }
+
+        #preview-pane {
+            width: 60%;
+            height: 100%;
+            background: #ffffff;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #source-code {
+            flex: 1;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: none;
+            resize: none;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            outline: none;
+            line-height: 1.5;
+        }
+
+        #status-bar {
+            height: 30px;
+            background: #007acc;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+            justify-content: space-between;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="editor-pane">
+        <textarea id="source-code" spellcheck="false"></textarea>
+        <div id="status-bar">
+            <h1>Ark Mermaid Collab</h1>
+            <span id="sync-status">Connecting...</span>
+        </div>
+    </div>
+    <div id="preview-pane">
+        <div class="mermaid" id="mermaid-output">
+            graph TD
+            A[Loading...]
+        </div>
+    </div>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        
+        mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+
+        const editor = document.getElementById('source-code');
+        const output = document.getElementById('mermaid-output');
+        const status = document.getElementById('sync-status');
+        
+        let localVersion = -1;
+        let lastServerVersion = -1;
+        let isTyping = false;
+        let typingTimeout;
+
+        // --- Rendering ---
+        async function renderDiagram(code) {
+            try {
+                // Mermaid needs a unique ID for each render to avoid conflicts
+                const id = 'mermaid-' + Date.now();
+                const { svg } = await mermaid.render(id, code);
+                output.innerHTML = svg;
+                status.style.backgroundColor = '#007acc'; // Blue for OK
+            } catch (e) {
+                console.error("Mermaid Render Error", e);
+                // Don't wipe the diagram on error, just maybe show a red status
+                status.textContent = "Syntax Error";
+                status.style.backgroundColor = '#d9534f'; // Red
+            }
+        }
+
+        // --- Sync Logic ---
+        async function fetchState() {
+            try {
+                const res = await fetch('/api/collab/state');
+                const data = await res.json();
+                
+                // Only update editor if we are behind AND not actively typing
+                if (data.version > lastServerVersion) {
+                    lastServerVersion = data.version;
+                    
+                    if (!isTyping) {
+                        if (editor.value !== data.source) {
+                            editor.value = data.source;
+                            renderDiagram(data.source);
+                        }
+                        status.textContent = `Synced v${data.version}`;
+                    } else {
+                        status.textContent = `Server v${data.version} (Paused)`;
+                    }
+                }
+            } catch (e) {
+                status.textContent = "Offline";
+                status.style.backgroundColor = '#555';
+            }
+        }
+
+        async function pushUpdate() {
+            const source = editor.value;
+            status.textContent = "Saving...";
+            
+            try {
+                await fetch('/api/collab/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'update_source', source })
+                });
+                renderDiagram(source); // Optimistic render
+                status.textContent = "Saved";
+            } catch (e) {
+                status.textContent = "Save Failed";
+                status.style.backgroundColor = '#d9534f';
+            }
+            isTyping = false;
+        }
+
+        // --- Interaction ---
+        editor.addEventListener('input', () => {
+            isTyping = true;
+            status.textContent = "Typing...";
+            
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                pushUpdate();
+            }, 500); // 500ms debounce
+        });
+
+        // Initialize
+        fetchState();
+        // Poll every 1s
+        setInterval(fetchState, 1000);
+
+    </script>
+</body>
+
+</html>

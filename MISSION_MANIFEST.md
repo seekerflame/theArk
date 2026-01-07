@@ -3,6 +3,7 @@
 **Date**: Dec 9, 2025
 **Status**: UPGRADED (v0.7.0)
 **Objective**: Civilization Permanence
+**Ethos**: Action Research + Cross-Subsidization (Global Problemsolving Method)
 
 ## 1. The Core (Digital Steel)
 
@@ -32,6 +33,7 @@
 | File | Purpose | Status |
 | :--- | :--- | :--- |
 | `Abundance_Token_Master_Whitepaper.md` | **The Constitution**. Governance, Economics, and Rights. | 🏛️ ARCHIVED |
+| `docs/SOP/GPM_001.md` | **The Method**. Action Research & Global Problemsolving SOP. | 📜 ACTIVE |
 | `OSE_Wiki_Update.wiki` | **The Public Face**. MediaWiki formatted documentation for the world. | 🌍 READY |
 | `README.md` | **The Instruction Manual**. How to install and run the node. | 📖 UPDATED |
 | `PRESENTATION_SCRIPT.md` | **The Pitch**. Script for onboarding new members (Marcin). | 🎤 READY |

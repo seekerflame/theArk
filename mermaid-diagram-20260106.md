@@ -62,3 +62,35 @@ graph TD
 ---
 
 *"This is the complete value loop: User boredom → Merchant help → AT minting → Spending → Fiat conversion (optional) → Repeat."*
+
+# Building Mode Implementation Flow
+
+**Generated via /linearmermaid workflow**
+
+```mermaid
+graph TD
+    A[Start: User Request] --> B[Research Rapier.js]
+    B --> C[Init Canvas & Loop]
+    C --> D[Integrate Physics World]
+    D --> E[Fix Script Tags/ESM]
+    E --> F[Implement Grid Snapping]
+    F --> G[Add Component Library]
+    G --> H[Implement Rotation]
+    H --> I[Add HUD & Constraints]
+    I --> J[Final Verification]
+    J --> K[End: Functional Building Mode]
+
+    style K fill:#10B981,color:#fff
+```
+
+## Nodes Explained (Building Mode)
+
+| Node | Description |
+|------|-------------|
+| **Research Rapier.js** | Selected Rust-based physics engine for performance. |
+| **Fix Script Tags** | Resolved issue where JS was rendering as plain text. |
+| **Grid Snapping** | Enforced 0.2m alignment for structural integrity. |
+| **Component Library** | Added standard 2x4s, beams, and blocks. |
+| **Functional Building Mode** | Final state: Physics-enabled construction tool. |
+
+---

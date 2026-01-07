@@ -240,6 +240,7 @@
         <button class="tool-btn active" data-tool="stud">2x4 Stud</button>
         <button class="tool-btn" data-tool="beam">4x8 Beam</button>
         <button class="tool-btn" data-tool="panel">OSB Panel</button>
+        <button class="tool-btn" data-tool="ceb">CEB Block</button>
         <button class="tool-btn" data-tool="connection">Connection</button>
         <button class="tool-btn" data-tool="delete">🗑️ Delete</button>
         <button class="tool-btn" data-tool="simulate">▶️ Simulate</button>
@@ -252,10 +253,14 @@
     </div>
 
     <script type="module">
-        // Rapier.js Physics Integration
-        // Using CDN for quick setup - production would bundle this
+        import RAPIER from 'https://esm.sh/@dimforge/rapier2d-compat';
 
-        import RAPIER from 'https://cdn.skypack.dev/@dimforge/rapier2d-compat';
+        const COMPONENTS = {
+            stud: { width: 0.089, height: 2.44, color: '#d4a574', label: '2x4 Stud' },
+            beam: { width: 0.184, height: 0.089, color: '#8b6914', label: '4x8 Beam' },
+            panel: { width: 1.22, height: 2.44, color: '#c4a35a', label: 'OSB Panel' },
+            ceb: { width: 0.355, height: 0.101, color: '#8d6e63', label: 'CEB Block' }
+        };
 
         class BuildingPhysics {
             constructor(canvas) {
@@ -264,91 +269,70 @@
                 this.components = [];
                 this.selectedTool = 'stud';
                 this.running = true;
+                this.gridSize = 0.2; // 20cm grid snapping
                 this.lastTime = 0;
                 this.frameCount = 0;
                 this.fpsTime = 0;
+                this.mousePos = { x: 0, y: 0 };
+                this.rotation = 0;
 
                 this.resize();
                 window.addEventListener('resize', () => this.resize());
             }
 
             async init() {
-                // Initialize Rapier physics
-                await RAPIER.init();
-
-                // Create physics world with gravity
-                const gravity = { x: 0.0, y: 9.81 };
-                this.world = new RAPIER.World(gravity);
-
-                // Create ground
-                this.createGround();
-
-                // Start simulation
-                this.loop();
-
-                // Setup input
-                this.setupInput();
-
-                console.log('🏗️ Building Physics initialized with Rapier.js');
+                try {
+                    await RAPIER.init();
+                    const gravity = { x: 0.0, y: 9.81 };
+                    this.world = new RAPIER.World(gravity);
+                    this.createGround();
+                    this.loop();
+                    this.setupInput();
+                    console.log('🏗️ Building Physics initialized with Rapier.js');
+                    document.getElementById('sim-status').textContent = 'Running';
+                } catch (err) {
+                    console.error('Failed to initialize physics:', err);
+                    document.getElementById('sim-status').textContent = 'Error: ' + err.message;
+                    document.getElementById('sim-status').style.color = '#ef4444';
+                }
             }
 
             resize() {
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight;
-                this.scale = 50; // Pixels per meter
+                this.scale = 50;
                 this.offsetX = this.canvas.width / 2;
                 this.offsetY = this.canvas.height - 100;
             }
 
             createGround() {
-                // Ground is a static rigid body
-                const groundDesc = RAPIER.RigidBodyDesc.fixed()
-                    .setTranslation(0.0, 0.0);
+                const groundDesc = RAPIER.RigidBodyDesc.fixed().setTranslation(0.0, 0.0);
                 const groundBody = this.world.createRigidBody(groundDesc);
-
-                // Ground collider (wide platform)
-                const groundCollider = RAPIER.ColliderDesc.cuboid(20.0, 0.5);
+                const groundCollider = RAPIER.ColliderDesc.cuboid(100.0, 0.5);
                 this.world.createCollider(groundCollider, groundBody);
+            }
 
-                this.groundBody = groundBody;
+            snapToGrid(val) {
+                return Math.round(val / this.gridSize) * this.gridSize;
             }
 
             addComponent(x, y, type) {
-                let width, height, color;
+                const config = COMPONENTS[type] || { width: 0.1, height: 0.1, color: '#888' };
 
-                switch (type) {
-                    case 'stud':
-                        width = 0.089; // 3.5 inches in meters
-                        height = 2.44; // 8 feet in meters
-                        color = '#d4a574';
-                        break;
-                    case 'beam':
-                        width = 0.184; // 7.25 inches
-                        height = 0.089; // 3.5 inches (laid flat)
-                        color = '#8b6914';
-                        break;
-                    case 'panel':
-                        width = 1.22; // 4 feet
-                        height = 2.44; // 8 feet
-                        color = '#c4a35a';
-                        break;
-                    default:
-                        width = 0.1;
-                        height = 0.1;
-                        color = '#888';
-                }
+                // Convert screen to physics coords
+                let physX = (x - this.offsetX) / this.scale;
+                let physY = -(y - this.offsetY) / this.scale;
 
-                // Convert screen coords to physics coords
-                const physX = (x - this.offsetX) / this.scale;
-                const physY = -(y - this.offsetY) / this.scale;
+                // Apply grid snapping
+                physX = this.snapToGrid(physX);
+                physY = this.snapToGrid(physY);
 
-                // Create dynamic rigid body
                 const bodyDesc = RAPIER.RigidBodyDesc.dynamic()
-                    .setTranslation(physX, physY);
+                    .setTranslation(physX, physY)
+                    .setRotation(this.rotation);
                 const body = this.world.createRigidBody(bodyDesc);
 
-                // Create collider
-                const colliderDesc = RAPIER.ColliderDesc.cuboid(width / 2, height / 2)
+                const colliderDesc = RAPIER.ColliderDesc.cuboid(config.width / 2, config.height / 2)
                     .setRestitution(0.1)
                     .setFriction(0.8);
                 this.world.createCollider(colliderDesc, body);
@@ -356,38 +340,49 @@
                 const component = {
                     body,
                     type,
-                    width,
-                    height,
-                    color,
+                    width: config.width,
+                    height: config.height,
+                    color: config.color,
                     id: Date.now()
                 };
 
                 this.components.push(component);
                 this.updateHUD();
-
                 return component;
             }
 
             setupInput() {
-                // Tool selection
                 document.querySelectorAll('.tool-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
-                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        this.selectedTool = btn.dataset.tool;
-
-                        if (this.selectedTool === 'simulate') {
+                        if (btn.dataset.tool === 'simulate') {
                             this.running = !this.running;
                             btn.textContent = this.running ? '⏸️ Pause' : '▶️ Simulate';
                             document.getElementById('sim-status').textContent = this.running ? 'Running' : 'Paused';
+                            return;
                         }
+
+                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.selectedTool = btn.dataset.tool;
                     });
                 });
 
-                // Click to place
+                this.canvas.addEventListener('mousemove', (e) => {
+                    this.mousePos.x = e.clientX;
+                    this.mousePos.y = e.clientY;
+                });
+
                 this.canvas.addEventListener('click', (e) => {
-                    if (this.selectedTool === 'simulate' || this.selectedTool === 'delete') return;
+                    if (this.selectedTool === 'simulate' || this.selectedTool === 'delete' || this.selectedTool === 'connection')
+                        return;
                     this.addComponent(e.clientX, e.clientY, this.selectedTool);
+                });
+
+                window.addEventListener('keydown', (e) => {
+                    if (e.key === 'r') {
+                        this.rotation += Math.PI / 2;
+                        if (this.rotation >= Math.PI * 2) this.rotation = 0;
+                    }
                 });
             }
 
@@ -398,7 +393,6 @@
 
             step() {
                 if (!this.running) return;
-
                 const stepStart = performance.now();
                 this.world.step();
                 const stepTime = performance.now() - stepStart;
@@ -407,81 +401,90 @@
 
             render() {
                 const ctx = this.ctx;
-
-                // Clear
                 ctx.fillStyle = '#0a0a0a';
                 ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-                // Draw grid
-                ctx.strokeStyle = 'rgba(100, 255, 218, 0.1)';
+                // Draw Grid
+                ctx.strokeStyle = 'rgba(100, 255, 218, 0.05)';
                 ctx.lineWidth = 1;
-                const gridSize = this.scale; // 1 meter grid
+                const visualGridSize = this.gridSize * this.scale;
 
-                for (let x = this.offsetX % gridSize; x < this.canvas.width; x += gridSize) {
+                for (let x = this.offsetX % visualGridSize; x < this.canvas.width; x += visualGridSize) {
                     ctx.beginPath();
                     ctx.moveTo(x, 0);
                     ctx.lineTo(x, this.canvas.height);
                     ctx.stroke();
                 }
-
-                for (let y = this.offsetY % gridSize; y < this.canvas.height; y += gridSize) {
+                for (let y = this.offsetY % visualGridSize; y < this.canvas.height; y += visualGridSize) {
                     ctx.beginPath();
                     ctx.moveTo(0, y);
                     ctx.lineTo(this.canvas.width, y);
                     ctx.stroke();
                 }
 
-                // Draw ground
-                ctx.fillStyle = '#2a5a2a';
+                // Draw Ground
+                ctx.fillStyle = '#1a1a1a';
                 ctx.fillRect(0, this.offsetY, this.canvas.width, 100);
+                ctx.strokeStyle = '#64ffda';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, this.offsetY);
+                ctx.lineTo(this.canvas.width, this.offsetY);
+                ctx.stroke();
 
-                // Draw components
+                // Draw Components
                 for (const comp of this.components) {
                     const pos = comp.body.translation();
                     const rot = comp.body.rotation();
-
                     const screenX = pos.x * this.scale + this.offsetX;
                     const screenY = -pos.y * this.scale + this.offsetY;
 
                     ctx.save();
                     ctx.translate(screenX, screenY);
                     ctx.rotate(-rot);
-
-                    // Component body
                     ctx.fillStyle = comp.color;
-                    ctx.fillRect(
-                        -comp.width * this.scale / 2,
-                        -comp.height * this.scale / 2,
-                        comp.width * this.scale,
-                        comp.height * this.scale
-                    );
-
-                    // Border
+                    ctx.fillRect(-comp.width * this.scale / 2, -comp.height * this.scale / 2, comp.width * this.scale, comp.height * this.scale);
                     ctx.strokeStyle = 'rgba(0,0,0,0.5)';
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(
-                        -comp.width * this.scale / 2,
-                        -comp.height * this.scale / 2,
-                        comp.width * this.scale,
-                        comp.height * this.scale
-                    );
-
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(-comp.width * this.scale / 2, -comp.height * this.scale / 2, comp.width * this.scale, comp.height * this.scale);
                     ctx.restore();
+                }
+
+                // Draw Preview
+                if (this.selectedTool !== 'simulate' && this.selectedTool !== 'delete' && this.selectedTool !== 'connection') {
+                    const config = COMPONENTS[this.selectedTool];
+                    if (config) {
+                        let physX = (this.mousePos.x - this.offsetX) / this.scale;
+                        let physY = -(this.mousePos.y - this.offsetY) / this.scale;
+                        physX = this.snapToGrid(physX);
+                        physY = this.snapToGrid(physY);
+
+                        const screenX = physX * this.scale + this.offsetX;
+                        const screenY = -physY * this.scale + this.offsetY;
+
+                        ctx.save();
+                        ctx.translate(screenX, screenY);
+                        ctx.rotate(-this.rotation);
+                        ctx.globalAlpha = 0.4;
+                        ctx.fillStyle = config.color;
+                        ctx.fillRect(-config.width * this.scale / 2, -config.height * this.scale / 2, config.width * this.scale, config.height * this.scale);
+                        ctx.strokeStyle = '#64ffda';
+                        ctx.lineWidth = 2;
+                        ctx.strokeRect(-config.width * this.scale / 2, -config.height * this.scale / 2, config.width * this.scale, config.height * this.scale);
+                        ctx.restore();
+                    }
                 }
             }
 
             loop(time = 0) {
-                // FPS calculation
                 this.frameCount++;
                 if (time - this.fpsTime >= 1000) {
                     document.getElementById('fps').textContent = this.frameCount;
                     this.frameCount = 0;
                     this.fpsTime = time;
                 }
-
                 this.step();
                 this.render();
-
                 requestAnimationFrame((t) => this.loop(t));
             }
         }

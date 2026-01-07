@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>First Friday Flyer</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 8.5in;
+            height: 11in;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            border: 20px solid #10B981;
+            padding: 40px;
+            width: 7in;
+            height: 9.5in;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #10B981;
+            margin-top: 10px;
+        }
+
+        .qr-box {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        img {
+            width: 300px;
+            height: 300px;
+            image-rendering: pixelated;
+            /* Crisp QR */
+        }
+
+        .steps {
+            text-align: left;
+            font-size: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #10B981;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>BORED?</h1>
+            <h2>Turn Time Into Money.</h2>
+        </div>
+
+        <div class="qr-box">
+            <!-- Ensure this path works relative to were this file is opened, or instruct user to move it -->
+            <img src="qr_codes/first_friday_join.png" alt="Scan to Join">
+        </div>
+
+        <div class="steps">
+            1. Scan the Code<br>
+            2. Help a neighbor<br>
+            3. Earn <span class="highlight">Abundance Token</span><br>
+            4. Spend at <span class="highlight">Rudy's Hot Dogs</span>
+        </div>
+
+        <div class="footer">
+            No Banks. No Fees. You Own It.<br>
+            <strong>ark-os.local</strong>
+        </div>
+    </div>
+</body>
+
+</html>

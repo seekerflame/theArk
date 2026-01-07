@@ -1,178 +1,76 @@
-# JULES MISSION: Governance UI Components
+# JULES MISSION: Governance & Justice Hub (The Unified UI)
 
 **Priority**: 🔴 CRITICAL  
-**ETA**: 2-3 days  
-**Context**: Anti-dystopia architecture implementation
+**Context**: User flagged "Hydra Problem" (too many disparate apps).  
+**Goal**: Consolidate `verifier.html`, Reporting, and Appeals into a single **Community Justice Hub**.
 
 ---
 
-## MISSION 1: Community Reporting System
+## MISSION: Unify and Modernize
 
-### Goal
+We have a legacy `verifier.html` that user likes, but it points to old APIs (`/api/graph`, `/api/verify`). We need to upgrade it to use the new `api/moderation.py` and `api/economy.py` endpoints, and merge it with the new Reporting/Appeals features.
 
-Build a reporting flow where users can flag content for review.
+## 1. The Justice Hub (`web/justice.html`)
 
-### Requirements
+Create a main "Justice" dashboard that serves as the entry point.
 
-1. **Report Button**: One-tap flag on any content
-2. **Cost**: 0.1 AT to report (refunded if upheld)
-3. **Categories**: Violence, Fraud, Spam, Other
-4. **Queue**: Reports go to oracle review queue
-5. **Status**: Reporter sees outcome (Action Taken / No Action)
+**Tabs:**
 
-### Files to Create
+1. **Verification Station** (Upgraded `verifier.html`) - For Oracles
+2. **Report Center** (New) - For Users to report/view status
+3. **Transparency Log** (New) - Public feed
+4. **Appeals Court** (New) - For Jurors
 
-```
-web/
-├── report.html         # Report submission modal
-├── css/report.css      # Styling
-api/
-├── report.py           # Backend endpoints
-```
+## 2. Upgrade Verification Station
 
-### API Endpoints
+**Current State**: `verifier.html` exists but fetchs from `/api/graph`.  
+**New Requirements**:
 
-- `POST /api/report/submit` - Submit a report
-- `GET /api/report/status/<report_id>` - Check report status
-- `GET /api/oracle/queue` - Oracle sees pending reports
+- fetch from `/api/verification/pending` (from `api/economy.py`)
+- fetch from `/api/moderation/queue` (from `api/moderation.py`)
+- combine these into one "Inbox" for the oracle.
 
-### UI/UX Requirements
+**Action**: Refactor `verifier.html` code into a component `web/components/verification_inbox.js` and embed it in the Justice Hub.
 
-- Report in <3 clicks
-- Show full context to oracle
-- Confirm action with costs displayed
+## 3. Reporting UI (New)
 
----
+- **Modal**: "Report This Content"
+- **API**: `POST /api/moderation/report`
+- **UX**: Simple, fast, shows cost (0.1 AT).
 
-## MISSION 2: Appeals Dashboard
+## 4. Transparency Log (New)
 
-### Goal
-
-Build system where banned users can appeal to community court.
-
-### Flow
-
-```
-1. User banned → Sees "Appeal" button
-2. User submits appeal with evidence
-3. 9 random users selected as "Jury"
-4. Each votes: Uphold / Overturn (anonymous)
-5. 7/9 required to overturn
-6. Result logged to transparency
-```
-
-### Requirements
-
-1. **Jury Selection**: Random from users with rep >50
-2. **Voting Period**: 48 hours
-3. **Anonymity**: Jury sees case, not each other's votes
-4. **Compensation**: False ban = 50 AT from treasury
-
-### Files to Create
-
-```
-web/
-├── appeals.html        # Appeals submission page
-├── jury.html           # Jury voting interface
-├── css/appeals.css     # Styling
-api/
-├── appeals.py          # Backend logic
-core/
-├── community_court.py  # Jury selection, voting
-```
-
-### API Endpoints
-
-- `POST /api/appeal/submit` - Submit appeal
-- `GET /api/appeal/jury/<appeal_id>` - Get jury panel
-- `POST /api/appeal/vote` - Jury member votes
-- `GET /api/appeal/result/<appeal_id>` - Check result
+- **View**: Infinite scroll list of bans/actions
+- **API**: `GET /api/moderation/log`
 
 ---
 
-## MISSION 3: Oracle Queue View
+## FILES TO MODIFY/CREATE
 
-### Goal
-
-Dashboard for oracles to review pending reports/verifications.
-
-### Requirements
-
-1. List all pending reports assigned to this oracle
-2. Show full content + context
-3. Quick action buttons: Approve / Reject / Escalate
-4. Track oracle's accuracy score
-5. Show audit status (is meta-oracle reviewing me?)
-
-### Files to Create
-
-```
-web/
-├── oracle_queue.html   # Oracle dashboard
-├── css/oracle.css      # Styling
-```
+| File | Status | Action |
+|------|--------|--------|
+| `web/justice.html` | NEW | Main container (Tabs + Nav) |
+| `web/verifier.html` | **DEPRECATE** | Move logic to `web/justice.html` tab |
+| `web/css/justice.css`| NEW | Unified styling |
+| `web/components/oracle_inbox.js` | NEW | The "Pending Verifications" logic |
+| `web/components/transparency.js` | NEW | The Log viewer |
 
 ---
 
-## MISSION 4: Transparency Log Viewer
+## API MAP (The Source of Truth)
 
-### Goal
-
-Public page showing all moderation actions.
-
-### Requirements
-
-1. Table of all bans/warnings/appeals
-2. Filterable by: action type, oracle, date
-3. Link to appeal for each action
-4. No user PII visible (pseudonymous IDs only)
-
-### Files to Create
-
-```
-web/
-├── transparency.html   # Public log viewer
-```
+- **Pending Verifications**: `GET /api/verification/pending` (requires Auth)
+- **Moderation Queue**: `GET /api/moderation/queue` (requires Auth + Oracle Role)
+- **Submit Verification**: `POST /api/verification/submit`
+- **Public Log**: `GET /api/moderation/log`
 
 ---
 
-## DESIGN REQUIREMENTS
+## EXECUTION ORDER
 
-### Visual Style
+1. **Create `web/justice.html`** skeleton.
+2. **Port `verifier.html` logic** into the "Oracle" tab of Justice Hub.
+3. **Wire up** the new API endpoints.
+4. **Delete/Redirect** old `verifier.html` to `justice.html` to kill the Hydra.
 
-- Match existing Pip-Boy aesthetic (green/blue gradient, dark bg)
-- Use existing `style.css` color scheme
-- Mobile-first responsive design
-
-### UX Principles
-
-- Maximum 3 clicks for any action
-- Clear feedback on success/failure
-- Loading states for async operations
-- Error messages human-readable
-
----
-
-## SUCCESS CRITERIA
-
-| Component | Must Have | Nice to Have |
-|-----------|-----------|--------------|
-| Reporting | <3 click submit | Attach evidence |
-| Appeals | 48h vote window | Real-time vote count |
-| Oracle Queue | Full context | Bulk actions |
-| Transparency | Public feed | RSS/API access |
-
----
-
-## NOTES FOR JULES
-
-1. **Backend already exists in `core/`** - You're building UI on top
-2. **Auth uses JWT** - `get_auth_user()` available in handlers
-3. **Ledger is append-only** - All actions become permanent record
-4. **Test locally** at `http://localhost:3000`
-
-**Start with Mission 1 (Reporting). That unblocks the rest.**
-
----
-
-*Advance the mission.* 🚀
+**"One System. One Interface. No Hydra."** 🛡️

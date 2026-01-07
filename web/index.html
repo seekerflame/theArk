@@ -22,6 +22,7 @@
     <script src="mobility_module.js"></script>
     <script src="pipboy_enhancements.js"></script>
     <script src="admin_deck.js"></script>
+    <script type="module" src="components/focus.js"></script>
 </head>
 
 <body>
@@ -197,6 +198,43 @@
                     </div>
                 </div>
 
+                <!-- VIEW: FOCUS (Deep Work) -->
+                <div id="view-focus" class="app-view" style="display: none;">
+                    <div class="pip-grid-2">
+                        <div class="pip-box" style="text-align: center; border: 3px solid var(--pip-green);">
+                            <h2 style="font-size: 2rem; margin: 0;">MONK MODE</h2>
+                            <div id="focus-progress-container"
+                                style="position: relative; width: 150px; height: 150px; margin: 20px auto;">
+                                <div id="focus-timer"
+                                    style="font-size: 3rem; font-weight: bold; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                    25:00</div>
+                                <svg width="150" height="150">
+                                    <circle cx="75" cy="75" r="70" fill="none" stroke="var(--pip-dim)"
+                                        stroke-width="10" />
+                                    <circle id="focus-progress-circle" cx="75" cy="75" r="70" fill="none"
+                                        stroke="var(--pip-green)" stroke-width="10" stroke-dasharray="440"
+                                        stroke-dashoffset="440" transform="rotate(-90 75 75)"
+                                        style="transition: stroke-dashoffset 1s linear;" />
+                                </svg>
+                            </div>
+                            <div id="focus-status" style="font-size: 1.5rem; color: var(--pip-green);">💤 IDLE</div>
+                        </div>
+                        <div class="pip-box">
+                            <h3 style="margin-top:0;">CONTROL</h3>
+                            <div class="pip-grid-2" style="gap: 10px;">
+                                <button class="btn-pip" onclick="FocusMode.start(25)">25 MIN</button>
+                                <button class="btn-pip" onclick="FocusMode.start(60)">60 MIN</button>
+                                <button class="btn-pip"
+                                    style="grid-column: span 2; border-color: #ff5555; color: #ff5555;"
+                                    onclick="FocusMode.stop()">ABORT SESSION</button>
+                            </div>
+                            <h3 style="margin-top: 20px;">QUOTES</h3>
+                            <div id="focus-quote" style="font-style: italic; color: var(--pip-dim);">"Small steps make
+                                big changes."</div>
+                        </div>
+                    </div>
+                </div>
+
             </div> <!-- End Screen Content -->
         </div> <!-- End CRT Screen -->
 
@@ -206,6 +244,7 @@
             <button class="pip-tab" onclick="switchPipTab('inv')">INV</button>
             <button class="pip-tab" onclick="switchPipTab('data')">DATA</button>
             <button class="pip-tab" onclick="switchPipTab('map')">MAP</button>
+            <button class="pip-tab" onclick="switchPipTab('focus')">FOCUS</button>
             <button class="pip-tab" onclick="switchPipTab('radio')">RADIO</button>
         </div>
 

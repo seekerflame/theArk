@@ -7,6 +7,7 @@ import logging
 import threading
 
 # Core Modules
+from core.config import Config
 from core.ledger import VillageLedger
 from core.identity import IdentityManager
 from core.sensors import SensorRegistry
@@ -21,6 +22,7 @@ from core.inventory import InventorySystem
 from core.fiat_bridge import FiatBridge, register_fiat_routes
 from core.party_quests import PartyQuestSystem
 from core.harvest_marketplace import HarvestMarketplace
+from core.governance import GovernanceEngine
 
 
 # API Modules
@@ -34,14 +36,15 @@ from api.quests import register_quest_routes
 from api.treasury import register_treasury_routes
 from api.justice import register_justice_routes
 from api.roles import register_role_routes
+from api.moderation import register_moderation_routes
 
 
 # Bot Modules
 from core.treasury_bot import TreasuryBot
 
 # Configuration
-PORT = int(os.environ.get('PORT', 3000))
-JWT_SECRET = os.environ.get('JWT_SECRET', 'dev_only_secret_change_in_production')
+PORT = int(Config.get('PORT', 3000))
+JWT_SECRET = Config.get_jwt_secret()
 DB_FILE = os.path.join(os.getcwd(), 'ledger', 'village_ledger.db')
 WEB_DIR = os.path.join(os.getcwd(), 'web')
 USERS_FILE = os.path.join('core', 'users.json')
@@ -108,6 +111,14 @@ try:
     
     logger.info("🎉 Party & Harvest API endpoints registered")
     logger.info("🧬 Evolution Engine loaded (Perpetual Loop active)")
+    
+    # Governance & Moderation
+    from core.governance import GovernanceEngine
+    from api.moderation import register_moderation_routes
+    
+    governance = GovernanceEngine(ledger, identity)
+    register_moderation_routes(router, governance, identity, auth_decorator)
+    logger.info("⚖️ Governance Engine & Moderation API active")
 except ImportError as e:
     logger.warning(f"⚠️  API modules missing: {e}")
 
@@ -126,6 +137,14 @@ try:
     logger.info("🧠 AI Memory System loaded")
 except ImportError:
     logger.warning("⚠️  AI Memory System not available")
+
+# Collaborative Canvas
+try:
+    from api.collab import register_collab_routes
+    register_collab_routes(router)
+    logger.info("🎨 Collaborative Canvas loaded")
+except ImportError as e:
+    logger.warning(f"⚠️  Collab API missing: {e}")
 
 # Rate Limiting (simple in-memory, resets on restart)
 rate_limit_store = {}
@@ -237,6 +256,7 @@ if __name__ == '__main__':
     syncer.start()
     steward.start()
     treasury.start()
+    socketserver.TCPServer.allow_reuse_address = True
     with socketserver.ThreadingTCPServer(("", PORT), ArkHandler) as httpd:
         logger.info(f"Ark OS Modular Core v1.2 ONLINE at port {PORT}")
         httpd.serve_forever()

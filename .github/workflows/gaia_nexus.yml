@@ -1,0 +1,28 @@
+name: GAIA Nexus Automation Loop
+
+on:
+  schedule:
+    # Runs every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  run-gaia:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: pip install requests
+        
+      - name: Run GAIA Nexus
+        env:
+          ARK_API_URL: https://ark-os-free.onrender.com
+          AI_AGENT_TOKEN: ${{ secrets.AI_AGENT_TOKEN }}
+        run: python3 ai_orchestrator.py

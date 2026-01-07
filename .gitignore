@@ -9,8 +9,10 @@ __pycache__/
 # Environment & Secrets
 .env
 .env.*
+!.env.template
 *.key
 *.pem
+*.macaroon
 *secret*
 *credential*
 config/secrets.json

@@ -1,14 +1,10 @@
-import time
-import json
-import random
-import http.client
-import uuid
+from core.config import Config
 
 # Ark OS Hardware Simulation
 # Emulates Solar, Water, and Motion sensors providing "Civilization Proofs"
 
-SERVER = "localhost:3000"
-TOKEN = "GAIA_PROTO_CENTENNIAL_2025" # Simulated internal bypass or we fetch one
+SERVER = Config.get('SERVER', "localhost:3000")
+TOKEN = Config.get('HARDWARE_TOKEN', "GAIA_PROTO_SIM_2026")
 
 def post_hardware_event(sensor_id, s_type, value):
     try:
