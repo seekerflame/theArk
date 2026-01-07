@@ -9,7 +9,7 @@ def register_hardware_routes(router, sensors, requires_auth):
         meta = p.get('meta', {})
 
         if not s_id or not s_type:
-            return h.send_error("Missing sensor 'id' or 'type'")
+            return h.send_json_error("Missing sensor 'id' or 'type'")
 
         sensor = sensors.register(s_id, s_type, meta)
         h.send_json({"status": "registered", "sensor": sensor})
@@ -25,7 +25,7 @@ def register_hardware_routes(router, sensors, requires_auth):
         value = p.get('value')
 
         if not s_id or value is None:
-            return h.send_error("Missing 'id' or 'value'")
+            return h.send_json_error("Missing 'id' or 'value'")
 
         # Optional: update type/meta on fly
         s_type = p.get('type', 'unknown')

@@ -16,15 +16,15 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     def h_certify_role(h, user, p):
         """Oracle certifies a user for a specific role/skill."""
         if user['role'] != 'ADMIN' and 'ORACLE' not in identity.users.get(user['sub'], {}).get('roles', []):
-            return h.send_error("Only Oracles or Admin can certify roles", status=403)
+            return h.send_json_error("Only Oracles or Admin can certify roles", status=403)
             
         target_user = p.get('username')
         role = p.get('role', '').upper()
         if not target_user or not role:
-            return h.send_error("Username and Role required")
+            return h.send_json_error("Username and Role required")
             
         if target_user not in identity.users:
-            return h.send_error("Target user not found")
+            return h.send_json_error("Target user not found")
             
         # Update user metadata
         u_data = identity.users[target_user]
@@ -57,12 +57,12 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     def h_define_role(h, user, p):
         """Oracle defines a new role multiplier on the ledger."""
         if user['role'] != 'ADMIN' and 'ORACLE' not in identity.users.get(user['sub'], {}).get('roles', []):
-            return h.send_error("Only Oracles or Admin can define roles", status=403)
+            return h.send_json_error("Only Oracles or Admin can define roles", status=403)
             
         role_name = p.get('role', '').upper()
         multiplier = float(p.get('multiplier', 1.0))
         
-        if not role_name: return h.send_error("Role name required")
+        if not role_name: return h.send_json_error("Role name required")
         
         ledger.add_block('ROLE_DEFINITION', {
             "role": role_name,
@@ -101,9 +101,9 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
                 selected = random.choice(prompts)
                 h.send_json(selected)
             else:
-                h.send_error("No prompts available")
+                h.send_json_error("No prompts available")
         except Exception as e:
-            h.send_error(f"Error loading prompts: {str(e)}")
+            h.send_json_error(f"Error loading prompts: {str(e)}")
 
     @router.post('/api/mint')
     @requires_auth
@@ -125,7 +125,7 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
         if block_hash: 
             identity.add_verified_hours(user['sub'], hours) # Progress tiers
             h.send_json({"hash": block_hash, "reward": reward, "hm": hm})
-        else: h.send_error("Failed to mint block")
+        else: h.send_json_error("Failed to mint block")
 
 
 
@@ -150,7 +150,7 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
         # 1. Justice Audit
         is_valid, score, reason = justice.audit_code_contribution(user['sub'], lines, diff_content)
         if not is_valid:
-            return h.send_error(f"Justice Audit Failed: {reason} (Score: {score:.2f})")
+            return h.send_json_error(f"Justice Audit Failed: {reason} (Score: {score:.2f})")
         
         # 2. Reward Calculation with HM Integration
         multiplier = COMPLEXITY.get(complexity_level, 1.0)
@@ -176,7 +176,7 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
             identity.add_verified_hours(user['sub'], lines / 100.0)
             h.send_json({"hash": block_hash, "reward": reward, "audit_score": score, "hm": hm})
         else: 
-            h.send_error("Failed to mint code block")
+            h.send_json_error("Failed to mint code block")
 
 
     @router.post('/api/transfer')
@@ -184,7 +184,7 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     def h_transfer(h, user, p):
         sender = user['sub']
         recv, amt = p.get('receiver'), float(p.get('amount', 0))
-        if ledger.get_balance(sender) < amt: return h.send_error("Insufficient life wealth (AT)")
+        if ledger.get_balance(sender) < amt: return h.send_json_error("Insufficient life wealth (AT)")
         h_res = ledger.add_block('TX', {'sender': sender, 'receiver': recv, 'amount': amt, 'timestamp': time.time()})
         h.send_json({"hash": h_res})
 
@@ -201,7 +201,7 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     @router.post('/api/purchase')
     def h_purchase(h, p):
         u = h.get_auth_user()
-        if not u: return h.send_error("Auth Required", status=401)
+        if not u: return h.send_json_error("Auth Required", status=401)
         sender = u['sub']
         item_id = p.get('item_id')
         prices = {
@@ -212,8 +212,8 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
             "ose_sticker": 10
         }
         price = prices.get(item_id)
-        if not price: return h.send_error("Item not found")
-        if ledger.get_balance(sender) < price: return h.send_error("Insufficient AT")
+        if not price: return h.send_json_error("Item not found")
+        if ledger.get_balance(sender) < price: return h.send_json_error("Insufficient AT")
         
         h_res = ledger.add_block('PURCHASE', {'buyer': sender, 'item': item_id, 'amount': price, 'timestamp': time.time()})
         h.send_json({"hash": h_res, "status": "success"})
@@ -225,19 +225,19 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     def h_post_quest(h, user, p):
         """Post a new community quest."""
         if not quest_system:
-            return h.send_error("Quest system not available")
+            return h.send_json_error("Quest system not available")
         
         success, result = quest_system.post_quest(user['sub'], p)
         if success:
             h.send_json({"quest_id": result, "status": "posted"})
         else:
-            h.send_error(result)
+            h.send_json_error(result)
     
     @router.get('/api/quests/available')
     def h_available_quests(h):
         """Get all available quests (optionally filtered)."""
         if not quest_system:
-            return h.send_error("Quest system not available")
+            return h.send_json_error("Quest system not available")
         
         # TODO: Parse query params for filters
         user = h.get_auth_user()
@@ -251,23 +251,23 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     def h_claim_quest(h, user, p):
         """Claim a quest to work on it."""
         if not quest_system:
-            return h.send_error("Quest system not available")
+            return h.send_json_error("Quest system not available")
         
         quest_id = p.get('quest_id')
         if not quest_id:
-            return h.send_error("quest_id required")
+            return h.send_json_error("quest_id required")
         
         success, message = quest_system.claim_quest(quest_id, user['sub'])
         if success:
             h.send_json({"status": "claimed", "message": message})
         else:
-            h.send_error(message)
+            h.send_json_error(message)
     
     @router.get('/api/quests/detail')
     def h_quest_detail(h):
         """Get details of a specific quest."""
         if not quest_system:
-            return h.send_error("Quest system not available")
+            return h.send_json_error("Quest system not available")
         
         # Parse query param
         from urllib.parse import parse_qs, urlparse
@@ -275,13 +275,13 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
         quest_id = query.get('quest_id', [None])[0]
         
         if not quest_id:
-            return h.send_error("quest_id required")
+            return h.send_json_error("quest_id required")
         
         quest = quest_system.get_quest(quest_id)
         if quest:
             h.send_json(quest)
         else:
-            h.send_error("Quest not found", status=404)
+            h.send_json_error("Quest not found", status=404)
     
     # === VERIFICATION SYSTEM ===
     
@@ -290,14 +290,14 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     def h_request_verification(h, user, p):
         """Request 3-witness verification after completing a quest."""
         if not verification:
-            return h.send_error("Verification system not available")
+            return h.send_json_error("Verification system not available")
         
         quest_id = p.get('quest_id')
         witnesses = p.get('witnesses', [])
         proof = p.get('proof', {})
         
         if not quest_id or not witnesses or not proof:
-            return h.send_error("quest_id, witnesses, and proof required")
+            return h.send_json_error("quest_id, witnesses, and proof required")
         
         success, result = verification.request_verification(
             quest_id, user['sub'], witnesses, proof
@@ -310,21 +310,21 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
                 "message": "Verification request sent to witnesses"
             })
         else:
-            h.send_error(result)
+            h.send_json_error(result)
     
     @router.post('/api/verification/submit')
     @requires_auth
     def h_submit_verification(h, user, p):
         """Witness submits their verification decision."""
         if not verification:
-            return h.send_error("Verification system not available")
+            return h.send_json_error("Verification system not available")
         
         verification_id = p.get('verification_id')
         approved = p.get('approved', False)
         note = p.get('note', '')
         
         if not verification_id:
-            return h.send_error("verification_id required")
+            return h.send_json_error("verification_id required")
         
         success, message = verification.submit_verification(
             verification_id, user['sub'], approved, note
@@ -333,14 +333,14 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
         if success:
             h.send_json({"status": "recorded", "message": message})
         else:
-            h.send_error(message)
+            h.send_json_error(message)
     
     @router.get('/api/verification/pending')
     @requires_auth
     def h_pending_verifications(h, user, p):
         """Get all pending verifications where user is a witness."""
         if not verification:
-            return h.send_error("Verification system not available")
+            return h.send_json_error("Verification system not available")
         
         pending = verification.get_pending_verifications_for_user(user['sub'])
         h.send_json({"verifications": pending, "count": len(pending)})

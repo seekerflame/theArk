@@ -50,13 +50,13 @@ def register_steward_routes(router, ledger, energy, requires_auth):
                 "raw": response_text
             })
         except Exception as e:
-            h.send_error(f"Steward Brain Error: {str(e)}")
+            h.send_json_error(f"Steward Brain Error: {str(e)}")
 
     @router.post('/api/mission/propose')
     def h_mission_propose(h, p):
         title = p.get('title')
         desc = p.get('description', p.get('desc'))
-        if not title: return h.send_error("Mission title required")
+        if not title: return h.send_json_error("Mission title required")
         
         data = {
             "mission_id": f"mission_{int(time.time())}",

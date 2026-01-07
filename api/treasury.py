@@ -15,7 +15,7 @@ def register_treasury_routes(router, treasury_bot, auth_decorator):
         """Updates the Treasury Bot configuration."""
         # Only admin can update config (simple check)
         if user.get('role') != 'admin':
-            return h.send_error("Unauthorized", status=403)
+            return h.send_json_error("Unauthorized", status=403)
             
         # Update config logic
         new_config = p
@@ -27,4 +27,4 @@ def register_treasury_routes(router, treasury_bot, auth_decorator):
             # Potentially restart/refresh bot
             h.send_json({"status": "Config updated. Restart required for some changes."})
         except Exception as e:
-            h.send_error(f"Failed to update config: {str(e)}")
+            h.send_json_error(f"Failed to update config: {str(e)}")

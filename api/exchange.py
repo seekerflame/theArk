@@ -20,7 +20,7 @@ def register_exchange_routes(router, ledger, requires_auth):
             amount = float(params.get('amount', [1.0])[0])
             h.send_json(bridge.get_quote(amount))
         except ValueError:
-            h.send_error("Invalid amount")
+            h.send_json_error("Invalid amount")
 
     @router.post('/api/exchange/buy')
     @requires_auth
@@ -31,7 +31,7 @@ def register_exchange_routes(router, ledger, requires_auth):
             amount = float(p.get('amount'))
             if amount <= 0: raise ValueError
         except:
-            return h.send_error("Invalid amount")
+            return h.send_json_error("Invalid amount")
 
         username = user['username']
 
@@ -39,7 +39,7 @@ def register_exchange_routes(router, ledger, requires_auth):
         if result:
             h.send_json(result)
         else:
-            h.send_error("Failed to create invoice (Node offline?)", status=503)
+            h.send_json_error("Failed to create invoice (Node offline?)", status=503)
 
     @router.get('/api/exchange/status')
     @requires_auth
@@ -60,12 +60,12 @@ def register_exchange_routes(router, ledger, requires_auth):
         amount_str = params.get('amount', [None])[0]
 
         if not p_hash or not amount_str:
-            return h.send_error("Missing hash or amount")
+            return h.send_json_error("Missing hash or amount")
 
         try:
             amount = float(amount_str)
         except:
-            return h.send_error("Invalid amount")
+            return h.send_json_error("Invalid amount")
 
         # Execute Swap Logic (Checks LND, then updates Ledger)
         result = bridge.execute_swap(p_hash, ledger, user['username'], amount)

@@ -24,7 +24,7 @@ def register_role_routes(router, ledger, identity, requires_auth):
                 })
             h.send_json(roles)
         except ImportError:
-            h.send_error("Role system not available", status=500)
+            h.send_json_error("Role system not available", status=500)
     
     @router.get('/api/roles/my')
     @requires_auth

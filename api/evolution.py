@@ -106,7 +106,7 @@ def register_evolution_routes(router, evolution, auth_decorator):
         if success:
             h.send_json({"status": "success", "proposal_id": result})
         else:
-            h.send_error(result)
+            h.send_json_error(result)
             
     @router.post('/api/evolution/review')
     @auth_decorator
@@ -118,4 +118,4 @@ def register_evolution_routes(router, evolution, auth_decorator):
         if success:
             h.send_json({"status": "success", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)

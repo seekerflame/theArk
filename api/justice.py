@@ -10,13 +10,13 @@ def register_justice_routes(router, ledger, justice, requires_auth):
         reason = p.get('reason')
         
         if not block_hash or not reason:
-            return h.send_error("Block Hash and Reason required")
+            return h.send_json_error("Block Hash and Reason required")
             
         success, msg = justice.dispute_block(block_hash, user['sub'], reason)
         if success:
             h.send_json({"status": "disputed", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)
 
     @router.post('/api/justice/resolve')
     @requires_auth
@@ -25,20 +25,20 @@ def register_justice_routes(router, ledger, justice, requires_auth):
         # Simple permission check for now
         u_roles = justice.identity.users.get(user['sub'], {}).get('roles', [])
         if user['role'] != 'ADMIN' and 'ORACLE' not in u_roles:
-            return h.send_error("Only Oracles can resolve disputes", status=403)
+            return h.send_json_error("Only Oracles can resolve disputes", status=403)
             
         dispute_hash = p.get('dispute_hash')
         resolution = p.get('resolution') # VALID | MISTAKE | MALICE
         findings = p.get('findings')
         
         if not dispute_hash or not resolution:
-            return h.send_error("Dispute Hash and Resolution required")
+            return h.send_json_error("Dispute Hash and Resolution required")
             
         success, msg = justice.resolve_dispute(dispute_hash, resolution, user['sub'], findings)
         if success:
             h.send_json({"status": "resolved", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)
 
     @router.get('/api/justice/grade')
     @requires_auth

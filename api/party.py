@@ -63,7 +63,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if success:
             h.send_json({"status": "success", "party_id": result})
         else:
-            h.send_error(result)
+            h.send_json_error(result)
     
     @router.post('/api/party/join')
     @auth_decorator
@@ -77,7 +77,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if success:
             h.send_json({"status": "success", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)
     
     @router.post('/api/party/start')
     @auth_decorator
@@ -88,7 +88,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if success:
             h.send_json({"status": "success", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)
     
     @router.post('/api/party/complete')
     @auth_decorator
@@ -100,7 +100,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if success:
             h.send_json({"status": "success", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)
     
     @router.post('/api/party/verify')
     @auth_decorator
@@ -112,7 +112,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if success:
             h.send_json({"status": "success", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)
     
     @router.get('/api/child/wallet')
     @auth_decorator
@@ -123,7 +123,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if info:
             h.send_json(info)
         else:
-            h.send_error("Child wallet not found")
+            h.send_json_error("Child wallet not found")
     
     # ========== HARVEST MARKETPLACE ==========
     
@@ -148,7 +148,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if success:
             h.send_json({"status": "success", "listing_id": result})
         else:
-            h.send_error(result)
+            h.send_json_error(result)
     
     @router.post('/api/harvest/buy')
     @auth_decorator
@@ -159,7 +159,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if success:
             h.send_json({"status": "success", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)
     
     @router.get('/api/harvest/my')
     @auth_decorator
@@ -177,7 +177,7 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if success:
             h.send_json({"status": "success", "message": msg})
         else:
-            h.send_error(msg)
+            h.send_json_error(msg)
     
     @router.get('/api/harvest/provenance')
     def h_harvest_provenance(h, p):
@@ -187,4 +187,4 @@ def register_party_routes(router, party_quests, harvest, auth_decorator):
         if provenance:
             h.send_json({"provenance": provenance})
         else:
-            h.send_error("Listing not found")
+            h.send_json_error("Listing not found")

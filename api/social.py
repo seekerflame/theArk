@@ -15,7 +15,7 @@ def register_social_routes(router, ledger, requires_auth):
     @requires_auth
     def h_post_message(h, user, p):
         content = p.get('content')
-        if not content: return h.send_error("Message content required")
+        if not content: return h.send_json_error("Message content required")
         channel = p.get('channel', 'general')
         data = {'sender': user['sub'], 'content': content, 'channel': channel, 'timestamp': time.time()}
         block_hash = ledger.add_block('MESSAGE', data)
@@ -46,7 +46,7 @@ def register_social_routes(router, ledger, requires_auth):
     def h_quest_create(h, user, p):
         title = p.get('title')
         reward = p.get('bounty_at', 10)
-        if not title: return h.send_error("Quest must have a title")
+        if not title: return h.send_json_error("Quest must have a title")
         q_id = f"quest_{int(time.time())}"
         block_hash = ledger.add_block('QUEST', {
             'quest_id': q_id, 'title': title, 'reward': reward, 

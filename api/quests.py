@@ -45,7 +45,7 @@ def register_quest_routes(router, ledger, identity, requires_auth):
     def h_my_quests(h):
         """List quests I posted or am working on"""
         user = h.get_auth_user()
-        if not user: return h.send_error("Auth Required", status=401)
+        if not user: return h.send_json_error("Auth Required", status=401)
         username = user['sub']
         
         my_quests = {'posted': [], 'working': [], 'completed': []}
@@ -90,9 +90,9 @@ def register_quest_routes(router, ledger, identity, requires_auth):
         skills_required = p.get('skills', [])
         
         if not title:
-            return h.send_error("Quest must have a title")
+            return h.send_json_error("Quest must have a title")
         if offer_type not in ['FIXED', 'ROLE_MULTIPLIED', 'BARTER', 'NEGOTIATE']:
-            return h.send_error("Invalid offer_type. Use: FIXED, ROLE_MULTIPLIED, BARTER, NEGOTIATE")
+            return h.send_json_error("Invalid offer_type. Use: FIXED, ROLE_MULTIPLIED, BARTER, NEGOTIATE")
         
         quest_id = f"quest_{int(time.time())}_{user['sub'][:4]}"
         quest_data = {
@@ -129,15 +129,15 @@ def register_quest_routes(router, ledger, identity, requires_auth):
         message = p.get('message', '')
         
         if not quest_id:
-            return h.send_error("quest_id required")
+            return h.send_json_error("quest_id required")
         
         # Find the quest
         quest = _get_quest_state(ledger, quest_id)
         if not quest:
-            return h.send_error("Quest not found", status=404)
+            return h.send_json_error("Quest not found", status=404)
         
         if quest.get('status') != 'OPEN':
-            return h.send_error("Quest not available")
+            return h.send_json_error("Quest not available")
         offer_type = quest.get('offer_type', 'FIXED')
         
         if offer_type == 'FIXED':
@@ -211,9 +211,9 @@ def register_quest_routes(router, ledger, identity, requires_auth):
         
         quest = _get_quest_state(ledger, quest_id)
         if not quest:
-            return h.send_error("Quest not found", status=404)
+            return h.send_json_error("Quest not found", status=404)
         if quest.get('owner') != user['sub']:
-            return h.send_error("Only quest owner can respond")
+            return h.send_json_error("Only quest owner can respond")
         
         if action == 'accept':
             # Accept worker's terms
@@ -253,7 +253,7 @@ def register_quest_routes(router, ledger, identity, requires_auth):
             ledger.add_block('QUEST_UPDATE', update_data)
             h.send_json({'status': 'counter_sent'})
         else:
-            h.send_error("Invalid action. Use: accept, reject, counter")
+            h.send_json_error("Invalid action. Use: accept, reject, counter")
     
     # =====================
     # SUBMISSION & VALIDATION
@@ -268,11 +268,11 @@ def register_quest_routes(router, ledger, identity, requires_auth):
         
         quest = _get_quest_state(ledger, quest_id)
         if not quest:
-            return h.send_error("Quest not found", status=404)
+            return h.send_json_error("Quest not found", status=404)
         if quest.get('worker') != user['sub']:
-            return h.send_error("Only assigned worker can submit")
+            return h.send_json_error("Only assigned worker can submit")
         if quest.get('status') != 'IN_PROGRESS':
-            return h.send_error("Quest not in progress")
+            return h.send_json_error("Quest not in progress")
         
         proof_data = {
             'quest_id': quest_id,
@@ -298,7 +298,7 @@ def register_quest_routes(router, ledger, identity, requires_auth):
         
         quest = _get_quest_state(ledger, quest_id)
         if not quest:
-            return h.send_error("Quest not found", status=404)
+            return h.send_json_error("Quest not found", status=404)
         
         # Oracle role check: Owner OR certified Oracle can validate
         user_roles = identity.get_user_roles(user['sub'], ledger)
@@ -306,9 +306,9 @@ def register_quest_routes(router, ledger, identity, requires_auth):
         is_owner = quest.get('owner') == user['sub']
         
         if not (is_owner or is_oracle):
-            return h.send_error("Only quest owner or Oracle can validate")
+            return h.send_json_error("Only quest owner or Oracle can validate")
         if quest.get('status') != 'PENDING_VALIDATION':
-            return h.send_error("Quest not pending validation")
+            return h.send_json_error("Quest not pending validation")
         
         if approved:
             # Apply Holistic Multiplier on Validation (Final Check)

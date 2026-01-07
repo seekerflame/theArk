@@ -25,18 +25,18 @@ def register_system_routes(router, ledger, identity, peers, sensors, energy, req
     @router.post('/api/register')
     def h_register(h, p):
         u, pwd = p.get('username'), p.get('password')
-        if not u or not pwd: return h.send_error("Missing username or password")
+        if not u or not pwd: return h.send_json_error("Missing username or password")
         ok, res = identity.register(u, pwd)
         if ok: h.send_json({"token": identity.generate_token(u), "mnemonic": res['mnemonic'], "message": res['message']})
-        else: h.send_error(res)
+        else: h.send_json_error(res)
 
     @router.post('/api/restore')
     def h_restore(h, p):
         u, m, pwd = p.get('username'), p.get('mnemonic'), p.get('password')
-        if not u or not m or not pwd: return h.send_error("Username, Mnemonic, and New Password required")
+        if not u or not m or not pwd: return h.send_json_error("Username, Mnemonic, and New Password required")
         ok, msg = identity.restore(u, m, pwd)
         if ok: h.send_json({"message": msg})
-        else: h.send_error(msg)
+        else: h.send_json_error(msg)
 
     @router.post('/api/login')
     def h_login(h, p):
@@ -56,7 +56,7 @@ def register_system_routes(router, ledger, identity, peers, sensors, energy, req
                     "hm": hm
                 }
             })
-        else: h.send_error("Invalid credentials")
+        else: h.send_json_error("Invalid credentials")
 
 
     @router.get('/api/logs')
@@ -91,7 +91,7 @@ def register_system_routes(router, ledger, identity, peers, sensors, energy, req
         """Returns scrubbed user data for Oracle/Admin visualization."""
         user_roles = identity.users.get(user['sub'], {}).get('roles', [])
         if user['role'] != 'ADMIN' and 'ORACLE' not in user_roles:
-            return h.send_error("Oracle level access required", status=403)
+            return h.send_json_error("Oracle level access required", status=403)
             
         scrubbed = {}
         for username, data in identity.users.items():
@@ -106,14 +106,14 @@ def register_system_routes(router, ledger, identity, peers, sensors, energy, req
     def h_wiki_sync(h, user, p):
         """Triggers the Wiki Sync script (Admins only)"""
         if user['role'] != 'ADMIN':
-            return h.send_error("Admin access required", status=403)
+            return h.send_json_error("Admin access required", status=403)
             
         import subprocess
         try:
             # Run the sync script in a separate process to avoid blocking
             script_path = os.path.join(os.getcwd(), 'wiki', 'wiki_sync.py')
             if not os.path.exists(script_path):
-                return h.send_error(f"Sync script not found at {script_path}")
+                return h.send_json_error(f"Sync script not found at {script_path}")
                 
             # Use sys.executable to ensure we use the same python environment
             import sys
@@ -121,7 +121,7 @@ def register_system_routes(router, ledger, identity, peers, sensors, energy, req
             
             h.send_json({"status": "sync_started", "message": "Wiki synchronization initiated in background"})
         except Exception as e:
-            h.send_error(f"Failed to start sync: {str(e)}")
+            h.send_json_error(f"Failed to start sync: {str(e)}")
 
     @router.get('/api/wiki/status')
     def h_wiki_status(h):
