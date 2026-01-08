@@ -1,0 +1,15 @@
+--- DIAGNOSTIC REPORT ---
+Wed Jan  7 18:40:20 PST 2026
+Checking Python:
+/opt/homebrew/bin/python3
+Checking Processes:
+eternalflame     57999   0.1  0.1 435340512  14512 s012  SN    1:11AM   1:22.03 /opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python server.py
+eternalflame     57630   0.0  0.0 435313744   6752   ??  S     1:10AM   0:01.21 /opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python /Users/eternalflame/.antigravity/extensions/ms-python.python-2025.20.1-universal/python_files/run-jedi-language-server.py
+eternalflame     23582   0.0  0.0 435330480   8144   ??  S     7:48PM   0:00.54 /opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python /Users/eternalflame/.antigravity/extensions/ms-python.python-2025.20.1-universal/python_files/run-jedi-language-server.py
+eternalflame     18695   0.0  0.0 435330896   8096   ??  S     7:17PM   0:00.85 /opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python /Users/eternalflame/.antigravity/extensions/ms-python.python-2025.20.1-universal/python_files/run-jedi-language-server.py
+eternalflame     18671   0.0  0.0 435312304   6368   ??  S     7:17PM   0:00.38 /opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python /Users/eternalflame/.antigravity/extensions/ms-python.python-2025.20.1-universal/python_files/run-jedi-language-server.py
+eternalflame     18650   0.0  0.1 435563952   8832   ??  S     7:17PM   0:05.95 /opt/homebrew/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python /Users/eternalflame/.antigravity/extensions/ms-python.python-2025.20.1-universal/python_files/run-jedi-language-server.py
+Checking Port 3000:
+COMMAND   PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+Python  57999 eternalflame    4u  IPv4 0x5e2b6b235fc5c075      0t0  TCP *:hbci (LISTEN)
+--- END ---

@@ -320,5 +320,17 @@
     "verified_hours": 5.0,
     "safety_grade": 100.0,
     "created_at": 1767580215.6149251
+  },
+  "dagny_lifetest": {
+    "password": "password123",
+    "mnemonic": "build flow hand mint seed path soul gaia value node open grid",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1767850924.802732
   }
 }
