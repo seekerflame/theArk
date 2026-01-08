@@ -138,3 +138,36 @@ class JusticeSteward:
                 
         density = logic_lines / total_lines
         return density
+    def get_trust_level(self, username):
+        """
+        Determines the trust multiplier for a user, accounting for Ghost status.
+        Transparent = 1.0, Ghost = 0.1 (default)
+        """
+        user = self.identity.users.get(username, {})
+        roles = user.get('roles', [])
+        
+        base_trust = user.get('safety_grade', 100.0) / 100.0
+        
+        if 'GHOST' in roles:
+            # Ghost trust is capped and monitored
+            ghost_tier = user.get('ghost_tier', 'FULL_GHOST')
+            # Higher audits for ghosts
+            if ghost_tier == 'FULL_GHOST':
+                return base_trust * 0.1
+            elif ghost_tier == 'SEMI_TRANSPARENT':
+                return base_trust * 0.6
+        
+        return base_trust
+
+    def audit_transaction(self, username, amount):
+        """
+        Specific audit for AT transactions, with Ghost-specific limits.
+        """
+        trust = self.get_trust_level(username)
+        
+        # Ghosts have a 'scam-prevention' cap on unverified transfers
+        if trust < 0.2 and amount > 50:
+            logger.warning(f"🚫 Ghost Transaction Blocked: {username} attempted {amount} AT with low trust.")
+            return False, "Ghost transfer limit exceeded. Increase reputation or transparency."
+            
+        return True, "Transaction authorized."

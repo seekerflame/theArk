@@ -44,7 +44,15 @@ window.renderAdminDeck = function () {
                     <div class="terminal-item"><span>Population</span> <span>1 (Seed)</span></div>
                     <div class="terminal-item"><span>Block Height</span> <span>${window.appState.ledger?.length || 0}</span></div>
                     <div class="terminal-item"><span>Mesh Peers</span> <span>${window.mobilityState?.peers?.length || 0}</span></div>
+                    <div class="terminal-item"><span>Labor Density (AT)</span> <span style="color:var(--pip-green);">$70.00/HR</span></div>
+                    <div class="terminal-item"><span>Abundance Velocity</span> <span style="color:var(--pip-green);">$700.00/HR</span></div>
+                    <div class="terminal-item"><span>Sovereign Title</span> <span style="color:var(--pip-green);">YES (PERPETUAL)</span></div>
+                    <div class="terminal-item"><span>PoP Verification</span> <span style="color:var(--pip-green);">MULTI-SIG / SENSOR</span></div>
+                    <div class="terminal-item"><span>Permanence Index</span> <span style="color:var(--pip-green);">500YR+</span></div>
                     <div class="terminal-item"><span>AI Agent</span> <span style="color:var(--pip-green);">ONLINE</span></div>
+                </div>
+                <div style="margin-top:10px; border-top:1px solid var(--pip-dim); padding-top:10px;">
+                    <a href="#" onclick="window.showSOP('INVERSION_PROTOCOL_001')" style="color:var(--pip-green); font-size:0.8rem; text-decoration:none;">>>> [VIEW INVERSION PROTOCOL]</a>
                 </div>
             </div>
         </div>

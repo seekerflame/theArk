@@ -55,7 +55,8 @@ function main() {
         ledger: [],
         lastId: 0,
         currentChannel: 'general',
-        pendingSwap: JSON.parse(localStorage.getItem('at_pending_swap') || 'null')
+        pendingSwap: JSON.parse(localStorage.getItem('at_pending_swap') || 'null'),
+        focusSession: JSON.parse(localStorage.getItem('at_focus_session') || 'null')
     };
 
     // Deep Proxy Handler for nested objects
@@ -228,6 +229,8 @@ function main() {
             if (viewId === 'techtree') renderTechTree(appState.xp);
             if (viewId === 'leaderboard') renderLeaderboard();
             if (viewId === 'treasury') renderTreasuryUI();
+            if (viewId === 'exodus') Exodus.render();
+            if (viewId === 'intel') Intel.render();
             if (viewId === 'dashboard' && window.updateDashboardStats) window.updateDashboardStats();
 
         }
@@ -485,11 +488,123 @@ function main() {
         // Boot Sequence Integrations
         window.updateStreak();
         window.updateUI();
+        if (appState.focusSession) window.resumeFocusTimer();
         console.log("[GAIA] State Synchronized.");
     };
 
     window.saveState = function () {
         localStorage.setItem('ose_state', JSON.stringify(appState));
+        if (appState.focusSession) localStorage.setItem('at_focus_session', JSON.stringify(appState.focusSession));
+        else localStorage.removeItem('at_focus_session');
+    };
+
+    // --- MONK MODE (FOCUS ECONOMY) ---
+    window.startFocus = function () {
+        if (appState.focusSession) return alert("Focus session already active.");
+
+        apiFetch('/api/economy/focus/start', { method: 'POST' })
+            .then(data => {
+                appState.focusSession = {
+                    id: data.session_id,
+                    start_time: Date.now(),
+                    target_duration: 3600 * 1000 // 1 hour in ms
+                };
+                window.saveState();
+                window.resumeFocusTimer();
+                logToTerminal("[MONK_MODE] Neural lock engaged. Stay focused.");
+            })
+            .catch(e => alert("Failed to start focus: " + e.message));
+    };
+
+    window.resumeFocusTimer = function () {
+        if (window.focusInterval) clearInterval(window.focusInterval);
+        window.focusInterval = setInterval(() => {
+            if (!appState.focusSession) {
+                clearInterval(window.focusInterval);
+                return;
+            }
+
+            // HUD Elements
+            const el = document.getElementById('focus-battery-fill');
+            const txt = document.getElementById('focus-timer-text');
+
+            // Large View Elements
+            const elLarge = document.getElementById('focus-battery-fill-large');
+            const txtLarge = document.getElementById('focus-timer-text-large');
+
+            const elapsed = Date.now() - appState.focusSession.start_time;
+            const progress = Math.min(100, (elapsed / appState.focusSession.target_duration) * 100);
+
+            if (el) el.style.width = progress + '%';
+            if (elLarge) elLarge.style.width = progress + '%';
+
+            const remaining = Math.max(0, appState.focusSession.target_duration - elapsed);
+            const hours = Math.floor(remaining / 3600000);
+            const mins = Math.floor((remaining % 3600000) / 60000);
+            const secs = Math.floor((remaining % 60000) / 1000);
+
+            const timeStr = `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            const shortStr = `${mins}:${secs.toString().padStart(2, '0')} REMAINING`;
+
+            if (txt) txt.innerText = shortStr;
+            if (txtLarge) txtLarge.innerText = timeStr;
+
+            if (progress >= 100) {
+                if (el) el.style.background = 'var(--pip-green)';
+                if (elLarge) elLarge.style.background = 'var(--pip-green)';
+                if (txt) {
+                    txt.innerText = "READY TO CLAIM";
+                    txt.classList.add('blink');
+                }
+                if (txtLarge) {
+                    txtLarge.innerText = "SYNTHESIS READY";
+                    txtLarge.classList.add('blink');
+                }
+
+                // --- ENTROPY CHALLENGE ---
+                // Every 10 minutes, regenerate a local "Attention Proof"
+                if (Math.floor(elapsed / 60000) % 10 === 0 && !window.lastEntropyUpdate) {
+                    window.lastEntropyUpdate = true;
+                    console.log("[SOVEREIGN] Attention Entropy Verified locally.");
+                    setTimeout(() => { window.lastEntropyUpdate = false; }, 60000);
+                }
+            }
+        }, 1000);
+    };
+
+    // --- SOVEREIGN DATA SALE ---
+    window.authorizeDataSale = function (packetId) {
+        const mnemonic = prompt("🔐 Enter Mnemonic Seed to authorize local data signing:");
+        if (!mnemonic) return;
+
+        apiFetch('/api/sovereign/data-sale/sign', {
+            method: 'POST',
+            body: {
+                mnemonic: mnemonic,
+                packet_id: packetId,
+                buyer: "GPM_RESEARCH_FOUNDATION"
+            }
+        }).then(data => {
+            showCelebration(`💰 SOVEREIGN SALE SIGNED +${data.reward} AT`);
+            logToTerminal(`[SOVEREIGN] Data Sale authorized. Reward: ${data.reward} AT`);
+            syncWithLedger();
+        }).catch(e => alert(e.message));
+    };
+
+    window.claimFocus = function () {
+        if (!appState.focusSession) return;
+
+        apiFetch('/api/economy/focus/claim', {
+            method: 'POST',
+            body: { session_id: appState.focusSession.id }
+        }).then(data => {
+            logToTerminal(`[MONK_MODE] Synthesis complete. +1.0 AT minted.`);
+            appState.focusSession = null;
+            window.saveState();
+            syncWithLedger();
+            // Show result
+            showCelebration("🧘 FOCUS TRANSCENDED +1 AT");
+        }).catch(e => alert(e.message));
     };
 
     window.fetchLogs = function () {

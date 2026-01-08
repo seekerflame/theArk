@@ -11,7 +11,23 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     logger = logging.getLogger("ArkOS.Economy")
 
     # === MINTING (Labor -> AT) ===
-    
+
+    @router.get('/api/economy/ppp')
+    def h_ppp(h):
+        """Get current Purchasing Power Parity (PPP) metrics."""
+        # Baseline: 1960 Silver Standard (5 Silver Quarters for 8 hours)
+        # 1 AT target = ~$70 USD (2026 inflation-adjusted)
+        # This is a dynamic metric used for the Admin Deck
+        ppp_data = {
+            "target_unit_value_usd": 70.0,
+            "parity_standard": "1960 Silver Standard",
+            "daily_labor_parity_usd": 560.0,
+            "labor_density_index": 1.0, # Target 1.0
+            "fiat_dilution_factor": 8.0, # How much more an hour SHOULD be worth vs fiat current
+            "timestamp": time.time()
+        }
+        h.send_json(ppp_data)
+
     @router.post('/api/mint')
     @requires_auth
     def h_mint(h, user, p):
@@ -140,3 +156,73 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
             h.send_json({"status": "submitted"})
         else:
             h.send_json_error("Verification failed (already verified or invalid)")
+
+    # === ANTI-GRIFT (Vibe Check) ===
+
+    def _vibe_check(user_id):
+        """
+        Verify if knowledge (XP) aligns with real-world action (Labor).
+        Prevents AI farming of levels without physical output.
+        """
+        user_data = identity.get_user(user_id)
+        xp = user_data.get('xp', 0)
+        verified_hours = user_data.get('verified_hours', 0)
+        
+        # Heuristic: 1 hour labor should roughly equal 100 XP worth of learning
+        # If XP is 10x higher than labor-equivalent, trigger a 'Deep Research' audit
+        if xp > (verified_hours * 100) + 1000: # Grant 1000 XP grace for newcomers
+            logger.warning(f"⚠️  User {user_id} triggered Anti-Grift: XP({xp}) >> Labor({verified_hours})")
+            return 0.5 # Slashing multiplier for being "all talk, no action"
+        return 1.0
+
+    @router.post('/api/economy/focus/start')
+    @requires_auth
+    def h_focus_start(h, user, p):
+        """Initialize a focus session."""
+        session_id = f"focus_{user['sub']}_{int(time.time())}"
+        focus_sessions[session_id] = {
+            "user": user['sub'],
+            "start_time": time.time(),
+            "entropy_challenge": os.urandom(8).hex() # Proof-of-Attention seed
+        }
+        h.send_json({"status": "started", "session_id": session_id, "challenge": focus_sessions[session_id]['entropy_challenge']})
+
+    @router.post('/api/economy/focus/claim')
+    @requires_auth
+    def h_focus_claim(h, user, p):
+        """Claim AT for completed focus session."""
+        session_id = p.get('session_id')
+        session = focus_sessions.get(session_id)
+        
+        if not session or session['user'] != user['sub']:
+            return h.send_json_error("Invalid session")
+            
+        duration = time.time() - session['start_time']
+        
+        # Minimum 60 minutes (3600 seconds)
+        MIN_DURATION = 3600 
+        if Config.get('ENVIRONMENT') == 'development':
+            MIN_DURATION = 10
+            
+        if duration < MIN_DURATION:
+            return h.send_json_error(f"Incomplete session. Remaining: {int((MIN_DURATION - duration)/60)}m")
+            
+        # Anti-Grift Multiplier
+        multiplier = _vibe_check(user['sub'])
+        final_mint = 1.0 * multiplier
+        
+        # Mint AT
+        tx = ledger.add_block('MINT', {
+            "action": "FOCUS_MINT",
+            "amount": final_mint,
+            "minter": user['sub'],
+            "memo": f"Deep Focus Session (Efficiency: {int(multiplier*100)}%)",
+            "duration_sec": duration,
+            "timestamp": time.time()
+        })
+        
+        # Reward XP for the attention
+        identity.add_xp(user['sub'], 50) # Focus = 50 XP
+        
+        del focus_sessions[session_id]
+        h.send_json({"status": "minted", "tx": tx, "amount": final_mint, "multiplier": multiplier})

@@ -167,7 +167,33 @@ def enforce_no_misinformation_bans(moderation_policy):
                 "Counter bad ideas with good ideas, not censorship."
             )
 
-# CONSTRAINT 10: Recursive Verification Required
+# CONSTRAINT 10: No Pornographic Content
+def enforce_no_porn(media_system):
+    """
+    Hard-no on pornographic content locally.
+    OSE is built for family and civilization stability.
+    """
+    if media_system.get('allow_nsfw') == True:
+        raise DystopiaViolation(
+            "VIOLATION: NSFW/Pornographic content enabled. "
+            "Ark OS is a family-and-civilization-building platform. "
+            "Pornography is a tool of atomization and decay. Hard no."
+        )
+
+# CONSTRAINT 11: No Usury (Interest-bearing Debt)
+def enforce_no_usury(economy_system):
+    """
+    You can lend, but you cannot charge interest.
+    Usury is the root of artificial scarcity.
+    """
+    if economy_system.get('interest_rate', 0) > 0:
+        raise DystopiaViolation(
+            "VIOLATION: Interest rate > 0 detected. "
+            "Ark OS allows peer-to-peer lending, but USURY is forbidden. "
+            "Lend for utility, not for parasitic gain."
+        )
+
+# CONSTRAINT 12: Recursive Verification Required
 def enforce_verify_verifiers(oracle_system):
     """
     Oracles must be verified by meta-oracles
@@ -223,6 +249,12 @@ def verify_anti_dystopia_compliance(system):
         enforce_no_misinformation_bans(system.moderation)
         print("✅ No truth policing")
         
+        enforce_no_porn(system.media)
+        print("✅ No pornographic content")
+        
+        enforce_no_usury(system.economy)
+        print("✅ No usury (interest-free only)")
+        
         enforce_verify_verifiers(system.oracles)
         print("✅ Recursive verification enforced")
         
@@ -250,6 +282,8 @@ if __name__ == "__main__":
         'feeds': {'sort_by': 'chronological'},
         'revenue': {'sources': ['voluntary_contributions']},
         'moderation': {'ban_reasons': ['violence', 'csam', 'fraud']},  # No misinformation
+        'media': {'allow_nsfw': False},
+        'economy': {'interest_rate': 0},
         'oracles': {'meta_oracle_enabled': True, 'inverted_incentive': True}
     }
     

@@ -1,0 +1,81 @@
+/* Lifeline Module Styles - Stress Relief & Life Ops */
+
+.life-container {
+    padding: 10px;
+}
+
+.zen-display {
+    text-align: center;
+    padding: 40px;
+    border: 3px double var(--pip-green);
+    margin-bottom: 20px;
+    background: rgba(16, 249, 111, 0.03);
+}
+
+.zen-timer {
+    font-size: 4rem;
+    font-family: var(--font-retro);
+    letter-spacing: 5px;
+}
+
+.memory-vault {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.life-op-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px dashed var(--pip-dim);
+    cursor: pointer;
+}
+
+.life-op-item.done span {
+    text-decoration: line-through;
+    color: var(--pip-dim);
+}
+
+.favor-card {
+    border: 1px solid var(--pip-dim);
+    padding: 12px;
+    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.favor-status {
+    font-size: 0.7rem;
+    float: right;
+    color: var(--pip-green);
+}
+
+.life-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--pip-green);
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.life-tab {
+    padding: 10px 15px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    font-size: 0.85rem;
+    color: var(--pip-dim);
+    text-transform: uppercase;
+}
+
+.life-tab.active {
+    color: var(--pip-green);
+    border: 1px solid var(--pip-green);
+    border-bottom: 2px solid var(--pip-dark);
+    background: rgba(16, 249, 111, 0.1);
+    margin-bottom: -2px;
+}
+
+#new-memory-content {
+    min-height: 100px;
+    resize: none;
+}

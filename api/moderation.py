@@ -61,8 +61,8 @@ def register_moderation_routes(router, governance, identity, requires_auth):
         """Get pending reports for oracle."""
         # Check if oracle
         u_data = identity.users.get(user['sub'], {})
-        if 'ORACLE' not in u_data.get('roles', []):
+        if 'ORACLE' not in u_data.get('roles', []) and user['role'] != 'ADMIN':
             return h.send_json_error("Access denied: Oracles only", status=403)
             
-        # TODO: Get queue from governance engine
-        h.send_json({"queue": [], "count": 0})
+        queue = governance.get_report_queue()
+        h.send_json({"queue": queue, "count": len(queue)})

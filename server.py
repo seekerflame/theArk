@@ -23,6 +23,7 @@ from core.fiat_bridge import FiatBridge, register_fiat_routes
 from core.party_quests import PartyQuestSystem
 from core.harvest_marketplace import HarvestMarketplace
 from core.governance import GovernanceEngine
+from core.wisdom_engine import WisdomEngine
 
 
 # API Modules
@@ -37,6 +38,8 @@ from api.treasury import register_treasury_routes
 from api.justice import register_justice_routes
 from api.roles import register_role_routes
 from api.moderation import register_moderation_routes
+from api.academy import AcademyAPI, register_academy_routes
+from api.lifeline import register_lifeline_routes
 
 
 # Bot Modules
@@ -73,6 +76,8 @@ inventory = InventorySystem(ledger, identity)
 fiat_bridge = FiatBridge(ledger)
 party_quests = PartyQuestSystem(ledger, identity, quest_system)
 harvest = HarvestMarketplace(ledger, inventory)
+wisdom = WisdomEngine(os.path.join(os.getcwd(), '..', '..', '..', 'CHRONICLE', 'SOP'))
+academy = AcademyAPI(ledger, wisdom)
 
 
 # Routing
@@ -93,10 +98,21 @@ register_quest_routes(router, ledger, identity, auth_decorator)
 register_treasury_routes(router, treasury, auth_decorator)
 register_role_routes(router, ledger, identity, auth_decorator)
 register_fiat_routes(router, ledger, fiat_bridge, auth_decorator)
+register_academy_routes(router, academy, auth_decorator)
+register_lifeline_routes(router, ledger, auth_decorator)
+
+try:
+    from api.sovereign import register_sovereign_routes
+    register_sovereign_routes(router, ledger, identity, auth_decorator)
+    logger.info("🛡️  Sovereign Vault active (Data Privacy & Sales)")
+except ImportError as e:
+    logger.warning(f"⚠️  Sovereign API missing or dependencies failed: {e}")
+
 logger.info("💰 Fiat Bridge loaded (Card ↔ BTC ↔ AT ↔ Bank)")
 logger.info("📦 Inventory System loaded")
 logger.info("👨‍👩‍👧 Party Quests loaded (families + groups)")
 logger.info("🥬 Harvest Marketplace loaded (sell produce)")
+logger.info("🛡️  Sovereign Vault active (Data Privacy & Sales)")
 
 # Party & Harvest API
 try:
@@ -110,7 +126,7 @@ try:
     register_evolution_routes(router, evolution, auth_decorator)
     
     logger.info("🎉 Party & Harvest API endpoints registered")
-    logger.info("🧬 Evolution Engine loaded (Perpetual Loop active)")
+    logger.info("🧬 Evolution Engine (Solo Leveling) loaded - ByLifeReset Protocol Active")
     
     # Governance & Moderation
     from core.governance import GovernanceEngine
@@ -138,10 +154,28 @@ try:
 except ImportError:
     logger.warning("⚠️  AI Memory System not available")
 
+# Sovereign Intelligence (Analytics & Passport)
+try:
+    from api.sovereign_intel import register_sovereign_intel_routes
+    register_sovereign_intel_routes(router, ledger, identity, auth_decorator)
+    logger.info("📡 Sovereign Intelligence Engine ACTIVE (Anti-Palantir)")
+except ImportError as e:
+    logger.warning(f"⚠️ Sovereign Intel missing: {e}")
+
+# Project Exodus
+try:
+    from api.exodus import register_exodus_routes
+    from api.exodus_admin import register_exodus_admin_routes
+    register_exodus_routes(router, ledger, identity, auth_decorator)
+    register_exodus_admin_routes(router, ledger, identity, admin_only)
+    logger.info("🕊️ Project Exodus Bridge & Admin ONLINE (Anti-Worldcoin Protocol)")
+except ImportError as e:
+    logger.warning(f"⚠️ Exodus API missing: {e}")
+
 # Collaborative Canvas
 try:
     from api.collab import register_collab_routes
-    register_collab_routes(router)
+    register_collab_routes(router, ledger)
     logger.info("🎨 Collaborative Canvas loaded")
 except ImportError as e:
     logger.warning(f"⚠️  Collab API missing: {e}")

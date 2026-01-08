@@ -12,8 +12,6 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <!-- App Logic -->
@@ -26,11 +24,6 @@
     <script src="admin_deck.js"></script>
     <script type="module" src="components/focus.js"></script>
     <script src="harvest_ui.js"></script>
-    <script src="academy_ui.js"></script>
-    <script src="exodus.js"></script>
-    <script src="intel.js"></script>
-    <script src="lifeline.js"></script>
-    <link rel="stylesheet" href="lifeline.css">
 </head>
 
 <body>
@@ -103,30 +96,6 @@
                                     <span>STABLE</span>
                                 </div>
                             </div>
-
-                            <div class="pip-box" id="focus-hud-element">
-                                <h3 style="margin: 0; border: none;">FOCUS BATTERY</h3>
-                                <div class="pip-bar-container" style="margin-top: 10px;">
-                                    <div id="focus-battery-fill" class="pip-bar-fill" style="width: 0%;"></div>
-                                </div>
-                                <div class="pip-stat-row">
-                                    <span id="focus-timer-text">INACTIVE</span>
-                                    <span onclick="window.claimFocus()"
-                                        style="cursor:pointer; text-decoration:underline;">CLAIM</span>
-                                </div>
-                            </div>
-
-                            <div class="pip-box" style="border-color: var(--pip-blue);">
-                                <h3 style="margin: 0; border: none; color: var(--pip-blue);">SOVEREIGNTY</h3>
-                                <div class="pip-stat-row">
-                                    <span>VAULT STATUS</span>
-                                    <span style="color: var(--pip-blue);">HARDENED</span>
-                                </div>
-                                <div class="pip-stat-row">
-                                    <span>SIGNATURE</span>
-                                    <span>AES-256</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -169,12 +138,6 @@
                         <button class="btn-pip" onclick="window.renderSendModal()">TRANSFER</button>
                         <button class="btn-pip" onclick="window.renderExchangeUI()">BARTER</button>
                         <button class="btn-pip" onclick="window.renderCodeMintModal()">CRAFT</button>
-                    </div>
-                    <div style="margin-top:10px;">
-                        <button class="btn-pip"
-                            style="width: 100%; border-color: var(--pip-blue); color: var(--pip-blue);"
-                            onclick="window.authorizeDataSale('daily_packet_001')">SELL ANONYMIZED METABOLIC PROOF (+2
-                            AT)</button>
                     </div>
                 </div>
 
@@ -241,78 +204,35 @@
                     <div class="pip-grid-2">
                         <div class="pip-box" style="text-align: center; border: 3px solid var(--pip-green);">
                             <h2 style="font-size: 2rem; margin: 0;">MONK MODE</h2>
-                            <div style="margin: 20px 0;">
-                                <div class="pip-bar-container" style="height: 40px;">
-                                    <div id="focus-battery-fill-large" class="pip-bar-fill"
-                                        style="width: 0%; height: 100%;"></div>
-                                </div>
+                            <div id="focus-progress-container"
+                                style="position: relative; width: 150px; height: 150px; margin: 20px auto;">
+                                <div id="focus-timer"
+                                    style="font-size: 3rem; font-weight: bold; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                    25:00</div>
+                                <svg width="150" height="150">
+                                    <circle cx="75" cy="75" r="70" fill="none" stroke="var(--pip-dim)"
+                                        stroke-width="10" />
+                                    <circle id="focus-progress-circle" cx="75" cy="75" r="70" fill="none"
+                                        stroke="var(--pip-green)" stroke-width="10" stroke-dasharray="440"
+                                        stroke-dashoffset="440" transform="rotate(-90 75 75)"
+                                        style="transition: stroke-dashoffset 1s linear;" />
+                                </svg>
                             </div>
-                            <div id="focus-timer-text-large" style="font-size: 2.5rem; font-weight: bold;">00:00:00
-                            </div>
-                            <div id="focus-status" style="font-size: 1.2rem; color: var(--pip-green); margin-top:10px;">
-                                NEURAL_LOCK: DISENGAGED</div>
+                            <div id="focus-status" style="font-size: 1.5rem; color: var(--pip-green);">💤 IDLE</div>
                         </div>
                         <div class="pip-box">
-                            <h3 style="margin-top:0;">NEURAL CONTROL</h3>
-                            <div style="display: flex; flex-direction: column; gap:10px;">
-                                <button class="btn-pip" onclick="window.startFocus()">ENGAGE FOCUS (60 MIN)</button>
-                                <button class="btn-pip" onclick="window.claimFocus()" id="btn-claim-focus">CLAIM
-                                    SYNTHESIS REWARD</button>
-                                <button class="btn-pip" style="border-color: var(--pip-alert); color: var(--pip-alert);"
-                                    onclick="appState.focusSession = null; window.saveState(); window.updateUI();">ABORT
-                                    SESSION</button>
+                            <h3 style="margin-top:0;">CONTROL</h3>
+                            <div class="pip-grid-2" style="gap: 10px;">
+                                <button class="btn-pip" onclick="FocusMode.start(25)">25 MIN</button>
+                                <button class="btn-pip" onclick="FocusMode.start(60)">60 MIN</button>
+                                <button class="btn-pip"
+                                    style="grid-column: span 2; border-color: #ff5555; color: #ff5555;"
+                                    onclick="FocusMode.stop()">ABORT SESSION</button>
                             </div>
-                            <h3 style="margin-top: 20px;">QUEST LOG</h3>
-                            <div style="font-size: 0.8rem; color: var(--pip-dim); font-family: 'VT323';">
-                                "The single greatest asset of mankind is attention. Guard it with your life."
-                            </div>
+                            <h3 style="margin-top: 20px;">QUOTES</h3>
+                            <div id="focus-quote" style="font-style: italic; color: var(--pip-dim);">"Small steps make
+                                big changes."</div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- VIEW: ACADEMY (Learn-to-Earn) -->
-                <div id="view-academy" class="app-view" style="display: none;">
-                    <div class="pip-grid-2">
-                        <div class="pip-box">
-                            <h3 style="margin-top:0;">WISDOM FEED</h3>
-                            <div id="academy-wisdom-snippet">
-                                <div class="pip-box">Loading OSE lessons...</div>
-                            </div>
-                        </div>
-                        <div class="pip-box">
-                            <h3 style="margin-top:0;">SKILL TREE</h3>
-                            <div id="academy-skill-tree"
-                                style="background: rgba(0,20,0,0.5); border: 1px solid var(--pip-green); overflow: auto;">
-                                <!-- Mermaid graph injected here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIEW: LIFE (Lifeline - Stress & Ops) -->
-                <div id="view-life" class="app-view" style="display: none;">
-                    <!-- Injected by lifeline.js -->
-                </div>
-
-                <!-- VIEW: INTEL (Sovereign Analytics) -->
-                <div id="view-intel" class="app-view" style="display: none;">
-                    <!-- Injected by intel.js -->
-                </div>
-
-                <!-- VIEW: EXODUS (Liberation Portal) -->
-                <div id="view-exodus" class="app-view" style="display: none;">
-                    <!-- Injected by exodus.js -->
-                </div>
-
-                <!-- VIEW: BUILD (Blueprint Collab) -->
-                <div id="view-build" class="app-view" style="display: none; height: 100%;">
-                    <iframe src="/collab/"
-                        style="width: 100%; height: 500px; border: 2px solid var(--pip-green); background: #000;"
-                        id="collab-frame"></iframe>
-                    <div style="margin-top: 10px; display: flex; justify-content: space-between;">
-                        <span>BLUEPRINT: GVCS_MODULAR_V1</span>
-                        <span onclick="document.getElementById('collab-frame').src += ''"
-                            style="cursor:pointer; text-decoration:underline;">RELOAD_SYNC</span>
                     </div>
                 </div>
 
@@ -326,12 +246,6 @@
             <button class="pip-tab" onclick="switchPipTab('data')">DATA</button>
             <button class="pip-tab" onclick="switchPipTab('map')">MAP</button>
             <button class="pip-tab" onclick="switchPipTab('focus')">FOCUS</button>
-            <button class="pip-tab" onclick="switchPipTab('academy')">ACADEMY</button>
-            <button class="pip-tab" onclick="switchPipTab('build')">BUILD</button>
-            <button class="pip-tab" onclick="switchPipTab('exodus')"
-                style="border-color: var(--pip-alert); color: var(--pip-alert);">EXODUS</button>
-            <button class="pip-tab" onclick="switchPipTab('life')">LIFE</button>
-            <button class="pip-tab" onclick="switchPipTab('intel')">INTEL</button>
             <button class="pip-tab" onclick="switchPipTab('harvest')">HARVEST</button>
             <button class="pip-tab" onclick="switchPipTab('radio')">RADIO</button>
         </div>

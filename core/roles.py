@@ -190,21 +190,27 @@ ROLE_DEFINITIONS = {
         "requires_certification": True
     },
     
-    # ===== ENTRY-LEVEL ROLE =====
-    "WORKER": {
-        "title": "General Worker",
-        "base_multiplier": 1.0,
-        "sops": ["MP_001"],
+    "GHOST": {
+        "title": "The Ghost / Pseudonymous Agent",
+        "base_multiplier": 0.8, # Anonymity tax
+        "sops": ["SEC_001"],
         "capabilities": [
-            "complete_tasks",
-            "assist_others",
-            "learn_skills",
-            "contribute_labor"
+            "anonymous_contribution",
+            "private_research",
+            "shielded_transactions"
         ],
-        "quest_tags": ["general", "labor", "assistance", "learning"],
-        "onboarding": "Start earning by completing any available quest",
-        "value_metric": "Quests completed, hours worked"
+        "quest_tags": ["security", "anonymity", "low-trust"],
+        "onboarding": "Contribute from the shadows with high-audit verification",
+        "value_metric": "Verified anonymous impact",
+        "is_ghost": True
     }
+}
+
+# Ghost Reputation Tiers
+GHOST_TIERS = {
+    "FULL_TRANSPARENT": {"trust": 1.0, "audit_level": "standard"},
+    "SEMI_TRANSPARENT": {"trust": 0.6, "audit_level": "high"},
+    "FULL_GHOST": {"trust": 0.1, "audit_level": "critical"}
 }
 
 # Role Progression Paths

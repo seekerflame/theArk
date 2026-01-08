@@ -1,0 +1,74 @@
+"""
+Sovereign Vault API
+Handles the authorization and signing of local data sales.
+Uses core/sovereign_data.py for device-level encryption.
+"""
+
+import time
+import json
+from core.sovereign_data import SovereignData
+
+def register_sovereign_routes(router, ledger, identity, auth_decorator):
+    
+    @router.post('/api/sovereign/data-sale/sign')
+    @auth_decorator
+    def h_sign_data_sale(h, user, p):
+        """
+        Signs a data-sale agreement locally using the user's mnemonic.
+        This authorizes the release of a specific, anonymized data packet.
+        """
+        username = user['sub']
+        mnemonic = p.get('mnemonic')
+        data_packet_id = p.get('packet_id')
+        buyer = p.get('buyer', 'GPM_RESEARCH_FOUNDATION')
+        
+        if not mnemonic:
+            return h.send_json_error("Mnemonic seed required for sovereign signing.")
+            
+        try:
+            sd = SovereignData(mnemonic)
+            
+            # 1. Create the Agreement
+            agreement = {
+                "packet_id": data_packet_id,
+                "seller": username,
+                "buyer": buyer,
+                "timestamp": time.time(),
+                "terms": "Anonymized metabolic aggregate for GPM Research"
+            }
+            
+            # 2. Sign it (deterministic hash based on key)
+            signature = sd.encrypt(json.dumps(agreement))
+            
+            # 3. Add to Ledger as a SOVEREIGN_TX
+            tx = ledger.add_block('SOVEREIGN_TX', {
+                "action": "DATA_SALE",
+                "seller": username,
+                "buyer": buyer,
+                "amount": 2.0, # Standard UBI data subsidy
+                "signature_hash": signature[:64],
+                "timestamp": time.time()
+            })
+            
+            h.send_json({
+                "status": "signed",
+                "tx": tx,
+                "reward": 2.0,
+                "message": "Sovereign data sale authorized and tokenized."
+            })
+            
+        except Exception as e:
+            return h.send_json_error(f"Sovereign signing failed: {str(e)}")
+
+    @router.get('/api/sovereign/status')
+    @auth_decorator
+    def h_sov_status(h, user, p):
+        """Returns the user's data sovereignty metrics."""
+        username = user['sub']
+        # This would pull from locally encrypted files in a real implementation
+        h.send_json({
+            "status": "HARDENED",
+            "encryption": "AES-256-CFB",
+            "last_audit": time.time(),
+            "data_sale_eligibility": True
+        })

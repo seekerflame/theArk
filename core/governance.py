@@ -64,3 +64,15 @@ class GovernanceEngine:
     def get_public_logs(self, limit=50, offset=0):
         """Get public transparency logs."""
         return self.transparency.get_logs(limit, offset)
+
+    def get_report_queue(self):
+        """Get pending reports from the ledger."""
+        reports = []
+        # Filter for CONTENT_REPORTED blocks
+        for block in reversed(self.ledger.blocks):
+            if block['type'] == 'CONTENT_REPORTED':
+                data = block['data']
+                if data.get('status') == 'pending':
+                    reports.append(data)
+        
+        return reports

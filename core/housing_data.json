@@ -1,0 +1,26 @@
+{
+    "last_updated": "2026-01-08T09:26:00Z",
+    "metrics": {
+        "housing_health_index": 50.14,
+        "supply_score": 46.90,
+        "affordability_score": 45.57,
+        "crash_likelihood": 45.75,
+        "tiers": {
+            "supply": "Tight Market",
+            "affordability": "Very Strained",
+            "health": "Affordability Crisis",
+            "crash": "Nowhere Close"
+        }
+    },
+    "market_data": {
+        "median_resale_home_usd": 490000,
+        "median_new_home_usd": 550000,
+        "target_yearly_income_usd": 145600,
+        "target_hourly_wage_usd": 70.00
+    },
+    "parity_ratios": {
+        "home_to_income_ratio_current": 3.37,
+        "home_to_income_ratio_target": 1.5,
+        "at_purchasing_power_usd": 70.00
+    }
+}

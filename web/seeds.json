@@ -1,0 +1,29 @@
+[
+    {
+        "id": "seed_001",
+        "name": "Heirloom Tomato Seeds",
+        "variety": "Cherokee Purple",
+        "quantity": "20 seeds",
+        "provider": "Farmer John",
+        "price": 2,
+        "instructions": "Full sun, deep watering."
+    },
+    {
+        "id": "seed_002",
+        "name": "Garden Sage",
+        "variety": "Common Sage",
+        "quantity": "1 seedling",
+        "provider": "Green Thumb Maria",
+        "price": 5,
+        "instructions": "Daily sun, moderate water."
+    },
+    {
+        "id": "plant_001",
+        "name": "Compost Starter",
+        "variety": "Premium Worm Castings",
+        "quantity": "5 lbs",
+        "provider": "Soil Master Steve",
+        "price": 10,
+        "instructions": "Mix with topsoil."
+    }
+]
