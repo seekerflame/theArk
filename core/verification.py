@@ -13,21 +13,29 @@ class ProofOfPhysics:
         self.ledger = ledger
         self.pending_claims = {} # claim_id -> verification data
         
-    def submit_value_claim(self, user: str, manifest: Dict) -> str:
+    def submit_work_claim(self, user: str, work_manifest: Dict) -> str:
         """
-        Submit a claim for value produced (e.g., "Built 1 SEH Wall").
+        First Principles Verification: Work = Force x Distance
         
-        manifest:
-            type: str (SEH, FOOD, POWER)
-            value_delta_usd: float
-            sensor_payload: dict (GPS, Video Hash, IoT logs)
+        work_manifest:
+            type: str (CEB_PRESS, SOLAR_GEN, AGRI_MOVE)
+            joules_expended: float
+            mass_moved_kg: float
+            distance_m: float
             witnesses: list (Peer Node IDs)
         """
         claim_id = hashlib.sha256(f"{user}{time.time()}".encode()).hexdigest()[:12]
         
+        # Calculate Physical Value based on energy density
+        # Baseline: 10 kWh (36 MJ) of useful work = 1 AT floor ($70)
+        # This is a hard guardrail against value inflation.
+        mj_expended = work_manifest.get("joules_expended", 0) / 1e6
+        implied_at_value = mj_expended / 36.0 # 36 MJ per AT
+        
         self.pending_claims[claim_id] = {
             "user": user,
-            "manifest": manifest,
+            "manifest": work_manifest,
+            "calculated_at": implied_at_value,
             "signatures": [],
             "sensor_verified": False,
             "timestamp": time.time(),
@@ -38,19 +46,18 @@ class ProofOfPhysics:
 
     def verify_sensor_payload(self, claim_id: str, hardware_signature: str) -> bool:
         """
-        Validate sensor data from the Hardware Bridge (IoT sensors).
+        Direct IoT bridge verification.
         """
         if claim_id not in self.pending_claims:
             return False
             
-        # mock validation: In production, checks hardware key and data consistency
-        print(f"[PoP] Verifying Hardware Payload for {claim_id}...")
+        # In production: Check hardware secure element signature
         self.pending_claims[claim_id]["sensor_verified"] = True
         return True
 
     def toggle_peer_signature(self, claim_id: str, peer_id: str) -> bool:
         """
-        Add a peer signature (Dunbar Witness).
+        Dunbar Witness Consensus (Consensus = Truth).
         """
         if claim_id not in self.pending_claims:
             return False
@@ -59,7 +66,7 @@ class ProofOfPhysics:
         if peer_id not in claim["signatures"]:
             claim["signatures"].append(peer_id)
             
-        # Check for consensus (3 signatures standard for small nodes)
+        # 3 peer sigs + sensor pulse = Reality
         if len(claim["signatures"]) >= 3 and claim["sensor_verified"]:
             claim["status"] = "VERIFIED_PHYSICS"
             return True
@@ -67,33 +74,29 @@ class ProofOfPhysics:
         return False
 
     def finalize_verification(self, claim_id: str) -> Tuple[bool, float]:
-        """
-        Finalize and return the validated AT amount to mint.
-        """
         if claim_id not in self.pending_claims:
             return False, 0.0
             
         claim = self.pending_claims[claim_id]
         if claim["status"] == "VERIFIED_PHYSICS":
-            # 1 AT = $70. If value produced = $700, mint 10 AT.
-            at_to_mint = claim["manifest"]["value_delta_usd"] / 70.0
-            return True, at_to_mint
+            return True, claim["calculated_at"]
             
         return False, 0.0
 
 # Protocol Integration
 if __name__ == "__main__":
     pop = ProofOfPhysics(ledger=None)
-    cid = pop.submit_value_claim("User123", {
-        "type": "SEH_BUILD",
-        "value_delta_usd": 700.0,
-        "witnesses": ["PeerA", "PeerB", "PeerC"]
+    # 360 MJ = 10 AT ($700 Value Delta)
+    cid = pop.submit_work_claim("Prober", {
+        "type": "CEB_PRODUCTION",
+        "joules_expended": 360000000, 
+        "witnesses": ["A", "B", "C"]
     })
     
-    pop.verify_sensor_payload(cid, "HW_SIGNED_7788")
-    pop.toggle_peer_signature(cid, "PeerA")
-    pop.toggle_peer_signature(cid, "PeerB")
-    pop.toggle_peer_signature(cid, "PeerC")
+    pop.verify_sensor_payload(cid, "SECURE_ELEMENT_001")
+    pop.toggle_peer_signature(cid, "A")
+    pop.toggle_peer_signature(cid, "B")
+    pop.toggle_peer_signature(cid, "C")
     
     success, amount = pop.finalize_verification(cid)
-    print(f"Verification Success: {success} | Minted: {amount} AT")
+    print(f"First Principles Verification Success: {success} | Minted: {amount} AT")

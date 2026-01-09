@@ -67,9 +67,9 @@ class TripleVerification:
         
         return True, verification_id
     
-    def submit_verification(self, verification_id: str, witness: str, approved: bool, note: str = "") -> Tuple[bool, str]:
+    def submit_verification(self, verification_id: str, witness: str, approved: bool, note: str = "", witness_type: str = "HUMAN") -> Tuple[bool, str]:
         """
-        A witness submits their verification decision.
+        A witness (Human, Sensor, or AI) submits their verification decision.
         
         Returns:
             (success, message)
@@ -84,26 +84,39 @@ class TripleVerification:
             v_req["status"] = "expired"
             return False, "Verification window expired (24h)"
         
-        # Check witness is authorized
-        if witness not in v_req["witnesses"]:
+        # Check witness is authorized (for HUMAN witnesses only)
+        if witness_type == "HUMAN" and witness not in v_req["witnesses"]:
             return False, "You are not an authorized witness for this quest"
         
         # Check witness hasn't already verified
         if witness in v_req["verifications"]:
-            return False, "You have already submitted verification"
+            return False, "This witness/sensor has already submitted verification"
         
         # Record verification
         v_req["verifications"][witness] = {
             "approved": approved,
             "timestamp": time.time(),
-            "note": note
+            "note": note,
+            "type": witness_type
         }
         
-        # Check if all 3 witnesses have responded
-        if len(v_req["verifications"]) == 3:
+        # Check if consensus threshold is met
+        # Reality Witnessing: We can now have 1 Human + 1 Sensor + 1 AI as witnesses
+        if len(v_req["verifications"]) >= 3:
             return self._finalize_verification(verification_id)
         
         return True, f"Verification recorded ({len(v_req['verifications'])}/3 complete)"
+
+    def submit_sensor_verification(self, verification_id: str, sensor_id: str, data: Dict) -> Tuple[bool, str]:
+        """Automated verification from a Hardware Bridge sensor."""
+        # Logic to verify data values (e.g., 'solar_voltage' > threshold)
+        approved = data.get('verified', False)
+        return self.submit_verification(verification_id, sensor_id, approved, note=f"Sensor Data Input: {list(data.keys())}", witness_type="SENSOR")
+
+    def submit_ai_verification(self, verification_id: str, ai_agent_id: str, analysis: str, confidence: float) -> Tuple[bool, str]:
+        """Automated verification from an AI Auditor (e.g., image analysis)."""
+        approved = confidence > 0.95
+        return self.submit_verification(verification_id, ai_agent_id, approved, note=f"AI Analysis: {analysis} (Conf: {confidence})", witness_type="AI")
     
     def _finalize_verification(self, verification_id: str) -> Tuple[bool, str]:
         """

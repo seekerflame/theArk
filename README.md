@@ -2,7 +2,7 @@
 
 > **Building the infrastructure for a Type 1 Civilization, one node at a time.**
 
-**Status**: ✅ OPERATIONAL | **Kardashev Level**: Type 0.73 | **Ledger Blocks**: 292
+**Status**: ✅ OPERATIONAL | **Kardashev Level**: Type 0.73 | **Ledger Blocks**: 3,902+
 
 The Ark is a self-sovereign village operating system that enables communities of up to 150 people to achieve absolute survival sovereignty through decentralized labor markets, real-time energy tracking, and AI-assisted governance.
 
