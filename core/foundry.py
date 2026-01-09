@@ -1,17 +1,21 @@
 import time
 import json
 import os
+import threading
+import random
 import logging
 
 logger = logging.getLogger("ArkOS.Foundry")
 
 class FoundryMachine:
-    def __init__(self, name, machine_type, at_cost_per_hour):
+    def __init__(self, name, machine_type, at_cost_per_hour, is_static=False):
         self.name = name
         self.machine_type = machine_type
         self.at_cost_per_hour = at_cost_per_hour
+        self.is_static = is_static
         self.status = "IDLE"
         self.active_job = None
+
 
 class FoundryJob:
     def __init__(self, job_id, user, machine_name, at_budget, blueprint_id):
@@ -34,6 +38,7 @@ class OSEFoundry:
         self.storage_path = storage_path
         self.machines = {}
         self.jobs = {}
+        self._lock = threading.Lock()
         self._load_state()
         
         # Seed default machines if empty
@@ -78,6 +83,49 @@ class OSEFoundry:
         # Recycling often costs less AT but produces raw materials for future builds
         return self.start_job(user, machine_name, 0.2, f"RECYCLE-{material_id}", job_type="RECYCLE")
 
+    def reserve_asset(self, user, asset_name, duration_hours):
+        """Reserved a static asset (e.g. Lab, Studio) for a duration."""
+        with self._lock:
+            if asset_name not in self.machines:
+                return {"status": "error", "message": "Asset not found"}
+            
+            machine = self.machines[asset_name]
+            if not machine.is_static:
+                return {"status": "error", "message": "Asset is not a reservation-only resource"}
+                
+            if machine.status != "IDLE":
+                return {"status": "error", "message": "Asset is currently occupied"}
+
+            at_cost = machine.at_cost_per_hour * duration_hours
+            
+            # Verify and deduction
+            balance = self.ledger.get_balance(user)
+            if balance < at_cost:
+                return {"status": "error", "message": f"Insufficient AT. Required: {at_cost}"}
+
+            job_id = f"RES-{int(time.time())}-{random.randint(100,999)}"
+            self.ledger.add_block('PURCHASE', {
+                "buyer": user,
+                "amount": at_cost,
+                "item": f"Reservation: {asset_name} for {duration_hours}h",
+                "timestamp": time.time()
+            })
+
+            # Set machine state
+            machine.status = "RESERVED"
+            machine.active_job = job_id
+            
+            job = FoundryJob(job_id, user, asset_name, at_cost, f"RESERVATION-{asset_name}")
+            job.status = "RUNNING"
+            job.start_time = time.time()
+            job.end_time = time.time() + (duration_hours * 3600)
+            self.jobs[job_id] = job
+            
+            self._save_state()
+            return {"status": "success", "reservation_id": job_id, "cost": at_cost}
+
+
+
     def get_status(self):
         return {
             "machines": {name: vars(m) for name, m in self.machines.items()},
@@ -102,10 +150,16 @@ class OSEFoundry:
                 with open(self.storage_path, 'r') as f:
                     state = json.load(f)
                     for name, m_data in state.get("machines", {}).items():
-                        m = FoundryMachine(m_data['name'], m_data['machine_type'], m_data['at_cost_per_hour'])
+                        m = FoundryMachine(
+                            m_data['name'], 
+                            m_data['machine_type'], 
+                            m_data['at_cost_per_hour'],
+                            is_static=m_data.get('is_static', False)
+                        )
                         m.status = m_data['status']
                         m.active_job = m_data['active_job']
                         self.machines[name] = m
+
                     for jid, j_data in state.get("jobs", {}).items():
                         j = FoundryJob(j_data['job_id'], j_data['user'], j_data['machine_name'], j_data['at_budget'], j_data['blueprint_id'])
                         j.status = j_data['status']

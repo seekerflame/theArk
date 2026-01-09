@@ -488,8 +488,8 @@ function main() {
         // Boot Sequence Integrations
         window.updateStreak();
         window.updateUI();
-        if (appState.focusSession) window.resumeFocusTimer();
         console.log("[GAIA] State Synchronized.");
+        if (window.Founders) window.Founders.init();
     };
 
     window.saveState = function () {

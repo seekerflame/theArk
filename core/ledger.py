@@ -85,9 +85,9 @@ class VillageLedger:
             if b['type'] == 'TX':
                 if d.get('sender') == username: balance -= d.get('amount', 0)
                 if d.get('receiver') == username: balance += d.get('amount', 0)
-            elif b['type'] in ['LABOR', 'HARDWARE_PROOF', 'PROOF', 'CODE_MINT']:
-                if d.get('minter') == username or d.get('worker') == username: 
-                    balance += d.get('reward', d.get('at', 10))
+            elif b['type'] in ['LABOR', 'HARDWARE_PROOF', 'PROOF', 'CODE_MINT', 'MINT', 'GRANT']:
+                if d.get('minter') == username or d.get('worker') == username or d.get('recipient') == username:
+                    balance += d.get('reward', d.get('at', d.get('amount', 10)))
             elif b['type'] == 'PURCHASE':
                 if d.get('buyer') == username: balance -= d.get('amount', 0)
         return balance

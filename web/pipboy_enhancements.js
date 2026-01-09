@@ -87,9 +87,24 @@ window.switchPipTab = function (tabName) {
     if (tabName === 'deck') {
         if (window.renderAdminDeck) window.renderAdminDeck();
     }
+    if (tabName === 'founders') {
+        if (window.Founders && window.Founders.render) {
+            window.Founders.render();
+        }
+    }
 }
 
-// 4. Update Stats in Real Time
+// 4. Founders Visibility Hook
+const originalUpdateUI = window.updateUI;
+window.updateUI = function () {
+    if (originalUpdateUI) originalUpdateUI();
+    if (window.Founders && window.Founders.updateTabVisibility) {
+        window.Founders.updateTabVisibility();
+    }
+};
+
+// 5. Update Stats in Real Time
+
 setInterval(() => {
     const hpEl = document.getElementById('hp-stat');
     const lvlEl = document.getElementById('lvl-stat');

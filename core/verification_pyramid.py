@@ -5,6 +5,7 @@ From MODERATION_TRIPLE_ELEPHANT.md
 
 import random
 import time
+import threading
 import logging
 
 logger = logging.getLogger("ArkOS.VerificationPyramid")
@@ -18,12 +19,14 @@ class VerificationPyramid:
     KEY: Higher level = Higher scrutiny (inverted incentive)
     """
     
-    def __init__(self, ledger, identity):
+    def __init__(self, ledger, identity, oracle_stake_required=100.0):
         self.ledger = ledger
         self.identity = identity
         self.oracle_stats = {}  # oracle_id -> {verifications: int, accuracy: float, staked: float}
         self.pending_audits = {}  # audit_id -> {oracle_id, meta_oracles, votes}
-        self.ORACLE_STAKE_REQUIRED = 100.0  # AT required to become oracle
+        self.ORACLE_STAKE_REQUIRED = oracle_stake_required  # AT required to become oracle
+        self._lock = threading.Lock()
+
         self.META_ORACLE_MIN_VERIFICATIONS = 100
         self.META_ORACLE_MIN_ACCURACY = 0.95
     
@@ -50,30 +53,32 @@ class VerificationPyramid:
     
     def stake_oracle(self, user_id, amount):
         """Lock AT to become an oracle. Stake forfeited on abuse."""
-        if amount < self.ORACLE_STAKE_REQUIRED:
-            return False, f"Must stake at least {self.ORACLE_STAKE_REQUIRED} AT"
-        
-        balance = self.ledger.get_balance(user_id)
-        if balance < amount:
-            return False, "Insufficient AT balance"
-        
-        # Record stake on ledger
-        self.ledger.add_block('ORACLE_STAKE', {
-            'oracle': user_id,
-            'amount': amount,
-            'timestamp': time.time()
-        })
-        
-        # Initialize oracle stats
-        self.oracle_stats[user_id] = {
-            "verifications": 0,
-            "accuracy": 1.0,
-            "staked": amount,
-            "active": True
-        }
-        
-        logger.info(f"🔮 {user_id} staked {amount} AT to become oracle")
-        return True, "Oracle status activated"
+        with self._lock:
+            if amount < self.ORACLE_STAKE_REQUIRED:
+                return False, f"Must stake at least {self.ORACLE_STAKE_REQUIRED} AT"
+            
+            balance = self.ledger.get_balance(user_id)
+            if balance < amount:
+                return False, "Insufficient AT balance"
+            
+            # Record stake on ledger
+            self.ledger.add_block('ORACLE_STAKE', {
+                'oracle': user_id,
+                'amount': amount,
+                'timestamp': time.time()
+            })
+            
+            # Initialize oracle stats
+            self.oracle_stats[user_id] = {
+                "verifications": 0,
+                "accuracy": 1.0,
+                "staked": amount,
+                "active": True
+            }
+            
+            logger.info(f"🔮 {user_id} staked {amount} AT to become oracle")
+            return True, "Oracle status activated"
+
     
     def slash_stake(self, oracle_id, reason, slash_percent=0.5):
         """Punish bad actor by slashing their stake."""
@@ -152,24 +157,26 @@ class VerificationPyramid:
     
     def submit_audit_vote(self, audit_id, meta_oracle_id, approved, note=""):
         """Meta-oracle submits their audit decision."""
-        audit = self.pending_audits.get(audit_id)
-        if not audit:
-            return False, "Audit not found"
-        
-        if meta_oracle_id not in audit["meta_oracles"]:
-            return False, "You are not assigned to this audit"
-        
-        audit["votes"][meta_oracle_id] = {
-            "approved": approved,
-            "note": note,
-            "timestamp": time.time()
-        }
-        
-        # Check if all votes in
-        if len(audit["votes"]) == len(audit["meta_oracles"]):
-            return self._resolve_audit(audit_id)
-        
-        return True, "Vote recorded"
+        with self._lock:
+            audit = self.pending_audits.get(audit_id)
+            if not audit:
+                return False, "Audit not found"
+            
+            if meta_oracle_id not in audit["meta_oracles"]:
+                return False, "You are not assigned to this audit"
+            
+            audit["votes"][meta_oracle_id] = {
+                "approved": approved,
+                "note": note,
+                "timestamp": time.time()
+            }
+            
+            # Check if all votes in
+            if len(audit["votes"]) == len(audit["meta_oracles"]):
+                return self._resolve_audit(audit_id)
+            
+            return True, "Vote recorded"
+
     
     def _resolve_audit(self, audit_id):
         """Resolve audit when all votes are in."""

@@ -1,0 +1,97 @@
+{
+    "machines": {
+        "3D-PRINTER-001": {
+            "name": "3D-PRINTER-001",
+            "machine_type": "3D_PRINTER",
+            "at_cost_per_hour": 0.5,
+            "is_static": false,
+            "status": "IDLE",
+            "active_job": null
+        },
+        "CNC-LASER-001": {
+            "name": "CNC-LASER-001",
+            "machine_type": "CNC_LASER",
+            "at_cost_per_hour": 1.2,
+            "is_static": false,
+            "status": "IDLE",
+            "active_job": null
+        },
+        "HEAVY-TRACTOR-001": {
+            "name": "HEAVY-TRACTOR-001",
+            "machine_type": "MOBILE_FARM_UNIT",
+            "at_cost_per_hour": 5.0,
+            "is_static": false,
+            "status": "IDLE",
+            "active_job": null
+        },
+        "HARDWARE-LAB-001": {
+            "name": "HARDWARE-LAB-001",
+            "machine_type": "LAB",
+            "at_cost_per_hour": 50.0,
+            "is_static": true,
+            "status": "RESERVED",
+            "active_job": "RES-1767994990-759"
+        },
+        "MEDIA-STUDIO-001": {
+            "name": "MEDIA-STUDIO-001",
+            "machine_type": "STUDIO",
+            "at_cost_per_hour": 30.0,
+            "is_static": true,
+            "status": "RESERVED",
+            "active_job": "RES-1767994990-617"
+        },
+        "QUIET-ROOM-001": {
+            "name": "QUIET-ROOM-001",
+            "machine_type": "SPACE",
+            "at_cost_per_hour": 10.0,
+            "is_static": true,
+            "status": "RESERVED",
+            "active_job": "RES-1767994990-910"
+        }
+    },
+    "jobs": {
+        "RES-1767994936": {
+            "job_id": "RES-1767994936",
+            "user": "founder_48",
+            "machine_name": "MEDIA-STUDIO-001",
+            "at_budget": 60.0,
+            "blueprint_id": "RESERVATION-MEDIA-STUDIO-001",
+            "status": "RUNNING",
+            "start_time": 1767994939.717241,
+            "progress": 0
+        },
+        "RES-1767994990-617": {
+            "job_id": "RES-1767994990-617",
+            "user": "founder_0",
+            "machine_name": "MEDIA-STUDIO-001",
+            "at_budget": 60.0,
+            "blueprint_id": "RESERVATION-MEDIA-STUDIO-001",
+            "status": "RUNNING",
+            "start_time": 1767994990.687459,
+            "progress": 0,
+            "end_time": 1768002190.687459
+        },
+        "RES-1767994990-910": {
+            "job_id": "RES-1767994990-910",
+            "user": "founder_2",
+            "machine_name": "QUIET-ROOM-001",
+            "at_budget": 20.0,
+            "blueprint_id": "RESERVATION-QUIET-ROOM-001",
+            "status": "RUNNING",
+            "start_time": 1767994990.6959171,
+            "progress": 0,
+            "end_time": 1768002190.695918
+        },
+        "RES-1767994990-759": {
+            "job_id": "RES-1767994990-759",
+            "user": "founder_9",
+            "machine_name": "HARDWARE-LAB-001",
+            "at_budget": 150.0,
+            "blueprint_id": "RESERVATION-HARDWARE-LAB-001",
+            "status": "RUNNING",
+            "start_time": 1767994990.70528,
+            "progress": 0,
+            "end_time": 1768005790.70528
+        }
+    }
+}

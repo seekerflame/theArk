@@ -1,0 +1,72 @@
+{
+    "template_name": "Founders Node (The Lab)",
+    "vibe": "High-Intensity Startup Hub",
+    "overrides": {
+        "core.verification_pyramid.ORACLE_STAKE_REQUIRED": 500.0,
+        "core.foundry.DEFAULT_MACHINES": [
+            {
+                "name": "HARDWARE-LAB-001",
+                "type": "HARDWARE_LAB",
+                "at_cost_per_hour": 2.5,
+                "is_static": true
+            },
+            {
+                "name": "MEDIA-STUDIO-001",
+                "type": "MEDIA_STUDIO",
+                "at_cost_per_hour": 1.5,
+                "is_static": true
+            },
+            {
+                "name": "QUIET-ROOM-ALPHA",
+                "type": "QUIET_SPACE",
+                "at_cost_per_hour": 0.5,
+                "is_static": true
+            }
+        ],
+        "core.roles.ROLE_DEFINITIONS": {
+            "FOUNDER": {
+                "title": "Founder (The Lab)",
+                "base_multiplier": 3.0,
+                "sops": [
+                    "HK_001",
+                    "MBD_001",
+                    "SOP_Founders_Lab"
+                ],
+                "capabilities": [
+                    "access_hardware_lab",
+                    "access_media_studio",
+                    "submit_equity_milestone",
+                    "mint_high_output_labor"
+                ],
+                "quest_tags": [
+                    "startup",
+                    "equity",
+                    "milestone",
+                    "innovation"
+                ],
+                "onboarding": "Build the future of decentralized civilization",
+                "value_metric": "Key milestones reached"
+            },
+            "NODE_ADMIN": {
+                "title": "Lab Administrator",
+                "base_multiplier": 2.0,
+                "sops": [
+                    "HK_001",
+                    "FCP_001"
+                ],
+                "capabilities": [
+                    "manage_lab_access",
+                    "schedule_resources",
+                    "verify_startup_labor"
+                ],
+                "quest_tags": [
+                    "admin",
+                    "logistics",
+                    "scheduling"
+                ],
+                "onboarding": "Ensure the high-bar environment remains optimized",
+                "value_metric": "Resource utilization, user satisfaction"
+            }
+        }
+    }
+}

@@ -63,11 +63,11 @@ while True:
             # ONLY Sync WIKI or CRITICAL Transaction blocks to save bandwidth
             btype = block['data'].get('block_type', 'UNKNOWN')
             
-            if btype in ['WIKI', 'TX', 'GENESIS']:
+            if btype in ['WIKI', 'TX', 'GENESIS', 'NODE_TEMPLATE', 'PURCHASE', 'ORACLE_STAKE', 'ORACLE_SLASHED']:
                 packet = compress_block(block)
                 broadcast(packet)
             else:
-                print(f"⏭️ [SKIP] ignoring heavy block {btype}")
+                print(f"⏭️ [SKIP] ignoring heavy or local-only block {btype}")
         
         last_count = current_count
     

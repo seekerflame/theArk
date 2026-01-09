@@ -30,7 +30,9 @@
     <script src="exodus.js"></script>
     <script src="intel.js"></script>
     <script src="lifeline.js"></script>
+    <script src="founders_deck.js"></script>
     <link rel="stylesheet" href="lifeline.css">
+
 </head>
 
 <body>
@@ -304,6 +306,12 @@
                     <!-- Injected by exodus.js -->
                 </div>
 
+                <!-- VIEW: FOUNDERS (The Lab) -->
+                <div id="view-founders" class="app-view" style="display: none;">
+                    <!-- Injected by founders_deck.js -->
+                </div>
+
+
                 <!-- VIEW: BUILD (Blueprint Collab) -->
                 <div id="view-build" class="app-view" style="display: none; height: 100%;">
                     <iframe src="/collab/"
@@ -330,7 +338,10 @@
             <button class="pip-tab" onclick="switchPipTab('build')">BUILD</button>
             <button class="pip-tab" onclick="switchPipTab('exodus')"
                 style="border-color: var(--pip-alert); color: var(--pip-alert);">EXODUS</button>
+            <button class="pip-tab" id="tab-founders" onclick="switchPipTab('founders')"
+                style="border-color: #FBBF24; color: #FBBF24; display: none;">FOUNDERS</button>
             <button class="pip-tab" onclick="switchPipTab('life')">LIFE</button>
+
             <button class="pip-tab" onclick="switchPipTab('intel')">INTEL</button>
             <button class="pip-tab" onclick="switchPipTab('harvest')">HARVEST</button>
             <button class="pip-tab" onclick="switchPipTab('radio')">RADIO</button>

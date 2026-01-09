@@ -203,8 +203,39 @@ ROLE_DEFINITIONS = {
         "onboarding": "Contribute from the shadows with high-audit verification",
         "value_metric": "Verified anonymous impact",
         "is_ghost": True
+    },
+    
+    # ===== FOUNDERS NODE SPECIALIZED ROLES =====
+    "FOUNDER": {
+        "title": "Founder (The Lab)",
+        "base_multiplier": 3.0,
+        "sops": ["HK_001", "MBD_001"],
+        "capabilities": [
+            "access_hardware_lab",
+            "access_media_studio",
+            "submit_equity_milestone",
+            "mint_high_output_labor"
+        ],
+        "quest_tags": ["startup", "equity", "milestone", "innovation"],
+        "onboarding": "Build the future of decentralized civilization",
+        "value_metric": "Key milestones reached"
+    },
+    
+    "NODE_ADMIN": {
+        "title": "Lab Administrator",
+        "base_multiplier": 2.0,
+        "sops": ["HK_001", "FCP_001"],
+        "capabilities": [
+            "manage_lab_access",
+            "schedule_resources",
+            "verify_startup_labor"
+        ],
+        "quest_tags": ["admin", "logistics", "scheduling"],
+        "onboarding": "Ensure the high-bar environment remains optimized",
+        "value_metric": "Resource utilization, user satisfaction"
     }
 }
+
 
 # Ghost Reputation Tiers
 GHOST_TIERS = {

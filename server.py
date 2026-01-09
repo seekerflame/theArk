@@ -22,8 +22,10 @@ from core.inventory import InventorySystem
 from core.fiat_bridge import FiatBridge, register_fiat_routes
 from core.party_quests import PartyQuestSystem
 from core.harvest_marketplace import HarvestMarketplace
-from core.governance import GovernanceEngine
 from core.wisdom_engine import WisdomEngine
+from core.foundry import OSEFoundry
+from core.verification_pyramid import VerificationPyramid
+
 
 
 # API Modules
@@ -37,9 +39,10 @@ from api.quests import register_quest_routes
 from api.treasury import register_treasury_routes
 from api.justice import register_justice_routes
 from api.roles import register_role_routes
-from api.moderation import register_moderation_routes
 from api.academy import AcademyAPI, register_academy_routes
 from api.lifeline import register_lifeline_routes
+from api.nodes import register_node_routes
+
 
 
 # Bot Modules
@@ -75,9 +78,11 @@ quest_system = QuestSystem(ledger, identity)
 inventory = InventorySystem(ledger, identity)
 fiat_bridge = FiatBridge(ledger)
 party_quests = PartyQuestSystem(ledger, identity, quest_system)
-harvest = HarvestMarketplace(ledger, inventory)
 wisdom = WisdomEngine(os.path.join(os.getcwd(), '..', '..', '..', 'CHRONICLE', 'SOP'))
 academy = AcademyAPI(ledger, wisdom)
+foundry = OSEFoundry(ledger)
+verification_pyramid = VerificationPyramid(ledger, identity)
+
 
 
 # Routing
@@ -90,8 +95,9 @@ register_economy_routes(router, ledger, sensors, identity, justice, auth_decorat
 
 
 register_social_routes(router, ledger, auth_decorator)
-register_hardware_routes(router, sensors, auth_decorator)
+register_hardware_routes(router, sensors, foundry, auth_decorator)
 register_exchange_routes(router, ledger, auth_decorator)
+
 register_justice_routes(router, ledger, justice, auth_decorator)
 
 register_quest_routes(router, ledger, identity, auth_decorator)
@@ -100,6 +106,8 @@ register_role_routes(router, ledger, identity, auth_decorator)
 register_fiat_routes(router, ledger, fiat_bridge, auth_decorator)
 register_academy_routes(router, academy, auth_decorator)
 register_lifeline_routes(router, ledger, auth_decorator)
+register_node_routes(router, ledger, identity, foundry, verification_pyramid, auth_decorator)
+
 
 try:
     from api.sovereign import register_sovereign_routes
