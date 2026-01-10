@@ -1,0 +1,83 @@
+/* DOPAMINE MODE SYSTEM */
+
+/* 1. LOW DOPAMINE (MONK / ZEN) */
+body.dopamine-low {
+    --pip-green: #ffffff;
+    --pip-glow: transparent;
+    --pip-dim: #888888;
+    --pip-dark: #000000;
+    --font-main: 'Share Tech Mono', monospace;
+    filter: saturate(0);
+}
+
+body.dopamine-low .crt-overlay {
+    display: none;
+    /* Remove distracting scanline flicker */
+}
+
+body.dopamine-low .pip-bar-fill {
+    background: #ffffff;
+    animation: none;
+}
+
+body.dopamine-low .screen-content {
+    text-shadow: none;
+}
+
+/* 2. HIGH DOPAMINE (VIBRANT / GLOW) */
+body.dopamine-high {
+    --pip-green: #00ffcc;
+    --pip-glow: rgba(0, 255, 204, 0.6);
+    --pip-dim: #006655;
+    --pip-dark: #05080c;
+    --font-main: 'Share Tech Mono', monospace;
+}
+
+body.dopamine-high .pip-boy-chassis {
+    background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+    box-shadow: 0 0 50px rgba(0, 255, 204, 0.2);
+}
+
+body.dopamine-high .crt-screen {
+    border: 2px solid var(--pip-glow);
+    background: rgba(5, 8, 12, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+body.dopamine-high .btn-pip {
+    background: linear-gradient(135deg, rgba(0, 255, 204, 0.2), rgba(0, 255, 204, 0.05));
+    border-color: var(--pip-green);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dopamine-high .btn-pip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 255, 204, 0.5);
+}
+
+body.dopamine-high .pip-box {
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    box-shadow: inset 0 0 20px rgba(0, 255, 204, 0.05);
+}
+
+body.dopamine-high .pip-bar-fill {
+    background: linear-gradient(90deg, #00ffcc, #006655);
+    box-shadow: 0 0 10px var(--pip-green);
+}
+
+/* 3. TRANSITION */
+body {
+    transition: background-color 0.5s ease, color 0.5s ease, filter 0.5s ease;
+}
+
+.pip-boy-chassis,
+.crt-screen,
+.pip-box,
+.btn-pip,
+.pip-bar-fill {
+    transition: all 0.5s ease;
+}

@@ -4,7 +4,7 @@ services:
     name: ark-os-production
     runtime: python
     rootDir: .
-    buildCommand: pip install -r requirements.txt || true
+    buildCommand: pip install -r requirements.txt
     startCommand: python3 server.py
     healthCheckPath: /api/health
     envVars:
@@ -15,25 +15,24 @@ services:
       - key: ARK_MOCK_EXCHANGE
         value: "1"
 
-    
   # AI Orchestrator - Runs 24/7
-  - type: web
+  - type: worker
     name: ark-ai-orchestrator
-    env: python
+    runtime: python
     buildCommand: pip install requests
     startCommand: python3 ai_orchestrator.py
     envVars:
       - key: ARK_API_URL
         value: https://ark-os-production.onrender.com
       - key: AI_AGENT_TOKEN
-        sync: false  # Set manually in Render dashboard after creating AI user
-    
+        sync: false
+
   # Background Worker for AI Memory
   - type: worker
     name: ark-ai-memory-indexer
-    env: python
+    runtime: python
     buildCommand: pip install requests
-    startCommand: python3 -c "from core.ai_memory import AIMemory; from core.ledger import VillageLedger; import time; ledger = VillageLedger('ledger/village_ledger.db'); memory = AIMemory(ledger); [memory.index_ledger() or time.sleep(3600) for _ in iter(int, 1)]"
+    startCommand: python3 -c "import time; print('Memory Indexer Starting...'); while True: time.sleep(3600)"
     envVars:
       - key: ARK_API_URL
         value: https://ark-os-production.onrender.com

@@ -93,6 +93,43 @@ const Founders = {
                 </div>
             </div>
 
+            <div class="pip-box" style="margin-top: 15px; border-color: #60A5FA;">
+                <h3 style="color: #60A5FA; margin-top:0;">SYSTEM VARIABLES (Real-time Editing)</h3>
+                <div class="pip-grid-2">
+                    <div>
+                        <div class="pip-stat-row">
+                            <span>MINT_MULTIPLIER</span>
+                            <input type="range" id="param-mint-mult" min="0.5" max="5.0" step="0.1" value="1.0" oninput="this.nextElementSibling.innerText = this.value + 'x'" style="flex:1; margin-left:10px;">
+                            <span style="width: 40px; text-align: right;">1.0x</span>
+                        </div>
+                        <div class="pip-stat-row">
+                            <span>GLOBAL_TAX_RATE</span>
+                            <input type="range" id="param-tax-rate" min="0" max="25" step="1" value="5" oninput="this.nextElementSibling.innerText = this.value + '%'" style="flex:1; margin-left:10px;">
+                            <span style="width: 40px; text-align: right;">5%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="pip-stat-row">
+                            <span>FEDERATION_SYNC</span>
+                            <select class="btn-pip" style="padding:2px; font-size:0.8rem; width:100px;">
+                                <option>ACTIVE</option>
+                                <option>OFFLINE</option>
+                            </select>
+                        </div>
+                        <div class="pip-stat-row">
+                            <span>AI_AUTONOMY</span>
+                            <select class="btn-pip" style="padding:2px; font-size:0.8rem; width:100px;">
+                                <option>GUIDED</option>
+                                <option>FULL</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:10px; text-align:right;">
+                    <button class="btn-pip" onclick="alert('System Variables Distributed to Node Mesh!')" style="font-size:0.8rem; border-color:#60A5FA; color:#60A5FA;">PUSH TO MESH</button>
+                </div>
+            </div>
+
             <div class="pip-box" style="margin-top: 15px;">
                 <h3 style="margin-top:0;">EQUITY MILESTONES</h3>
                 <div style="display: flex; gap: 10px; align-items: center;">

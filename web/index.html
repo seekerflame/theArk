@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PIP-BOY 3000 | ARK OS</title>
     <link rel="stylesheet" href="style.css?v=3.1">
+    <link rel="stylesheet" href="dopamine.css">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
     <!-- Scripts -->
@@ -148,6 +149,26 @@
                         </div>
                     </div>
 
+                    <!-- DOPAMINE CONTROL CENTER -->
+                    <div class="pip-box" style="margin-top: 20px;">
+                        <h3 style="margin: 0; border-bottom: 2px solid var(--pip-green);">DOPAMINE CONTROL CENTER</h3>
+                        <div class="pip-grid-2" style="margin-top: 15px;">
+                            <button id="btn-dopamine-low" class="btn-pip" onclick="window.setDopamineMode('low')">ZEN
+                                (MONK)</button>
+                            <button id="btn-dopamine-high" class="btn-pip" onclick="window.setDopamineMode('high')">GLOW
+                                (REWARD)</button>
+                        </div>
+                        <div class="pip-stat-row" style="margin-top: 10px;">
+                            <span>CURRENT PROTOCOL</span>
+                            <span id="current-dopamine-label">ADJUSTABLE</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button class="btn-pip" onclick="switchPipTab('sitemap')"
+                            style="width: 100%; letter-spacing: 5px;">ARCHITECTURE SITE MAP</button>
+                    </div>
+
                     <h3 style="margin-top: 20px;">QUICK COMMANDS</h3>
                     <div class="pip-grid-3">
                         <button class="btn-pip" onclick="window.quickMint(1)">MINT 1H</button>
@@ -241,6 +262,36 @@
                 </div>
 
                 <!-- VIEW: RADIO (Comms) -->
+                <!-- VIEW: SITE MAP (Project Topology) -->
+                <div id="view-sitemap" class="app-view" style="display: none;">
+                    <h1>ARCHITECTURE SITE MAP</h1>
+                    <div class="pip-box">
+                        <div id="sitemap-mermaid" class="mermaid">
+                            graph TD
+                            subgraph "Front-End Interfaces"
+                            PB["PIP-BOY 3000 (Main)"]
+                            GC["GAIA (AI Admin)"]
+                            VE["EXPLORER (Ledger)"]
+                            DC["DEV (Console)"]
+                            end
+                            subgraph "Interaction Models"
+                            H2H["HUMAN-2-HUMAN"]
+                            H2A["HUMAN-2-AI"]
+                            A2A["AI-2-AI"]
+                            end
+                            PB --> GC
+                            PB --> VE
+                            GC --> A2A
+                            H2A --> PB
+                            VE --> H2H
+                        </div>
+                    </div>
+                    <div class="pip-grid-2">
+                        <button class="btn-pip" onclick="window.open('/gaia.html', '_blank')">OPEN GAIA CONTROL</button>
+                        <button class="btn-pip" onclick="window.open('/explorer.html', '_blank')">OPEN EXPLORER</button>
+                    </div>
+                </div>
+
                 <div id="view-radio" class="app-view" style="display: none;">
                     <div class="pip-box" style="height: 350px; overflow-y: auto;">
                         <div id="terminal-log" style="font-size: 0.96rem; font-family: 'VT323', monospace;">

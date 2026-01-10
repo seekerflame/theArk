@@ -56,7 +56,8 @@ function main() {
         lastId: 0,
         currentChannel: 'general',
         pendingSwap: JSON.parse(localStorage.getItem('at_pending_swap') || 'null'),
-        focusSession: JSON.parse(localStorage.getItem('at_focus_session') || 'null')
+        focusSession: JSON.parse(localStorage.getItem('at_focus_session') || 'null'),
+        dopamineMode: localStorage.getItem('at_dopamine_mode') || 'standard'
     };
 
     // Deep Proxy Handler for nested objects
@@ -496,7 +497,31 @@ function main() {
         localStorage.setItem('ose_state', JSON.stringify(appState));
         if (appState.focusSession) localStorage.setItem('at_focus_session', JSON.stringify(appState.focusSession));
         else localStorage.removeItem('at_focus_session');
+        localStorage.setItem('at_dopamine_mode', appState.dopamineMode);
     };
+
+    // --- DOPAMINE ENGINE ---
+    window.setDopamineMode = function (mode) {
+        appState.dopamineMode = mode;
+        document.body.classList.remove('dopamine-low', 'dopamine-high');
+        if (mode === 'low') document.body.classList.add('dopamine-low');
+        if (mode === 'high') document.body.classList.add('dopamine-high');
+
+        const label = document.getElementById('current-dopamine-label');
+        if (label) label.innerText = mode.toUpperCase();
+
+        const lowBtn = document.getElementById('btn-dopamine-low');
+        const highBtn = document.getElementById('btn-dopamine-high');
+
+        if (lowBtn) lowBtn.style.opacity = mode === 'low' ? '1' : '0.4';
+        if (highBtn) highBtn.style.opacity = mode === 'high' ? '1' : '0.4';
+
+        logToTerminal(`[SYSTEM] Dopamine Protocol set to ${mode.toUpperCase()}`);
+    };
+    // Initialize Dopamine Mode on boot
+    setTimeout(() => {
+        window.setDopamineMode(appState.dopamineMode);
+    }, 100);
 
     // --- MONK MODE (FOCUS ECONOMY) ---
     window.startFocus = function () {
