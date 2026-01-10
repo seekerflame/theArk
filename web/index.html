@@ -129,6 +129,22 @@
                                     <span>AES-256</span>
                                 </div>
                             </div>
+
+                            <div class="pip-box" style="border-color: #FBBF24;">
+                                <h3 style="margin: 0; border: none; color: #FBBF24;">ECONOMY</h3>
+                                <div class="pip-stat-row">
+                                    <span>VERIFIED BLOCKS</span>
+                                    <span id="dash-block-count">3,900+</span>
+                                </div>
+                                <div class="pip-stat-row">
+                                    <span>BTC TREASURY</span>
+                                    <span style="color: #FBBF24;">0.42 BTC</span>
+                                </div>
+                                <div class="pip-stat-row">
+                                    <span>TOTAL MINTED</span>
+                                    <span id="dash-mint-count">12,450 AT</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -321,6 +337,22 @@
                         <span>BLUEPRINT: GVCS_MODULAR_V1</span>
                         <span onclick="document.getElementById('collab-frame').src += ''"
                             style="cursor:pointer; text-decoration:underline;">RELOAD_SYNC</span>
+                    </div>
+                </div>
+
+                <!-- VIEW: WIKI (Protocols) -->
+                <div id="view-wiki" class="app-view" style="display: none; height: 100%;">
+                    <div id="wiki-container" style="height: 100%; min-height: 500px;">
+                        <!-- Injected by app.js -->
+                        <div class="pip-box">Loading Protocols...</div>
+                    </div>
+                </div>
+
+                <!-- VIEW: CHRONICLE (Logs) -->
+                <div id="view-chronicle" class="app-view" style="display: none; height: 100%;">
+                    <div id="chronicle-container" class="pip-box" style="height: 500px; overflow-y: auto;">
+                        <h3 style="margin-top:0;">CHRONICLE LOGS</h3>
+                        <div id="chronicle-list-area">Loading session logs...</div>
                     </div>
                 </div>
 

@@ -81,6 +81,7 @@ party_quests = PartyQuestSystem(ledger, identity, quest_system)
 wisdom = WisdomEngine(os.path.join(os.getcwd(), '..', '..', '..', 'CHRONICLE', 'SOP'))
 academy = AcademyAPI(ledger, wisdom)
 foundry = OSEFoundry(ledger)
+harvest = HarvestMarketplace(ledger, inventory)
 verification_pyramid = VerificationPyramid(ledger, identity)
 
 

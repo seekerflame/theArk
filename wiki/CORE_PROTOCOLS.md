@@ -18,6 +18,8 @@
 ### 2. General Semantics & Engineering Logic
 
 - **Non-Identity Protocol**: A ledger entry represents labor; it is not the human who performed it.
+- **Anti-Digital ID Baseline**: We reject biometric/surveillance-linked identity. Your identity is your private key. One User = One Wallet = One Node.
+- **The Exit Strategy**: The Ark is designed as an immediate 'Off-Ramp' from centralized fiscal dependency.
 - **Reference Orientation**: Value is derived from entropy reduction (work done in time).
 - **Time-Binding**: All technical data must be recorded to the Chronicle to enable recursive improvement.
 
