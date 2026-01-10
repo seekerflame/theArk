@@ -885,28 +885,19 @@ function main() {
             icon: '📜',
             color: '#10B981',
             pages: [
-                { label: 'Master SOP Index', path: 'library/Master_SOP_Index.md', desc: 'Central hub for all operations' },
-                { label: 'Whitepaper', path: 'library/Abundance_Token_Master_Whitepaper.md', desc: 'Token economics & vision' },
-                { label: 'AFK Protocol', path: 'library/AFK_PROTOCOL.md', desc: 'Autonomous operation guide' }
+                { label: 'Core Protocols', path: 'wiki/CORE_PROTOCOLS.md', desc: 'Engineering standards & logic' },
+                { label: 'Economic Logic', path: 'wiki/ECONOMIC_LOGIC.md', desc: 'Labor mapping (1 AT = 1 Hour)' },
+                { label: 'Product Ecology', path: 'wiki/PRODUCT_ECOLOGY.md', desc: 'System build map' },
+                { label: 'Network Entry', path: 'wiki/NETWORK_ENTRY.md', desc: 'Access & Onboarding' }
             ]
         },
         {
-            name: 'Operations',
+            name: 'Archives',
             icon: '⚙️',
             color: '#3B82F6',
             pages: [
-                { label: 'User Checklist', path: 'library/USER_CHECKLIST.md', desc: 'Onboarding requirements' },
-                { label: 'Communication Channel', path: 'library/COMMUNICATION_CHANNEL.md', desc: 'Village comms setup' },
-                { label: 'Mission Report', path: 'library/MISSION_REPORT.md', desc: 'Daily status updates' }
-            ]
-        },
-        {
-            name: 'System',
-            icon: '🔧',
-            color: '#8B5CF6',
-            pages: [
-                { label: 'README', path: 'library/README.md', desc: 'System overview' },
-                { label: 'Presentation Script', path: 'library/PRESENTATION_SCRIPT.md', desc: 'Demo walkthrough' }
+                { label: 'Master SOP Index', path: 'wiki/library/Master_SOP_Index.md', desc: 'Legacy SOP hub' },
+                { label: 'User Checklist', path: 'wiki/library/USER_CHECKLIST.md', desc: 'Historical requirements' }
             ]
         }
     ];
@@ -1834,8 +1825,8 @@ function main() {
         `;
 
         let finalPath = path;
-        if (!finalPath.startsWith('library') && !finalPath.startsWith('http')) {
-            finalPath = 'library/' + finalPath;
+        if (!finalPath.startsWith('/') && !finalPath.startsWith('http')) {
+            finalPath = '/' + finalPath;
         }
 
         fetch(finalPath)

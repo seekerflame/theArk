@@ -253,7 +253,7 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
         path = self.path.split('?')[0]
         if path in router.routes['GET']:
             router.routes['GET'][path](self)
-        elif path == '/' or path.endswith('.html') or path.endswith('.js') or path.endswith('.css') or path.endswith('.png'):
+        elif path == '/' or path.endswith('.html') or path.endswith('.js') or path.endswith('.css') or path.endswith('.png') or path.endswith('.md'):
             self.serve_static()
         else:
             self.send_json_error("Not Found", status=404)
@@ -281,13 +281,22 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
     def serve_static(self):
         path = self.path.split('?')[0]
         if path == '/': path = '/index.html'
-        file_path = os.path.join(WEB_DIR, path.lstrip('/'))
+        
+        # Determine base directory
+        if path.startswith('/wiki/') or path.startswith('/library/'):
+            # Serve from project root (where wiki/ and library/ are)
+            file_path = os.path.join(os.getcwd(), path.lstrip('/'))
+        else:
+            # Serve from web directory
+            file_path = os.path.join(WEB_DIR, path.lstrip('/'))
+            
         if os.path.exists(file_path) and os.path.isfile(file_path):
             self.send_response(200)
-            # Simple mime type mapping
+            # Mime type mapping
             if path.endswith('.js'): self.send_header('Content-Type', 'application/javascript')
             elif path.endswith('.css'): self.send_header('Content-Type', 'text/css')
             elif path.endswith('.html'): self.send_header('Content-Type', 'text/html')
+            elif path.endswith('.md'): self.send_header('Content-Type', 'text/markdown')
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
             with open(file_path, 'rb') as f: self.wfile.write(f.read())
