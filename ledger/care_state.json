@@ -1,0 +1,26 @@
+{
+  "care_1768038650227": {
+    "id": "care_1768038650227",
+    "title": "Mentorship session",
+    "description": "Guidelines for onboarding new seekers.",
+    "reward_at": 2.0,
+    "status": "OPEN",
+    "completions": []
+  },
+  "care_1768038650230": {
+    "id": "care_1768038650230",
+    "title": "Wellness Check-in",
+    "description": "Verify the physical/mental readiness of a neighbor.",
+    "reward_at": 1.0,
+    "status": "OPEN",
+    "completions": []
+  },
+  "care_1768038650231": {
+    "id": "care_1768038650231",
+    "title": "Community Logistics",
+    "description": "Organizing the distribution of harvest surplus.",
+    "reward_at": 1.5,
+    "status": "OPEN",
+    "completions": []
+  }
+}

@@ -332,5 +332,29 @@
     "verified_hours": 0.0,
     "safety_grade": 100.0,
     "created_at": 1767850924.802732
+  },
+  "Lead_Architect": {
+    "password": "queen_password",
+    "mnemonic": "bond life spirit open gaia build tribe mint node source ark truth",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 68.0,
+    "safety_grade": 100.0,
+    "created_at": 1768033212.132607
+  },
+  "antigravity_ai": {
+    "password": "sovereign_intelligence_password_123",
+    "mnemonic": "ark build power source mint value hand core seed gaia mind grid",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768041454.088304
   }
 }

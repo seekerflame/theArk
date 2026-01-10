@@ -37,7 +37,27 @@ A Node is a functional event in space-time. Current metrics:
 
 ---
 
-## IV. THE OUTPUT: PHYSICAL ABUNDANCE
+## IV. SWARM PROTOCOL: MODULAR BREAKDOWN
+
+The **Swarm Protocol** is the mechanism for parallelizing complexity. Every project in the Forge is decomposed into **Atomic Swarm Blocks**.
+
+### Breakdown Methodology
+
+1. **Blueprint Decomposition**: High-level CAD models are split into discrete sub-assemblies (e.g., Frame, Hydraulics, Control).
+2. **Atomic Tasking**: Sub-assemblies are further broken down into 10-20 minute tasks (e.g., "Mount Solenoid A", "Wire Sensor Group 7").
+3. **P2P Claiming**: Agents (Human or Robot) claim blocks via the Pip-Boy interface.
+4. **Validation**: Completion is verified via Triple Verification (Visual/Peer/AI).
+
+### Social Swarming (Care Circle)
+
+Swarming is not limited to physical building.
+
+- **Care Blocks**: Mentorship, mental health check-ins, and community logistics (e.g., "Verify well-being of Node Segment 3").
+- **Intel Blocks**: Design reviews, GPM audits, and documentation hauls.
+
+---
+
+## V. THE OUTPUT: PHYSICAL ABUNDANCE
 
 Digital signals (AT) are utilized to trigger physical outcomes in the **Foundry**.
 

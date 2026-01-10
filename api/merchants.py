@@ -21,7 +21,7 @@ def register_merchant_routes(router, ledger, auth_decorator):
             (merchant_id,)
         )
         if not merchant:
-            return handler.send_error("Merchant not found", status=404)
+            return handler.send_json_error("Merchant not found", status=404)
         
         # Get services/products
         services = ledger.query(
@@ -40,7 +40,7 @@ def register_merchant_routes(router, ledger, auth_decorator):
         
         required = ['name', 'category', 'description']
         if not all(k in payload for k in required):
-            return handler.send_error("Missing required fields")
+            return handler.send_json_error("Missing required fields")
         
         merchant_id = f"{payload['category']}_{payload['name'].lower().replace(' ', '_')}"
         
@@ -91,7 +91,7 @@ def register_merchant_routes(router, ledger, auth_decorator):
         )
         
         if not merchant:
-            return handler.send_error("Merchant not found", status=404)
+            return handler.send_json_error("Merchant not found", status=404)
         
         # Serve merchant landing HTML
         html = f"""

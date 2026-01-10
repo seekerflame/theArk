@@ -1,13 +1,33 @@
 import os
 import json
 
-def register_treasury_routes(router, treasury_bot, auth_decorator):
+from core.treasury_bridge import TreasuryBridge
+
+def register_treasury_routes(router, treasury_bot, ledger, auth_decorator):
     
+    bridge = TreasuryBridge(ledger)
+
     @router.get('/api/treasury/status')
     @auth_decorator
     def h_treasury_status(h, user):
-        """Returns the current status of the Treasury Bot."""
-        h.send_json(treasury_bot.get_status())
+        """Returns the current status of the Treasury Bot and Bridge."""
+        status = treasury_bot.get_status()
+        status['bridge'] = bridge.get_market_metrics()
+        h.send_json(status)
+
+    @router.post('/api/treasury/ingress')
+    @auth_decorator
+    def h_treasury_ingress(h, p, user):
+        """Processes a simulated crypto deposit."""
+        sender = user['sub']
+        amount = float(p.get('amount_usd', 0))
+        asset = p.get('asset', 'BTC')
+        
+        if amount <= 0:
+            return h.send_json_error("Amount must be greater than zero.")
+            
+        result = bridge.process_ingress(sender, amount, asset)
+        h.send_json(result)
 
     @router.post('/api/treasury/config')
     @auth_decorator

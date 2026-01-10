@@ -1,124 +1,81 @@
-#!/usr/bin/env python3
-"""
-GAIA NEXUS DAEMON - Autonomous Background Worker
-Runs continuously, executing improvement cycles every 6 hours.
-Survives system restarts via launchd/cron.
-"""
-import os
 import time
-import sys
-import logging
-import json
-from datetime import datetime
-from pathlib import Path
+import random
+from core.swarm import SwarmEngine
+from core.care import CareCircle
+from core.ledger import VillageLedger
 
-# Add parent to path for imports
-sys.path.insert(0, str(Path(__file__).parent))
+class GaiaDaemon:
+    def __init__(self, ledger, hardware_bridge=None):
+        self.ledger = ledger
+        self.swarm = SwarmEngine(ledger)
+        self.care = CareCircle(ledger)
+        self.bridge = hardware_bridge
+        self.node_id = "node_001"
+        self.history = []
 
-from ai_orchestrator import GaiaNexus
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] [DAEMON] %(message)s',
-    handlers=[
-        logging.FileHandler('gaia_daemon.log'),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger("DAEMON")
-
-CYCLE_INTERVAL = 6 * 60 * 60  # 6 hours in seconds
-QUICK_CYCLE = 60 * 60  # 1 hour for testing
-HEARTBEAT_FILE = "daemon_heartbeat.json"
-
-def write_heartbeat():
-    """Write heartbeat file so user knows daemon is alive"""
-    with open(HEARTBEAT_FILE, 'w') as f:
-        json.dump({
-            'last_heartbeat': datetime.now().isoformat(),
-            'status': 'alive',
-            'pid': os.getpid()
-        }, f, indent=2)
-
-def check_should_run():
-    """Check if enough time has passed since last run"""
-    if not os.path.exists(HEARTBEAT_FILE):
-        return True
-    
-    try:
-        with open(HEARTBEAT_FILE, 'r') as f:
-            data = json.load(f)
-            last = datetime.fromisoformat(data['last_heartbeat'])
-            elapsed = (datetime.now() - last).total_seconds()
-            return elapsed > QUICK_CYCLE  # Run every hour in daemon mode
-    except:
-        return True
-
-def run_daemon():
-    """Main daemon loop"""
-    logger.info("=" * 60)
-    logger.info("🌌 GAIA NEXUS DAEMON STARTING")
-    logger.info(f"   PID: {os.getpid()}")
-    logger.info(f"   Cycle Interval: {CYCLE_INTERVAL / 3600} hours")
-    logger.info("=" * 60)
-    
-    # Get config from environment
-    ARK_URL = os.environ.get('ARK_API_URL', 'http://localhost:3000')
-    AI_TOKEN = os.environ.get('AI_AGENT_TOKEN', 'daemon_token')
-    
-    # Initialize GAIA NEXUS
-    gaia = GaiaNexus(ARK_URL, AI_TOKEN)
-    
-    while True:
-        try:
-            write_heartbeat()
-            
-            if check_should_run():
-                logger.info("🔄 Starting autonomous cycle...")
-                gaia.run_autonomous_cycle()
-                logger.info("✅ Cycle complete!")
-            else:
-                logger.info("⏳ Skipping cycle (ran recently)")
-            
-            # Sleep for interval
-            logger.info(f"😴 Sleeping for {CYCLE_INTERVAL / 3600} hours...")
-            time.sleep(CYCLE_INTERVAL)
-            
-        except KeyboardInterrupt:
-            logger.info("🛑 Daemon stopped by user")
-            break
-        except Exception as e:
-            logger.error(f"❌ Cycle error: {e}")
-            # Sleep shorter on error, then retry
-            time.sleep(300)  # 5 min
-
-def main():
-    """Entry point with daemonization option"""
-    import argparse
-    parser = argparse.ArgumentParser(description='GAIA NEXUS Daemon')
-    parser.add_argument('--test', action='store_true', help='Run one cycle and exit')
-    parser.add_argument('--status', action='store_true', help='Check daemon status')
-    args = parser.parse_args()
-    
-    if args.status:
-        if os.path.exists(HEARTBEAT_FILE):
-            with open(HEARTBEAT_FILE, 'r') as f:
-                data = json.load(f)
-                print(f"Status: {data['status']}")
-                print(f"Last Heartbeat: {data['last_heartbeat']}")
-                print(f"PID: {data['pid']}")
+    def run_cycle(self):
+        # 1. Monitor Hardware Sensors
+        if self.bridge:
+            telemetry = self.bridge.read_telemetry()
+            solar_efficiency = telemetry.get('solar_amps', 0) / 10.0 # Approximate efficiency based on max amps
+            battery_level = telemetry.get('battery_level', 50.0)
+            social_entropy = random.uniform(0.0, 1.0) # Still simulated for now
         else:
-            print("Daemon has never run or heartbeat missing")
-        return
-    
-    if args.test:
-        ARK_URL = os.environ.get('ARK_API_URL', 'http://localhost:3000')
-        AI_TOKEN = os.environ.get('AI_AGENT_TOKEN', 'test_token')
-        gaia = GaiaNexus(ARK_URL, AI_TOKEN)
-        gaia.run_autonomous_cycle()
-        return
-    
-    run_daemon()
+            # Fallback to pure random simulation if no bridge
+            solar_efficiency = random.uniform(0.7, 1.0)
+            battery_level = random.uniform(50.0, 100.0)
+            social_entropy = random.uniform(0.0, 1.0)
+        
+        # 2. Identify Critical Path Issues
+        if solar_efficiency < 0.8:
+            self.generate_repair_swarm("Solar Array Panel Cleaning", "blueprint_solar_maint")
 
-if __name__ == '__main__':
-    main()
+        # 3. Monitor Community Morale (Simulated)
+        social_entropy = random.uniform(0.0, 1.0)
+        if social_entropy > 0.7:
+            self.generate_care_quest("Inter-Node Mentorship", "Community fragmentation risk detected.")
+
+        # 4. Generate Thrive Messages for Radio
+        thrive_msgs = [
+            f"[GAIA] Solar Efficiency: {solar_efficiency*100:.1f}%",
+            f"[GAIA] Node Energy: {battery_level:.1f} kWh",
+            f"[GAIA] Social Entropy: {social_entropy:.2f}"
+        ]
+        
+        if social_entropy < 0.3:
+            thrive_msgs.append("🌟 Community synchronization reaching optimal levels.")
+        if solar_efficiency > 0.9:
+            thrive_msgs.append("☀️ Maximum photonic harvest detected.")
+
+        # 5. Log Gaia's thoughts to the Ledger
+        log_entry = {
+            "type": "GAIA_THOUGHT",
+            "solar_eff": f"{solar_efficiency:.2f}",
+            "entropy": f"{social_entropy:.2f}",
+            "messages": thrive_msgs,
+            "timestamp": time.time()
+        }
+        self.ledger.add_block('GAIA_PULSE', log_entry)
+        return log_entry
+
+    def generate_repair_swarm(self, title, blueprint):
+        # Check if already active
+        existing = any(p['title'] == title for p in self.swarm.projects.values())
+        if not existing:
+            pid = self.swarm.create_project(f"[AUTO] {title}", blueprint, 5)
+            self.ledger.add_block('GAIA_AUTONOMY', {
+                "action": "AUTO_SWARM_GEN",
+                "project_id": pid,
+                "reason": "Efficiency dropped below 80%"
+            })
+
+    def generate_care_quest(self, title, reason):
+        # Check if already active
+        existing = any(t['title'] == title for t in self.care.tasks.values())
+        if not existing:
+            tid = self.care.add_task(f"[GAIA] {title}", reason, 3.0)
+            self.ledger.add_block('GAIA_AUTONOMY', {
+                "action": "AUTO_CARE_GEN",
+                "task_id": tid,
+                "reason": reason
+            })

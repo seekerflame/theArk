@@ -1,0 +1,138 @@
+{
+  "swarm_1768038650": {
+    "id": "swarm_1768038650",
+    "title": "SEED Eco-Home v7",
+    "blueprint_id": "blueprint_01",
+    "status": "ACTIVE",
+    "blocks": {
+      "block_0": {
+        "id": "block_0",
+        "description": "Atomic Assembly Task 1 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_1": {
+        "id": "block_1",
+        "description": "Atomic Assembly Task 2 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_2": {
+        "id": "block_2",
+        "description": "Atomic Assembly Task 3 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_3": {
+        "id": "block_3",
+        "description": "Atomic Assembly Task 4 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_4": {
+        "id": "block_4",
+        "description": "Atomic Assembly Task 5 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_5": {
+        "id": "block_5",
+        "description": "Atomic Assembly Task 6 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_6": {
+        "id": "block_6",
+        "description": "Atomic Assembly Task 7 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_7": {
+        "id": "block_7",
+        "description": "Atomic Assembly Task 8 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_8": {
+        "id": "block_8",
+        "description": "Atomic Assembly Task 9 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_9": {
+        "id": "block_9",
+        "description": "Atomic Assembly Task 10 for SEED Eco-Home v7",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      }
+    }
+  },
+  "swarm_1768038686": {
+    "id": "swarm_1768038686",
+    "title": "[AUTO] Solar Array Panel Cleaning",
+    "blueprint_id": "blueprint_solar_maint",
+    "status": "ACTIVE",
+    "blocks": {
+      "block_0": {
+        "id": "block_0",
+        "description": "Atomic Assembly Task 1 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_1": {
+        "id": "block_1",
+        "description": "Atomic Assembly Task 2 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_2": {
+        "id": "block_2",
+        "description": "Atomic Assembly Task 3 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_3": {
+        "id": "block_3",
+        "description": "Atomic Assembly Task 4 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_4": {
+        "id": "block_4",
+        "description": "Atomic Assembly Task 5 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      }
+    }
+  }
+}

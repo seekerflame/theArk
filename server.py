@@ -91,7 +91,7 @@ router = Router()
 auth_decorator = requires_auth(identity)
 
 register_system_routes(router, ledger, identity, peers, sensors, energy, auth_decorator)
-register_steward_routes(router, ledger, energy, auth_decorator)
+register_steward_routes(router, ledger, energy, steward, auth_decorator)
 register_economy_routes(router, ledger, sensors, identity, justice, auth_decorator, quest_system, verification)
 
 
@@ -102,7 +102,7 @@ register_exchange_routes(router, ledger, auth_decorator)
 register_justice_routes(router, ledger, justice, auth_decorator)
 
 register_quest_routes(router, ledger, identity, auth_decorator)
-register_treasury_routes(router, treasury, auth_decorator)
+register_treasury_routes(router, treasury, ledger, auth_decorator)
 register_role_routes(router, ledger, identity, auth_decorator)
 register_fiat_routes(router, ledger, fiat_bridge, auth_decorator)
 register_academy_routes(router, academy, auth_decorator)
@@ -144,6 +144,62 @@ try:
     governance = GovernanceEngine(ledger, identity)
     register_moderation_routes(router, governance, identity, auth_decorator)
     logger.info("⚖️ Governance Engine & Moderation API active")
+    
+    # Academy Missions (Integrated into Academy)
+    # register_mission_routes(router, ledger, identity, auth_decorator)
+    # logger.info("🎓 Academy Missions (Learn-to-Earn) ONLINE")
+
+    # Board Bored (Ad Network)
+    from api.board_bored import register_board_bored_routes
+    register_board_bored_routes(router, ledger, auth_decorator)
+    logger.info("📺 Board Bored Ad Engine (Attention-to-Abundance) ONLINE")
+
+    # Swarm Protocol
+    from api.swarm import register_swarm_routes
+    register_swarm_routes(router, ledger, auth_decorator)
+    logger.info("🐝 Swarm Protocol (Modular Build) ONLINE")
+
+    # Care Circle
+    from api.care import register_care_routes
+    register_care_routes(router, ledger, auth_decorator)
+    logger.info("💗 Care Circle (Social Labor) ONLINE")
+
+    # Federation Mesh
+    from api.federation import register_federation_routes
+    register_federation_routes(router, ledger, auth_decorator)
+    logger.info("🌐 Federation Mesh (Cosmos) ONLINE")
+
+    # Evolution Loop (Self-Improvement)
+    from api.evolution import register_evolution_routes
+    register_evolution_routes(router, ledger, auth_decorator)
+    logger.info("🧬 Evolution Loop (Autopoiesis) ONLINE")
+
+    # Hardware Bridge (Physical/Simulated Sensors)
+    from core.hardware_bridge import HardwareBridge
+    hw_bridge = HardwareBridge()
+
+    # Gaia Autonomy Daemon (Background Observer)
+    from gaia_daemon import GaiaDaemon
+    gaia = GaiaDaemon(ledger, hardware_bridge=hw_bridge)
+    
+    # We expose Gaia's current 'pulse' to the dashboard
+    @router.get('/api/gaia/pulse')
+    def gaia_pulse(h):
+        pulse = gaia.run_cycle()
+        
+        # Broadcast pulse messages to the general chat
+        if 'messages' in pulse:
+            for msg in pulse['messages']:
+                ledger.add_block('MESSAGE', {
+                    'sender': 'GAIA',
+                    'content': msg,
+                    'channel': 'general',
+                    'timestamp': time.time(),
+                    'verified': True
+                })
+        
+        h.send_json(pulse)
+
 except ImportError as e:
     logger.warning(f"⚠️  API modules missing: {e}")
 

@@ -54,5 +54,35 @@ class StewardNexus:
                 })
         self.sensors.save()
 
+    def create_proposal(self, title, description, cost_at=0):
+        proposal_id = f"prop_{int(time.time())}"
+        data = {
+            "id": proposal_id,
+            "title": title,
+            "description": description,
+            "cost_at": cost_at,
+            "votes_for": 0,
+            "votes_against": 0,
+            "status": "OPEN",
+            "timestamp": time.time()
+        }
+        self.ledger.add_block('PROPOSAL', data)
+        return proposal_id
+
+    def vote_on_proposal(self, proposal_id, vote_type='for'):
+        for block in self.ledger.blocks:
+            if block['type'] == 'PROPOSAL' and block['data']['id'] == proposal_id:
+                if vote_type == 'for':
+                    block['data']['votes_for'] += 1
+                else:
+                    block['data']['votes_against'] += 1
+                
+                # Simple auto-approve logic for demo
+                if block['data']['votes_for'] >= 5:
+                    block['data']['status'] = "APPROVED"
+                
+                return True
+        return False
+
     def start(self):
         threading.Thread(target=self.audit_system, daemon=True).start()

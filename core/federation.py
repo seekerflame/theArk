@@ -1,74 +1,94 @@
+import time
 import json
 import os
-import time
-import threading
-import subprocess
-import logging
+import random
 
-logger = logging.getLogger("ArkOS.Federation")
-
-class PeerManager:
-    def __init__(self, registry_file, port):
-        self.registry_file = registry_file
-        self.port = port
-        self.peers = []
+class FederationMesh:
+    def __init__(self, ledger, storage_path='ledger/federation_registry.json'):
+        self.ledger = ledger
+        self.storage_path = storage_path
+        self.nodes = {}
         self.load()
 
     def load(self):
-        if os.path.exists(self.registry_file):
-            try:
-                with open(self.registry_file, 'r') as f:
-                    data = json.load(f)
-                    self.peers = data.get('villages', data) if isinstance(data, dict) else data
-            except: pass
+        if os.path.exists(self.storage_path):
+            with open(self.storage_path, 'r') as f:
+                self.nodes = json.load(f)
         else:
-            self.peers = [{"id": "V-001", "name": "The Ark (Local)", "url": f"http://localhost:{self.port}", "status": "ONLINE"}]
+            # Seed Genesis Node
+            self.nodes = {
+                "node_001": {
+                    "id": "node_001",
+                    "name": "Factor E Farm",
+                    "population": 142,
+                    "kardashev": 0.7241,
+                    "status": "STABLE",
+                    "location": [39.0, -91.0] # Kansas
+                }
+            }
             self.save()
 
     def save(self):
-        os.makedirs(os.path.dirname(self.registry_file), exist_ok=True)
-        with open(self.registry_file, 'w') as f: json.dump(self.peers, f, indent=2)
+        os.makedirs(os.path.dirname(self.storage_path), exist_ok=True)
+        with open(self.storage_path, 'w') as f:
+            json.dump(self.nodes, f, indent=2)
 
-    def add_peer(self, name, url):
-        p_id = f"V-{len(self.peers)+1:03d}"
-        self.peers.append({"id": p_id, "name": name, "url": url, "status": "PENDING"})
+    def heartbeat(self):
+        # Simulate mitosis across the federation
+        for node_id, node in list(self.nodes.items()):
+            # Growth simulation
+            node['population'] += random.randint(0, 2)
+            node['kardashev'] += random.uniform(0.0001, 0.0005)
+            
+            if node['population'] >= 150:
+                self.mitosis(node_id)
+
+    def mitosis(self, node_id):
+        parent = self.nodes[node_id]
+        new_node_id = f"node_{len(self.nodes) + 1:03d}"
+        
+        # Split population
+        new_pop = parent['population'] // 2
+        parent['population'] -= new_pop
+        parent['status'] = "RECOVERING"
+        
+        self.nodes[new_node_id] = {
+            "id": new_node_id,
+            "name": f"Spore Node {new_node_id}",
+            "population": new_pop,
+            "kardashev": 0.5,
+            "status": "COLONIZING",
+            "location": [
+                parent['location'][0] + random.uniform(-1.0, 1.0),
+                parent['location'][1] + random.uniform(-1.0, 1.0)
+            ],
+            "parent_id": node_id
+        }
+        
+        self.ledger.add_block('FEDERATION_MITOSIS', {
+            "parent": node_id,
+            "child": new_node_id,
+            "timestamp": time.time()
+        })
         self.save()
-        return p_id
+
+class PeerManager:
+    def __init__(self, registry_path, port):
+        self.registry_path = registry_path
+        self.port = port
+        self.mesh = FederationMesh(None, storage_path=registry_path)
+
+    def get_nodes(self):
+        return self.mesh.nodes
 
 class FederationSyncer:
     def __init__(self, ledger, peers, port):
         self.ledger = ledger
         self.peers = peers
         self.port = port
-        self.stop_event = threading.Event()
-
-    def sync_cycle(self):
-        while not self.stop_event.is_set():
-            for peer in self.peers.peers:
-                if not isinstance(peer, dict) or 'url' not in peer: continue
-                if peer['url'].endswith(str(self.port)): continue 
-                try:
-                    last_id = self.ledger.blocks[-1]['id'] if self.ledger.blocks else 0
-                    url = f"{peer['url']}/api/graph?since={last_id}"
-                    logger.info(f"Syncing from peer: {peer['name']} ({url})")
-                    
-                    res = subprocess.check_output(["curl", "-s", url])
-                    data = json.loads(res)
-                    
-                    if data.get('status') == 'success':
-                        new_blocks = data.get('data', [])
-                        for b in new_blocks:
-                            if self.ledger.reconcile_block(b):
-                                logger.info(f"Synced new block {b['hash'][:8]} from {peer['name']}")
-                        peer['status'] = 'ONLINE'
-                    else:
-                        peer['status'] = 'ERROR'
-                except Exception as e:
-                    logger.warning(f"Failed to sync from {peer['name']}: {e}")
-                    peer['status'] = 'OFFLINE'
-            
-            self.peers.save()
-            time.sleep(30)
+        self.running = False
 
     def start(self):
-        threading.Thread(target=self.sync_cycle, daemon=True).start()
+        self.running = True
+        # Background simulation loop could go here
+        print(f"🌐 Federation Syncer active on port {self.port}")

@@ -11,6 +11,26 @@ class AcademyAPI:
         self.ledger = ledger
         self.wisdom = wisdom_engine
         self.syntheses = []
+        self.missions = [
+            {
+                "id": "genesis_01",
+                "class": "BRONZE",
+                "title": "Protocol Greeting",
+                "description": "Welcome to the Ark. Verify your understanding of $0/month living.",
+                "reward_at": 10.0,
+                "reward_xp": 100,
+                "requires_physical": False
+            },
+            {
+                "id": "build_01",
+                "class": "SILVER",
+                "title": "Modular Frame Assembly",
+                "description": "Learn the CEB press mechanics and frame welding basics.",
+                "reward_at": 25.0,
+                "reward_xp": 500,
+                "requires_physical": True
+            }
+        ]
 
     # Complexity Multiplier Map
     COMPLEXITY_LEVELS = {
@@ -57,13 +77,48 @@ class AcademyAPI:
 
         return {"status": "success", "reward": reward, "complexity": multiplier}
 
+    def get_missions(self):
+        return self.missions
+
+    def claim_mission(self, user_id, mission_id):
+        mission = next((m for m in self.missions if m['id'] == mission_id), None)
+        if not mission:
+            return False, "Mission not found"
+        
+        if mission['requires_physical']:
+            return False, "This mission requires physical verification from a Mentor."
+
+        # Reward AT
+        self.ledger.add_block('ACADEMY_REWARD', {
+            "user": user_id,
+            "mission_id": mission_id,
+            "reward_at": mission['reward_at'],
+            "timestamp": time.time()
+        })
+        return True, mission['reward_at']
+
+    def verify_physical(self, mentor_id, student_id, mission_id):
+        # In a real scenario, check mentor_id role
+        mission = next((m for m in self.missions if m['id'] == mission_id), None)
+        if not mission:
+            return False, "Mission not found"
+
+        self.ledger.add_block('ACADEMY_PHYSICAL_VERIFY', {
+            "mentor": mentor_id,
+            "student": student_id,
+            "mission_id": mission_id,
+            "reward_at": mission['reward_at'],
+            "timestamp": time.time()
+        })
+        return True, f"Verified {student_id} for {mission_id}"
+
 def register_academy_routes(router, academy, auth_decorator):
     @router.get('/api/academy/wisdom')
-    def h_get_wisdom(h, p):
+    def h_get_wisdom(h):
         h.send_json(academy.get_wisdom_snippet())
 
     @router.get('/api/academy/tree')
-    def h_get_tree(h, p):
+    def h_get_tree(h):
         h.send_json({"mermaid": academy.get_skill_tree()})
 
     @router.post('/api/academy/synthesis')
@@ -71,3 +126,28 @@ def register_academy_routes(router, academy, auth_decorator):
     def h_submit_synthesis(h, user, p):
         result = academy.submit_synthesis(user['sub'], p)
         h.send_json(result)
+
+    @router.get('/api/academy/missions')
+    def h_get_missions(h):
+        h.send_json({"missions": academy.get_missions()})
+
+    @router.post('/api/academy/claim')
+    @auth_decorator
+    def h_claim_mission(h, user, p):
+        mission_id = p.get('mission_id')
+        success, reward = academy.claim_mission(user['sub'], mission_id)
+        if success:
+            h.send_json({"status": "success", "reward_at": reward, "reward_xp": 100})
+        else:
+            h.send_json_error(reward)
+
+    @router.post('/api/academy/verify_physical')
+    @auth_decorator
+    def h_verify_physical(h, user, p):
+        student_id = p.get('student_id')
+        mission_id = p.get('mission_id')
+        success, message = academy.verify_physical(user['sub'], student_id, mission_id)
+        if success:
+            h.send_json({"status": "success", "message": message})
+        else:
+            h.send_json_error(message)

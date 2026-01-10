@@ -1,0 +1,13 @@
+{
+  "node_001": {
+    "id": "node_001",
+    "name": "Factor E Farm",
+    "population": 142,
+    "kardashev": 0.7241,
+    "status": "STABLE",
+    "location": [
+      39.0,
+      -91.0
+    ]
+  }
+}

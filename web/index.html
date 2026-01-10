@@ -6,15 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PIP-BOY 3000 | ARK OS</title>
     <link rel="stylesheet" href="style.css?v=3.1">
-    <link rel="stylesheet" href="dopamine.css">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
     <!-- Scripts -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <!-- App Logic -->
@@ -31,9 +28,8 @@
     <script src="exodus.js"></script>
     <script src="intel.js"></script>
     <script src="lifeline.js"></script>
-    <script src="founders_deck.js"></script>
-    <link rel="stylesheet" href="lifeline.css">
-
+    <script src="evolution_ui.js"></script>
+    <link rel="stylesheet" href="dopamine.css">
 </head>
 
 <body>
@@ -47,27 +43,65 @@
 
             <div class="screen-content" id="main-display">
 
-                <!-- HEADER: Top Status Bar -->
-                <div
-                    style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--pip-green); padding-bottom: 10px; margin-bottom: 20px;">
-                    <div style="font-size: 1.2rem; font-weight: bold; cursor:pointer;" onclick="switchPipTab('deck')">
-                        HP <span id="hp-stat">100/100</span>
-                    </div>
-                    <div style="font-size: 1.2rem; font-weight: bold;">
-                        LEVEL <span id="lvl-stat">01</span> <span class="blink">▮</span>
-                    </div>
-                    <div style="font-size: 1.2rem; font-weight: bold;">
-                        AP <span id="ap-stat">85/100</span>
+                <!-- ... existing header ... -->
+
+                <!-- VIEW: EVOLUTION (Autopoiesis) -->
+                <div id="view-evolution" class="app-view" style="display: none;">
+                    <div class="pip-box" style="border-color: #ec4899;">
+                        <h2 style="color: #ec4899; margin: 0;">SYSTEM EVOLUTION <span class="blink">⚡</span></h2>
+                        <p style="font-size: 0.8rem; color: var(--pip-dim);">Autopoietic Self-Improvement Vectors</p>
+                        <div id="evolution-feed" class="terminal-list" style="margin-top: 10px;">
+                            <!-- Injected by evolution_ui.js -->
+                        </div>
                     </div>
                 </div>
 
-                <!-- VIEW: STAT (Dashboard) -->
-                <div id="view-stat" class="app-view">
-                    <div class="pip-grid-2">
-                        <div
-                            style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                            <pre
-                                style="font-family: 'VT323'; font-size: 10px; line-height: 10px; color: var(--pip-green);">
+                <!-- ... existing views ... -->
+
+            </div> <!-- End Screen Content -->
+        </div> <!-- End CRT Screen -->
+
+        <!-- PHYSICAL NAV TABS -->
+        <div class="pip-nav-container">
+            <button class="pip-tab active" onclick="switchPipTab('stat')">STAT</button>
+            <button class="pip-tab" onclick="switchPipTab('inv')">INV</button>
+            <button class="pip-tab" onclick="switchPipTab('data')">DATA</button>
+            <button class="pip-tab" onclick="switchPipTab('swarm')">SWARM</button>
+            <button class="pip-tab" onclick="switchPipTab('academy')">ACADEMY</button>
+            <button class="pip-tab" onclick="switchPipTab('evolution')">EVO</button>
+            <button class="pip-tab" onclick="switchPipTab('bored')">BORED</button>
+            <button class="pip-tab" onclick="switchPipTab('focus')">FOCUS</button>
+            <button class="pip-tab" onclick="switchPipTab('gov')">GOV</button>
+            <button class="pip-tab" onclick="switchPipTab('radio')">RADIO</button>
+        </div>
+        <div
+            style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--pip-green); padding-bottom: 10px; margin-bottom: 20px;">
+            <div style="font-size: 1.2rem; font-weight: bold; cursor:pointer;" onclick="switchPipTab('deck')">
+                HP <span id="hp-stat">100/100</span>
+            </div>
+            <div style="font-size: 1.2rem; font-weight: bold;">
+                LEVEL <span id="lvl-stat">01</span> <span class="blink">▮</span>
+            </div>
+            <div style="font-size: 1.2rem; font-weight: bold;">
+                AP <span id="ap-stat">85/100</span>
+            </div>
+        </div>
+
+        <div id="view-stat" class="app-view">
+            <!-- DOPAMINE CONTROL CENTER -->
+            <div class="pip-box" style="margin-top: 20px;">
+                <h3 style="margin: 0; border-bottom: 2px solid var(--pip-green);">DOPAMINE CONTROL CENTER</h3>
+                <div class="pip-grid-2" style="margin-top: 15px;">
+                    <button id="btn-dopamine-low" class="btn-pip" onclick="window.setDopamineMode('low')">ZEN
+                        (MONK)</button>
+                    <button id="btn-dopamine-high" class="btn-pip" onclick="window.setDopamineMode('high')">GLOW
+                        (REWARD)</button>
+                </div>
+            </div>
+
+            <div class="pip-grid-2">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <pre style="font-family: 'VT323'; font-size: 10px; line-height: 10px; color: var(--pip-green);">
       .::-::.
     .::'   '::.
    .::       ::.
@@ -81,362 +115,254 @@
      '::-::-'
       VAULT-TEC
                         </pre>
-                            <div style="margin-top: 10px; text-align: center; font-size: 1.5rem;">
-                                STATUS: <span style="color: var(--pip-green);">OPTIMAL</span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="pip-box">
-                                <h3 style="margin: 0; border: none;">KARDASHEV SIGNAL</h3>
-                                <div style="font-size: 2.5rem; font-weight: bold;" id="kardashev-realtime">0.7241</div>
-                                <div class="pip-stat-row">
-                                    <span>OUTPUT</span>
-                                    <span>15.4 TW</span>
-                                </div>
-                            </div>
-
-                            <div class="pip-box">
-                                <h3 style="margin: 0; border: none;">LIMBIC SYSTEM</h3>
-                                <div class="pip-bar-container" style="margin-top: 10px;">
-                                    <div class="pip-bar-fill" style="width: 75%;"></div>
-                                </div>
-                                <div class="pip-stat-row">
-                                    <span>MORALE</span>
-                                    <span>STABLE</span>
-                                </div>
-                            </div>
-
-                            <div class="pip-box" id="focus-hud-element">
-                                <h3 style="margin: 0; border: none;">FOCUS BATTERY</h3>
-                                <div class="pip-bar-container" style="margin-top: 10px;">
-                                    <div id="focus-battery-fill" class="pip-bar-fill" style="width: 0%;"></div>
-                                </div>
-                                <div class="pip-stat-row">
-                                    <span id="focus-timer-text">INACTIVE</span>
-                                    <span onclick="window.claimFocus()"
-                                        style="cursor:pointer; text-decoration:underline;">CLAIM</span>
-                                </div>
-                            </div>
-
-                            <div class="pip-box" style="border-color: var(--pip-blue);">
-                                <h3 style="margin: 0; border: none; color: var(--pip-blue);">SOVEREIGNTY</h3>
-                                <div class="pip-stat-row">
-                                    <span>VAULT STATUS</span>
-                                    <span style="color: var(--pip-blue);">HARDENED</span>
-                                </div>
-                                <div class="pip-stat-row">
-                                    <span>SIGNATURE</span>
-                                    <span>AES-256</span>
-                                </div>
-                            </div>
-
-                            <div class="pip-box" style="border-color: #FBBF24;">
-                                <h3 style="margin: 0; border: none; color: #FBBF24;">ECONOMY</h3>
-                                <div class="pip-stat-row">
-                                    <span>VERIFIED BLOCKS</span>
-                                    <span id="dash-block-count">3,900+</span>
-                                </div>
-                                <div class="pip-stat-row">
-                                    <span>BTC TREASURY</span>
-                                    <span style="color: #FBBF24;">0.42 BTC</span>
-                                </div>
-                                <div class="pip-stat-row">
-                                    <span>TOTAL MINTED</span>
-                                    <span id="dash-mint-count">12,450 AT</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- DOPAMINE CONTROL CENTER -->
-                    <div class="pip-box" style="margin-top: 20px;">
-                        <h3 style="margin: 0; border-bottom: 2px solid var(--pip-green);">DOPAMINE CONTROL CENTER</h3>
-                        <div class="pip-grid-2" style="margin-top: 15px;">
-                            <button id="btn-dopamine-low" class="btn-pip" onclick="window.setDopamineMode('low')">ZEN
-                                (MONK)</button>
-                            <button id="btn-dopamine-high" class="btn-pip" onclick="window.setDopamineMode('high')">GLOW
-                                (REWARD)</button>
-                        </div>
-                        <div class="pip-stat-row" style="margin-top: 10px;">
-                            <span>CURRENT PROTOCOL</span>
-                            <span id="current-dopamine-label">ADJUSTABLE</span>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 20px; text-align: center;">
-                        <button class="btn-pip" onclick="switchPipTab('sitemap')"
-                            style="width: 100%; letter-spacing: 5px;">ARCHITECTURE SITE MAP</button>
-                    </div>
-
-                    <h3 style="margin-top: 20px;">QUICK COMMANDS</h3>
-                    <div class="pip-grid-3">
-                        <button class="btn-pip" onclick="window.quickMint(1)">MINT 1H</button>
-                        <button class="btn-pip" onclick="window.runDiagnostic()">DIAGNOSE</button>
-                        <button class="btn-pip" onclick="window.toggleZenMode()">ZEN MODE</button>
+                    <div id="gaia-neural-hud" style="width: 150px; height: 150px; margin-bottom: 10px;"></div>
+                    <div style="margin-top: 10px; text-align: center; font-size: 1.5rem;">
+                        STATUS: <span style="color: var(--pip-green);">OPTIMAL</span>
                     </div>
                 </div>
 
-                <!-- VIEW: INV (Wallet) -->
-                <div id="view-inv" class="app-view" style="display: none;">
-                    <div class="pip-grid-2">
-                        <div class="pip-box">
-                            <h3>CAPS (AT)</h3>
-                            <div style="font-size: 3rem; font-weight: bold;" id="wallet-balance">0.00</div>
-                            <div class="pip-stat-row">
-                                <span>HOURLY RATE</span>
-                                <span>10.0 AT/HR</span>
-                            </div>
-                        </div>
-                        <div class="pip-box">
-                            <h3>INVENTORY</h3>
-                            <ul class="terminal-list">
-                                <li class="terminal-item">
-                                    <span>Starter Kit</span>
-                                    <span>1</span>
-                                </li>
-                                <li class="terminal-item">
-                                    <span>Stimpack</span>
-                                    <span>0</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <h3>ACTIONS</h3>
-                    <div class="pip-grid-3">
-                        <button class="btn-pip" onclick="window.renderSendModal()">TRANSFER</button>
-                        <button class="btn-pip" onclick="window.renderExchangeUI()">BARTER</button>
-                        <button class="btn-pip" onclick="window.renderCodeMintModal()">CRAFT</button>
-                    </div>
-                    <div style="margin-top:10px;">
-                        <button class="btn-pip"
-                            style="width: 100%; border-color: var(--pip-blue); color: var(--pip-blue);"
-                            onclick="window.authorizeDataSale('daily_packet_001')">SELL ANONYMIZED METABOLIC PROOF (+2
-                            AT)</button>
-                    </div>
-                </div>
-
-                <!-- VIEW: DATA (Quests/Wiki/Tech Tree) -->
-                <div id="view-data" class="app-view" style="display: none;">
-                    <div class="pip-grid-2" style="grid-template-columns: 1fr 1.5fr;">
-                        <div style="border-right: 1px solid var(--pip-dim); padding-right: 15px;">
-                            <h3 style="margin-top:0;">ARCHIVES</h3>
-                            <button class="btn-pip" style="width:100%; margin-bottom:10px;"
-                                onclick="window.switchView('wiki')">LIBRARY</button>
-                            <button class="btn-pip" style="width:100%; margin-bottom:10px;"
-                                onclick="window.switchView('chronicle')">LOGS</button>
-
-                            <h3 style="margin-top: 10px;">QUESTS</h3>
-                            <ul class="terminal-list" id="active-missions-list">
-                                <li class="terminal-item"><span>Loading quests...</span></li>
-                            </ul>
-                        </div>
-                        <div style="padding-left: 15px;">
-                            <h3 style="margin-top:0;">TECH TREE</h3>
-                            <div id="tech-tree-content" class="tech-tree-container">
-                                <!-- Injected via pipboy_enhancements.js -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIEW: MAP -->
-                <div id="view-map" class="app-view" style="display: none;">
-                    <div class="pip-box" style="padding: 0; min-height: 400px; border: 2px solid var(--pip-green);">
-                        <div id="mobility-map"
-                            style="filter: sepia(100%) hue-rotate(90deg) invert(100%) brightness(0.8) contrast(1.5);">
-                        </div>
-                    </div>
-                    <div class="pip-stat-row" style="margin-top:10px;">
-                        <span id="current-node-name">NODE: V-001 (FACTOR E FARM)</span>
-                        <span id="mobility-status-badge">🛰️ SIGNAL STABLE</span>
-                    </div>
-                </div>
-
-                <!-- VIEW: ADMIN DECK (God Mode) -->
-                <div id="view-deck" class="app-view" style="display: none;">
-                    <div id="view-admin-deck">
-                        <!-- Injected by admin_deck.js -->
-                    </div>
-                </div>
-
-                <!-- VIEW: RADIO (Comms) -->
-                <!-- VIEW: SITE MAP (Project Topology) -->
-                <div id="view-sitemap" class="app-view" style="display: none;">
-                    <h1>ARCHITECTURE SITE MAP</h1>
+                <div>
                     <div class="pip-box">
-                        <div id="sitemap-mermaid" class="mermaid">
-                            graph TD
-                            subgraph "Front-End Interfaces"
-                            PB["PIP-BOY 3000 (Main)"]
-                            GC["GAIA (AI Admin)"]
-                            VE["EXPLORER (Ledger)"]
-                            DC["DEV (Console)"]
-                            end
-                            subgraph "Interaction Models"
-                            H2H["HUMAN-2-HUMAN"]
-                            H2A["HUMAN-2-AI"]
-                            A2A["AI-2-AI"]
-                            end
-                            PB --> GC
-                            PB --> VE
-                            GC --> A2A
-                            H2A --> PB
-                            VE --> H2H
+                        <h3 style="margin: 0; border: none;">KARDASHEV SIGNAL</h3>
+                        <div style="font-size: 2.5rem; font-weight: bold;" id="kardashev-realtime">0.7241</div>
+                        <div class="pip-stat-row">
+                            <span>OUTPUT</span>
+                            <span>15.4 TW</span>
                         </div>
                     </div>
-                    <div class="pip-grid-2">
-                        <button class="btn-pip" onclick="window.open('/gaia.html', '_blank')">OPEN GAIA CONTROL</button>
-                        <button class="btn-pip" onclick="window.open('/explorer.html', '_blank')">OPEN EXPLORER</button>
-                    </div>
-                </div>
 
-                <div id="view-radio" class="app-view" style="display: none;">
-                    <div class="pip-box" style="height: 350px; overflow-y: auto;">
-                        <div id="terminal-log" style="font-size: 0.96rem; font-family: 'VT323', monospace;">
-                            <div style="color: var(--pip-dim);">[SYSTEM] RADIO FREQUENCY OPEN...</div>
+                    <div class="pip-box">
+                        <h3 style="margin: 0; border: none;">LIMBIC SYSTEM</h3>
+                        <div class="pip-bar-container" style="margin-top: 10px;">
+                            <div class="pip-bar-fill" style="width: 75%;"></div>
                         </div>
-                    </div>
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <input type="text" id="chat-input" placeholder="BROADCAST MESSAGE..."
-                            onkeyup="if(event.key==='Enter') window.sendChat()">
-                        <button class="btn-pip" onclick="window.sendChat()">TX</button>
-                    </div>
-                </div>
-
-                <!-- VIEW: FOCUS (Deep Work) -->
-                <div id="view-focus" class="app-view" style="display: none;">
-                    <div class="pip-grid-2">
-                        <div class="pip-box" style="text-align: center; border: 3px solid var(--pip-green);">
-                            <h2 style="font-size: 2rem; margin: 0;">MONK MODE</h2>
-                            <div style="margin: 20px 0;">
-                                <div class="pip-bar-container" style="height: 40px;">
-                                    <div id="focus-battery-fill-large" class="pip-bar-fill"
-                                        style="width: 0%; height: 100%;"></div>
-                                </div>
-                            </div>
-                            <div id="focus-timer-text-large" style="font-size: 2.5rem; font-weight: bold;">00:00:00
-                            </div>
-                            <div id="focus-status" style="font-size: 1.2rem; color: var(--pip-green); margin-top:10px;">
-                                NEURAL_LOCK: DISENGAGED</div>
-                        </div>
-                        <div class="pip-box">
-                            <h3 style="margin-top:0;">NEURAL CONTROL</h3>
-                            <div style="display: flex; flex-direction: column; gap:10px;">
-                                <button class="btn-pip" onclick="window.startFocus()">ENGAGE FOCUS (60 MIN)</button>
-                                <button class="btn-pip" onclick="window.claimFocus()" id="btn-claim-focus">CLAIM
-                                    SYNTHESIS REWARD</button>
-                                <button class="btn-pip" style="border-color: var(--pip-alert); color: var(--pip-alert);"
-                                    onclick="appState.focusSession = null; window.saveState(); window.updateUI();">ABORT
-                                    SESSION</button>
-                            </div>
-                            <h3 style="margin-top: 20px;">QUEST LOG</h3>
-                            <div style="font-size: 0.8rem; color: var(--pip-dim); font-family: 'VT323';">
-                                "The single greatest asset of mankind is attention. Guard it with your life."
-                            </div>
+                        <div class="pip-stat-row">
+                            <span>MORALE</span>
+                            <span>STABLE</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- VIEW: ACADEMY (Learn-to-Earn) -->
-                <div id="view-academy" class="app-view" style="display: none;">
-                    <div class="pip-grid-2">
-                        <div class="pip-box">
-                            <h3 style="margin-top:0;">WISDOM FEED</h3>
-                            <div id="academy-wisdom-snippet">
-                                <div class="pip-box">Loading OSE lessons...</div>
-                            </div>
-                        </div>
-                        <div class="pip-box">
-                            <h3 style="margin-top:0;">SKILL TREE</h3>
-                            <div id="academy-skill-tree"
-                                style="background: rgba(0,20,0,0.5); border: 1px solid var(--pip-green); overflow: auto;">
-                                <!-- Mermaid graph injected here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIEW: LIFE (Lifeline - Stress & Ops) -->
-                <div id="view-life" class="app-view" style="display: none;">
-                    <!-- Injected by lifeline.js -->
-                </div>
-
-                <!-- VIEW: INTEL (Sovereign Analytics) -->
-                <div id="view-intel" class="app-view" style="display: none;">
-                    <!-- Injected by intel.js -->
-                </div>
-
-                <!-- VIEW: HARVEST (Marketplace) -->
-                <div id="view-harvest" class="app-view" style="display: none;">
-                    <div id="harvest-container">
-                        <!-- Injected by harvest_ui.js -->
-                        <div class="pip-box">Loading Harvest Marketplace...</div>
-                    </div>
-                </div>
-
-                <!-- VIEW: EXODUS (Liberation Portal) -->
-                <div id="view-exodus" class="app-view" style="display: none;">
-                    <!-- Injected by exodus.js -->
-                </div>
-
-                <!-- VIEW: FOUNDERS (The Lab) -->
-                <div id="view-founders" class="app-view" style="display: none;">
-                    <!-- Injected by founders_deck.js -->
-                </div>
-
-
-                <!-- VIEW: BUILD (Blueprint Collab) -->
-                <div id="view-build" class="app-view" style="display: none; height: 100%;">
-                    <iframe src="/collab/"
-                        style="width: 100%; height: 500px; border: 2px solid var(--pip-green); background: #000;"
-                        id="collab-frame"></iframe>
-                    <div style="margin-top: 10px; display: flex; justify-content: space-between;">
-                        <span>BLUEPRINT: GVCS_MODULAR_V1</span>
-                        <span onclick="document.getElementById('collab-frame').src += ''"
-                            style="cursor:pointer; text-decoration:underline;">RELOAD_SYNC</span>
-                    </div>
-                </div>
-
-                <!-- VIEW: WIKI (Protocols) -->
-                <div id="view-wiki" class="app-view" style="display: none; height: 100%;">
-                    <div id="wiki-container" style="height: 100%; min-height: 500px;">
-                        <!-- Injected by app.js -->
-                        <div class="pip-box">Loading Protocols...</div>
-                    </div>
-                </div>
-
-                <!-- VIEW: CHRONICLE (Logs) -->
-                <div id="view-chronicle" class="app-view" style="display: none; height: 100%;">
-                    <div id="chronicle-container" class="pip-box" style="height: 500px; overflow-y: auto;">
-                        <h3 style="margin-top:0;">CHRONICLE LOGS</h3>
-                        <div id="chronicle-list-area">Loading session logs...</div>
-                    </div>
-                </div>
-
-            </div> <!-- End Screen Content -->
-        </div> <!-- End CRT Screen -->
-
-        <!-- PHYSICAL NAV TABS -->
-        <div class="pip-nav-container">
-            <button class="pip-tab active" onclick="switchPipTab('stat')">STAT</button>
-            <button class="pip-tab" onclick="switchPipTab('inv')">INV</button>
-            <button class="pip-tab" onclick="switchPipTab('data')">DATA</button>
-            <button class="pip-tab" onclick="switchPipTab('map')">MAP</button>
-            <button class="pip-tab" onclick="switchPipTab('focus')">FOCUS</button>
-            <button class="pip-tab" onclick="switchPipTab('academy')">ACADEMY</button>
-            <button class="pip-tab" onclick="switchPipTab('build')">BUILD</button>
-            <button class="pip-tab" onclick="switchPipTab('exodus')"
-                style="border-color: var(--pip-alert); color: var(--pip-alert);">EXODUS</button>
-            <button class="pip-tab" id="tab-founders" onclick="switchPipTab('founders')"
-                style="border-color: #FBBF24; color: #FBBF24; display: none;">FOUNDERS</button>
-            <button class="pip-tab" onclick="switchPipTab('life')">LIFE</button>
-
-            <button class="pip-tab" onclick="switchPipTab('intel')">INTEL</button>
-            <button class="pip-tab" onclick="switchPipTab('harvest')">HARVEST</button>
-            <button class="pip-tab" onclick="switchPipTab('radio')">RADIO</button>
+            <h3 style="margin-top: 20px;">QUICK COMMANDS</h3>
+            <div class="pip-grid-3">
+                <button class="btn-pip" onclick="window.quickMint(1)">MINT 1H</button>
+                <button class="btn-pip" onclick="window.runDiagnostic()">DIAGNOSE</button>
+                <button class="btn-pip" onclick="window.toggleZenMode()">ZEN MODE</button>
+            </div>
         </div>
+
+        <!-- VIEW: INV (Wallet) -->
+        <div id="view-inv" class="app-view" style="display: none;">
+            <div class="pip-grid-2">
+                <div class="pip-box">
+                    <h3>CAPS (AT)</h3>
+                    <div style="font-size: 3rem; font-weight: bold;" id="wallet-balance">0.00</div>
+                    <div class="pip-stat-row">
+                        <span>HOURLY RATE</span>
+                        <span>10.0 AT/HR</span>
+                    </div>
+                </div>
+                <div class="pip-box">
+                    <h3>INVENTORY</h3>
+                    <ul class="terminal-list">
+                        <li class="terminal-item">
+                            <span>Starter Kit</span>
+                            <span>1</span>
+                        </li>
+                        <li class="terminal-item">
+                            <span>Stimpack</span>
+                            <span>0</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>ACTIONS</h3>
+            <div class="pip-grid-3">
+                <button class="btn-pip" onclick="window.renderSendModal()">TRANSFER</button>
+                <button class="btn-pip" onclick="window.renderExchangeUI()">BARTER</button>
+                <button class="btn-pip" onclick="window.renderCodeMintModal()">CRAFT</button>
+            </div>
+        </div>
+
+        <!-- VIEW: DATA (Quests/Wiki/Tech Tree) -->
+        <div id="view-data" class="app-view" style="display: none;">
+            <div class="pip-grid-2" style="grid-template-columns: 1fr 1.5fr;">
+                <div style="border-right: 1px solid var(--pip-dim); padding-right: 15px;">
+                    <h3 style="margin-top:0;">ARCHIVES</h3>
+                    <button class="btn-pip" style="width:100%; margin-bottom:10px;"
+                        onclick="window.switchView('wiki')">LIBRARY</button>
+                    <button class="btn-pip" style="width:100%; margin-bottom:10px;"
+                        onclick="window.switchView('chronicle')">LOGS</button>
+
+                    <h3 style="margin-top: 10px;">QUESTS</h3>
+                    <ul class="terminal-list" id="active-missions-list">
+                        <li class="terminal-item"><span>Loading quests...</span></li>
+                    </ul>
+                </div>
+                <div style="padding-left: 15px;">
+                    <h3 style="margin-top:0;">TECH TREE</h3>
+                    <div id="tech-tree-content" class="tech-tree-container">
+                        <!-- Injected via pipboy_enhancements.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: MAP -->
+        <div id="view-map" class="app-view" style="display: none;">
+            <div class="pip-box"
+                style="padding: 0; min-height: 400px; border: 2px solid var(--pip-green); position: relative; overflow: hidden;">
+                <div id="mobility-map" style="width: 100%; height: 400px;"></div>
+                <div id="cosmos-mesh-overlay"
+                    style="position: absolute; top: 10px; left: 10px; font-size: 0.7rem; color: var(--pip-green); pointer-events: none;">
+                    [SYSTEM] COSMOS FEDERATION VIEW ACTIVE
+                </div>
+            </div>
+            <div class="pip-stat-row" style="margin-top:10px;">
+                <span id="current-node-name">NODE: V-001 (FACTOR E FARM)</span>
+                <span id="mobility-status-badge">🛰️ SIGNAL STABLE</span>
+            </div>
+        </div>
+
+        <!-- VIEW: ADMIN DECK (God Mode) -->
+        <div id="view-deck" class="app-view" style="display: none;">
+            <div id="view-admin-deck">
+                <!-- Injected by admin_deck.js -->
+            </div>
+        </div>
+
+        <!-- VIEW: ACADEMY (Learn-to-Earn) -->
+        <div id="view-academy" class="app-view" style="display: none;">
+            <div id="academy-wisdom-snippet">
+                <!-- Injected by academy_ui.js or app.js -->
+                <div class="pip-box">Loading Academy Missions...</div>
+            </div>
+        </div>
+
+        <!-- VIEW: SWARM (Modular Build) -->
+        <div id="view-swarm" class="app-view" style="display: none;">
+            <div class="pip-box" style="border-color: #10B981;">
+                <h2 style="color: #10B981; margin: 0;">SWARM DYNAMICS <span class="blink">▮</span></h2>
+                <div id="swarm-content">
+                    <!-- Injected by app.js -->
+                    <div class="terminal-item">Scanning for active build nodes...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: BORED (Board Bored Ad Network) -->
+        <div id="view-bored" class="app-view" style="display: none;">
+            <div class="pip-box" style="border-color: #A855F7;">
+                <h2 style="color: #A855F7; margin: 0;">BOARD BORED // ATTENTION MINT</h2>
+                <p style="font-size: 0.8rem; color: var(--pip-dim);">Interact with community boards to mint
+                    Abundance.</p>
+                <div id="bored-ads-list" class="terminal-list">
+                    <!-- Injected by app.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: EXODUS (Anti-Surveillance) -->
+        <div id="view-exodus" class="app-view" style="display: none;">
+            <div class="pip-box" style="border-color: var(--pip-alert);">
+                <h2 style="color: var(--pip-alert); margin: 0;">PROJECT EXODUS <span
+                        style="font-size: 0.6rem; vertical-align: middle; background: var(--pip-alert); color: #000; padding: 2px 5px; border-radius: 3px; margin-left: 10px;">HARDENED_BETA</span>
+                </h2>
+                <div id="exodus-content">Encryption Layer: ACTIVE</div>
+            </div>
+        </div>
+
+        <!-- VIEW: INTEL (Sovereign Analytics) -->
+        <div id="view-intel" class="app-view" style="display: none;">
+            <div class="section-header"
+                style="border-bottom: 2px solid #A855F7; padding-bottom: 5px; margin-bottom: 15px;">
+                <h2 style="color: #A855F7; margin:0;">SOVEREIGN INTEL <span
+                        style="font-size: 0.6rem; vertical-align: middle; background: #A855F7; color: #000; padding: 2px 5px; border-radius: 3px; margin-left: 10px;">LIVE_AUDIT</span>
+                </h2>
+            </div>
+            <div id="intel-content">
+                <!-- Injected by intel.js -->
+            </div>
+        </div>
+
+        <!-- VIEW: RADIO (Comms) -->
+        <div id="view-radio" class="app-view" style="display: none;">
+            <div class="pip-box" style="height: 350px; overflow-y: auto;">
+                <div id="terminal-log" style="font-size: 0.96rem; font-family: 'VT323', monospace;">
+                    <div style="color: var(--pip-dim);">[SYSTEM] RADIO FREQUENCY OPEN...</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <input type="text" id="chat-input" placeholder="BROADCAST MESSAGE..."
+                    onkeyup="if(event.key==='Enter') window.sendChat()">
+                <button class="btn-pip" onclick="window.sendChat()">TX</button>
+            </div>
+        </div>
+
+        <!-- VIEW: GOV (Governance & Proposals) -->
+        <div id="view-gov" class="app-view" style="display: none;">
+            <div class="pip-box" style="border-color: #FBBF24;">
+                <h2 style="color: #FBBF24; margin: 0;">CIVIC GOVERNANCE // PROPOSALS</h2>
+                <p style="font-size: 0.8rem; color: var(--pip-dim);">Authorize community fund usage and
+                    collective grants.</p>
+                <div id="proposals-list" class="terminal-list">
+                    <!-- Injected by app.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: FOCUS (Deep Work) -->
+        <div id="view-focus" class="app-view" style="display: none;">
+            <div class="pip-grid-2">
+                <div class="pip-box" style="text-align: center; border: 3px solid var(--pip-green);">
+                    <h2 style="font-size: 2rem; margin: 0;">MONK MODE</h2>
+                    <div id="focus-progress-container"
+                        style="position: relative; width: 150px; height: 150px; margin: 20px auto;">
+                        <div id="focus-timer"
+                            style="font-size: 3rem; font-weight: bold; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            25:00</div>
+                        <svg width="150" height="150">
+                            <circle cx="75" cy="75" r="70" fill="none" stroke="var(--pip-dim)" stroke-width="10" />
+                            <circle id="focus-progress-circle" cx="75" cy="75" r="70" fill="none"
+                                stroke="var(--pip-green)" stroke-width="10" stroke-dasharray="440"
+                                stroke-dashoffset="440" transform="rotate(-90 75 75)"
+                                style="transition: stroke-dashoffset 1s linear;" />
+                        </svg>
+                    </div>
+                    <div id="focus-status" style="font-size: 1.5rem; color: var(--pip-green);">💤 IDLE</div>
+                </div>
+                <div class="pip-box">
+                    <h3 style="margin-top:0;">CONTROL</h3>
+                    <div class="pip-grid-2" style="gap: 10px;">
+                        <button class="btn-pip" onclick="FocusMode.start(25)">25 MIN</button>
+                        <button class="btn-pip" onclick="FocusMode.start(60)">60 MIN</button>
+                        <button class="btn-pip" style="grid-column: span 2; border-color: #ff5555; color: #ff5555;"
+                            onclick="FocusMode.stop()">ABORT SESSION</button>
+                    </div>
+                    <h3 style="margin-top: 20px;">QUOTES</h3>
+                    <div id="focus-quote" style="font-style: italic; color: var(--pip-dim);">"Small steps make
+                        big changes."</div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- End Screen Content -->
+    </div> <!-- End CRT Screen -->
+
+    <!-- PHYSICAL NAV TABS -->
+    <div class="pip-nav-container">
+        <button class="pip-tab active" onclick="switchPipTab('stat')">STAT</button>
+        <button class="pip-tab" onclick="switchPipTab('inv')">INV</button>
+        <button class="pip-tab" onclick="switchPipTab('data')">DATA</button>
+        <button class="pip-tab" onclick="switchPipTab('swarm')">SWARM</button>
+        <button class="pip-tab" onclick="switchPipTab('academy')">ACADEMY</button>
+        <button class="pip-tab" onclick="switchPipTab('bored')">BORED</button>
+        <button class="pip-tab" onclick="switchPipTab('focus')">FOCUS</button>
+        <button class="pip-tab" onclick="switchPipTab('gov')">GOV</button>
+        <button class="pip-tab" onclick="switchPipTab('radio')">RADIO</button>
+    </div>
 
     </div>
 
@@ -452,6 +378,7 @@
             if (view) view.style.display = 'block';
 
             // Enhancement dispatch
+            if (tabName === 'evolution' && window.renderEvolution) window.renderEvolution();
             if (window.switchPipTabHook) window.switchPipTabHook(tabName);
         }
     </script>

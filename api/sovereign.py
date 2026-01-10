@@ -63,12 +63,19 @@ def register_sovereign_routes(router, ledger, identity, auth_decorator):
     @router.get('/api/sovereign/status')
     @auth_decorator
     def h_sov_status(h, user, p):
-        """Returns the user's data sovereignty metrics."""
+        """Returns the user's data sovereignty metrics and economic state."""
         username = user['sub']
-        # This would pull from locally encrypted files in a real implementation
+        user_data = identity.users.get(username, {})
+        balance = ledger.get_balance(username)
+        
         h.send_json({
             "status": "HARDENED",
             "encryption": "AES-256-CFB",
             "last_audit": time.time(),
-            "data_sale_eligibility": True
+            "data_sale_eligibility": True,
+            "username": username,
+            "role": user_data.get('role', 'WORKER'),
+            "balance": balance,
+            "verified_hours": user_data.get('verified_hours', 0.0),
+            "safety_grade": user_data.get('safety_grade', 100.0)
         })

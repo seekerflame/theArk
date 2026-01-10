@@ -26,8 +26,11 @@ fi
 # Navigate to Ark directory
 cd "$ARK_DIR" || exit 1
 
+# Default PORT if not set
+PORT=${PORT:-3000}
+
 # Start server in background
-echo "🔧 Starting Python server..."
+echo "🔧 Starting Python server on port $PORT..."
 nohup python3 server.py > "$LOG_FILE" 2>&1 &
 SERVER_PID=$!
 echo $SERVER_PID > "$PID_FILE"
@@ -37,13 +40,13 @@ echo "⏳ Waiting for server initialization..."
 sleep 3
 
 # Health check
-echo "🩺 Running health check..."
-HEALTH=$(curl -s http://localhost:3000/api/health 2>/dev/null || echo '{"status":"error"}')
+echo "🩺 Running health check on port $PORT..."
+HEALTH=$(curl -s http://localhost:$PORT/api/health 2>/dev/null || echo '{"status":"error"}')
 
 if echo "$HEALTH" | grep -q "healthy"; then
     echo "✅ SERVER ONLINE"
     echo "   PID: $SERVER_PID"
-    echo "   URL: http://localhost:3000"
+    echo "   URL: http://localhost:$PORT"
     echo "   Log: $LOG_FILE"
     echo ""
     echo "🎯 Ark OS is operational. Advance the mission."

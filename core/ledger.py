@@ -42,7 +42,10 @@ class VillageLedger:
         for row in rows:
             self.blocks.append({
                 "id": row['block_id'],
+                "index": row['block_index'],
                 "hash": row['block_hash'],
+                "prev": row['previous_hash'],
+                "parents": json.loads(row['parents']) if row['parents'] else [],
                 "type": row['block_type'],
                 "timestamp": row['timestamp'],
                 "data": json.loads(row['data'])
@@ -51,26 +54,42 @@ class VillageLedger:
 
     def add_block(self, block_type, data):
         timestamp = int(time.time())
-        block_string = json.dumps(data, sort_keys=True) + str(timestamp) + block_type
+        last_block = self.blocks[-1] if self.blocks else {"index": -1, "hash": "0"}
+        
+        # Safe fallback for NULL columns in existing DB
+        last_index = last_block.get('index')
+        if last_index is None: last_index = 0
+        
+        new_index = last_index + 1
+        prev_hash = last_block.get('hash', "0")
+        if prev_hash is None: prev_hash = "0"
+        
+        block_string = json.dumps(data, sort_keys=True) + str(timestamp) + block_type + prev_hash
         block_hash = hashlib.sha256(block_string.encode()).hexdigest()
-        return self._persist_block(block_hash, block_type, timestamp, data)
+        
+        return self._persist_block(block_hash, block_type, timestamp, data, index=new_index, prev=prev_hash)
 
-    def reconcile_block(self, block_data):
-        b_hash = block_data.get('hash')
-        if any(b['hash'] == b_hash for b in self.blocks): return False
-        return self._persist_block(b_hash, block_data['type'], block_data['timestamp'], block_data['data'])
-
-    def _persist_block(self, b_hash, b_type, timestamp, data):
+    def _persist_block(self, b_hash, b_type, timestamp, data, index=0, prev="0"):
         try:
             conn = sqlite3.connect(self.db_file)
             cursor = conn.cursor()
-            cursor.execute("INSERT OR IGNORE INTO blocks (block_hash, block_type, timestamp, data) VALUES (?, ?, ?, ?)",
-                           (b_hash, b_type, timestamp, json.dumps(data)))
+            parents = json.dumps([prev])
+            cursor.execute("""
+                INSERT OR IGNORE INTO blocks 
+                (block_index, block_hash, previous_hash, parents, block_type, timestamp, data) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (index, b_hash, prev, parents, b_type, timestamp, json.dumps(data)))
+            
             block_id = cursor.lastrowid
             conn.commit()
             conn.close()
+            
             if block_id:
-                res_block = {"id": block_id, "hash": b_hash, "type": b_type, "timestamp": timestamp, "data": data}
+                res_block = {
+                    "id": block_id, "index": index, "hash": b_hash, 
+                    "prev": prev, "parents": [prev], "type": b_type, 
+                    "timestamp": timestamp, "data": data
+                }
                 self.blocks.append(res_block)
                 return b_hash
             return None

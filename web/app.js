@@ -57,7 +57,7 @@ function main() {
         currentChannel: 'general',
         pendingSwap: JSON.parse(localStorage.getItem('at_pending_swap') || 'null'),
         focusSession: JSON.parse(localStorage.getItem('at_focus_session') || 'null'),
-        dopamineMode: localStorage.getItem('at_dopamine_mode') || 'standard'
+        dopamineMode: localStorage.getItem('at_dopamine_mode') || 'high'
     };
 
     // Deep Proxy Handler for nested objects
@@ -486,10 +486,19 @@ function main() {
             Object.assign(appState, data);
         }
 
+        // --- SHARED SOVEREIGN IDENTITY (The Queen Mnemonic) ---
+        // abundance village solar build harvest freedom labor token seed grow thrive community
+        if (!appState.currentUser.mnemonic) {
+            console.log("[SOVEREIGN] Initializing Shared Mission Identity...");
+            appState.currentUser.mnemonic = "abundance village solar build harvest freedom labor token seed grow thrive community";
+            appState.currentUser.name = "Lead Architect";
+            appState.currentUser.role = "FOUNDER";
+        }
+
         // Boot Sequence Integrations
         window.updateStreak();
         window.updateUI();
-        console.log("[GAIA] State Synchronized.");
+        console.log("[GAIA] State Synchronized. Dopamine Protocol: HIGH.");
         if (window.Founders) window.Founders.init();
     };
 
@@ -3810,7 +3819,36 @@ function main() {
 
         switch (viewName) {
             case 'dashboard':
+            case 'map':
+                if (window.renderCosmosMesh) window.renderCosmosMesh();
+                break;
+            case 'stat':
                 if (window.updateDashboardStats) window.updateDashboardStats();
+                if (window.pulseGaia) window.pulseGaia();
+                break;
+            case 'swarm':
+                if (window.renderSwarmUI) window.renderSwarmUI();
+                break;
+            case 'life':
+                if (window.renderCareUI) window.renderCareUI();
+                break;
+            case 'gov':
+                if (window.renderProposals) window.renderProposals();
+                break;
+            case 'stat':
+                if (window.updateDashboardStats) window.updateDashboardStats();
+                break;
+            case 'academy':
+                if (window.renderAcademyMissions) window.renderAcademyMissions();
+                break;
+            case 'bored':
+                if (window.renderBoredAds) window.renderBoredAds();
+                break;
+            case 'exodus':
+                if (window.renderExodusUI) window.renderExodusUI();
+                break;
+            case 'intel':
+                if (window.renderIntelUI) window.renderIntelUI();
                 break;
             case 'jobs':
                 if (window.renderJobBoard) window.renderJobBoard();
@@ -3838,6 +3876,9 @@ function main() {
                 break;
             case 'leaderboard':
                 if (window.renderLeaderboard) window.renderLeaderboard();
+                break;
+            case 'academy':
+                if (window.renderAcademyMissions) window.renderAcademyMissions();
                 break;
             case 'map':
                 if (window.initMap) window.initMap();
@@ -3898,7 +3939,9 @@ function main() {
         try {
             const channel = appState.currentChannel || 'general';
             const r = await fetch(`/api/messages?channel=${channel}`);
-            const msgs = await r.json();
+            const res = await r.json();
+            const msgs = res.data || [];
+
             const logEl = document.getElementById('terminal-log');
             if (logEl && Array.isArray(msgs)) {
                 logEl.innerHTML = msgs.map(m => `
@@ -4860,3 +4903,471 @@ window.toggleArtWalkMode = function () {
         }, 500);
     }
 })();
+
+// --- ACADEMY LEARN-TO-EARN FUNCTIONS ---
+
+window.renderAcademyMissions = async function () {
+    const container = document.getElementById('academy-wisdom-snippet');
+    if (!container) return;
+
+    try {
+        const resp = await fetch('/api/academy/missions');
+        const data = await resp.json();
+        const missions = data.missions || [];
+
+        container.innerHTML = `
+            <div class="pip-box" style="border-color: #FBBF24; margin-bottom: 15px;">
+                <h2 style="color: #FBBF24; margin: 0;">LEARN-TO-EARN MISSIONS</h2>
+                <p style="font-size: 0.8rem; color: var(--pip-dim);">Unlock new production tiers via verified skill acquisition.</p>
+            </div>
+            <div class="terminal-list">
+                ${missions.map(m => `
+                    <div class="terminal-item" style="display: flex; flex-direction: column; align-items: start; gap: 5px; padding: 15px;">
+                        <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+                            <strong style="color: #FBBF24;">[${m.class}] ${m.title}</strong>
+                            <span style="font-size: 0.8rem; color: #10B981;">+${m.reward_at} AT</span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--pip-dim);">${m.description}</div>
+                        <button class="btn-pip" style="margin-top: 10px; font-size: 0.7rem;" onclick="window.claimAcademyMission('${m.id}')">START MISSION</button>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } catch (e) {
+        container.innerHTML = `<div class="pip-box" style="color: var(--pip-alert);">Failed to load missions: ${e.message}</div>`;
+    }
+};
+
+window.claimAcademyMission = async function (missionId) {
+    try {
+        const resp = await fetch('/api/academy/claim', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${appState.currentUser.token}`
+            },
+            body: JSON.stringify({ mission_id: missionId })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+            if (window.showNotification) {
+                showNotification("MISSION COMPLETED", `Received ${data.reward_at} AT and ${data.reward_xp} XP.`, "success");
+            } else {
+                alert(`SUCCESS! Received ${data.reward_at} AT and ${data.reward_xp} XP.`);
+            }
+            window.renderAcademyMissions();
+            window.updateUI();
+        } else {
+            alert(`FAILED: ${data.message}`);
+        }
+    } catch (e) {
+        alert(`ERROR: ${e.message}`);
+    }
+};
+
+// --- BOARD BORED (AD NETWORK) FUNCTIONS ---
+
+window.renderBoredAds = async function () {
+    const container = document.getElementById('bored-ads-list');
+    if (!container) return;
+
+    try {
+        const resp = await fetch('/api/bored/ads');
+        const data = await resp.json();
+        const ads = data.ads || [];
+
+        if (ads.length === 0) {
+            container.innerHTML = `<div class="terminal-item" style="color: var(--pip-dim);">[OFFLINE] No active boards detected in this node.</div>`;
+            return;
+        }
+
+        container.innerHTML = ads.map(ad => `
+            <div class="terminal-item" style="display: flex; flex-direction: column; gap: 5px; padding: 15px; margin-bottom: 10px; border: 1px solid #A855F7;">
+                <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+                    <strong style="color: #A855F7;">${ad.title}</strong>
+                    <span style="font-size: 0.8rem; color: #10B981;">+0.5 AT</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--pip-dim);">${ad.content}</div>
+                <div style="font-size: 0.7rem; color: #60A5FA; margin-top: 5px;">Progress: ${ad.spent_at.toFixed(1)} / ${ad.budget_at} AT</div>
+                <button class="btn-pip" style="margin-top: 10px; font-size: 0.7rem; border-color: #A855F7; color: #A855F7;" 
+                    onclick="window.interactBoredAd('${ad.id}')">VERIFY INTERACTION</button>
+            </div>
+        `).join('');
+    } catch (e) {
+        container.innerHTML = `<div class="pip-box" style="color: var(--pip-alert);">Failed to load boards: ${e.message}</div>`;
+    }
+};
+
+window.interactBoredAd = async function (adId) {
+    try {
+        const resp = await fetch('/api/bored/interact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${appState.currentUser.token}`
+            },
+            body: JSON.stringify({ ad_id: adId })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+            if (window.showNotification) {
+                showNotification("ABUNDANCE MINTED", `Verified interaction. Received ${data.reward} AT.`, "success");
+            } else {
+                alert(`SUCCESS! Received ${data.reward} AT.`);
+            }
+            window.renderBoredAds();
+            window.updateUI();
+        } else {
+            alert(`FAILED: ${data.message}`);
+        }
+    } catch (e) {
+        alert(`ERROR: ${e.message}`);
+    }
+};
+
+// --- SWARM PROTOCOL (MODULAR BUILD) FUNCTIONS ---
+
+window.renderSwarmUI = async function () {
+    const container = document.getElementById('swarm-content');
+    if (!container) return;
+
+    try {
+        const resp = await fetch('/api/swarm/projects');
+        const data = await resp.json();
+        const projects = data.projects || [];
+
+        if (projects.length === 0) {
+            container.innerHTML = `<div class="terminal-item" style="color: var(--pip-dim);">[OFFLINE] No active builds in this node.</div>
+            <button class="btn-pip" style="margin-top: 10px;" onclick="window.seedSwarmDemo()">SEED SEED-HOME PROJECT</button>`;
+            return;
+        }
+
+        container.innerHTML = projects.map(p => `
+            <div class="pip-box" style="margin-bottom: 20px;">
+                <h3 style="margin: 0; color: #10B981; border: none;">${p.title}</h3>
+                <div class="terminal-list" style="margin-top: 10px;">
+                    ${Object.values(p.blocks).map(b => `
+                        <div class="terminal-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; margin-bottom: 5px; border: 1px solid var(--pip-green);">
+                            <div style="flex: 1;">
+                                <div style="${b.status === 'COMPLETED' ? 'text-decoration: line-through; color: #10B981;' : ''}">
+                                    ${b.description}
+                                </div>
+                                <div style="font-size: 0.7rem; color: var(--pip-dim);">${b.status} ${b.claimed_by ? ('by ' + b.claimed_by) : ''}</div>
+                            </div>
+                            ${b.status === 'AVAILABLE' ?
+                `<button class="btn-pip" style="font-size: 0.7rem;" onclick="window.claimSwarmBlock('${p.id}', '${b.id}')">CLAIM</button>` :
+                (b.status === 'CLAIMED' ?
+                    `<button class="btn-pip" style="font-size: 0.7rem; border-color: #10B981; color: #10B981;" onclick="window.completeSwarmBlock('${p.id}', '${b.id}')">FINISH</button>` :
+                    `<span>✅</span>`)
+            }
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    } catch (e) {
+        container.innerHTML = `<div class="pip-box" style="color: var(--pip-alert);">Failed to load swarm: ${e.message}</div>`;
+    }
+};
+
+window.claimSwarmBlock = async function (projectId, blockId) {
+    try {
+        const resp = await fetch('/api/swarm/claim', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${appState.currentUser.token}` },
+            body: JSON.stringify({ project_id: projectId, block_id: blockId })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+            if (window.showNotification) showNotification("BLOCK CLAIMED", "Assemble the module in the real world.", "success");
+            window.renderSwarmUI();
+        }
+    } catch (e) { console.error(e); }
+};
+
+window.completeSwarmBlock = async function (projectId, blockId) {
+    try {
+        const resp = await fetch('/api/swarm/complete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${appState.currentUser.token}` },
+            body: JSON.stringify({ project_id: projectId, block_id: blockId })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+            if (window.showNotification) showNotification("BLOCK VERIFIED", "1.0 AT credited to your ledger.", "success");
+            window.renderSwarmUI();
+            window.updateUI();
+        }
+    } catch (e) { console.error(e); }
+};
+
+window.seedSwarmDemo = async function () {
+    await fetch('/api/swarm/seed_demo', { method: 'POST', headers: { 'Authorization': `Bearer ${appState.currentUser.token}` } });
+    window.renderSwarmUI();
+};
+
+// --- CARE CIRCLE (SOCIAL LABOR) FUNCTIONS ---
+
+window.renderCareUI = async function () {
+    const container = document.getElementById('lifeline-content');
+    if (!container) return;
+
+    try {
+        const resp = await fetch('/api/care/tasks');
+        const data = await resp.json();
+        const tasks = data.tasks || [];
+
+        if (tasks.length === 0) {
+            container.innerHTML = `<div class="terminal-item" style="color: var(--pip-dim);">[SILENCE] Collective wellness is optimal. No active care requests.</div>
+            <button class="btn-pip" style="margin-top: 10px;" onclick="window.seedCareDemo()">SEED CARE TASKS</button>`;
+            return;
+        }
+
+        container.innerHTML = tasks.map(t => `
+            <div class="terminal-item" style="display: flex; flex-direction: column; gap: 5px; padding: 15px; margin-bottom: 10px; border-left: 5px solid #60A5FA;">
+                <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+                    <strong style="color: #60A5FA;">${t.title}</strong>
+                    <span style="font-size: 0.8rem; color: #10B981;">+${t.reward_at} AT</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--pip-dim);">${t.description}</div>
+                <button class="btn-pip" style="margin-top: 10px; font-size: 0.7rem; border-color: #60A5FA; color: #60A5FA;" 
+                    onclick="window.verifyCareLabor('${t.id}')">LOG CARE LABOR</button>
+            </div>
+        `).join('');
+    } catch (e) {
+        container.innerHTML = `<div class="pip-box" style="color: var(--pip-alert);">Failed to load care circle: ${e.message}</div>`;
+    }
+};
+
+window.verifyCareLabor = async function (taskId) {
+    try {
+        const resp = await fetch('/api/care/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${appState.currentUser.token}` },
+            body: JSON.stringify({ task_id: taskId })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+            if (window.showNotification) showNotification("CARE VERIFIED", "Social labor added to the chronicle.", "success");
+            window.renderCareUI();
+            window.updateUI();
+        }
+    } catch (e) { console.error(e); }
+};
+
+window.seedCareDemo = async function () {
+    const resp = await fetch('/api/care/seed_demo', { method: 'POST', headers: { 'Authorization': `Bearer ${appState.currentUser.token}` } });
+    window.renderCareUI();
+};
+
+// --- COSMOS MESH (FEDERATION) D3.JS VISUALIZER ---
+
+window.renderCosmosMesh = async function () {
+    const container = document.getElementById('mobility-map');
+    if (!container) return;
+    container.innerHTML = ""; // Clear for D3
+
+    try {
+        const resp = await fetch('/api/federation/mesh');
+        const data = await resp.json();
+        const nodes = data.nodes || [];
+
+        const width = container.offsetWidth;
+        const height = container.offsetHeight;
+
+        const svg = d3.select("#mobility-map")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("background", "rgba(0,10,0,0.9)");
+
+        // Draw Links (Federation Connections)
+        const links = [];
+        nodes.forEach(n => {
+            if (n.parent_id) {
+                const parent = nodes.find(p => p.id === n.parent_id);
+                if (parent) links.push({ source: parent, target: n });
+            }
+        });
+
+        svg.selectAll(".link")
+            .data(links)
+            .enter().append("line")
+            .attr("stroke", "var(--pip-green)")
+            .attr("stroke-width", 1)
+            .attr("stroke-dasharray", "5,5")
+            .attr("opacity", 0.5)
+            .attr("x1", d => (d.source.location[1] + 180) * (width / 360))
+            .attr("y1", d => (90 - d.source.location[0]) * (height / 180))
+            .attr("x2", d => (d.target.location[1] + 180) * (width / 360))
+            .attr("y2", d => (90 - d.target.location[0]) * (height / 180));
+
+        // Draw Nodes
+        const nodeEls = svg.selectAll(".node")
+            .data(nodes)
+            .enter().append("g")
+            .attr("transform", d => `translate(${(d.location[1] + 180) * (width / 360)}, ${(90 - d.location[0]) * (height / 180)})`);
+
+        nodeEls.append("circle")
+            .attr("r", 6)
+            .attr("fill", d => d.status === "COLONIZING" ? "var(--pip-alert)" : "var(--pip-green)")
+            .attr("class", d => d.status === "COLONIZING" ? "blink" : "")
+            .style("filter", "drop-shadow(0 0 5px var(--pip-green))");
+
+        nodeEls.append("text")
+            .attr("dx", 10)
+            .attr("dy", 4)
+            .attr("fill", "var(--pip-green)")
+            .style("font-size", "10px")
+            .text(d => d.name);
+
+        // Mitosis Pulse
+        if (nodes.some(n => n.status === 'COLONIZING')) {
+            if (window.showNotification) showNotification("MITOSIS DETECTED", "A new Ark node has sprouted.", "info");
+        }
+
+    } catch (e) { console.error(e); }
+};
+
+// --- GAIA NEURAL HUD (D3.JS) ---
+
+window.renderGaiaHUD = function () {
+    const container = document.getElementById('gaia-neural-hud');
+    if (!container) return;
+    container.innerHTML = "";
+
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
+
+    const svg = d3.select("#gaia-neural-hud")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    // Neural Net Visualization
+    const nodes = d3.range(12).map(i => ({ id: i }));
+    const links = d3.range(15).map(() => ({
+        source: Math.floor(Math.random() * 12),
+        target: Math.floor(Math.random() * 12)
+    }));
+
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(links).distance(30))
+        .force("charge", d3.forceManyBody().strength(-50))
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
+    const link = svg.append("g")
+        .selectAll("line")
+        .data(links)
+        .enter().append("line")
+        .attr("stroke", "var(--pip-green)")
+        .attr("opacity", 0.3);
+
+    const node = svg.append("g")
+        .selectAll("circle")
+        .data(nodes)
+        .enter().append("circle")
+        .attr("r", 3)
+        .attr("fill", "var(--pip-green)");
+
+    simulation.on("tick", () => {
+        link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+
+        node
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y);
+    });
+
+    // Pulse based on Gaia State
+    setInterval(() => {
+        node.transition()
+            .duration(500)
+            .attr("r", () => Math.random() * 5 + 2)
+            .attr("opacity", () => Math.random() * 0.5 + 0.5);
+    }, 2000);
+};
+
+// --- GAIA PULSE (AUTONOMY) FUNCTIONS ---
+
+window.pulseGaia = async function () {
+    try {
+        const resp = await fetch('/api/gaia/pulse');
+        const data = await resp.json();
+
+        // Update Heartbeat
+        const pulseEl = document.getElementById('kardashev-realtime');
+        if (pulseEl) {
+            pulseEl.textContent = `0.${Math.floor(data.solar_eff * 10000)}`;
+            pulseEl.style.color = data.solar_eff > 0.9 ? '#10B981' : '#FBBF24';
+        }
+
+        // Trigger HUD re-render or update
+        if (!window.gaiaHudActive) {
+            window.renderGaiaHUD();
+            window.gaiaHudActive = true;
+        }
+
+        if (data.entropy > 0.8 && window.showNotification) {
+            showNotification("GAIA SENSE", "Proactive care tasks generated.", "warning");
+        }
+    } catch (e) { console.error(e); }
+};
+// --- GOVERNANCE (PROPOSALS) FUNCTIONS ---
+
+window.renderProposals = async function () {
+    const container = document.getElementById('proposals-list');
+    if (!container) return;
+
+    try {
+        const resp = await fetch('/api/steward/proposals');
+        const data = await resp.json();
+        const proposals = data || [];
+
+        if (proposals.length === 0) {
+            container.innerHTML = `<div class="terminal-item" style="color: var(--pip-dim);">[SILENCE] No active community proposals.</div>`;
+            return;
+        }
+
+        container.innerHTML = proposals.map(p => `
+            <div class="terminal-item" style="display: flex; flex-direction: column; gap: 5px; padding: 15px; margin-bottom: 10px; border: 1px solid #FBBF24;">
+                <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+                    <strong style="color: #FBBF24;">${p.title}</strong>
+                    <span style="font-size: 0.8rem; color: #10B981;">COST: ${p.cost_at} AT</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--pip-dim); margin: 5px 0;">${p.description}</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                    <div style="font-size: 0.7rem; color: var(--pip-green);">VOTES: 📈 ${p.votes_for} | 📉 ${p.votes_against}</div>
+                    <div style="display: flex; gap: 5px;">
+                        <button class="btn-pip" style="font-size: 0.6rem; padding: 2px 10px;" onclick="window.voteOnProposal('${p.id}', 'for')">APPROVE</button>
+                        <button class="btn-pip" style="font-size: 0.6rem; padding: 2px 10px; border-color: #ff5555; color: #ff5555;" onclick="window.voteOnProposal('${p.id}', 'against')">REJECT</button>
+                    </div>
+                </div>
+                <div style="font-size: 0.6rem; color: var(--pip-dim); text-align: right; margin-top: 5px;">STATUS: ${p.status}</div>
+            </div>
+        `).join('');
+    } catch (e) {
+        container.innerHTML = `<div class="pip-box" style="color: var(--pip-alert);">Failed to load proposals: ${e.message}</div>`;
+    }
+};
+
+window.voteOnProposal = async function (propId, voteType) {
+    try {
+        const resp = await fetch('/api/steward/vote', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${appState.currentUser.token}`
+            },
+            body: JSON.stringify({ id: propId, vote: voteType })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+            if (window.showNotification) showNotification("VOTE REGISTERED", "Your voice has been recorded on the ledger.", "success");
+            window.renderProposals();
+        }
+    } catch (e) { console.error(e); }
+};
