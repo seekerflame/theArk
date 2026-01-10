@@ -2,9 +2,11 @@ services:
   # Main Ark Application
   - type: web
     name: ark-os-production
-    env: python
-    buildCommand: ""
+    runtime: python
+    rootDir: .
+    buildCommand: pip install -r requirements.txt || true
     startCommand: python3 server.py
+    healthCheckPath: /api/health
     envVars:
       - key: PORT
         value: 3001
@@ -12,6 +14,7 @@ services:
         generateValue: true
       - key: ARK_MOCK_EXCHANGE
         value: "1"
+
     
   # AI Orchestrator - Runs 24/7
   - type: web
