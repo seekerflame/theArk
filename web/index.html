@@ -61,11 +61,11 @@
             </div> <!-- End Screen Content -->
         </div> <!-- End CRT Screen -->
 
-        <!-- PHYSICAL NAV TABS -->
         <div class="pip-nav-container">
             <button class="pip-tab active" onclick="switchPipTab('stat')">STAT</button>
             <button class="pip-tab" onclick="switchPipTab('inv')">INV</button>
             <button class="pip-tab" onclick="switchPipTab('data')">DATA</button>
+            <button class="pip-tab" onclick="switchPipTab('map')">MAP</button>
             <button class="pip-tab" onclick="switchPipTab('swarm')">SWARM</button>
             <button class="pip-tab" onclick="switchPipTab('academy')">ACADEMY</button>
             <button class="pip-tab" onclick="switchPipTab('evolution')">EVO</button>
@@ -351,20 +351,8 @@
     </div> <!-- End Screen Content -->
     </div> <!-- End CRT Screen -->
 
-    <!-- PHYSICAL NAV TABS -->
-    <div class="pip-nav-container">
-        <button class="pip-tab active" onclick="switchPipTab('stat')">STAT</button>
-        <button class="pip-tab" onclick="switchPipTab('inv')">INV</button>
-        <button class="pip-tab" onclick="switchPipTab('data')">DATA</button>
-        <button class="pip-tab" onclick="switchPipTab('swarm')">SWARM</button>
-        <button class="pip-tab" onclick="switchPipTab('academy')">ACADEMY</button>
-        <button class="pip-tab" onclick="switchPipTab('bored')">BORED</button>
-        <button class="pip-tab" onclick="switchPipTab('focus')">FOCUS</button>
-        <button class="pip-tab" onclick="switchPipTab('gov')">GOV</button>
-        <button class="pip-tab" onclick="switchPipTab('radio')">RADIO</button>
     </div>
 
-    </div>
 
     <!-- INLINE INIT -->
     <script>
@@ -379,6 +367,7 @@
 
             // Enhancement dispatch
             if (tabName === 'evolution' && window.renderEvolution) window.renderEvolution();
+            if (tabName === 'map' && window.initMobilityUI) window.initMobilityUI();
             if (window.switchPipTabHook) window.switchPipTabHook(tabName);
         }
     </script>

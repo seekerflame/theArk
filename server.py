@@ -126,16 +126,10 @@ logger.info("🛡️  Sovereign Vault active (Data Privacy & Sales)")
 # Party & Harvest API
 try:
     from api.party import register_party_routes
-    from api.evolution import EvolutionEngine, register_evolution_routes
-    
-    # Instance
-    evolution = EvolutionEngine(ledger, identity)
     
     register_party_routes(router, party_quests, harvest, auth_decorator)
-    register_evolution_routes(router, evolution, auth_decorator)
     
     logger.info("🎉 Party & Harvest API endpoints registered")
-    logger.info("🧬 Evolution Engine (Solo Leveling) loaded - ByLifeReset Protocol Active")
     
     # Governance & Moderation
     from core.governance import GovernanceEngine
@@ -173,6 +167,11 @@ try:
     from api.evolution import register_evolution_routes
     register_evolution_routes(router, ledger, auth_decorator)
     logger.info("🧬 Evolution Loop (Autopoiesis) ONLINE")
+
+    # Trade API (Inter-Node Resource Swaps)
+    from api.trade import register_trade_routes
+    register_trade_routes(router, ledger, auth_decorator)
+    logger.info("🤝 Trade API (Economic Federation) ONLINE")
 
     # Hardware Bridge (Physical/Simulated Sensors)
     from core.hardware_bridge import HardwareBridge

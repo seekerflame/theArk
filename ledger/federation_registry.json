@@ -9,5 +9,19 @@
       39.0,
       -91.0
     ]
+  },
+  "node_002": {
+    "id": "node_002",
+    "name": "Friend_Village",
+    "url": null,
+    "ip": "127.0.0.1",
+    "port": 3007,
+    "kardashev": 0.5,
+    "status": "CONNECTED",
+    "last_seen": 1768073057.174925,
+    "location": [
+      0,
+      0
+    ]
   }
 }

@@ -49,10 +49,12 @@ def test_federation_handshake():
         )
         
         if r.status_code == 200:
-            resp = r.json()
-            print(f"✅ Handshake Accepted! Response: {resp}")
-            assert resp.get('status') == 'success'
-            assert resp.get('node_id') == 'node_001' # Node A's ID
+            resp_raw = r.json()
+            print(f"✅ Handshake Accepted! Response: {resp_raw}")
+            # Unwrap data
+            data = resp_raw.get('data', {})
+            assert resp_raw.get('status') == 'success'
+            assert data.get('node_info', {}).get('node_id') == 'node_001' # Node A's ID
         else:
             pytest.fail(f"Handshake failed: {r.text}")
             

@@ -72,6 +72,38 @@ class FederationMesh:
         })
         self.save()
 
+    def register_node(self, node_data):
+        """Register a real peer node in the mesh"""
+        node_id = node_data.get('node_id')
+        if not node_id: return False, "No node_id provided"
+        
+        # Standardize node format
+        self.nodes[node_id] = {
+            "id": node_id,
+            "name": node_data.get('name', f"Peer {node_id}"),
+            "url": node_data.get('url'),
+            "ip": node_data.get('ip'),
+            "port": node_data.get('port'),
+            "kardashev": node_data.get('kardashev', 0.5),
+            "status": "CONNECTED",
+            "last_seen": time.time(),
+            "location": node_data.get('location', [0, 0])
+        }
+        self.save()
+        return True, "Node registered"
+
+    def get_node_info(self, node_id):
+        return self.nodes.get(node_id)
+
+    def get_public_manifest(self):
+        """Returns data about this node for handshakes"""
+        return {
+            "node_id": "node_001", # Should be configurable
+            "name": "Factor E Farm",
+            "kardashev": 0.7241,
+            "location": [39.0, -91.0]
+        }
+
 class PeerManager:
     def __init__(self, registry_path, port):
         self.registry_path = registry_path

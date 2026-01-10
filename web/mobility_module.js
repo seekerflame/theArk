@@ -119,7 +119,7 @@ window.addPeerDialog = async function () {
     try {
         const res = await apiFetch('/api/federation/peers/add', {
             method: 'POST',
-            body: JSON.stringify({ name, url })
+            body: { name, url }
         });
         showCelebration(`NEW NODE FEDERATED: ${name}`);
         loadPeers();
