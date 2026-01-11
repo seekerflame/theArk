@@ -5766,6 +5766,20 @@ window.switchPipTab = function (category) {
                 console.warn("[UI] HarvestUI not ready");
             }
             break;
+        case 'justice':
+            if (window.renderJusticeUI) {
+                window.renderJusticeUI();
+            } else {
+                console.warn("[UI] JusticeUI not ready");
+            }
+            break;
+        case 'ledger':
+            if (window.renderExplorerUI) {
+                window.renderExplorerUI();
+            } else {
+                console.warn("[UI] ExplorerUI not ready");
+            }
+            break;
         case 'radio': if (typeof window.renderRadioIntel === 'function') window.renderRadioIntel(); break;
     }
 
