@@ -65,6 +65,8 @@
                     <!-- SUB-NAV FOR SYST -->
                     <div class="sub-nav">
                         <div class="sub-tab active" onclick="switchPipTab('stat')">STATUS</div>
+                        <div class="sub-tab" onclick="switchPipTab('life')">LIFE</div>
+                        <div class="sub-tab" onclick="switchPipTab('focus')">FOCUS</div>
                         <div class="sub-tab" onclick="switchPipTab('evolution')">EVO</div>
                         <div class="sub-tab" onclick="switchPipTab('deck')">ADMIN</div>
                     </div>
@@ -155,7 +157,8 @@
                         <!-- SUB-NAV FOR ECON -->
                         <div class="sub-nav">
                             <div class="sub-tab active" onclick="switchPipTab('inv')">WALLET</div>
-                            <div class="sub-tab" onclick="switchPipTab('bored')">BORED (MINT)</div>
+                            <div class="sub-tab" onclick="switchPipTab('bored')">BORED</div>
+                            <div class="sub-tab" onclick="switchPipTab('harvest')">HARVEST</div>
                         </div>
                         <div class="pip-grid-2">
                             <div class="pip-box">
@@ -430,6 +433,32 @@
                                 <div id="focus-quote" style="font-style: italic; color: var(--pip-dim);">"Small steps
                                     make
                                     big changes."</div>
+                            </div>
+                        </div>
+                        <!-- VIEW: LIFE (Lifeline / Tasks) -->
+                        <div id="view-life" class="app-view" style="display: none;">
+                            <div class="pip-box" style="border-color: #F472B6;">
+                                <div
+                                    style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                                    <h2 style="color: #F472B6; margin: 0;">LIFELINE OS</h2>
+                                    <button class="btn-pip" onclick="if(window.Lifeline) window.Lifeline.render()"
+                                        style="font-size:0.7rem;">↻ SYNC</button>
+                                </div>
+                                <div id="lifeline-content">
+                                    <div style="color:var(--pip-dim); font-size:0.8rem;">Initializing Neural Link...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VIEW: HARVEST (Resource Gathering) -->
+                        <div id="view-harvest" class="app-view" style="display: none;">
+                            <div class="pip-box" style="border-color: #FB923C;">
+                                <h2 style="color: #FB923C; margin: 0;">RESOURCE HARVEST</h2>
+                                <div id="harvest-ui-container">
+                                    <!-- Injected by harvest_ui.js -->
+                                    <div style="color:var(--pip-dim);">Scanning local resources...</div>
+                                </div>
                             </div>
                         </div>
                     </div> <!-- End Screen Content -->

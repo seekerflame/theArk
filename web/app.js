@@ -5712,7 +5712,9 @@ window.switchPipTab = function (category) {
         'academy': 'view-academy',
         'gov': 'view-gov',
         'swarm': 'view-swarm',
-        'focus': 'view-focus'
+        'focus': 'view-focus',
+        'life': 'view-life',
+        'harvest': 'view-harvest'
     };
 
     const targetViewId = featureMap[category] || categoryDefaults[category] || ('view-' + category);
@@ -5749,6 +5751,20 @@ window.switchPipTab = function (category) {
             break;
         case 'swarm':
             console.log("[UI] Swarm Matrix Access");
+            break;
+        case 'life':
+            if (window.Lifeline && typeof window.Lifeline.render === 'function') {
+                window.Lifeline.render();
+            } else {
+                console.warn("[UI] Lifeline module not ready");
+            }
+            break;
+        case 'harvest':
+            if (typeof window.renderHarvestUI === 'function') {
+                window.renderHarvestUI();
+            } else {
+                console.warn("[UI] HarvestUI not ready");
+            }
             break;
         case 'radio': if (typeof window.renderRadioIntel === 'function') window.renderRadioIntel(); break;
     }
