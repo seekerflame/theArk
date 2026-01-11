@@ -32,6 +32,8 @@
     <script src="evolution_ui.js"></script>
     <script src="ark_passport_ui.js"></script>
     <script src="abundance_loop.js"></script>
+    <script src="bounty_board.js"></script>
+    <script src="verifier_ui.js"></script>
     <link rel="stylesheet" href="dopamine.css">
 </head>
 
@@ -263,22 +265,59 @@
                         <div class="pip-box" style="border-color: #10B981;">
                             <h2 style="color: #10B981; margin: 0;">SWARM DYNAMICS <span class="blink">▮</span></h2>
                             <div id="swarm-content">
-                                <!-- Injected by app.js -->
-                                <div class="terminal-item">Scanning for active build nodes...</div>
+                                <div class="pip-grid-2" style="gap:10px; margin-top:10px;">
+                                    <a href="/web/building/index.html" target="_blank" class="btn-pip"
+                                        style="text-align:center; text-decoration:none; color:#10B981; border-color:#10B981;">
+                                        🏗️ LAUNCH ARCHITECT (Physics)
+                                    </a>
+                                    <a href="/web/collab/index.html" target="_blank" class="btn-pip"
+                                        style="text-align:center; text-decoration:none; color:#3B82F6; border-color:#3B82F6;">
+                                        🧜‍♀️ OPEN COLLAB (Mermaid)
+                                    </a>
+                                </div>
+                                <div class="terminal-item" style="margin-top:10px; opacity:0.7;">
+                                    > Accessing local swarm constructs...<br>
+                                    > connection_established: true
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- VIEW: BORED (Board Bored Ad Network) -->
                     <div id="view-bored" class="app-view" style="display: none;">
-                        <div class="pip-box" style="border-color: #A855F7;">
-                            <h2 style="color: #A855F7; margin: 0;">BOARD BORED // ATTENTION MINT</h2>
-                            <p style="font-size: 0.8rem; color: var(--pip-dim);">Interact with community boards to mint
-                                Abundance.</p>
-                            <div id="bored-ads-list" class="terminal-list">
-                                <!-- Injected by app.js -->
+                        <input type="checkbox" id="toggle-bounty-form" style="display:none;">
+
+                        <!-- Header / Controls -->
+                        <div class="pip-box" style="border-color: #A855F7; margin-bottom: 15px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h2 style="color: #A855F7; margin: 0;">BOARD BORED</h2>
+                                <button class="btn-pip" onclick="window.toggleBountyForm()" style="font-size:0.7rem;">+
+                                    NEW BOUNTY</button>
+                            </div>
+
+                            <!-- Creation Form (Hidden by default) -->
+                            <div id="bounty-form"
+                                style="display:none; margin-top:10px; border-top:1px solid #A855F7; padding-top:10px;">
+                                <input type="text" id="b-title" placeholder="Task Title"
+                                    style="width:100%; margin-bottom:5px; background:black; color:white; border:1px solid #A855F7;">
+                                <input type="text" id="b-desc" placeholder="Description / Requirements"
+                                    style="width:100%; margin-bottom:5px; background:black; color:white; border:1px solid #A855F7;">
+                                <input type="number" id="b-reward" placeholder="Reward (AT)"
+                                    style="width:100%; margin-bottom:5px; background:black; color:white; border:1px solid #A855F7;">
+                                <button class="btn-pip" onclick="window.createBounty()"
+                                    style="width:100%; border-color:#A855F7;">POST BOUNTY</button>
                             </div>
                         </div>
+
+                        <!-- 1. ACTIVE (My Tasks) -->
+                        <div id="bounties-active"></div>
+
+                        <!-- 2. VERIFY (My Created Tasks) -->
+                        <div id="bounties-verify"></div>
+
+                        <!-- 3. OPEN (Marketplace) -->
+                        <h3 style="color:var(--pip-dim); margin: 15px 0 5px 0;">OPEN CONTRACTS</h3>
+                        <div id="bounties-open" class="terminal-list"></div>
                     </div>
 
                     <!-- VIEW: EXODUS (Anti-Surveillance) -->
@@ -336,13 +375,24 @@
 
                     <!-- VIEW: GOV (Governance & Proposals) -->
                     <div id="view-gov" class="app-view" style="display: none;">
+
+                        <!-- VERIFIER STATION -->
                         <div class="pip-box" style="border-color: #FBBF24;">
-                            <h2 style="color: #FBBF24; margin: 0;">CIVIC GOVERNANCE // PROPOSALS</h2>
-                            <p style="font-size: 0.8rem; color: var(--pip-dim);">Authorize community fund usage and
-                                collective grants.</p>
-                            <div id="proposals-list" class="terminal-list">
-                                <!-- Injected by app.js -->
+                            <div
+                                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                                <h2 style="color: #FBBF24; margin: 0;">ORACLE STATION</h2>
+                                <button class="btn-pip" onclick="window.loadVerifierPending()"
+                                    style="font-size:0.7rem;">↻ REFRESH</button>
                             </div>
+                            <div id="verifier-inbox">
+                                <div style="color:var(--pip-dim); font-size:0.8rem;">Loading Pending Verifications...
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pip-box" style="border-color: var(--pip-dim); opacity: 0.7; margin-top:20px;">
+                            <h3 style="margin:0; border:none;">PROPOSALS (COMING SOON)</h3>
+                            <div id="proposals-list" class="terminal-list"></div>
                         </div>
                     </div>
 

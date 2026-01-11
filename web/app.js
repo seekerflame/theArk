@@ -5733,8 +5733,24 @@ window.switchPipTab = function (category) {
         case 'deck': if (window.refreshAgentStatus) window.refreshAgentStatus(); break;
         case 'data': if (window.renderQuests) window.renderQuests(); break;
         case 'map': if (window.initMobilityUI) window.initMobilityUI(); break;
-        case 'bored': if (window.renderAds) window.renderAds(); break;
-        case 'radio': if (window.renderRadioIntel) window.renderRadioIntel(); break;
+        case 'bored':
+            if (typeof window.initBountyBoard === 'function') {
+                window.initBountyBoard();
+            } else {
+                console.warn("[UI] initBountyBoard not ready");
+            }
+            break;
+        case 'gov':
+            if (typeof window.renderVerifierPending === 'function') {
+                window.renderVerifierPending();
+            } else {
+                console.warn("[UI] renderVerifierPending not ready");
+            }
+            break;
+        case 'swarm':
+            console.log("[UI] Swarm Matrix Access");
+            break;
+        case 'radio': if (typeof window.renderRadioIntel === 'function') window.renderRadioIntel(); break;
     }
 
     if (window.switchPipTabHook) window.switchPipTabHook(category);
