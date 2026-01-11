@@ -40,12 +40,10 @@ class VillageLedger:
         rows = cursor.fetchall()
         self.blocks = []
         for row in rows:
+            # Schema: block_id, block_hash, block_type, timestamp, data
             self.blocks.append({
                 "id": row['block_id'],
-                "index": row['block_index'],
                 "hash": row['block_hash'],
-                "prev": row['previous_hash'],
-                "parents": json.loads(row['parents']) if row['parents'] else [],
                 "type": row['block_type'],
                 "timestamp": row['timestamp'],
                 "data": json.loads(row['data'])
@@ -73,12 +71,12 @@ class VillageLedger:
         try:
             conn = sqlite3.connect(self.db_file)
             cursor = conn.cursor()
-            parents = json.dumps([prev])
+            # Schema: block_id (auto), block_hash, block_type, timestamp, data
             cursor.execute("""
                 INSERT OR IGNORE INTO blocks 
-                (block_index, block_hash, previous_hash, parents, block_type, timestamp, data) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (index, b_hash, prev, parents, b_type, timestamp, json.dumps(data)))
+                (block_hash, block_type, timestamp, data) 
+                VALUES (?, ?, ?, ?)
+            """, (b_hash, b_type, timestamp, json.dumps(data)))
             
             block_id = cursor.lastrowid
             conn.commit()
@@ -86,9 +84,8 @@ class VillageLedger:
             
             if block_id:
                 res_block = {
-                    "id": block_id, "index": index, "hash": b_hash, 
-                    "prev": prev, "parents": [prev], "type": b_type, 
-                    "timestamp": timestamp, "data": data
+                    "id": block_id, "hash": b_hash, 
+                    "type": b_type, "timestamp": timestamp, "data": data
                 }
                 self.blocks.append(res_block)
                 return b_hash
