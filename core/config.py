@@ -22,8 +22,17 @@ class Config:
     STORAGE_DIR = BASE_DIR / "storage"
     INBOX_DIR = STORAGE_DIR / "inbox"
 
+# Export constants at module level for compatibility
+LIBRARY_DIR = Config.LIBRARY_DIR
+CORE_DIR = Config.CORE_DIR
+LEDGER_DIR = Config.LEDGER_DIR
+LOGS_DIR = Config.LOGS_DIR
+WEB_DIR = Config.WEB_DIR
+STORAGE_DIR = Config.STORAGE_DIR
+INBOX_DIR = Config.INBOX_DIR
+
 # Ensure critical directories exist
-for d in [Config.LEDGER_DIR, Config.LOGS_DIR, Config.STORAGE_DIR, Config.INBOX_DIR]:
+for d in [LEDGER_DIR, LOGS_DIR, STORAGE_DIR, INBOX_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
 # Ledger Config (legacy variables for modules not using class)
