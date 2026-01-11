@@ -4,12 +4,17 @@
 
 set -e
 
-ARK_DIR="/Volumes/Extreme SSD/Antigrav/OSE/abundancetoken/07_Code/The_Ark"
-LOG_FILE="$ARK_DIR/server.log"
+# Get actual script location to be portable
+ARK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+LOG_FILE="$ARK_DIR/logs/server.log"
 PID_FILE="$ARK_DIR/server.pid"
 
 echo "🚀 ARK OS STARTUP SEQUENCE"
 echo "=========================="
+
+# Ensure Environment is set up
+echo "🛠️  Initializing environment..."
+python3 "$ARK_DIR/setup.py"
 
 # Check if already running
 if [ -f "$PID_FILE" ]; then
@@ -26,11 +31,12 @@ fi
 # Navigate to Ark directory
 cd "$ARK_DIR" || exit 1
 
-# Default PORT if not set
+# Default PORT if not set (or load from .env.local if needed)
 PORT=${PORT:-3000}
 
 # Start server in background
 echo "🔧 Starting Python server on port $PORT..."
+mkdir -p "$ARK_DIR/logs"
 nohup python3 server.py > "$LOG_FILE" 2>&1 &
 SERVER_PID=$!
 echo $SERVER_PID > "$PID_FILE"

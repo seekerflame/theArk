@@ -1,59 +1,32 @@
 import os
-import json
-import logging
+from pathlib import Path
 
-logger = logging.getLogger("ArkOS.Config")
+# Base Paths
+BASE_DIR = Path(__file__).resolve().parent.parent
+LIBRARY_DIR = BASE_DIR / "library"
+CORE_DIR = BASE_DIR / "core"
+LEDGER_DIR = BASE_DIR / "ledger"
+LOGS_DIR = BASE_DIR / "logs"
+WEB_DIR = BASE_DIR / "web"
 
-class Config:
-    """
-    Centralized configuration management.
-    Reads from environment variables with fallback to a local .env file logic.
-    """
-    
-    @staticmethod
-    def get(key, default=None):
-        return os.environ.get(key, default)
+# Ensure critical directories exist
+for d in [LEDGER_DIR, LOGS_DIR]:
+    d.mkdir(parents=True, exist_ok=True)
 
-    @staticmethod
-    def is_prod():
-        return os.environ.get('ENVIRONMENT') == 'production'
+# Ledger Config
+LEDGER_FILE = os.environ.get("ARK_LEDGER_FILE", str(BASE_DIR / "village_ledger_py.json"))
+LEDGER_DB = os.environ.get("ARK_LEDGER_DB", str(BASE_DIR / "village_ledger.db"))
 
-    @staticmethod
-    def get_mermaid_key():
-        return os.environ.get('MERMAID_CHART_API_KEY')
+# Server Config
+PORT = int(os.environ.get("PORT", 3000))
+HOST = os.environ.get("HOST", "0.0.0.0")
 
-    @staticmethod
-    def get_jwt_key():
-        key = os.environ.get('JWT_TOKEN_KEY', 'dev_only_key_change_in_production')
-        if Config.is_prod() and key == 'dev_only_key_change_in_production':
-            logger.critical("🚨 PRODUCTION SECURITY BREACH: Using default JWT_KEY!")
-            raise RuntimeError("Cannot start production server with default JWT_KEY")
-        return key
+# Agent Config
+AI_AGENT_TOKEN = os.environ.get("AI_AGENT_TOKEN", "")
+ARK_API_URL = os.environ.get("ARK_API_URL", f"http://localhost:{PORT}")
 
-def load_env_file(path='.env'):
-    """Simple parser for .env files to populate os.environ"""
-    # Try current dir then parent dir
-    if not os.path.exists(path):
-        alt_path = os.path.join(os.path.dirname(__file__), '..', '.env')
-        if os.path.exists(alt_path):
-            path = alt_path
-        else:
-            return
-    
-    try:
-        with open(path, 'r') as f:
-            logger.info(f"💡 Loading config from {os.path.abspath(path)}")
-            for line in f:
-                line = line.strip()
-                if not line or line.startswith('#'):
-                    continue
-                if '=' in line:
-                    key, value = line.split('=', 1)
-                    # Don't overwrite existing env vars
-                    if key.strip() not in os.environ:
-                        os.environ[key.strip()] = value.strip()
-    except Exception as e:
-        logger.error(f"Failed to load .env file: {e}")
-
-# Auto-load on import
-load_env_file()
+# File Sharing Config
+STORAGE_DIR = BASE_DIR / "storage"
+STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+INBOX_DIR = STORAGE_DIR / "inbox"
+INBOX_DIR.mkdir(parents=True, exist_ok=True)

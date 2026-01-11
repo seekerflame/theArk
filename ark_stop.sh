@@ -1,47 +1,48 @@
 #!/bin/bash
-# Ark OS - Automated Shutdown Script  
+# Ark OS - Automated Shutdown Script
 # Usage: ./ark_stop.sh
 
 set -e
 
-ARK_DIR="/Volumes/Extreme SSD/Antigrav/OSE/abundancetoken/07_Code/The_Ark"
+# Get actual script location
+ARK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PID_FILE="$ARK_DIR/server.pid"
 CHRONICLE_DIR="/Volumes/Extreme SSD/Antigrav/OSE/CHRONICLE"
 
 echo "🛑 ARK OS SHUTDOWN SEQUENCE"
 echo "==========================="
 
-# Check if server is running
 if [ ! -f "$PID_FILE" ]; then
-    echo "⚠️  No PID file found. Checking for orphaned processes..."
-    pkill -f "python3 server.py" && echo "✅ Killed orphaned server" || echo "ℹ️  No server processes found"
+    echo "⚠️  No PID file found. Server might already be stopped."
+    # Fallback to pkill if user really wants it stopped
+    echo "🔍 Checking for zombie processes..."
+    if pgrep -f "python3 server.py" > /dev/null; then
+        echo "🧟 Found zombie process. Terminating..."
+        pkill -f "python3 server.py"
+    fi
     exit 0
 fi
 
 SERVER_PID=$(cat "$PID_FILE")
 
-# Graceful shutdown
-if ps -p "$SERVER_PID" > /dev/null 2>&1; then
-    echo "📡 Sending shutdown signal to PID $SERVER_PID..."
-    kill -TERM "$SERVER_PID" 2>/dev/null || true
-    
-    # Wait for graceful shutdown (max 10 seconds)
-    for i in {1..10}; do
-        if ! ps -p "$SERVER_PID" > /dev/null 2>&1; then
-            echo "✅ Server stopped gracefully"
+echo "⏳ Terminating server (PID: $SERVER_PID)..."
+if kill "$SERVER_PID" 2>/dev/null; then
+    # Wait for it to actually die
+    for i in {1..5}; do
+        if ps -p "$SERVER_PID" > /dev/null; then
+            sleep 1
+        else
             break
         fi
-        sleep 1
     done
-    
-    # Force kill if still running
-    if ps -p "$SERVER_PID" > /dev/null 2>&1; then
-        echo "⚠️  Force killing stubborn process..."
-        kill -9 "$SERVER_PID"
+
+    if ps -p "$SERVER_PID" > /dev/null; then
+        echo "⚠️  Server didn't stop. Forcing shutdown..."
+        kill -9 "$SERVER_PID" 2>/dev/null
     fi
+
+    echo "✅ Server stopped."
 else
-    echo "ℹ️  Server not running"
-fi
 
 # Cleanup PID file
 rm -f "$PID_FILE"

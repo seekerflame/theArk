@@ -18,7 +18,7 @@ def register_system_routes(router, ledger, identity, peers, sensors, energy, fis
         h.send_json({
             "status": "operational",
             "blocks": len(ledger.blocks),
-            "version": "1.2.0",
+            "version": "1.2.2",
             "codename": "The Ark Modular"
         })
 

@@ -133,6 +133,18 @@ class HarvestMarketplace:
         listing["sold_to"] = buyer
         listing["sold_at"] = time.time()
         
+        # --- Value Creation: Production Minting ---
+        # Protocol rewards the producer for increasing community food security.
+        production_bonus = 0.2  # 20% bonus for thrival production
+        self.ledger.add_block('MINT', {
+            "action": "PRODUCTION_BONUS",
+            "amount": production_bonus,
+            "minter": listing["grown_by"],
+            "memo": f"Production Bonus: {listing['title']}",
+            "listing_id": listing_id,
+            "timestamp": time.time()
+        })
+        
         # Log to ledger
         self.ledger.add_block('HARVEST_SOLD', {
             "listing_id": listing_id,

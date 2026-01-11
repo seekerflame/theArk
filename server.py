@@ -28,6 +28,8 @@ from core.foundry import OSEFoundry
 from core.verification_pyramid import VerificationPyramid
 from core.hardware_bridge import HardwareBridge
 from core.anti_dystopia import verify_anti_dystopia_compliance
+from core.agent_controller import AgentController
+from federation.file_bridge import FileBridge
 
 
 
@@ -86,6 +88,8 @@ academy = AcademyAPI(ledger, wisdom)
 foundry = OSEFoundry(ledger)
 harvest = HarvestMarketplace(ledger, inventory)
 verification_pyramid = VerificationPyramid(ledger, identity)
+agent_controller = AgentController()
+file_bridge = FileBridge(ledger)
 
 
 
@@ -231,6 +235,36 @@ try:
                 })
         
         h.send_json(pulse)
+
+    # Agent Control & File Discovery
+    @router.get('/api/agents/status')
+    @auth_decorator
+    def get_agent_status(h, user):
+        h.send_json(agent_controller.update_status_report())
+
+    @router.post('/api/agents/control')
+    @auth_decorator
+    def control_agent(h, payload, user):
+        service = payload.get('service')
+        action = payload.get('action')
+        if action == 'start':
+            agent_controller.start_service(service)
+        elif action == 'stop':
+            agent_controller.stop_service(service)
+        h.send_json({"status": "action_triggered", "service": service, "action": action})
+
+    @router.get('/api/files/manifest')
+    @auth_decorator
+    def get_file_manifest(h, user):
+        h.send_json(file_bridge.manifest)
+
+    @router.post('/api/files/register')
+    @auth_decorator
+    def register_file(h, payload, user):
+        file_path = payload.get('path')
+        metadata = payload.get('metadata')
+        file_hash = file_bridge.register_file(file_path, metadata)
+        h.send_json({"hash": file_hash})
 
 except ImportError as e:
     logger.warning(f"⚠️  API modules missing: {e}")
@@ -409,6 +443,7 @@ if __name__ == '__main__':
     steward.start()
     treasury.start()
     socketserver.TCPServer.allow_reuse_address = True
+    
     with socketserver.ThreadingTCPServer(("", PORT), ArkHandler) as httpd:
-        logger.info(f"Ark OS Modular Core v1.2 ONLINE at port {PORT}")
+        logger.info(f"Ark OS Modular Core v1.2.2 ONLINE at port {PORT}")
         httpd.serve_forever()

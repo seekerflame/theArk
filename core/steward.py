@@ -53,6 +53,20 @@ class StewardNexus:
                     'status': 'OPEN',
                     'created_at': now
                 })
+        
+        # --- Value Creation: Infrastructure Dividends ---
+        # Reward NODE_HOSTS for providing community infrastructure (Solar/Mesh)
+        for u_name, u_data in self.identity.users.items():
+            if 'NODE_HOST' in u_data.get('roles', []):
+                uptime_dividend = 0.1  # Continuous thrival dividend
+                self.ledger.add_block('MINT', {
+                    "action": "UPTIME_MINT",
+                    "amount": uptime_dividend,
+                    "minter": u_name,
+                    "memo": "Infrastructure Dividend: Node Hosting verified",
+                    "timestamp": now
+                })
+                
         self.sensors.save()
 
     def create_proposal(self, title, description, requested_amount=0, creator_id='anonymous'):

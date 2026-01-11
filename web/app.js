@@ -342,11 +342,19 @@ function main() {
                     </div>
                 </div>
 
+                <div class="glass-panel" style="margin-top:20px; border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <h3 style="color:#10B981;">🛰️ AGENT CONTROL TOWER</h3>
+                    <div id="agent-status-container" style="margin-top:15px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <!-- Agent status items will be injected here -->
+                    </div>
+                </div>
+
                 <div class="glass-panel" style="margin-top:20px; background: rgba(0,0,0,0.4);">
                     <h3 style="color:#94a3b8; font-size:0.9rem;">SENTINEL LOGS (LIVE)</h3>
                     <div id="admin-logs" class="terminal-view" style="height:150px; overflow-y:auto; font-size:0.75rem;">Loading logs...</div>
                 </div>
                 `;
+                window.refreshAgentStatus();
                 window.fetchLogs();
                 window.renderMissionPulse(data.evolution_cycles);
 
@@ -662,6 +670,40 @@ function main() {
                 if (logBox) logBox.innerHTML = '⚠️ Failed to synchronize logs.';
             });
     }
+
+    window.refreshAgentStatus = function () {
+        apiFetch('/api/agents/status')
+            .then(status => {
+                const container = document.getElementById('agent-status-container');
+                if (!container) return;
+                container.innerHTML = '';
+                Object.entries(status).forEach(([name, state]) => {
+                    const isRunning = state === 'RUNNING';
+                    const color = isRunning ? '#10B981' : '#EF4444';
+                    const item = document.createElement('div');
+                    item.className = 'agent-status-item';
+                    item.style = `padding:10px; border:1px solid ${color}33; border-radius:8px; background:rgba(0,0,0,0.3); display:flex; justify-content:space-between; align-items:center;`;
+                    item.innerHTML = `
+                        <div>
+                            <div style="font-size:0.8rem; font-weight:bold; color:#f1f5f9;">${name.toUpperCase()}</div>
+                            <div style="font-size:0.6rem; color:${color};">${state}</div>
+                        </div>
+                        <button onclick="window.controlAgent('${name}', '${isRunning ? 'stop' : 'start'}')" class="btn-xs" style="background:${isRunning ? '#EF4444' : '#10B981'}33; border:1px solid ${isRunning ? '#EF4444' : '#10B981'}; color:${isRunning ? '#EF4444' : '#10B981'};">${isRunning ? 'STOP' : 'START'}</button>
+                    `;
+                    container.appendChild(item);
+                });
+            });
+    };
+
+    window.controlAgent = function (service, action) {
+        apiFetch('/api/agents/control', {
+            method: 'POST',
+            body: { service, action }
+        }).then(() => {
+            logToTerminal(`[SYSTEM] ${service.toUpperCase()} ${action.toUpperCase()} signal sent.`);
+            setTimeout(window.refreshAgentStatus, 1000);
+        });
+    };
 
     window.adminAction = function (action) {
         let endpoint = '/api/ledger/verify_all'; // Updated to match hardened ledger API if we add it
@@ -5538,33 +5580,33 @@ window.pollFisheryStatus();
 setTimeout(() => { if (window.renderPassport) window.renderPassport(); }, 1000);
 
 // --- GHOST MODE (Privacy Shield) ---
-window.toggleGhostMode = function() {
+window.toggleGhostMode = function () {
     const isChecked = document.getElementById('ghost-mode-toggle').checked;
     appState.ghostMode = isChecked;
     localStorage.setItem('ark_ghost_mode', isChecked);
-    
+
     const status = isChecked ? "ACTIVE (Zero Trail)" : "INACTIVE (Building Legend)";
     logToTerminal(`[PRIVACY] Ghost Mode ${status}`);
-    
+
     // Notify server of privacy preference
     apiFetch('/api/ark/privacy', {
         method: 'POST',
         body: { ghost_mode: isChecked }
     }).catch(e => console.warn("Privacy sync failed, using local-only shield."));
-    
+
     if (window.renderPassport) window.renderPassport();
 };
 
 // --- PARTY QUESTS (Social Engagement) ---
-window.createPartyQuest = function(type) {
+window.createPartyQuest = function (type) {
     const title = prompt(`Enter ${type.toUpperCase()} Mission Title:`);
     if (!title) return;
-    
+
     const reward = parseFloat(prompt("Enter Reward per person (AT):", "5.0"));
     if (isNaN(reward) || reward <= 0) return alert("Invalid reward amount.");
-    
+
     logToTerminal(`[PARTY] Initializing ${type.toUpperCase()} Quest: ${title}...`);
-    
+
     apiFetch('/api/party/create', {
         method: 'POST',
         body: {
@@ -5588,10 +5630,10 @@ window.createPartyQuest = function(type) {
 };
 
 // --- RADIO INTEL (All Seeing Eye Visualization) ---
-window.updateRadioIntel = function() {
+window.updateRadioIntel = function () {
     const viz = document.getElementById('radio-intel-viz');
     if (!viz) return;
-    
+
     const signals = [
         "SIG_INTEL: 433.92MHz [STABLE]",
         "TRAFFIC: 101-North [HEAVY]",
@@ -5601,16 +5643,16 @@ window.updateRadioIntel = function() {
         "PONY_EXPRESS: Packet Delivered to Node-B",
         "ENCRYPTION: AES-256 [HARDENED]"
     ];
-    
+
     const line = signals[Math.floor(Math.random() * signals.length)];
     const time = new Date().toLocaleTimeString();
-    
+
     const newEntry = document.createElement('div');
     newEntry.style.borderLeft = "2px solid #3b82f6";
     newEntry.style.paddingLeft = "5px";
     newEntry.style.marginBottom = "2px";
     newEntry.innerHTML = `<span style="opacity:0.5;">[${time}]</span> ${line}`;
-    
+
     viz.prepend(newEntry);
     if (viz.children.length > 8) viz.removeChild(viz.lastChild);
 };

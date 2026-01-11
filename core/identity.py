@@ -160,6 +160,14 @@ class IdentityManager:
         
         return list(roles)
 
+    def has_role(self, username, role, ledger=None, hw_bridge=None):
+        """Check if a user has a specific role."""
+        if role == 'ANY': return True
+        user_roles = self.get_user_roles(username, ledger, hw_bridge)
+        # Check both primary role and certified roles
+        primary_role = self.users.get(username, {}).get('role')
+        return role == primary_role or role in user_roles
+
     def get_holistic_multiplier(self, username, role="WORKER", ledger=None):
         """Calculates HM = RoleMod * TierMod * HostMod * SafetyGrade * SurvivalNet"""
         if role is None: role = "WORKER"
@@ -228,5 +236,3 @@ class IdentityManager:
                 return u
         
         return None
-
-
