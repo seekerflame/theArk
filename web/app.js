@@ -107,6 +107,7 @@ function main() {
             })
             .catch(e => console.warn("[ENERGY] Polling failed:", e));
     };
+    window.pollEnergy(); // Immediate poll on load
     setInterval(window.pollEnergy, 1000);
 
     window.loginUser = function (username, password) {
@@ -5657,15 +5658,84 @@ window.updateRadioIntel = function () {
     if (viz.children.length > 8) viz.removeChild(viz.lastChild);
 };
 
-// Start Radio Intel Simulation
-setInterval(window.updateRadioIntel, 4000);
+// --- INITIALIZATION (ArkBoot Sequence) ---
+function arkBoot() {
+    console.log("🚀 Ark OS Boot Sequence Initiated...");
+    try {
+        main(); // Start Core Logic
 
-// Load Privacy State
-document.addEventListener('DOMContentLoaded', () => {
-    const savedGhost = localStorage.getItem('ark_ghost_mode') === 'true';
-    const toggle = document.getElementById('ghost-mode-toggle');
-    if (toggle) {
-        toggle.checked = savedGhost;
-        appState.ghostMode = savedGhost;
+        // Load Privacy State
+        const savedGhost = localStorage.getItem('ark_ghost_mode') === 'true';
+        const toggle = document.getElementById('ghost-mode-toggle');
+        if (toggle) {
+            toggle.checked = savedGhost;
+            if (window.appState) window.appState.ghostMode = savedGhost;
+        }
+
+        // Trigger initial UI sync
+        if (window.updateUI) window.updateUI();
+
+        console.log("✅ Ark OS Boot Complete.");
+    } catch (e) {
+        console.error("❌ Ark OS Boot Failed:", e);
     }
-});
+}
+
+document.addEventListener('DOMContentLoaded', arkBoot);
+
+// Consolidated Navigation Logic
+window.switchPipTab = function (category) {
+    // 1. Update Navigation Button Styles
+    document.querySelectorAll('.pip-nav-container .pip-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.sub-nav .sub-tab').forEach(t => t.classList.remove('active'));
+
+    const activeBtn = document.querySelector(`.pip-nav-container .pip-tab[onclick*="'${category}'"]`);
+    const activeSubBtn = document.querySelector(`.sub-nav .sub-tab[onclick*="'${category}'"]`);
+
+    if (activeBtn) activeBtn.classList.add('active');
+    if (activeSubBtn) activeSubBtn.classList.add('active');
+
+    // 2. Map Categorical "Master" Clicks to Default Sub-Views
+    const categoryDefaults = {
+        'stat': 'view-stat',
+        'inv': 'view-inv',
+        'data': 'view-data',
+        'map': 'view-map',
+        'radio': 'view-radio'
+    };
+
+    // 3. Sub-Category Mapping (Feature Consolidation)
+    const featureMap = {
+        'evolution': 'view-evolution',
+        'deck': 'view-deck',
+        'bored': 'view-bored',
+        'academy': 'view-academy',
+        'gov': 'view-gov',
+        'swarm': 'view-swarm',
+        'focus': 'view-focus'
+    };
+
+    const targetViewId = featureMap[category] || categoryDefaults[category] || ('view-' + category);
+
+    // 4. Update View Visibility
+    document.querySelectorAll('.app-view').forEach(v => v.style.display = 'none');
+    const view = document.getElementById(targetViewId);
+    if (view) {
+        view.style.display = 'block';
+        // Auto-scroll to top on view change
+        const mainDisplay = document.getElementById('main-display');
+        if (mainDisplay) mainDisplay.scrollTop = 0;
+    }
+
+    // 5. Category-Specific Dispatch (Instant Render)
+    switch (category) {
+        case 'evolution': if (window.renderEvolution) window.renderEvolution(); break;
+        case 'deck': if (window.refreshAgentStatus) window.refreshAgentStatus(); break;
+        case 'data': if (window.renderQuests) window.renderQuests(); break;
+        case 'map': if (window.initMobilityUI) window.initMobilityUI(); break;
+        case 'bored': if (window.renderAds) window.renderAds(); break;
+        case 'radio': if (window.renderRadioIntel) window.renderRadioIntel(); break;
+    }
+
+    if (window.switchPipTabHook) window.switchPipTabHook(category);
+};

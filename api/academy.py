@@ -77,6 +77,38 @@ class AcademyAPI:
 
         return {"status": "success", "reward": reward, "complexity": multiplier}
 
+    def get_wisdom_snippet(self):
+        """
+        Retrieve a wisdom snippet from the wisdom engine or return a default.
+        """
+        if hasattr(self.wisdom, 'get_snippet'):
+             return self.wisdom.get_snippet()
+        
+        # Fallback quotes if wisdom engine is simple or not ready
+        import random
+        quotes = [
+            "The best time to plant a tree was 20 years ago. The second best time is now.",
+            "Freedom is not given, it is built.",
+            "Resilience is the ability to adapt to change.",
+            "Community is the greatest form of wealth.",
+            "Knowledge shared is power multiplied."
+        ]
+        return {"quote": random.choice(quotes), "author": "Anonymous"}
+
+    def get_skill_tree(self):
+        """
+        Return the Mermaid JS definition for the skill tree.
+        """
+        return """
+        graph TD
+            A[Survivor] --> B(Builder)
+            A --> C(Gardener)
+            B --> D[Architect]
+            B --> E[Engineer]
+            C --> F[Botanist]
+            C --> G[Healer]
+        """
+
     def get_missions(self):
         return self.missions
 

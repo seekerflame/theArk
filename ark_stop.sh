@@ -43,6 +43,8 @@ if kill "$SERVER_PID" 2>/dev/null; then
 
     echo "✅ Server stopped."
 else
+    echo "⚠️  Process $SERVER_PID not accessible. Assuming stopped."
+fi
 
 # Cleanup PID file
 rm -f "$PID_FILE"

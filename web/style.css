@@ -33,56 +33,65 @@ body {
     margin: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     user-select: none;
-    -webkit-font-smoothing: none;
-    /* Crisper pixel look */
-    /* Center the device on desktop */
+    -webkit-font-smoothing: antialiased;
     display: flex;
     justify-content: center;
     align-items: center;
     background-image: radial-gradient(circle at 50% 50%, #111, #000);
 }
 
-/* --- THE CHASSIS (Physical Device container) --- */
+/* --- THE CHASSIS (Rigid Grid) --- */
 .pip-boy-chassis {
     width: 100%;
     height: 100%;
     background: var(--pip-chassis);
     position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* Header, Content, Nav */
 }
 
 /* Desktop: simulate the device in center */
 @media (min-width: 769px) {
     .pip-boy-chassis {
-        width: 1000px;
-        height: 700px;
+        width: 1100px;
+        height: 800px;
         border-radius: 40px;
         box-shadow:
-            inset 0 0 20px #000,
-            0 0 0 5px #222,
-            0 0 0 10px #111,
-            0 20px 50px rgba(0, 0, 0, 0.8);
-        border: 2px solid #333;
+            inset 0 0 40px #000,
+            0 0 0 8px #222,
+            0 0 0 16px #111,
+            0 30px 60px rgba(0, 0, 0, 0.9);
+        border: 4px solid #333;
     }
 }
 
-/* The Screen Area */
+/* Header Area (HP/Level/AP) */
+.pip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 20px 40px 10px 40px;
+    background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
+    border-bottom: 2px solid var(--pip-dim);
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+/* The CRT Screen Area (Bounded) */
 .crt-screen {
-    flex: 1;
     background-color: var(--pip-dark);
     position: relative;
-    margin: 20px 20px 0 20px;
-    /* Leave space for bottom nav */
-    border-radius: 20px 20px 0 0;
-    /* Flat bottom for tabs */
-    border: 4px solid var(--pip-bezel);
+    margin: 10px 20px;
+    border-radius: 15px;
+    border: 3px solid var(--pip-bezel);
     box-shadow:
         inset 0 0 40px rgba(0, 0, 0, 0.8),
-        inset 0 0 10px var(--pip-glow);
+        inset 0 0 15px var(--pip-glow);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -98,36 +107,30 @@ body {
     pointer-events: none;
     z-index: 9999;
     background:
-        /* Scanlines */
-        linear-gradient(rgba(18, 16, 16, 0) 50%,
-            rgba(0, 0, 0, 0.25) 50%),
-        /* Screen Glare */
-        linear-gradient(135deg,
-            rgba(255, 255, 255, 0.05) 0%,
-            rgba(255, 255, 255, 0) 50%);
-    background-size: 100% 4px, 100% 100%;
-    animation: flicker 0.15s infinite;
-}
-
-@keyframes flicker {
-    0% {
-        opacity: 0.95;
-    }
-
-    100% {
-        opacity: 0.98;
-    }
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+        radial-gradient(rgba(16, 249, 111, 0.05) 0%, rgba(0, 0, 0, 0.2) 100%);
+    background-size: 100% 3px, 100% 100%;
+    opacity: 0.8;
 }
 
 .screen-content {
-    padding: 30px;
+    padding: 25px;
     height: 100%;
     overflow-y: auto;
     position: relative;
     z-index: 10;
     box-sizing: border-box;
-    /* Main Green Glow */
-    text-shadow: 0 0 4px var(--pip-glow);
+    scrollbar-gutter: stable;
+}
+
+.glass-panel {
+    background: rgba(16, 249, 111, 0.03);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(16, 249, 111, 0.15);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Custom Scrollbar */
@@ -188,6 +191,33 @@ body {
 }
 
 .pip-tab:hover {
+    color: #fff;
+    background: rgba(16, 249, 111, 0.05);
+}
+
+/* --- SUB-NAVIGATION (Internal Category Tabs) --- */
+.sub-nav {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--pip-dim);
+    padding-bottom: 5px;
+}
+
+.sub-tab {
+    font-size: 0.8rem;
+    color: var(--pip-dim);
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
+.sub-tab.active {
+    color: var(--pip-green);
+    text-decoration: underline;
+}
+
+.sub-tab:hover {
     color: #fff;
 }
 
@@ -449,6 +479,7 @@ input:focus {
     height: 100%;
     background: #000;
 }
+
 /* --- SWITCH STYLES (Ghost Mode) --- */
 .switch {
     position: relative;
@@ -485,11 +516,11 @@ input:focus {
     transition: .4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: var(--pip-green);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     transform: translateX(14px);
     background-color: #000;
 }
