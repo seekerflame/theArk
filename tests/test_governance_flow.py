@@ -1,13 +1,14 @@
 import requests
 import json
 import time
+import os
 
 BASE_URL = "http://localhost:3006"
 USER_TOKEN = "dev_token_user" # Assuming dev token works or we need to login
 
 def login():
     username = os.environ.get("ARK_ADMIN_USER", "Lead_Architect")
-    password = os.environ.get("ARK_ADMIN_PASS", "queen_password")
+    admin_p = os.environ.get("ARK_ADMIN_PASS", "ark_pass_default")
     
     try:
         # Try login first
@@ -16,8 +17,8 @@ def login():
         # Register if login fails
         if r.status_code != 200:
             print("    Registering user...")
-            requests.post(f"{BASE_URL}/api/register", json={"username": username, "password": password})
-            r = requests.post(f"{BASE_URL}/api/login", json={"username": username, "password": password})
+            requests.post(f"{BASE_URL}/api/register", json={"username": username, "password": admin_p})
+            r = requests.post(f"{BASE_URL}/api/login", json={"username": username, "password": admin_p})
             
         if r.status_code == 200:
             resp_json = r.json()

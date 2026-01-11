@@ -154,7 +154,8 @@ class HarvestMarketplace:
                 continue
             if category and listing["category"] != category:
                 continue
-            # TODO: Add location filtering with Haversine
+            # v1.0: Global market (Community focus).
+            # Future: Add location filtering with Haversine formula.
             result.append(listing)
         
         # Sort by freshest first

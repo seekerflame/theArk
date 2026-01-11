@@ -21,12 +21,12 @@ def requires_auth(identity_manager):
         @wraps(f)
         def wrapper(handler, payload=None, *args, **kwargs):
             u = handler.get_auth_user()
-            if not u: return handler.send_error("Unauthorized", status=401)
+            if not u: return handler.send_json_error("Unauthorized", status=401)
             uname = u['sub']
             now = time.time()
             if uname not in USER_RATE_LIMITS: USER_RATE_LIMITS[uname] = []
             USER_RATE_LIMITS[uname] = [t for t in USER_RATE_LIMITS[uname] if now - t < 60]
-            if len(USER_RATE_LIMITS[uname]) > 5000: return handler.send_error("Too many requests (User)", status=429)
+            if len(USER_RATE_LIMITS[uname]) > 5000: return handler.send_json_error("Too many requests (User)", status=429)
             USER_RATE_LIMITS[uname].append(now)
             
             return f(handler, u, payload, *args, **kwargs)
@@ -36,6 +36,6 @@ def requires_auth(identity_manager):
 def admin_only(f):
     @wraps(f)
     def wrapper(handler, user, *args, **kwargs):
-        if user.get('role') != 'ADMIN': return handler.send_error("Admin access required", status=403)
+        if user.get('role') != 'ADMIN': return handler.send_json_error("Admin access required", status=403)
         return f(handler, user, *args, **kwargs)
     return wrapper

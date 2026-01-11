@@ -122,6 +122,7 @@ function main() {
             appState.currentUser.verified_hours = data.user.verified_hours;
             appState.currentUser.safety_grade = data.user.safety_grade;
             appState.currentUser.hm = data.user.hm;
+            appState.currentUser.pseudoname = data.user.pseudoname;
             appState.balance = data.user.balance;
             return { success: true };
 
@@ -308,7 +309,7 @@ function main() {
                         <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
                             <input type="number" id="cb-amount" class="input-dark" placeholder="Amount (AT)" style="margin-bottom:0;">
                             <input type="text" id="cb-recipient" class="input-dark" placeholder="Recipient (Sovereign ID)" style="margin-bottom:0;">
-                            <button onclick="window.centralBankMint()" class="btn-primary" style="background: linear-gradient(135deg, #F59E0B, #D97706); font-weight:bold;">🖨️ MINT SOVEREIGN AT</button>
+                            <button onclick="window.centralBankMint()" class="btn-primary" style="background: linear-gradient(135deg, #F59E0B, #D97706); font-weight:bold;">🖨️ MINT ARK AT</button>
                             <div style="font-size:0.7rem; color:#94a3b8; text-align:center; margin-top:5px;">⚠️ Minting requires Oracle consensus in Mainnet.</div>
                         </div>
                     </div>
@@ -486,10 +487,10 @@ function main() {
             Object.assign(appState, data);
         }
 
-        // --- SHARED SOVEREIGN IDENTITY (The Queen Mnemonic) ---
+        // --- SHARED ARK IDENTITY (The Queen Mnemonic) ---
         // abundance village solar build harvest freedom labor token seed grow thrive community
         if (!appState.currentUser.mnemonic) {
-            console.log("[SOVEREIGN] Initializing Shared Mission Identity...");
+            console.log("[ARK] Initializing Shared Mission Identity...");
             appState.currentUser.mnemonic = "abundance village solar build harvest freedom labor token seed grow thrive community";
             appState.currentUser.name = "Lead Architect";
             appState.currentUser.role = "FOUNDER";
@@ -599,19 +600,19 @@ function main() {
                 // Every 10 minutes, regenerate a local "Attention Proof"
                 if (Math.floor(elapsed / 60000) % 10 === 0 && !window.lastEntropyUpdate) {
                     window.lastEntropyUpdate = true;
-                    console.log("[SOVEREIGN] Attention Entropy Verified locally.");
+                    console.log("[ARK] Attention Entropy Verified locally.");
                     setTimeout(() => { window.lastEntropyUpdate = false; }, 60000);
                 }
             }
         }, 1000);
     };
 
-    // --- SOVEREIGN DATA SALE ---
+    // --- ARK DATA SALE ---
     window.authorizeDataSale = function (packetId) {
         const mnemonic = prompt("🔐 Enter Mnemonic Seed to authorize local data signing:");
         if (!mnemonic) return;
 
-        apiFetch('/api/sovereign/data-sale/sign', {
+        apiFetch('/api/ark/data-sale/sign', {
             method: 'POST',
             body: {
                 mnemonic: mnemonic,
@@ -619,8 +620,8 @@ function main() {
                 buyer: "GPM_RESEARCH_FOUNDATION"
             }
         }).then(data => {
-            showCelebration(`💰 SOVEREIGN SALE SIGNED +${data.reward} AT`);
-            logToTerminal(`[SOVEREIGN] Data Sale authorized. Reward: ${data.reward} AT`);
+            showCelebration(`💰 ARK SALE SIGNED +${data.reward} AT`);
+            logToTerminal(`[ARK] Data Sale authorized. Reward: ${data.reward} AT`);
             syncWithLedger();
         }).catch(e => alert(e.message));
     };
@@ -714,7 +715,7 @@ function main() {
         });
     };
 
-    // --- SOVEREIGN IDENTITY LOGIC ---
+    // --- ARK IDENTITY LOGIC ---
     window.showAuthMode = function (mode) {
         document.getElementById('auth-login-form').style.display = mode === 'login' ? 'block' : 'none';
         document.getElementById('auth-register-form').style.display = mode === 'register' ? 'block' : 'none';
@@ -1306,7 +1307,7 @@ function main() {
                 { id: 'dashboard', name: 'Mission Control', icon: '🚀', enabled: true, order: 1 },
                 { id: 'jobs', name: 'Job Board', icon: '📋', enabled: true, order: 2 },
                 { id: 'bounties', name: 'Bounty Board', icon: '⚔️', enabled: true, order: 2.5 },
-                { id: 'wallet', name: 'Sovereign Wallet', icon: '💰', enabled: true, order: 3 },
+                { id: 'wallet', name: 'True Wallet', icon: '💰', enabled: true, order: 3 },
                 { id: 'techtree', name: 'Tech Tree', icon: '🧬', enabled: true, order: 4 },
                 { id: 'map', name: 'Mesh Map', icon: '🗺️', enabled: true, order: 7 },
                 { id: 'tangle', name: 'Live Tangle', icon: '🕸️', enabled: true, order: 8 },
@@ -3335,7 +3336,7 @@ function main() {
 
     window.uploadProof = function (questId) {
         if (!appState.currentUser || appState.currentUser.name === 'Guest') {
-            alert("🔒 Sovereign Identity required to claim quest bounties. Please login first.");
+            alert("🔒 Ark Identity required to claim quest bounties. Please login first.");
             return;
         }
 
@@ -3389,7 +3390,7 @@ function main() {
             setTimeout(() => logo.classList.remove('pulse-active'), 500);
         }
 
-        logToTerminal("[SYSTEM] Initiating sovereign health audit...");
+        logToTerminal("[SYSTEM] Initiating ark health audit...");
 
         // Play diagnostic sound
         if (window.playSound) window.playSound('boot');
@@ -3414,7 +3415,7 @@ function main() {
 
     // --- GAIA MISSION GUIDE (Animated Helper) ---
     window.onboardingSteps = [
-        { id: 'auth', title: '🔐 Establish Identity', desc: 'Create your sovereign wallet', view: 'auth', check: () => appState.token != null },
+        { id: 'auth', title: '🔐 Establish Identity', desc: 'Create your ark wallet', view: 'auth', check: () => appState.token != null },
         { id: 'jobs', title: '📋 Claim your first Quest', desc: 'Accept a task from the board', view: 'jobs', check: () => appState.tasks && appState.tasks.some(t => t.worker === appState.currentUser?.name || t.assignee === appState.currentUser?.name) },
         { id: 'submit', title: '📤 Submit Proof of Work', desc: 'Upload evidence of completion', view: 'jobs', check: () => appState.history && appState.history.some(h => h.type === 'QUEST_UPDATE' && h.data?.status === 'PENDING_VALIDATION') },
         { id: 'mint', title: '⚡ Earn your first AT', desc: 'Get validated and receive tokens', view: 'wallet', check: () => appState.balance > 0 },
@@ -3825,6 +3826,7 @@ function main() {
             case 'stat':
                 if (window.updateDashboardStats) window.updateDashboardStats();
                 if (window.pulseGaia) window.pulseGaia();
+                if (window.AbundanceLoop) window.AbundanceLoop.init();
                 break;
             case 'swarm':
                 if (window.renderSwarmUI) window.renderSwarmUI();
@@ -4278,13 +4280,23 @@ function main() {
                 <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Transfer Abundance Tokens to another villager.</p>
                 
                 <div class="form-group">
-                    <label>Recipient Username</label>
-                    <input type="text" id="send-recipient" placeholder="Enter username..." class="input-dark">
+                    <label>Recipient Username or @Handle</label>
+                    <input type="text" id="send-recipient" placeholder="@alias or username..." class="input-dark">
                 </div>
                 
                 <div class="form-group">
                     <label>Amount (AT)</label>
                     <input type="number" id="send-amount" value="1.0" min="0.01" step="0.01" class="input-dark">
+                </div>
+
+                <div class="form-group">
+                    <label>Transfer Category</label>
+                    <select id="send-category" class="input-dark">
+                        <option value="COMMUNITY">Community (Trade/Services)</option>
+                        <option value="FAMILY">Family (Allowance/Support)</option>
+                        <option value="GIFT">Gift (Gratitude)</option>
+                        <option value="PRIVATE">Private (Internal Sync)</option>
+                    </select>
                 </div>
                 
                 <div style="margin-top:20px;">
@@ -4301,6 +4313,125 @@ function main() {
         if (container) {
             container.innerHTML = '';
             container.style.pointerEvents = 'none';
+        }
+    };
+
+    window.renderReceiveQR = function () {
+        const container = document.getElementById('send-modal-container');
+        if (!container) return;
+
+        const user = appState.currentUser;
+        const handle = user.pseudoname ? `@${user.pseudoname}` : user.username;
+        const address = user.username; // Sub is used as unique ID
+
+        container.style.pointerEvents = 'auto';
+        container.innerHTML = `
+            <div class="exchange-modal glass-panel" style="border-color: var(--pip-green); text-align:center;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h2 style="margin:0; color:var(--pip-green);">↙ Receive AT</h2>
+                    <button onclick="window.closeSendModal()" style="background:none; border:none; color:var(--pip-dim); font-size:1.5rem; cursor:pointer;">&times;</button>
+                </div>
+                
+                <div id="qrcode-box" style="background:white; padding:15px; display:inline-block; border-radius:10px; margin-bottom:15px;"></div>
+                
+                <div style="font-family:'Share Tech Mono'; font-size:1.2rem; color:var(--pip-green);">${handle}</div>
+                <div style="font-size:0.7rem; color:var(--pip-dim); margin-top:5px; word-break:break-all;">${address}</div>
+                
+                <p style="font-size:0.8rem; color:var(--pip-dim); margin-top:15px;">Show this QR to another villager to receive Abundance Tokens.</p>
+            </div>
+        `;
+
+        // Generate QR Code
+        setTimeout(() => {
+            new QRCode(document.getElementById("qrcode-box"), {
+                text: `at:${address}`,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }, 100);
+    };
+
+    window.setPseudoname = async function () {
+        const current = appState.currentUser.pseudoname || "";
+        const pseudo = prompt("Enter your Sovereign Pseudoname (Online Alias):", current);
+        if (pseudo === null) return;
+
+        try {
+            const data = await apiFetch('/api/identity/pseudoname', {
+                method: 'POST',
+                body: { pseudoname: pseudo }
+            });
+            if (data.status === 'success') {
+                appState.currentUser.pseudoname = pseudo;
+                if (window.showNotification) showNotification("ALIAS UPDATED", `Identity established as @${pseudo}`, "success");
+                else alert(`Success: Pseudoname set to @${pseudo}`);
+                updateUI();
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        } catch (e) {
+            console.error(e);
+            alert("Network Error");
+        }
+    };
+
+    window.openScanner = function () {
+        const container = document.getElementById('send-modal-container');
+        if (!container) return;
+
+        container.style.pointerEvents = 'auto';
+        container.innerHTML = `
+            <div class="exchange-modal glass-panel" style="border-color: #FBBF24;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h2 style="margin:0; color:#FBBF24;">📷 Scanner Interface</h2>
+                    <button onclick="window.closeSendModal()" style="background:none; border:none; color:var(--pip-dim); font-size:1.5rem; cursor:pointer;">&times;</button>
+                </div>
+                
+                <div id="qr-reader" style="width:100%; min-height:200px; background:#000; border:2px dashed #FBBF24; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                    <span style="color:#FBBF24; font-size:3rem; margin-bottom:10px;">SCANNING...</span>
+                    <p style="font-size:0.7rem; color:var(--pip-dim);">Align QR code within the neural frame.</p>
+                </div>
+
+                <div style="margin-top:20px;">
+                    <p style="font-size:0.8rem; color:var(--pip-dim); margin-bottom:10px;">[SIMULATION] Enter QR Payload manually:</p>
+                    <input type="text" id="sim-qr-payload" placeholder="at:username or at:buy?item_id=..." class="input-dark">
+                    <button onclick="window.processQR(document.getElementById('sim-qr-payload').value)" class="btn-pip" style="width:100%; margin-top:10px; border-color:#FBBF24; color:#FBBF24;">
+                        PROCESS NEURAL SIGNAL
+                    </button>
+                </div>
+            </div>
+        `;
+    };
+
+    window.processQR = function (payload) {
+        if (!payload.startsWith('at:')) {
+            return alert("Invalid neural signal. Use 'at:' protocol.");
+        }
+
+        const data = payload.substring(3); // Remove 'at:'
+
+        if (data.startsWith('buy?')) {
+            const params = new URLSearchParams(data.split('?')[1]);
+            const itemId = params.get('item_id');
+            if (itemId) {
+                window.closeSendModal();
+                if (window.buyItem) window.buyItem(itemId);
+                else alert(`Purchase intent for ${itemId} registered. (Function buyItem not found)`);
+            }
+        } else {
+            const parts = data.split('?');
+            const recipient = parts[0];
+            window.closeSendModal();
+            window.renderSendModal();
+            document.getElementById('send-recipient').value = recipient;
+            if (parts.length > 1) {
+                const amountParams = new URLSearchParams(parts[1]);
+                const amtVal = amountParams.get('amount');
+                if (amtVal) document.getElementById('send-amount').value = amtVal;
+            }
         }
     };
 
@@ -4568,19 +4699,20 @@ function main() {
     window.sendAT = async function () {
         const recipient = document.getElementById('send-recipient').value.trim();
         const amount = parseFloat(document.getElementById('send-amount').value);
+        const category = document.getElementById('send-category').value;
 
         if (!recipient) return alert("Recipient required.");
         if (isNaN(amount) || amount <= 0) return alert("Invalid amount.");
         if (amount > appState.balance) return alert("Insufficient balance.");
 
         try {
-            const res = await apiFetch('/api/wallet/send', {
+            const res = await apiFetch('/api/transfer', {
                 method: 'POST',
-                body: { recipient: recipient, amount: amount }
+                body: { receiver: recipient, amount: amount, category: category }
             });
 
             if (res.status === 'success') {
-                window.notifyUser(`Sent ${amount} AT to ${recipient}`, 'success');
+                window.notifyUser(`Sent ${amount} AT to ${recipient} (${category})`, 'success');
                 window.closeSendModal();
                 syncWithLedger();
                 if (window.playSound) window.playSound('success');
@@ -5371,3 +5503,127 @@ window.voteOnProposal = async function (propId, voteType) {
         }
     } catch (e) { console.error(e); }
 };
+// --- FISHERY & PASSPORT INTEGRATION ---
+
+window.pollFisheryStatus = async function () {
+    try {
+        const resp = await fetch('/api/fishery/status', {
+            headers: { 'Authorization': `Bearer ${appState.token || localStorage.getItem('at_token')}` }
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+            const status = data.data;
+            const badge = document.getElementById('fishery-badge');
+            if (badge) {
+                badge.textContent = status.state;
+                if (status.state === 'LOCKDOWN') badge.style.background = '#ef4444';
+                else if (status.state === 'SHIELDED') badge.style.background = '#f59e0b';
+                else badge.style.background = 'var(--pip-green)';
+            }
+        }
+    } catch (e) { console.error("Fishery pulse failed"); }
+};
+
+window.switchPipTabHook = function (tabName) {
+    if (tabName === 'stat' || tabName === 'deck') {
+        if (window.renderPassport) window.renderPassport();
+    }
+};
+
+// Start background safety monitor
+setInterval(window.pollFisheryStatus, 5000);
+window.pollFisheryStatus();
+
+// Initial Passport Render
+setTimeout(() => { if (window.renderPassport) window.renderPassport(); }, 1000);
+
+// --- GHOST MODE (Privacy Shield) ---
+window.toggleGhostMode = function() {
+    const isChecked = document.getElementById('ghost-mode-toggle').checked;
+    appState.ghostMode = isChecked;
+    localStorage.setItem('ark_ghost_mode', isChecked);
+    
+    const status = isChecked ? "ACTIVE (Zero Trail)" : "INACTIVE (Building Legend)";
+    logToTerminal(`[PRIVACY] Ghost Mode ${status}`);
+    
+    // Notify server of privacy preference
+    apiFetch('/api/ark/privacy', {
+        method: 'POST',
+        body: { ghost_mode: isChecked }
+    }).catch(e => console.warn("Privacy sync failed, using local-only shield."));
+    
+    if (window.renderPassport) window.renderPassport();
+};
+
+// --- PARTY QUESTS (Social Engagement) ---
+window.createPartyQuest = function(type) {
+    const title = prompt(`Enter ${type.toUpperCase()} Mission Title:`);
+    if (!title) return;
+    
+    const reward = parseFloat(prompt("Enter Reward per person (AT):", "5.0"));
+    if (isNaN(reward) || reward <= 0) return alert("Invalid reward amount.");
+    
+    logToTerminal(`[PARTY] Initializing ${type.toUpperCase()} Quest: ${title}...`);
+    
+    apiFetch('/api/party/create', {
+        method: 'POST',
+        body: {
+            title: title,
+            reward_per_person: reward,
+            quest_type: type,
+            category: "COMMUNITY",
+            child_friendly: true
+        }
+    }).then(res => {
+        if (res.status === 'success') {
+            window.notifyUser(`Party Quest Created: ${title}`, 'success');
+            syncWithLedger();
+        } else {
+            alert(res.message || "Failed to create party quest.");
+        }
+    }).catch(e => {
+        console.error("Party Quest Creation Error:", e);
+        alert("Network error. Is the server online?");
+    });
+};
+
+// --- RADIO INTEL (All Seeing Eye Visualization) ---
+window.updateRadioIntel = function() {
+    const viz = document.getElementById('radio-intel-viz');
+    if (!viz) return;
+    
+    const signals = [
+        "SIG_INTEL: 433.92MHz [STABLE]",
+        "TRAFFIC: 101-North [HEAVY]",
+        "MESH_NODE: 'PONY_BACKBONE' [CONNECTED]",
+        "RF_BURST: 2.4GHz [ENCRYPTED]",
+        "ALL_SEEING_EYE: Object Detected Sector 7",
+        "PONY_EXPRESS: Packet Delivered to Node-B",
+        "ENCRYPTION: AES-256 [HARDENED]"
+    ];
+    
+    const line = signals[Math.floor(Math.random() * signals.length)];
+    const time = new Date().toLocaleTimeString();
+    
+    const newEntry = document.createElement('div');
+    newEntry.style.borderLeft = "2px solid #3b82f6";
+    newEntry.style.paddingLeft = "5px";
+    newEntry.style.marginBottom = "2px";
+    newEntry.innerHTML = `<span style="opacity:0.5;">[${time}]</span> ${line}`;
+    
+    viz.prepend(newEntry);
+    if (viz.children.length > 8) viz.removeChild(viz.lastChild);
+};
+
+// Start Radio Intel Simulation
+setInterval(window.updateRadioIntel, 4000);
+
+// Load Privacy State
+document.addEventListener('DOMContentLoaded', () => {
+    const savedGhost = localStorage.getItem('ark_ghost_mode') === 'true';
+    const toggle = document.getElementById('ghost-mode-toggle');
+    if (toggle) {
+        toggle.checked = savedGhost;
+        appState.ghostMode = savedGhost;
+    }
+});

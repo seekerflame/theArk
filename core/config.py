@@ -23,12 +23,12 @@ class Config:
         return os.environ.get('MERMAID_CHART_API_KEY')
 
     @staticmethod
-    def get_jwt_secret():
-        jwt_key = os.environ.get('JWT_SECRET', 'dev_only_secret_change_in_production')
-        if Config.is_prod() and jwt_key == 'dev_only_secret_change_in_production':
-            logger.critical("🚨 PRODUCTION SECURITY BREACH: Using default JWT_SECRET!")
-            raise RuntimeError("Cannot start production server with default JWT_SECRET")
-        return jwt_key
+    def get_jwt_key():
+        key = os.environ.get('JWT_TOKEN_KEY', 'dev_only_key_change_in_production')
+        if Config.is_prod() and key == 'dev_only_key_change_in_production':
+            logger.critical("🚨 PRODUCTION SECURITY BREACH: Using default JWT_KEY!")
+            raise RuntimeError("Cannot start production server with default JWT_KEY")
+        return key
 
 def load_env_file(path='.env'):
     """Simple parser for .env files to populate os.environ"""

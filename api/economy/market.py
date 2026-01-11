@@ -29,8 +29,8 @@ def register_market_routes(router, ledger, requires_auth):
         except Exception as e:
             h.send_json_error(f"Error loading prompts: {str(e)}")
 
-    @router.get('/api/store')
-    def h_store(h):
+    @router.get('/api/store/list')
+    def h_store_list(h):
         h.send_json([
             {"id": "ose_fbcc", "name": "FBCC Godzilla Ticket", "price": 2100, "icon": "🏎️", "desc": "2-for-1 Immersive Truck Build (Includes Food & Onsite Living)"},
             {"id": "ose_consult", "name": "AI/Lead Architect Consult", "price": 100, "icon": "🧠", "desc": "1 Hour technical strategy session"},
@@ -39,7 +39,7 @@ def register_market_routes(router, ledger, requires_auth):
             {"id": "ose_sticker", "name": "Civ-OS Sticker", "price": 10, "icon": "🏷️", "desc": "Proclaim your sovereignty"}
         ])
 
-    @router.post('/api/purchase')
+    @router.post('/api/store/buy')
     def h_purchase(h, p):
         u = h.get_auth_user()
         if not u: return h.send_json_error("Auth Required", status=401)

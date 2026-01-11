@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import os
 
 BASE_URL = "http://localhost:3006"
 
@@ -9,18 +10,18 @@ def seed():
     
     # 1. Login as Lead_Architect
     username = os.environ.get("ARK_ADMIN_USER", "Lead_Architect")
-    password = os.environ.get("ARK_ADMIN_PASS", "queen_password")
+    admin_p = os.environ.get("ARK_ADMIN_PASS", "ark_pass_default")
     
     print(f"🔑 Authenticating as {username}...")
-    login_resp = requests.post(f"{BASE_URL}/api/login", json={"username": username, "password": password})
+    login_resp = requests.post(f"{BASE_URL}/api/login", json={"username": username, "password": admin_p})
     
     if login_resp.status_code != 200:
         print("    Registering Lead_Architect...")
-        reg_resp = requests.post(f"{BASE_URL}/api/register", json={"username": username, "password": password})
+        reg_resp = requests.post(f"{BASE_URL}/api/register", json={"username": username, "password": admin_p})
         if reg_resp.status_code != 200:
             print(f"❌ Registration failed: {reg_resp.text}")
             return
-        login_resp = requests.post(f"{BASE_URL}/api/login", json={"username": username, "password": password})
+        login_resp = requests.post(f"{BASE_URL}/api/login", json={"username": username, "password": admin_p})
 
     try:
         resp_json = login_resp.json()

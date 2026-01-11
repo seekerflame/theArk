@@ -356,5 +356,510 @@
     "verified_hours": 0.0,
     "safety_grade": 100.0,
     "created_at": 1768041454.088304
+  },
+  "verifier_0": {
+    "password": "password123",
+    "mnemonic": "open path build soul bond value labor ark tribe gaia source mind",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768075742.261777
+  },
+  "verifier_1": {
+    "password": "password123",
+    "mnemonic": "spirit value tribe mind core truth life build open node flow bond",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768075742.2762392
+  },
+  "verifier_2": {
+    "password": "password123",
+    "mnemonic": "ark build power value gaia hand core mind earth grid spirit source",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768075742.292413
+  },
+  "new_citizen_v1": {
+    "password": "password123",
+    "mnemonic": "gaia mint open seed life mind core source soul ark earth hand",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768075742.3029141
+  },
+  "test_user_1768082024": {
+    "password": "password123",
+    "mnemonic": "bond node build value tribe mind source hand power flow ark labor",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768082024.412152
+  },
+  "test_user_1768082060": {
+    "password": "password123",
+    "mnemonic": "power open hand grid source build mint truth life gaia tribe soul",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768082060.657474
+  },
+  "test_user_1768082080": {
+    "password": "password123",
+    "mnemonic": "ark truth earth hand core gaia source open life mind power value",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768082080.7137668,
+    "pseudoname": "Cyber"
+  },
+  "test_user_qr": {
+    "password": "password123",
+    "mnemonic": "grid value ark earth flow core hand source truth node mind open",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 1.0,
+    "safety_grade": 100.0,
+    "created_at": 1768082080.733705
+  },
+  "test_user_1768082144": {
+    "password": "password123",
+    "mnemonic": "hand labor truth source mind spirit flow earth life mint core grid",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 1.0,
+    "safety_grade": 100.0,
+    "created_at": 1768082144.6272798
+  },
+  "test_user_1768082176": {
+    "password": "password123",
+    "mnemonic": "ark value path flow labor soul bond spirit gaia power build seed",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 1.0,
+    "safety_grade": 100.0,
+    "created_at": 1768082176.472356
+  },
+  "test_user_1768082192": {
+    "password": "password123",
+    "mnemonic": "flow seed spirit life bond ark open truth gaia grid tribe earth",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 1.0,
+    "safety_grade": 100.0,
+    "created_at": 1768082192.840876
+  },
+  "test_user_1768082217": {
+    "password": "password123",
+    "mnemonic": "mind truth power gaia seed source ark open node earth soul build",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 1.0,
+    "safety_grade": 100.0,
+    "created_at": 1768082217.375147
+  },
+  "citizen_0": {
+    "password": "node_password_123",
+    "mnemonic": "mint spirit hand build node source core grid truth power tribe soul",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.114675
+  },
+  "citizen_2": {
+    "password": "node_password_123",
+    "mnemonic": "node tribe bond flow labor soul life hand mind mint core build",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.203197
+  },
+  "citizen_1": {
+    "password": "node_password_123",
+    "mnemonic": "power gaia path labor grid value build open bond soul node truth",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.2032409
+  },
+  "citizen_3": {
+    "password": "node_password_123",
+    "mnemonic": "truth mind node seed labor tribe soul spirit flow bond core power",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.206846
+  },
+  "citizen_4": {
+    "password": "node_password_123",
+    "mnemonic": "seed open grid soul tribe ark node power build labor truth value",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.208608
+  },
+  "citizen_5": {
+    "password": "node_password_123",
+    "mnemonic": "spirit ark node power core path value open mind source labor flow",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.208818
+  },
+  "citizen_6": {
+    "password": "node_password_123",
+    "mnemonic": "truth spirit build node path hand grid life bond tribe source seed",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.208951
+  },
+  "citizen_7": {
+    "password": "node_password_123",
+    "mnemonic": "mind node truth ark build bond value hand tribe core soul spirit",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.2091498
+  },
+  "citizen_8": {
+    "password": "node_password_123",
+    "mnemonic": "truth node source hand power grid core ark earth value gaia flow",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.209623
+  },
+  "citizen_10": {
+    "password": "node_password_123",
+    "mnemonic": "power build hand grid ark flow node tribe earth truth bond open",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.209811
+  },
+  "citizen_9": {
+    "password": "node_password_123",
+    "mnemonic": "gaia grid hand truth node mint tribe open power spirit core flow",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.209972
+  },
+  "citizen_14": {
+    "password": "node_password_123",
+    "mnemonic": "life labor tribe grid gaia seed value source flow spirit mint power",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.3288362
+  },
+  "citizen_13": {
+    "password": "node_password_123",
+    "mnemonic": "tribe node life power earth truth value mind grid flow open mint",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.3288739
+  },
+  "citizen_11": {
+    "password": "node_password_123",
+    "mnemonic": "mint earth soul gaia hand grid bond build power core node seed",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.3292701
+  },
+  "citizen_15": {
+    "password": "node_password_123",
+    "mnemonic": "node ark flow labor seed truth build soul value power bond spirit",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.329396
+  },
+  "citizen_12": {
+    "password": "node_password_123",
+    "mnemonic": "power source flow seed build earth path ark mint labor mind open",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.329602
+  },
+  "citizen_16": {
+    "password": "node_password_123",
+    "mnemonic": "path spirit build mind value flow seed truth soul node source bond",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.3297741
+  },
+  "citizen_17": {
+    "password": "node_password_123",
+    "mnemonic": "spirit earth ark labor truth flow build seed grid life soul mint",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.3299289
+  },
+  "citizen_18": {
+    "password": "node_password_123",
+    "mnemonic": "source path earth value soul build ark core node hand open mind",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.3300889
+  },
+  "citizen_19": {
+    "password": "node_password_123",
+    "mnemonic": "hand gaia grid core source path soul flow power tribe spirit open",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.330234
+  },
+  "citizen_20": {
+    "password": "node_password_123",
+    "mnemonic": "node labor open flow path seed earth build bond source gaia power",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.3303611
+  },
+  "citizen_23": {
+    "password": "node_password_123",
+    "mnemonic": "ark labor open seed mind gaia life core bond spirit earth node",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.4442081
+  },
+  "citizen_21": {
+    "password": "node_password_123",
+    "mnemonic": "seed bond soul grid power value gaia labor spirit flow life earth",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.4458098
+  },
+  "citizen_22": {
+    "password": "node_password_123",
+    "mnemonic": "earth truth build ark power core path mind gaia flow source node",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.463443
+  },
+  "citizen_27": {
+    "password": "node_password_123",
+    "mnemonic": "value hand tribe flow mint grid ark core truth life path open",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.474176
+  },
+  "citizen_26": {
+    "password": "node_password_123",
+    "mnemonic": "gaia mint labor value path power ark bond grid core tribe soul",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.47799
+  },
+  "citizen_24": {
+    "password": "node_password_123",
+    "mnemonic": "source spirit path hand build value core seed life flow mint tribe",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.4955971
+  },
+  "citizen_28": {
+    "password": "node_password_123",
+    "mnemonic": "mint flow earth truth node path open labor life spirit seed grid",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.496474
+  },
+  "citizen_25": {
+    "password": "node_password_123",
+    "mnemonic": "earth flow bond core value labor grid source life open mind build",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.5208268
+  },
+  "citizen_29": {
+    "password": "node_password_123",
+    "mnemonic": "truth seed earth path power soul ark mint value labor core node",
+    "role": "WORKER",
+    "roles": [
+      "WORKER"
+    ],
+    "certifications": {},
+    "verified_hours": 0.0,
+    "safety_grade": 100.0,
+    "created_at": 1768086528.567738
   }
 }

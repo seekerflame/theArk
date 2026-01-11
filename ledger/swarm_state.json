@@ -134,5 +134,53 @@
         "verified": false
       }
     }
+  },
+  "swarm_1768083859": {
+    "id": "swarm_1768083859",
+    "title": "[AUTO] Solar Array Panel Cleaning",
+    "blueprint_id": "blueprint_solar_maint",
+    "status": "ACTIVE",
+    "blocks": {
+      "block_0": {
+        "id": "block_0",
+        "description": "Atomic Assembly Task 1 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_1": {
+        "id": "block_1",
+        "description": "Atomic Assembly Task 2 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_2": {
+        "id": "block_2",
+        "description": "Atomic Assembly Task 3 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_3": {
+        "id": "block_3",
+        "description": "Atomic Assembly Task 4 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      },
+      "block_4": {
+        "id": "block_4",
+        "description": "Atomic Assembly Task 5 for [AUTO] Solar Array Panel Cleaning",
+        "status": "AVAILABLE",
+        "claimed_by": null,
+        "reward_at": 1.0,
+        "verified": false
+      }
+    }
   }
 }

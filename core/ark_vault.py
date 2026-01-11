@@ -5,7 +5,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
-class SovereignData:
+class ArkVault:
     """
     Handles local, on-device encryption for sensitive metabolic and attention data.
     The key is derived from the user's mnemonic seed, ensuring only the device
@@ -16,7 +16,7 @@ class SovereignData:
         self.key = self._derive_key(seed_phrase)
         
     def _derive_key(self, seed_phrase):
-        salt = b'ose_sovereignty_salt' # In production, this should be unique per node
+        salt = b'ose_ark_salt' # In production, this should be unique per node
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
@@ -43,8 +43,8 @@ class SovereignData:
 
 def secure_local_save(filename, data, seed_phrase):
     """Saves encrypted data to a local file."""
-    sd = SovereignData(seed_phrase)
-    encrypted = sd.encrypt(data)
+    av = ArkVault(seed_phrase)
+    encrypted = av.encrypt(data)
     with open(filename, 'w') as f:
         f.write(encrypted)
 
@@ -52,7 +52,7 @@ def secure_local_load(filename, seed_phrase):
     """Loads and decrypts data from a local file."""
     if not os.path.exists(filename):
         return None
-    sd = SovereignData(seed_phrase)
+    av = ArkVault(seed_phrase)
     with open(filename, 'r') as f:
         encrypted = f.read()
-    return sd.decrypt(encrypted)
+    return av.decrypt(encrypted)

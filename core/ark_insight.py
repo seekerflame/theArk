@@ -1,8 +1,8 @@
 import time
 
-class SovereignAnalytics:
+class ArkAnalytics:
     """
-    Sovereign Analytics (Anti-Palantir).
+    Ark Insight (Anti-Palantir).
     Processes node data locally to provide abundance insights.
     Goal: Feed 150 people for $0.
     """

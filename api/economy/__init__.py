@@ -22,7 +22,7 @@ def register_economy_routes(router, ledger, sensors, identity, justice, requires
     register_market_routes(router, ledger, requires_auth)
     
     # 4. Transfer Routes
-    register_transfer_routes(router, ledger, requires_auth)
+    register_transfer_routes(router, ledger, identity, requires_auth)
     
     # 5. Stats/Evolution Routes
     register_stats_routes(router, ledger, sensors)

@@ -1,16 +1,16 @@
 """
-Sovereign Vault API
+Ark Vault API
 Handles the authorization and signing of local data sales.
-Uses core/sovereign_data.py for device-level encryption.
+Uses core/ark_vault.py for device-level encryption.
 """
 
 import time
 import json
-from core.sovereign_data import SovereignData
+from core.ark_vault import ArkVault
 
-def register_sovereign_routes(router, ledger, identity, auth_decorator):
+def register_ark_vault_routes(router, ledger, identity, auth_decorator):
     
-    @router.post('/api/sovereign/data-sale/sign')
+    @router.post('/api/ark/data-sale/sign')
     @auth_decorator
     def h_sign_data_sale(h, user, p):
         """
@@ -23,10 +23,10 @@ def register_sovereign_routes(router, ledger, identity, auth_decorator):
         buyer = p.get('buyer', 'GPM_RESEARCH_FOUNDATION')
         
         if not mnemonic:
-            return h.send_json_error("Mnemonic seed required for sovereign signing.")
+            return h.send_json_error("Mnemonic seed required for Ark signing.")
             
         try:
-            sd = SovereignData(mnemonic)
+            av = ArkVault(mnemonic)
             
             # 1. Create the Agreement
             agreement = {
@@ -38,10 +38,10 @@ def register_sovereign_routes(router, ledger, identity, auth_decorator):
             }
             
             # 2. Sign it (deterministic hash based on key)
-            signature = sd.encrypt(json.dumps(agreement))
+            signature = av.encrypt(json.dumps(agreement))
             
-            # 3. Add to Ledger as a SOVEREIGN_TX
-            tx = ledger.add_block('SOVEREIGN_TX', {
+            # 3. Add to Ledger as an ARK_TX
+            tx = ledger.add_block('ARK_TX', {
                 "action": "DATA_SALE",
                 "seller": username,
                 "buyer": buyer,
@@ -54,16 +54,16 @@ def register_sovereign_routes(router, ledger, identity, auth_decorator):
                 "status": "signed",
                 "tx": tx,
                 "reward": 2.0,
-                "message": "Sovereign data sale authorized and tokenized."
+                "message": "True data sale authorized and tokenized."
             })
             
         except Exception as e:
-            return h.send_json_error(f"Sovereign signing failed: {str(e)}")
+            return h.send_json_error(f"Ark signing failed: {str(e)}")
 
-    @router.get('/api/sovereign/status')
+    @router.get('/api/ark/status')
     @auth_decorator
-    def h_sov_status(h, user, p):
-        """Returns the user's data sovereignty metrics and economic state."""
+    def h_ark_status(h, user, p):
+        """Returns the user's data state and economic metrics."""
         username = user['sub']
         user_data = identity.users.get(username, {})
         balance = ledger.get_balance(username)

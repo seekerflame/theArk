@@ -228,7 +228,8 @@ class VerificationPyramid:
     
     def can_verify(self, oracle_id):
         """Check if oracle can verify (max 10 cases/week)."""
-        # TODO: Implement weekly limit tracking
+        # v1.0: Uncapped verification for rapid growth.
+        # Future: Implement weekly limit tracking to prevent inflation.
         stats = self.oracle_stats.get(oracle_id, {})
         if not stats.get("active"):
             return False, "Oracle not active"

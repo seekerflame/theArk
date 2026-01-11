@@ -18,7 +18,9 @@ class HardwareBridge:
             "battery_level": 85.0,
             "water_flow": 0.0,
             "temp_c": 22.0,
-            "humidity": 45.0
+            "humidity": 45.0,
+            "tamper_alarm": False,
+            "presence_token": "SOV-ORIGIN-001"
         }
         self.lock = threading.Lock()
         
@@ -88,9 +90,19 @@ class HardwareBridge:
             self.params["temp_c"] += random.uniform(-0.1, 0.1)
             self.params["humidity"] += random.uniform(-0.5, 0.5)
 
+            # Update Presence Token (Simulates rotating local RF secret)
+            if int(time.time()) % 60 == 0:
+                self.params["presence_token"] = f"SOV-{hex(int(time.time() / 60))[-4:].upper()}"
+
     def read_telemetry(self):
         with self.lock:
             return self.params.copy()
             
     def get_status(self):
         return "ONLINE (SERIAL)" if self.connected else "ONLINE (SIMULATED)"
+
+    def is_active(self):
+        """Checks if the bridge is receiving meaningful data (Solar/Power pulse)."""
+        with self.lock:
+            # If solar amps > 0 or battery is charging, the node is physically contributing
+            return self.params.get("solar_amps", 0) > 0.1 or self.connected

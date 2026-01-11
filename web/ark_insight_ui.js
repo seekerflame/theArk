@@ -5,7 +5,7 @@ const Intel = {
 
         container.innerHTML = `
             <div class="pip-box">
-                <h2 style="color: var(--pip-green);">SOVEREIGN INTELLIGENCE</h2>
+                <h2 style="color: var(--pip-green);">ARK INSIGHT</h2>
                 <div id="intel-recommendation" style="font-family: 'Share Tech Mono'; color: var(--pip-alert); margin-bottom: 15px; border-bottom: 1px solid var(--pip-dim); padding-bottom: 10px;">
                     LOADING STRATEGIC OVERVIEW...
                 </div>
@@ -20,7 +20,7 @@ const Intel = {
                         </div>
                     </div>
                     <div class="pip-box" style="border-color: var(--pip-dim);">
-                        <h3>SOVEREIGN PASSPORT</h3>
+                        <h3>ARK PASSPORT</h3>
                         <div id="passport-status" style="font-size: 0.8rem; font-family: 'VT323'; margin-bottom: 10px;">
                             STATUS: UNKNOWN
                         </div>
@@ -42,7 +42,7 @@ const Intel = {
     },
 
     fetchIntel: function () {
-        fetch('/api/sovereign/analytics', {
+        fetch('/api/ark/analytics', {
             headers: { 'Authorization': 'Bearer ' + appState.token }
         })
             .then(r => r.json())
@@ -61,7 +61,7 @@ const Intel = {
                 }
             });
 
-        fetch('/api/sovereign/passport/status', {
+        fetch('/api/ark/passport/status', {
             headers: { 'Authorization': 'Bearer ' + appState.token }
         })
             .then(r => r.json())
@@ -78,7 +78,7 @@ const Intel = {
     },
 
     requestPassport: function () {
-        fetch('/api/sovereign/passport/request', {
+        fetch('/api/ark/passport/request', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

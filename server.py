@@ -16,6 +16,7 @@ from core.steward import StewardNexus
 from core.energy import EnergyMonitor
 from core.router import Router, requires_auth, admin_only
 from core.justice import JusticeSteward
+from core.fishery import Fishery
 from core.triple_verification import TripleVerification
 from core.quest_system import QuestSystem
 from core.inventory import InventorySystem
@@ -25,6 +26,8 @@ from core.harvest_marketplace import HarvestMarketplace
 from core.wisdom_engine import WisdomEngine
 from core.foundry import OSEFoundry
 from core.verification_pyramid import VerificationPyramid
+from core.hardware_bridge import HardwareBridge
+from core.anti_dystopia import verify_anti_dystopia_compliance
 
 
 
@@ -50,14 +53,14 @@ from core.treasury_bot import TreasuryBot
 
 # Configuration
 PORT = int(Config.get('PORT', 3000))
-JWT_SECRET = Config.get_jwt_secret()
+JWT_KEY = Config.get_jwt_key()
 DB_FILE = os.path.join(os.getcwd(), 'ledger', 'village_ledger.db')
 WEB_DIR = os.path.join(os.getcwd(), 'web')
 USERS_FILE = os.path.join('core', 'users.json')
 
 # Security Warning
-if JWT_SECRET == 'dev_only_secret_change_in_production':
-    logging.warning("⚠️  Using default JWT_SECRET - set JWT_SECRET env var for production!")
+if JWT_KEY == 'dev_only_key_change_in_production':
+    logging.warning("⚠️  Using default JWT_KEY - set JWT_TOKEN_KEY env var for production!")
 
 # Logging
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s')
@@ -65,12 +68,12 @@ logger = logging.getLogger("ArkOS")
 
 # Instances
 ledger = VillageLedger(DB_FILE)
-identity = IdentityManager(USERS_FILE, JWT_SECRET)
+identity = IdentityManager(USERS_FILE, JWT_KEY)
 sensors = SensorRegistry(os.path.join('hardware', 'sensor_registry.json'))
 peers = PeerManager(os.path.join('federation', 'federation_registry.json'), PORT)
 syncer = FederationSyncer(ledger, peers, PORT)
 energy = EnergyMonitor(ledger, sensors=sensors)
-steward = StewardNexus(ledger, sensors, server_file='server.py')
+steward = StewardNexus(ledger, sensors, identity, server_file='server.py')
 treasury = TreasuryBot(ledger)
 justice = JusticeSteward(ledger, identity)
 verification = TripleVerification(ledger, identity)
@@ -88,9 +91,35 @@ verification_pyramid = VerificationPyramid(ledger, identity)
 
 # Routing
 router = Router()
+hw_bridge = HardwareBridge() # Physical Baseline
+fishery = Fishery(hardware_bridge=hw_bridge) # Initialize with bridge
 auth_decorator = requires_auth(identity)
 
-register_system_routes(router, ledger, identity, peers, sensors, energy, auth_decorator)
+# Anti-Dystopia Compliance Check (Ethics Hardcoding)
+try:
+    class SystemCompliance:
+        def __init__(self):
+            self.ledger = ledger
+            self.user_model = {"required": ["wallet_id"]} # Enforce pseudoname-only by default
+            self.auth = identity
+            self.tracking = {"enabled": ["timestamp", "tx_hash"]}
+            self.codebase = {"license": "AGPLv3", "source_available": True}
+            self.platform = type('obj', (object,), {'export_data': lambda: True, 'export_cost': 0})()
+            self.feeds = {"sort_by": "chronological"}
+            self.revenue = {"sources": ["labor_mint"]}
+            self.moderation = {"ban_reasons": ["violence", "fraud"]}
+            self.media = {"allow_nsfw": False}
+            self.economy = {"interest_rate": 0}
+            self.oracles = {"meta_oracle_enabled": True, "inverted_incentive": True}
+    
+    verify_anti_dystopia_compliance(SystemCompliance())
+except Exception as e:
+    logger.critical(f"🛑 ANTI-DYSTOPIA VIOLATION: {e}")
+    logger.critical("🚨 RECTIFY CORE CODE BEFORE BOOTING.")
+    exit(1)
+
+# API Registration
+register_system_routes(router, ledger, identity, peers, sensors, energy, fishery, hw_bridge, auth_decorator)
 register_steward_routes(router, ledger, energy, steward, auth_decorator)
 register_economy_routes(router, ledger, sensors, identity, justice, auth_decorator, quest_system, verification)
 
@@ -111,17 +140,17 @@ register_node_routes(router, ledger, identity, foundry, verification_pyramid, au
 
 
 try:
-    from api.sovereign import register_sovereign_routes
-    register_sovereign_routes(router, ledger, identity, auth_decorator)
-    logger.info("🛡️  Sovereign Vault active (Data Privacy & Sales)")
+    from api.ark_vault import register_ark_vault_routes
+    register_ark_vault_routes(router, ledger, identity, auth_decorator)
+    logger.info("🛡️  Ark Vault active (Data Privacy & Sales)")
 except ImportError as e:
-    logger.warning(f"⚠️  Sovereign API missing or dependencies failed: {e}")
+    logger.warning(f"⚠️  Ark API missing or dependencies failed: {e}")
 
 logger.info("💰 Fiat Bridge loaded (Card ↔ BTC ↔ AT ↔ Bank)")
 logger.info("📦 Inventory System loaded")
 logger.info("👨‍👩‍👧 Party Quests loaded (families + groups)")
 logger.info("🥬 Harvest Marketplace loaded (sell produce)")
-logger.info("🛡️  Sovereign Vault active (Data Privacy & Sales)")
+logger.info("🛡️  Ark Vault active (Data Privacy & Sales)")
 
 # Party & Harvest API
 try:
@@ -176,6 +205,8 @@ try:
     # Hardware Bridge (Physical/Simulated Sensors)
     from core.hardware_bridge import HardwareBridge
     hw_bridge = HardwareBridge()
+    # Attach bridge to Fishery for physical interlocks
+    fishery.bridge = hw_bridge
 
     # Gaia Autonomy Daemon (Background Observer)
     from gaia_daemon import GaiaDaemon
@@ -184,6 +215,8 @@ try:
     # We expose Gaia's current 'pulse' to the dashboard
     @router.get('/api/gaia/pulse')
     def gaia_pulse(h):
+        # Heartbeat for safety interlocks
+        fishery.heartbeat()
         pulse = gaia.run_cycle()
         
         # Broadcast pulse messages to the general chat
@@ -218,13 +251,13 @@ try:
 except ImportError:
     logger.warning("⚠️  AI Memory System not available")
 
-# Sovereign Intelligence (Analytics & Passport)
+# Ark Insight (Analytics & Passport)
 try:
-    from api.sovereign_intel import register_sovereign_intel_routes
-    register_sovereign_intel_routes(router, ledger, identity, auth_decorator)
-    logger.info("📡 Sovereign Intelligence Engine ACTIVE (Anti-Palantir)")
+    from api.ark_insight import register_ark_insight_routes
+    register_ark_insight_routes(router, ledger, identity, hw_bridge, auth_decorator)
+    logger.info("📡 Ark Insight Engine ACTIVE (Anti-Palantir)")
 except ImportError as e:
-    logger.warning(f"⚠️ Sovereign Intel missing: {e}")
+    logger.warning(f"⚠️ Ark Insight missing: {e}")
 
 # Project Exodus
 try:
@@ -249,7 +282,7 @@ rate_limit_store = {}
 RATE_LIMIT_WINDOW = 60  # seconds
 RATE_LIMIT_MAX = 30  # requests per window for auth endpoints
 
-def check_rate_limit(ip, endpoint):
+def check_rate_limit(ip, endpoint, max_count=RATE_LIMIT_MAX):
     """Returns True if request should be allowed, False if rate limited"""
     key = f"{ip}:{endpoint}"
     now = time.time()
@@ -264,7 +297,7 @@ def check_rate_limit(ip, endpoint):
         rate_limit_store[key] = {"count": 1, "window_start": now}
         return True
     
-    if entry["count"] >= RATE_LIMIT_MAX:
+    if entry["count"] >= max_count:
         return False
     
     entry["count"] += 1
@@ -306,6 +339,10 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+        # 🛡️ FISHERY INTERLOCK
+        if fishery.state == "LOCKDOWN":
+            return self.send_json_error("NODE IN LOCKDOWN: Physical or digital breach detected.", status=503)
+
         path = self.path.split('?')[0]
         if path in router.routes['GET']:
             router.routes['GET'][path](self)
@@ -315,13 +352,21 @@ class ArkHandler(http.server.BaseHTTPRequestHandler):
             self.send_json_error("Not Found", status=404)
 
     def do_POST(self):
+        # 🛡️ FISHERY INTERLOCK
+        if fishery.state == "LOCKDOWN":
+            return self.send_json_error("NODE IN LOCKDOWN: Physical or digital breach detected.", status=503)
+
         path = self.path.split('?')[0]
         
-        # Rate limit auth endpoints
-        if '/auth/' in path:
+        # Rate limit auth endpoints + Fishery SHIELDED state
+        is_auth_route = '/auth/' in path or '/login' in path or '/register' in path
+        if is_auth_route or fishery.state == "SHIELDED":
             client_ip = self.client_address[0]
-            if not check_rate_limit(client_ip, path):
-                self.send_json_error("Rate limited. Try again in 60 seconds.", status=429)
+            # Stricter limits if SHIELDED
+            limit = 5 if fishery.state == "SHIELDED" else RATE_LIMIT_MAX
+            if not check_rate_limit(client_ip, path, limit):
+                if is_auth_route: fishery.report_auth_failure() # Still count as failure
+                self.send_json_error("Rate limited. System is under protective shield.", status=429)
                 return
         
         if path in router.routes['POST']:

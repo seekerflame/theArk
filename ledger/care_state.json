@@ -22,5 +22,13 @@
     "reward_at": 1.5,
     "status": "OPEN",
     "completions": []
+  },
+  "care_1768083859303": {
+    "id": "care_1768083859303",
+    "title": "[GAIA] Inter-Node Mentorship",
+    "description": "Community fragmentation risk detected.",
+    "reward_at": 3.0,
+    "status": "OPEN",
+    "completions": []
   }
 }

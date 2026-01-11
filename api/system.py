@@ -3,7 +3,7 @@ import json
 import time
 import sqlite3
 
-def register_system_routes(router, ledger, identity, peers, sensors, energy, requires_auth):
+def register_system_routes(router, ledger, identity, peers, sensors, energy, fishery, hw_bridge, requires_auth):
 
     @router.get('/api/system/energy')
     def h_energy(h):
@@ -44,19 +44,45 @@ def register_system_routes(router, ledger, identity, peers, sensors, energy, req
         ok, res = identity.login(u, pwd)
         if ok: 
             user_data = identity.users.get(u, {})
+            # Detect Roles (including ephemeral NODE_HOST)
+            roles = identity.get_user_roles(u, ledger=ledger, hw_bridge=hw_bridge)
             hm = identity.get_holistic_multiplier(u, ledger=ledger)
+            
             h.send_json({
                 "token": identity.generate_token(u), 
                 "user": {
                     "username": u, 
-                    "role": res['role'], 
+                    "pseudoname": user_data.get('pseudoname'),
+                    "role": res['role'],
+                    "roles": roles, # Detailed roles list
+                    "is_host": "NODE_HOST" in roles,
                     "balance": ledger.get_balance(u),
                     "verified_hours": user_data.get('verified_hours', 0),
                     "safety_grade": user_data.get('safety_grade', 100),
                     "hm": hm
                 }
             })
-        else: h.send_json_error("Invalid credentials")
+        else: 
+            fishery.report_auth_failure()
+            h.send_json_error("Invalid credentials")
+
+    @router.post('/api/identity/pseudoname')
+    @requires_auth
+    def h_update_pseudoname(h, user, p):
+        u, pseudo = user['sub'], p.get('pseudoname')
+        if not pseudo: return h.send_json_error("Pseudoname required")
+        ok, msg = identity.update_pseudoname(u, pseudo)
+        if ok: h.send_json({"message": msg, "pseudoname": pseudo})
+        else: h.send_json_error(msg)
+
+    @router.get('/api/fishery/status')
+    @requires_auth
+    def h_fishery_status(h, user, p=None):
+        # Admin or Oracle only
+        user_roles = identity.users.get(user['sub'], {}).get('roles', [])
+        if user['role'] != 'ADMIN' and 'ORACLE' not in user_roles:
+            return h.send_json_error("Unauthorized access to safety systems", status=403)
+        h.send_json(fishery.get_status())
 
 
     @router.get('/api/logs')
@@ -122,6 +148,18 @@ def register_system_routes(router, ledger, identity, peers, sensors, energy, req
             h.send_json({"status": "sync_started", "message": "Wiki synchronization initiated in background"})
         except Exception as e:
             h.send_json_error(f"Failed to start sync: {str(e)}")
+
+    @router.post('/api/ark/privacy')
+    @requires_auth
+    def h_update_privacy(h, user, p):
+        """Toggle Ghost Mode (Identity Shielding)"""
+        u, ghost_mode = user['sub'], p.get('ghost_mode', False)
+        # In a real system, this would modify how the user appears in the federation
+        # For v1.0, we just persist the intent in the identity state
+        if 'settings' not in identity.users[u]:
+            identity.users[u]['settings'] = {}
+        identity.users[u]['settings']['ghost_mode'] = ghost_mode
+        h.send_json({"status": "success", "ghost_mode": ghost_mode})
 
     @router.get('/api/wiki/status')
     def h_wiki_status(h):

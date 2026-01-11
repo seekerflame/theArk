@@ -18,5 +18,25 @@
     "spent_at": 0.0,
     "views": 0,
     "active": true
+  },
+  "ad_1768083859268": {
+    "id": "ad_1768083859268",
+    "advertiser": "Lead_Architect",
+    "title": "Learn: Modular Chassis Assembly",
+    "content": "Review the blueprint for the SEED-Home chassis. Mint 0.5 AT for your attention.",
+    "budget_at": 50.0,
+    "spent_at": 0.0,
+    "views": 0,
+    "active": true
+  },
+  "ad_1768083859272": {
+    "id": "ad_1768083859272",
+    "advertiser": "Lead_Architect",
+    "title": "Safety Audit: Weld Points",
+    "content": "Verify the weld point locations on the primary pillars. Crucial for structural integrity.",
+    "budget_at": 20.0,
+    "spent_at": 0.0,
+    "views": 0,
+    "active": true
   }
 }
