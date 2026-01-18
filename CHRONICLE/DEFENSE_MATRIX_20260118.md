@@ -341,7 +341,7 @@
 
 ### 🟡 MEDIUM (This Week)
 
-6. **Power Profile Prototype** (7-day battery test) - 1 hour setup
+1. **Power Profile Prototype** (7-day battery test) - 1 hour setup
 2. **Follow Up Marcin** (governance collaboration) - 1 hour
 3. **Create UX Demo Video** (e-ink refresh expectations) - 3 hours
 4. **Clarify v1.0 Scope** (prevent feature creep) - 1 hour
@@ -349,7 +349,7 @@
 
 ### 🟢 LOW (Nice to Have)
 
-11. **Create START_HERE.md** (navigation hub) - 1 hour
+1. **Create START_HERE.md** (navigation hub) - 1 hour
 2. **Design Calibration Wizard** (EMG UX mockups) - 2 hours
 
 **Total Time Estimate**: ~24 hours over 7 days (3-4 hours/day)
