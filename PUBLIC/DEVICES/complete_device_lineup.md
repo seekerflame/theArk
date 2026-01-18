@@ -17,13 +17,13 @@
 
 ### Tier 2: Home Sovereignty (3 devices)
 
-5. **Solar Station** - Household energy independence
+1. **Solar Station** - Household energy independence
 2. **Hydroponic System** - Year-round food production
 3. **Mesh Hub** - Home network backbone
 
 ### Tier 3: Community Sovereignty (2 devices)
 
-8. **Fab Station** - Local manufacturing capability
+1. **Fab Station** - Local manufacturing capability
 2. **Water Station** - Village-scale water treatment
 
 ---
