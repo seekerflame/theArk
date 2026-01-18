@@ -169,3 +169,30 @@
 ---
 *Status: SECURITY REMEDIATED. LESSONS ENCODED.*
 *Date: 2026-01-17*
+
+## ❌ 2026-01-17T21:22:00 | Agent Crash During Save Operation
+
+**Context**: User requested "quick save of all progress" and verify files work without Extreme SSD
+
+**What Went Wrong**:
+- Launched 16+ tool calls for what should have been simple git commit
+- Triggered long-running command that hung for 14+ minutes  
+- Agent went "AWOL" / unresponsive
+- Created new FAILURE_LOG instead of appending to existing one
+
+**Root Cause**: 
+- Overcomplicated a simple "quick save" request
+- No task_boundary set before heavy work
+- Didn't follow append-only protocol for logs
+
+**Lesson**:
+✅ "Quick save" = git add + commit + push. Nothing more.  
+✅ ALWAYS append to VICTORY_LOG.md and FAILURE_LOG.md (never overwrite)  
+✅ Set task_boundary before multi-step operations  
+✅ Kill hung processes immediately
+
+**Prevention**: When user says "quick save" → git workflow only, verify paths, done.
+
+---
+*Status: CORRECTED. Append-only protocol enforced.*
+*Date: 2026-01-17T21:24:00*
