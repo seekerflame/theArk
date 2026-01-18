@@ -175,12 +175,14 @@
 **Context**: User requested "quick save of all progress" and verify files work without Extreme SSD
 
 **What Went Wrong**:
+
 - Launched 16+ tool calls for what should have been simple git commit
 - Triggered long-running command that hung for 14+ minutes  
 - Agent went "AWOL" / unresponsive
 - Created new FAILURE_LOG instead of appending to existing one
 
-**Root Cause**: 
+**Root Cause**:
+
 - Overcomplicated a simple "quick save" request
 - No task_boundary set before heavy work
 - Didn't follow append-only protocol for logs
@@ -202,12 +204,14 @@
 **Context**: User requested complete inventory of all assets before Liz collaboration, need to separate public vs private
 
 **What Went Wrong**:
+
 - Started creating comprehensive inventory mid-conversation
 - Did NOT set task_boundary despite clear complexity (user explicitly said "ALWAYS set task boundary")
 - Crashed while thinking through AT/gift economy tension
 - Left incomplete analysis of what can be shared publicly
 
 **Root Cause**:
+
 - Ignored user's explicit instruction to always set task_boundary
 - Tried to tackle philosophical tension (AT vs gift economy) without structured approach
 - No systematic audit of private vs public assets before planning
@@ -223,3 +227,87 @@
 ---
 *Status: CORRECTED. Task boundary set, systematic approach initiated.*
 *Date: 2026-01-17T22:35:00*
+
+## ❌ 2026-01-17T23:27:00 | Agent Crash During Umbrella Structure Execution
+
+**Context**: Designed PRIVATE/PUBLIC umbrella structure, user loved the flow, about to execute Block 1
+
+**What Went Wrong**:
+
+- Crash before executing foundation setup
+- User suspects external surveillance ("maybe external influences watching us")
+- Clarification needed on automation vs manual curation
+
+**Root Cause**:
+
+- System instability or external factors
+- Misunderstanding of "umbrella" scope - user wants FULL AUTOMATION, not manual curation
+- Didn't clarify: user wants to dogfood the system (time tracking internally, not share externally)
+
+**User Clarification**:
+
+- **Principle: SECRECY** - No manual middleman, fully automated protocols
+- User uploads → automated routing → shares (no human curation)
+- "Completely and fully organized always and forever ad infinitum"
+- Building replicable structures for ANY user (not just this one)
+- NO FAANG/Meta/OpenAI extraction - zero-knowledge sharing
+
+**Lesson**:
+✅ Umbrella structure good, but needs AUTOMATION layer  
+✅ Not "user curates PRIVATE → PUBLIC" - Protocol AUTOMATICALLY decides  
+✅ Secrecy by default, sharing by explicit protocol rules  
+✅ Build for replication (any user can clone this workflow)  
+✅ Dogfood our own time tracking (use it internally, don't leak it)
+
+**Next Steps**:
+
+- Refine umbrella structure with automated classification rules
+- Create `.agent/scripts/auto-classify.sh` (determines PRIVATE vs PUBLIC automatically)
+- Add encryption layer for PRIVATE/ (zero-knowledge)
+- Build replicable template (any user can deploy)
+
+---
+*Status: CORRECTED. Automated secrecy protocol design initiated.*
+*Date: 2026-01-17T23:27:00*
+
+## ❌ 2026-01-17T23:33:00 | Agent Crash During Script Execution
+
+**Context**: Created automated secrecy scripts (auto-classify.sh, setup.sh), attempted to execute
+
+**What Went Wrong**:
+
+- User cancelled 3 run_command calls
+- Scripts not created/executed
+- System instability or user interruption
+
+**Root Cause**:
+
+- Possible: Too many commands at once
+- Possible: User reviewing and decided to pause
+- Possible: System issues (external surveillance concerns)
+
+**Lesson**:
+✅ Save progress to artifacts BEFORE executing scripts  
+✅ Don't execute multiple scripts in single turn  
+✅ Present plan, wait for explicit "go"  
+✅ Keep artifacts concise (system reminder)
+
+**Documents Created This Session**:
+
+- UMBRELLA_STRUCTURE.md (manual curation v1)
+- AUTOMATED_SECRECY_PROTOCOL.md (rule-based v2)
+- SUPERPOWERS_INTEGRATION_PLAN.md
+- Task artifact updated 4x
+
+**Actual Progress**:
+
+- Superpowers cloned & audited ✅
+- Umbrella architecture designed ✅
+- Automated classification rules defined ✅
+- Scripts designed but NOT executed ❌
+
+**Next**: Wait for user direction on how to proceed
+
+---
+*Status: PAUSED. Awaiting user decision.*
+*Date: 2026-01-17T23:33:00*
