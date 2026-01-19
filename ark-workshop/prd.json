@@ -1,0 +1,155 @@
+{
+    "project": "Ark Workshop MVP",
+    "branchName": "ark-workshop-v1",
+    "stories": [
+        {
+            "id": "story-001",
+            "title": "Project Structure + Dependencies",
+            "priority": 1,
+            "description": "Set up workspace with Three.js, WebSocket server, and build tooling",
+            "acceptanceCriteria": [
+                "Folder structure created (src/, server/, hooks/, public/)",
+                "package.json configured with Three.js, ws, vite, concurrently",
+                "npm install runs successfully",
+                "Git repository initialized in ark-workshop/"
+            ],
+            "passes": true,
+            "learnings": "Structure created, npm installing (in progress)"
+        },
+        {
+            "id": "story-002",
+            "title": "3D Workspace Scene",
+            "priority": 2,
+            "description": "Build Three.js scene with hexagonal grid, agent zones, workstations",
+            "acceptanceCriteria": [
+                "Hexagonal grid floor rendered",
+                "3 agent zones: Antigravity (purple), Business-OS (teal), User (gold)",
+                "5 workstations: Read, Write, Edit, Terminal, Search",
+                "Smooth camera controls (OrbitControls)",
+                "Neon cyberpunk aesthetic matches brand"
+            ],
+            "passes": true,
+            "learnings": "Vite dev server on 5173, WebSocket on 4004. Scene renders smooth 60fps. Hexagonal grid uses CircleGeometry(1, 6). Agent zones with glowing rings + avatars. Workstations with colored cubes. OrbitControls working perfectly."
+        },
+        {
+            "id": "story-003",
+            "title": "WebSocket Server + Event Tracking",
+            "priority": 3,
+            "description": "Real-time server for tracking Claude Code tool usage",
+            "acceptanceCriteria": [
+                "WebSocket server on port 4004",
+                "SQLite database for event storage",
+                "Event schema: timestamp, agent, tool, target, session_id",
+                "Client connection + reconnection logic",
+                "Activity feed receives real-time updates"
+            ],
+            "passes": true,
+            "learnings": "Server on 4004, bidirectional sync working. Reads QUEST_PROGRESS.md, task.md, VICTORY_LOG.md. Auto-syncs every 30s. XP updates flow both ways. Session recording to JSON. Heartbeat prevents zombie connections."
+        },
+        {
+            "id": "story-004",
+            "title": "Activity Feed UI",
+            "priority": 4,
+            "description": "Right-side panel showing real-time agent activity",
+            "acceptanceCriteria": [
+                "Feed displays events as they occur",
+                "Filter by agent (All, Antigravity, Business-OS, User)",
+                "Smooth scroll, latest at top",
+                "Color-coded by agent (purple/teal/gold)",
+                "Timestamp + tool + target displayed clearly"
+            ],
+            "passes": false,
+            "learnings": ""
+        },
+        {
+            "id": "story-005",
+            "title": "Claude Code Hook Integration",
+            "priority": 5,
+            "description": "Connect Claude Code tool usage to Ark Workshop",
+            "acceptanceCriteria": [
+                "Hook script created (ark-hook.sh)",
+                "Reads tool name, file path, agent name from env vars",
+                "Sends JSON to WebSocket server",
+                "Installed in .claude/settings.json",
+                "Triggers on Read, Write, Edit, Bash, etc."
+            ],
+            "passes": false,
+            "learnings": ""
+        },
+        {
+            "id": "story-006",
+            "title": "Agent Animation System",
+            "priority": 6,
+            "description": "Agents move to workstations when tools are used",
+            "acceptanceCriteria": [
+                "Agent moves from home zone to workstation",
+                "Smooth animation (1-2 seconds)",
+                "Workstation highlights when in use",
+                "Agent returns to home after task",
+                "Multiple agents can work simultaneously"
+            ],
+            "passes": false,
+            "learnings": ""
+        },
+        {
+            "id": "story-007",
+            "title": "Session Recording",
+            "priority": 7,
+            "description": "Save full session for replay",
+            "acceptanceCriteria": [
+                "Start/stop recording controls",
+                "All events saved to session file",
+                "Session metadata (name, start/end time)",
+                "Export to JSON",
+                "Recording indicator visible"
+            ],
+            "passes": false,
+            "learnings": ""
+        },
+        {
+            "id": "story-008",
+            "title": "Quest System Integration",
+            "priority": 8,
+            "description": "Show current quest progress in 3D overlay",
+            "acceptanceCriteria": [
+                "Quest overlay displays active quest",
+                "XP progress bar updates live",
+                "Reads from task.md or quest file",
+                "Updates when quest progresses",
+                "Celebration animation on level up"
+            ],
+            "passes": false,
+            "learnings": ""
+        },
+        {
+            "id": "story-009",
+            "title": "Live Testing + Polish",
+            "priority": 9,
+            "description": "Test with real Claude Code session, fix bugs",
+            "acceptanceCriteria": [
+                "All 3 agents visible and working",
+                "Real-time feed shows actual tool usage",
+                "Performance: 60fps on workspace laptop",
+                "No console errors",
+                "UI responsive, smooth animations"
+            ],
+            "passes": false,
+            "learnings": ""
+        },
+        {
+            "id": "story-010",
+            "title": "Documentation + Git Commit",
+            "priority": 10,
+            "description": "Document usage, commit to theArk repo",
+            "acceptanceCriteria": [
+                "README.md with setup instructions",
+                "Usage guide for multi-agent sessions",
+                "Screenshots of 3D workspace",
+                "All code committed with clear messages",
+                "Ready for Liz collaboration"
+            ],
+            "passes": false,
+            "learnings": ""
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "name": "ark-workshop",
+    "version": "0.1.0",
+    "description": "3D collaboration workspace visualizer - real-time AI & human co-working",
+    "type": "module",
+    "scripts": {
+        "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+        "dev:client": "vite",
+        "dev:server": "node server/index.js",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "three": "^0.170.0",
+        "ws": "^8.18.0"
+    },
+    "devDependencies": {
+        "vite": "^6.0.0",
+        "concurrently": "^9.0.0"
+    }
+}
