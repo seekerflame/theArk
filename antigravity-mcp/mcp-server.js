@@ -13,6 +13,7 @@ import {
     ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import WebSocket from 'ws';
+import { toolStart, toolEnd, agentResponse, sessionStart } from './event-emitter.js';
 
 // Connect to Vibecraft WebSocket
 const VIBECRAFT_WS = 'ws://localhost:4003';
@@ -121,8 +122,13 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
 
+    // Emit pre-tool event → character moves to station in Vibecraft
+    toolStart(name, args);
+
+    let result;
+
     if (name === 'watch_antigravity') {
-        return {
+        result = {
             content: [{
                 type: 'text',
                 text: 'Open http://localhost:4002 to see Antigravity working in 3D workspace!\n\nYou can see me moving between stations as I work.',
@@ -130,59 +136,66 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         };
     }
 
-    if (name === 'send_activity') {
+    else if (name === 'send_activity') {
         if (!ws || ws.readyState !== WebSocket.OPEN) {
-            return {
+            result = {
                 content: [{
                     type: 'text',
                     text: 'Error: Not connected to workspace',
                 }],
             };
+        } else {
+            // Send activity to workspace
+            ws.send(JSON.stringify({
+                type: 'agent_activity',
+                agent: 'antigravity',
+                tool: args.tool,
+                target: args.target,
+                timestamp: Date.now(),
+            }));
+
+            result = {
+                content: [{
+                    type: 'text',
+                    text: `Activity sent: ${args.tool} → ${args.target}`,
+                }],
+            };
         }
-
-        // Send activity to workspace
-        ws.send(JSON.stringify({
-            type: 'agent_activity',
-            agent: 'antigravity',
-            tool: args.tool,
-            target: args.target,
-            timestamp: Date.now(),
-        }));
-
-        return {
-            content: [{
-                type: 'text',
-                text: `Activity sent: ${args.tool} → ${args.target}`,
-            }],
-        };
     }
 
-    if (name === 'ask_user') {
+    else if (name === 'ask_user') {
         if (!ws || ws.readyState !== WebSocket.OPEN) {
-            return {
+            result = {
                 content: [{
                     type: 'text',
                     text: 'Error: Not connected to workspace',
                 }],
             };
+        } else {
+            ws.send(JSON.stringify({
+                type: 'user_question',
+                agent: 'antigravity',
+                question: args.question,
+                timestamp: Date.now(),
+            }));
+
+            result = {
+                content: [{
+                    type: 'text',
+                    text: `Question sent to user: ${args.question}`,
+                }],
+            };
         }
-
-        ws.send(JSON.stringify({
-            type: 'user_question',
-            agent: 'antigravity',
-            question: args.question,
-            timestamp: Date.now(),
-        }));
-
-        return {
-            content: [{
-                type: 'text',
-                text: `Question sent to user: ${args.question}`,
-            }],
-        };
     }
 
-    throw new Error(`Unknown tool: ${name}`);
+    else {
+        throw new Error(`Unknown tool: ${name}`);
+    }
+
+    // Emit post-tool event → shows result in activity feed
+    toolEnd(name, result.content[0].text);
+
+    return result;
 });
 
 // Resource: Activity feed
